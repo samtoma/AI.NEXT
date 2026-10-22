@@ -1,0 +1,222 @@
+{
+ "format": "ainext.context-generated/1",
+ "book": "prep3-parallel",
+ "chapter": 7,
+ "made": "2026-10-22",
+ "made_by": "book_record_context.py generate-accept (context-gen-v1)",
+ "run": "runs/prep3-parallel/context/context-gen-ch07.20261022T145357Z.json",
+ "lessons": [
+  {
+   "slug": "pp3u7-1",
+   "gaps": [
+    1,
+    2
+   ],
+   "entries": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "text": "Imagine a school club sells small notebooks. Its profit in pounds from selling $x$ notebooks is $f(x)=x^2-5x+6$ ... Suppose instead the club checks $x=1$, $x=2$ and $x=3$ notebooks. Work out $f(1)$, $f(2)$ and $f(3)$. Which of these values of $x$ make the profit exactly $0$, and so belong to the set $Z(f)$?",
+     "numbers": [
+      {
+       "working": "f(1)=1-5+6",
+       "value": "2"
+      },
+      {
+       "working": "f(2)=4-10+6",
+       "value": "0"
+      },
+      {
+       "working": "f(3)=9-15+6",
+       "value": "0"
+      }
+     ],
+     "why": "The lesson has no story, so a new situation is needed. Checking which inputs make a profit formula equal 0 shows evaluating f at given x and naming Z(f).",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "f(1)=1-5+6=2, f(2)=4-10+6=0, f(3)=9-15+6=0, so the zeroes among them are 2 and 3. It only needs evaluating a polynomial and naming Z(f), which is objective 1. It is framed as imagined, with no real brand or person. It is short and clear, and it doesn't give the answer away."
+     },
+     "status": "confirmed",
+     "fingerprint": "b40e0593616e0834"
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "text": "Imagine a phone plan where your balance in pounds after $x$ days is $f(x)=60-4x$. The balance reaches zero on the day when $f(x)=0$. Put $f(x)=0$ and solve the equation to find the set of zeroes $Z(f)$. What does that tell you about the day the balance runs out?",
+     "numbers": [
+      {
+       "working": "60-4x=0, 4x=60, x=15",
+       "value": "Z(f)={15}"
+      }
+     ],
+     "why": "No lesson story exists. A simple break-even situation gives a linear equation f(x)=0 solved for x, which is exactly the method of finding Z(f).",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "Setting 60-4x=0 gives x=15, so Z(f)={15}. The balance runs out on day 15. This is the book's method of putting f(x)=0 and solving a linear equation, as in example (1). The setting is a generic phone plan with no brand, and a student can picture it. The answer is not given away."
+     },
+     "status": "confirmed",
+     "fingerprint": "bc16509bebaef7ff"
+    }
+   ]
+  },
+  {
+   "slug": "pp3u7-2",
+   "gaps": [
+    1,
+    2
+   ],
+   "entries": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "text": "Imagine a class hires a bus for a trip costing 360 pounds, and 4 places are paid for by a sponsor. The share of each paying student is $f(x)=\\frac{360}{x-4}$ pounds, where $x$ is the number of students registered. Which values of $x$ would make this formula meaningless, and what would be each student's share if $x=10$?",
+     "numbers": [
+      {
+       "working": "x-4=0 so x=4, domain R-{4}",
+       "value": "R - {4}"
+      },
+      {
+       "working": "f(10)=360/(10-4)=360/6",
+       "value": "60"
+      }
+     ],
+     "why": "The lesson has no story, so a new one is needed: a cost-sharing formula whose denominator can be zero, which shows why some x values are excluded, then evaluating it.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "The denominator x-4 is zero only at x=4, so the domain is R-{4}. f(10)=360/6=60 pounds. This is the objective's own method (domain as R minus the zeroes of the denominator, then evaluate). The scenario is a plain made-up trip and is not presented as fact. It is short and clear, and it does not give away the answer."
+     },
+     "status": "confirmed",
+     "fingerprint": "d80ef1bb395e7e5f"
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "text": "Suppose a school trip has two shares to pay for the same $x$ students: the bus share $n_1(x)=\\frac{360}{x-4}$ pounds and the food share $n_2(x)=\\frac{90}{x-2}$ pounds. The organiser needs a value of $x$ where both formulas make sense together. Which values of $x$ must be left out so that both $n_1$ and $n_2$ are defined at the same time?",
+     "numbers": [
+      {
+       "working": "x-4=0 so x=4, domain of n1 = R-{4}",
+       "value": "R - {4}"
+      },
+      {
+       "working": "x-2=0 so x=2, domain of n2 = R-{2}",
+       "value": "R - {2}"
+      },
+      {
+       "working": "R-({4}∪{2})",
+       "value": "R - {2, 4}"
+      }
+     ],
+     "why": "The lesson has no story, so a new one is needed: two cost-share formulas for the same group, each with its own denominator, and both must work at the same time.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "The zero of x-4 is 4 and the zero of x-2 is 2, so the common domain is R-{2,4}. The values to leave out are x=2 and x=4. This is the objective's own method (R minus the union of the zeroes). The scenario is a plain made-up trip, and the wording is clear and does not give away the answer."
+     },
+     "status": "confirmed",
+     "fingerprint": "ad51dc8b9a33e223"
+    }
+   ]
+  },
+  {
+   "slug": "pp3u7-3",
+   "gaps": [
+    1,
+    2
+   ],
+   "entries": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "text": "Imagine two rectangular plots of land. The area of plot A is $x^2-9$ square metres and the area of plot B is $x^2+3x$ square metres. The ratio of their areas is the fraction $\\frac{x^2-9}{x^2+3x}$. Can you write this ratio in its simplest form, and say which values of $x$ must be excluded before you cancel anything?",
+     "numbers": [],
+     "why": "The lesson has no story; a ratio of two plot areas gives a fraction that factorizes and cancels, with excluded values of x.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "x²-9 = (x+3)(x-3) and x²+3x = x(x+3). The excluded values are x = 0 and x = -3, and the simplest form is (x-3)/x. This is exactly the objective's method: factorize, state the domain, then cancel. The plots are imagined, which is fine, and the setting is clear and doesn't give the answer away."
+     },
+     "status": "confirmed",
+     "fingerprint": "22aa082b494f95d6"
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "text": "Suppose Sara and Omar each write a formula for the price in pounds of one pen when they buy a pack depending on $x$. Sara writes $\\frac{x^2-1}{x^2-x}$ and Omar writes $\\frac{x+1}{x}$. Do their formulas really describe the same fraction? To decide, you will compare the values of $x$ each formula allows and their simplest forms, and find the common domain if they are not equal.",
+     "numbers": [],
+     "why": "The lesson has no story; two people writing price formulas that look alike lets the student compare domains and simplest forms.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "Sara's fraction is (x²-1)/(x²-x) = (x+1)(x-1)/(x(x-1)), which reduces to (x+1)/x with domain R-{0,1}. Omar's fraction (x+1)/x has domain R-{0}. They reduce to the same fraction but the domains differ, so they are not equal. The common domain is R-{0,1}. This matches the book's second worked example. The pen-price setting is invented but not presented as fact, and it names no real people or brands. It is clear for a student and doesn't state the result."
+     },
+     "status": "confirmed",
+     "fingerprint": "5773189da08505ee"
+    }
+   ]
+  },
+  {
+   "slug": "pp3u7-4",
+   "gaps": [
+    1,
+    2
+   ],
+   "entries": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "text": "Imagine one tap can fill a water tank alone in $x$ hours, and a second tap can fill the same tank alone in $(x+2)$ hours. In one hour the first tap fills $\\frac{1}{x}$ of the tank and the second fills $\\frac{1}{x+2}$ of it. Write the part of the tank filled in one hour by both taps together as a single fraction, and say which values of $x$ are not allowed.",
+     "numbers": [],
+     "why": "The lesson has no story, so a new one is needed: two taps filling a tank, whose hourly rates are fractions with different denominators that must be added.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "1/x + 1/(x+2) = (2x+2)/(x(x+2)) = 2(x+1)/(x(x+2)); x cannot be 0 or -2. This is adding fractions with different denominators, which is the objective's method. The tap setting is a standard, clearly hypothetical picture."
+     },
+     "status": "confirmed",
+     "fingerprint": "924a4ff451b95927"
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "text": "Suppose a phone plan charges $\\frac{x+3}{x-1}$ pounds for each unit of data, and you use $\\frac{x-1}{x+5}$ units. The total cost is the product of the two fractions. Work out the total cost as a fraction in simplest form, and say which values of $x$ are not allowed.",
+     "numbers": [],
+     "why": "The lesson has no story, so a new one is needed: a cost computed as rate times amount, where the two algebraic fractions are multiplied and common factors cancel.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "(x+3)/(x-1) × (x-1)/(x+5) = (x+3)/(x+5) after cancelling (x-1). x cannot be 1 or -5, because those values make a denominator zero. This is multiplication of fractions with cancelling and a domain, as the objective requires. The phone-plan setting is hypothetical and contrived but not false, and it does not give away the answer."
+     },
+     "status": "confirmed",
+     "fingerprint": "901887a0bd0f97bf"
+    }
+   ]
+  }
+ ]
+}

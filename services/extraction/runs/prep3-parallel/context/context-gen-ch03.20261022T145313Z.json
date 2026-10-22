@@ -1,0 +1,102 @@
+{
+ "stage": "context-gen",
+ "workflow": "context-gen",
+ "prompts_version": "context-gen-v1",
+ "embedded": {
+  "source": "runbook/context-gen.workflow.js",
+  "source_sha256": "35e47fcb386e418c171433acd3116e02d29e39131379cad0d728752c7e62f57f",
+  "args_sha256": "ce2d6a091bf58a0e581e29fc50a0f7822071b86a3a4fc8ca4b7f4e42881b763f",
+  "generated_sha256": "ba5642429297d902ae5d52ef06c775ec48b624ae0215499f4e6ce27c85f1c787",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "book": "prep3-parallel",
+ "lessons": [
+  {
+   "slug": "pp3u3-1",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "No lesson story exists; a school-survey scenario contrasts collecting data yourself with using an official source.",
+     "text": "Imagine your class wants to know how many hours students in your school spend on their phones each day. You could hand out a questionnaire and interview students yourself, or you could look up figures already published by an official statistics agency. Which choice is the primary resource and which is the secondary one, and what is the advantage of each in time, cost and accuracy?",
+     "numbers": []
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "No lesson story exists; a factory lamp-testing scenario fits sample method versus whole population, matching the book's own case.",
+     "text": "Suppose a factory makes 10,000 electric lamps, and the manager wants to know how many hours a lamp lasts before it burns out. Testing every lamp would mean burning all of them out, so none would be left to sell. Would you study all the lamps or only a sample, and what is the risk if the chosen sample does not represent all the lamps well?",
+     "numbers": []
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "confirmed",
+     "why": "Questionnaire and interview is the primary (field) source. It is accurate but costs time, effort and money. Published figures from an official agency are the secondary source, and they save time and money. This matches the book's statements. The scenario is realistic, short and easy to picture, and it doesn't state the answer.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 2,
+     "verdict": "rejected",
+     "why": "The maths is right: 10,000 lamps, destructive testing, so use a sample, and a biased sample gives inaccurate results. But the prompt says that testing every lamp would burn them all out and leave none to sell. That gives away the main reason for choosing a sample, so the student has little left to work out. It also asks the question the student is meant to answer.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": false
+    }
+   ]
+  },
+  {
+   "slug": "pp3u3-2",
+   "written": [
+    {
+     "objective": 2,
+     "decision": "lesson_story",
+     "why": "The lesson's wages of Set A (170, 180, 180, 230, 240) and Set B are a list of values with a mean of 200. Finding how far each wage is from the mean, squaring those deviations, averaging them and taking the square root is exactly the standard deviation method, so no new text is needed."
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "The lesson story gives a plain list of wages, not a frequency table. A new example with repeated values and frequencies is needed.",
+     "text": "Suppose a school football team played 10 matches. It scored 0 goals in 2 matches, 1 goal in 3 matches, 2 goals in 4 matches and 3 goals in 1 match. The coach wants one number that shows how much the goals per match vary around the average. Work out the mean number of goals per match, and then the standard deviation $\\sigma$ of this distribution, using each number of goals $x$ with its frequency $k$.",
+     "numbers": [
+      {
+       "working": "2 + 3 + 4 + 1 = 10 matches, which equals the number of matches given",
+       "value": "10"
+      }
+     ]
+    },
+    {
+     "objective": 4,
+     "decision": "lesson_story",
+     "why": "Sets A and B in the lesson's wage story both have a mean wage of 200 pounds, because 1000 ÷ 5 = 200 for each. They have different spreads, with B having the outlier values 50 and 400. This is the situation where the set with the larger standard deviation is the more dispersed, so it is the less homogeneous. No new text is needed."
+    }
+   ],
+   "checked": [
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "Set A (170, 180, 180, 230, 240) has mean 200. The squared deviations are 900, 400, 400, 900 and 1600, which sum to 4200. So σ = √840 ≈ 28.98. Set B (50, 180, 180, 190, 400) also has mean 200. Its squared deviations sum to 63400, so σ = √12680 ≈ 112.6. The story gives raw values with a clean mean, so the standard-deviation method applies directly."
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "The frequencies 2+3+4+1 add to 10, which matches the 10 matches. Σxk = 0+3+8+3 = 14, so the mean is 1.4. The squared deviations times frequency are 3.92, 0.48, 1.44 and 2.56, which sum to 8.4. So σ = √0.84 ≈ 0.917. It uses only the ungrouped frequency-distribution formula from this objective. The situation is plausible and unnamed, it is short, and it does not state the answer.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 4,
+     "verdict": "confirmed",
+     "why": "Both sets A and B have mean 200 and are measured in pounds. This is the condition the book gives for comparing dispersion with the standard deviation. σ_A ≈ 28.98 and σ_B ≈ 112.6, so A is more homogeneous and B is more dispersed. The comparison happens inside the story."
+    }
+   ]
+  }
+ ]
+}

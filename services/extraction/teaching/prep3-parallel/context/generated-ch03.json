@@ -1,0 +1,119 @@
+{
+ "format": "ainext.context-generated/1",
+ "book": "prep3-parallel",
+ "chapter": 3,
+ "made": "2026-10-22",
+ "made_by": "book_record_context.py generate-accept (context-gen-v1)",
+ "run": "runs/prep3-parallel/context/context-gen-ch03.20261022T145313Z.json",
+ "lessons": [
+  {
+   "slug": "pp3u3-1",
+   "gaps": [
+    1,
+    2
+   ],
+   "entries": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "text": "Imagine your class wants to know how many hours students in your school spend on their phones each day. You could hand out a questionnaire and interview students yourself, or you could look up figures already published by an official statistics agency. Which choice is the primary resource and which is the secondary one, and what is the advantage of each in time, cost and accuracy?",
+     "numbers": [],
+     "why": "No lesson story exists; a school-survey scenario contrasts collecting data yourself with using an official source.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "Questionnaire and interview is the primary (field) source. It is accurate but costs time, effort and money. Published figures from an official agency are the secondary source, and they save time and money. This matches the book's statements. The scenario is realistic, short and easy to picture, and it doesn't state the answer."
+     },
+     "status": "confirmed",
+     "fingerprint": "860dadf40b3e1cdc"
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "text": "Suppose a factory makes 10,000 electric lamps, and the manager wants to know how many hours a lamp lasts before it burns out. Testing every lamp would mean burning all of them out, so none would be left to sell. Would you study all the lamps or only a sample, and what is the risk if the chosen sample does not represent all the lamps well?",
+     "numbers": [],
+     "why": "No lesson story exists; a factory lamp-testing scenario fits sample method versus whole population, matching the book's own case.",
+     "check": {
+      "verdict": "rejected",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": false,
+      "why": "The maths is right: 10,000 lamps, destructive testing, so use a sample, and a biased sample gives inaccurate results. But the prompt says that testing every lamp would burn them all out and leave none to sell. That gives away the main reason for choosing a sample, so the student has little left to work out. It also asks the question the student is meant to answer."
+     },
+     "status": "held",
+     "fingerprint": "096a992d9ddc8d0f"
+    }
+   ]
+  },
+  {
+   "slug": "pp3u3-2",
+   "gaps": [
+    2,
+    3,
+    4
+   ],
+   "entries": [
+    {
+     "objective": 2,
+     "decision": "lesson_story",
+     "text": null,
+     "numbers": [],
+     "why": "The lesson's wages of Set A (170, 180, 180, 230, 240) and Set B are a list of values with a mean of 200. Finding how far each wage is from the mean, squaring those deviations, averaging them and taking the square root is exactly the standard deviation method, so no new text is needed.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": null,
+      "maths_fits": null,
+      "true_to_world": null,
+      "suits_student": null,
+      "why": "Set A (170, 180, 180, 230, 240) has mean 200. The squared deviations are 900, 400, 400, 900 and 1600, which sum to 4200. So σ = √840 ≈ 28.98. Set B (50, 180, 180, 190, 400) also has mean 200. Its squared deviations sum to 63400, so σ = √12680 ≈ 112.6. The story gives raw values with a clean mean, so the standard-deviation method applies directly."
+     },
+     "status": "confirmed",
+     "fingerprint": "8e458c05ed817774"
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "text": "Suppose a school football team played 10 matches. It scored 0 goals in 2 matches, 1 goal in 3 matches, 2 goals in 4 matches and 3 goals in 1 match. The coach wants one number that shows how much the goals per match vary around the average. Work out the mean number of goals per match, and then the standard deviation $\\sigma$ of this distribution, using each number of goals $x$ with its frequency $k$.",
+     "numbers": [
+      {
+       "working": "2 + 3 + 4 + 1 = 10 matches, which equals the number of matches given",
+       "value": "10"
+      }
+     ],
+     "why": "The lesson story gives a plain list of wages, not a frequency table. A new example with repeated values and frequencies is needed.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "The frequencies 2+3+4+1 add to 10, which matches the 10 matches. Σxk = 0+3+8+3 = 14, so the mean is 1.4. The squared deviations times frequency are 3.92, 0.48, 1.44 and 2.56, which sum to 8.4. So σ = √0.84 ≈ 0.917. It uses only the ungrouped frequency-distribution formula from this objective. The situation is plausible and unnamed, it is short, and it does not state the answer."
+     },
+     "status": "confirmed",
+     "fingerprint": "668c6909b2ead504"
+    },
+    {
+     "objective": 4,
+     "decision": "lesson_story",
+     "text": null,
+     "numbers": [],
+     "why": "Sets A and B in the lesson's wage story both have a mean wage of 200 pounds, because 1000 ÷ 5 = 200 for each. They have different spreads, with B having the outlier values 50 and 400. This is the situation where the set with the larger standard deviation is the more dispersed, so it is the less homogeneous. No new text is needed.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": null,
+      "maths_fits": null,
+      "true_to_world": null,
+      "suits_student": null,
+      "why": "Both sets A and B have mean 200 and are measured in pounds. This is the condition the book gives for comparing dispersion with the standard deviation. σ_A ≈ 28.98 and σ_B ≈ 112.6, so A is more homogeneous and B is more dispersed. The comparison happens inside the story."
+     },
+     "status": "confirmed",
+     "fingerprint": "60ad856be75b4e07"
+    }
+   ]
+  }
+ ]
+}

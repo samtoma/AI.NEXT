@@ -1,0 +1,286 @@
+{
+ "stage": "context-gen",
+ "workflow": "context-gen",
+ "prompts_version": "context-gen-v1",
+ "embedded": {
+  "source": "runbook/context-gen.workflow.js",
+  "source_sha256": "35e47fcb386e418c171433acd3116e02d29e39131379cad0d728752c7e62f57f",
+  "args_sha256": "8300ffbe1de539706e461895d5260ccdc9f47d37ebfffe09e3e4c006233b5e7d",
+  "generated_sha256": "c413583ba9d9ab778445f316502d57fc960c9f4a26569f586238715a90795f5c",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "book": "prep3-parallel",
+ "lessons": [
+  {
+   "slug": "pp3u5-1",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "The book has no story for this lesson, so a new one is needed. A town map grid with two places gives a direct use of the distance rule.",
+     "text": "Imagine a town map drawn on a grid where each square is 100 m. The school is at $A(1, 2)$ and the bakery is at $B(4, 6)$. A student wants to know the straight-line distance from the school to the bakery. What is $AB$ in unit lengths?",
+     "numbers": []
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "No lesson story exists. A builder checking that four corner pegs form a perfect square needs side and diagonal lengths from the distance rule, which is this objective's maths.",
+     "text": "Suppose a builder pushes four pegs into the ground to mark a square garden, and on a grid plan they are at $A(0, 0)$, $B(4, 3)$, $C(1, 7)$ and $D(-3, 4)$. The edges are not along the grid lines, so he cannot just count squares. Which lengths should he find with the distance rule to be sure the garden is really a square?",
+     "numbers": []
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "No lesson story exists. A Wi-Fi router covering houses at equal distance is a natural case of equal distances from a centre.",
+     "text": "Imagine a Wi-Fi router placed at $M(2, 1)$ on a neighbourhood grid. Three houses are at $A(5, 5)$, $B(-2, 4)$ and $C(6, -2)$. The signal company says that all three houses are the same distance from the router, so they lie on one circle around it. How can you check this, and what would the distances have to be?",
+     "numbers": []
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "confirmed",
+     "why": "AB = sqrt(3²+4²) = 5 units (500 m). The distance rule is used directly, and the town-map setting is plausible and clear.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "AB = BC = CD = DA = 5, and the diagonals AC = BD = √50. So it is a square, and the answer is four sides plus two diagonals. This is the objective's method, and the setting is realistic.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "MA = sqrt(9+16) = 5, MB = sqrt(16+9) = 5, MC = sqrt(16+9) = 5. All three are equal to 5, so the houses lie on a circle centred at M. This is the circle-by-equal-distances method, with no real brand named.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    }
+   ]
+  },
+  {
+   "slug": "pp3u5-2",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "The lesson has no story, so a new one is needed. A segment parallel to an axis keeps the midpoint simple, using only this objective's maths.",
+     "text": "Imagine a town map drawn on a grid, with each square 100 m wide. A straight road runs from the point $A(2, 5)$ to the point $B(8, 5)$. The council wants to put a bus stop exactly halfway along the road. What are the two coordinates of the bus stop?",
+     "numbers": [
+      {
+       "working": "Road is horizontal (y = 5 at both ends); halfway between x = 2 and x = 8 is 2 + (8−2)/2",
+       "value": "(5, 5)"
+      }
+     ]
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "The lesson has no story. Two friends meeting halfway between their homes is a natural use of the average-of-coordinates formula.",
+     "text": "Suppose two friends live at $A(2, 4)$ and $B(8, 10)$ on a map grid, and they agree to meet at the point exactly halfway between their homes. The meeting point is the midpoint of the straight segment $\\overline{AB}$. What are the coordinates of the meeting point?",
+     "numbers": [
+      {
+       "working": "((2+8)/2, (4+10)/2) = (10/2, 14/2)",
+       "value": "(5, 7)"
+      }
+     ]
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "The lesson has no story. A shop known to be halfway between a school and an unknown point gives a missing end point from the midpoint.",
+     "text": "Imagine a map grid where a school is at $A(2, 1)$ and a bakery is at $M(5, 3)$. The bakery is exactly halfway between the school and a sports club at point $B$. What are the coordinates of the sports club $B$?",
+     "numbers": [
+      {
+       "working": "5 = (2 + x2)/2, so x2 = 10 − 2",
+       "value": "x2 = 8"
+      },
+      {
+       "working": "3 = (1 + y2)/2, so y2 = 6 − 1",
+       "value": "y2 = 5"
+      },
+      {
+       "working": "B = (x2, y2)",
+       "value": "B(8, 5)"
+      }
+     ]
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "confirmed",
+     "why": "A(2,5) and B(8,5) lie on a horizontal line. The midpoint is (5,5), which is the halfway point read from the grid. Only objective 1's maths is needed. The setting is a made-up map with no real names. The question is clear and doesn't give the answer away.",
+     "maths_fits": true,
+     "numbers_ok": true,
+     "suits_student": true,
+     "true_to_world": true
+    },
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "M = ((2+8)/2, (4+10)/2) = (5,7). This uses the averaging formula exactly as objective 2 describes. The scenario is plausible and not presented as fact. It is clear and simple.",
+     "maths_fits": true,
+     "numbers_ok": true,
+     "suits_student": true,
+     "true_to_world": true
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "M is the midpoint of AB, so 5=(2+x)/2 gives x=8, and 3=(1+y)/2 gives y=5. B is (8,5). This is the solve-for-the-end-point method of objective 3. The setting is a made-up map with no real names or brands, and it doesn't give the answer away.",
+     "maths_fits": true,
+     "numbers_ok": true,
+     "suits_student": true,
+     "true_to_world": true
+    }
+   ]
+  },
+  {
+   "slug": "pp3u5-3",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "The lesson has no story; a road on a map gives two points and an angle, which is exactly this objective's slope method.",
+     "text": "Imagine a map of a hill road drawn on a grid in metres. The road starts at the point $(2, 1)$ and ends at the point $(10, 5)$. We want to know how steep it is. Work out the slope of the road, and then the angle it makes with the positive direction of the x-axis.",
+     "numbers": [
+      {
+       "working": "5 - 1",
+       "value": "4"
+      },
+      {
+       "working": "10 - 2",
+       "value": "8"
+      },
+      {
+       "working": "4 / 8",
+       "value": "1/2"
+      }
+     ]
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "The lesson has no story; two roads on a map with equal slopes give a natural parallel-lines situation.",
+     "text": "Suppose a town map on a grid shows two straight roads. Road A passes through $(1, 2)$ and $(5, 10)$, and road B passes through $(0, -1)$ and $(3, 5)$. A student says the two roads will never meet. Use their slopes to decide if she is right.",
+     "numbers": [
+      {
+       "working": "(10 - 2)/(5 - 1) = 8/4",
+       "value": "2"
+      },
+      {
+       "working": "(5 - (-1))/(3 - 0) = 6/3",
+       "value": "2"
+      }
+     ]
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "The lesson has no story; two streets on a map crossing at a corner is a natural setting for the product of slopes being $-1$.",
+     "text": "Imagine a map on a grid where one street passes through $(0, 0)$ and $(4, 2)$, and another street passes through $(1, 5)$ and $(3, 1)$. The city planner says the two streets meet at a right angle. Use the slopes of the streets to check if this is true.",
+     "numbers": [
+      {
+       "working": "(2 - 0)/(4 - 0) = 2/4",
+       "value": "1/2"
+      },
+      {
+       "working": "(1 - 5)/(3 - 1) = -4/2",
+       "value": "-2"
+      },
+      {
+       "working": "(1/2) × (-2)",
+       "value": "-1"
+      }
+     ]
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "confirmed",
+     "why": "Slope = (5-1)/(10-2) = 4/8 = 0.5. Angle = inverse tan of 0.5, about 26 degrees 33 minutes 54 seconds, found with the calculator as in the book's example. Only objective 1's method is used. The scenario is invented but not presented as real fact. It is clear and does not give away the answer.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "Road A slope = (10-2)/(5-1) = 2. Road B slope = (5-(-1))/(3-0) = 2. The slopes are equal. The lines are not the same line (A is y=2x, B is y=2x-1), so they are parallel and never meet. The student is right. Only the equal-slopes rule is used. The scenario is clear.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "Street 1 slope = 2/4 = 1/2. Street 2 slope = (1-5)/(3-1) = -2. The product is -1, so the streets are perpendicular and the planner is right. Only objective 3's rule is used. The scenario is clear.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    }
+   ]
+  },
+  {
+   "slug": "pp3u5-4",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "The lesson has no story of its own, so a new situation is needed: a filling tank whose relation is given as ax + by + c = 0, to be rewritten as y = mx + b.",
+     "text": "Imagine a water tank that is being filled, and the relation between the time $x$ (in minutes) and the litres $y$ in the tank is $6x - 2y + 40 = 0$. A worker wants to draw this relation as a straight line. Using the equation only, what is the slope of the line and the length of its y-intercept, and how can you use them to draw the line?",
+     "numbers": [
+      {
+       "working": "6x - 2y + 40 = 0, so 2y = 6x + 40, so y = 3x + 20; m = -6/(-2)",
+       "value": "slope = 3"
+      },
+      {
+       "working": "from y = 3x + 20, b = 40/2",
+       "value": "y-intercept = 20"
+      }
+     ]
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "No lesson story exists; a park map on a grid gives a slope from two points, a perpendicular condition and a point on the new line, which is exactly this objective's method.",
+     "text": "Suppose a park map is drawn on a grid. A straight path runs from the gate $A(1, 1)$ to the fountain $B(4, 3)$. The park keeper wants a new straight path through the bench at $(2, 5)$ that meets the first path at right angles. What is the equation of the new path in the form $y = mx + b$?",
+     "numbers": []
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "confirmed",
+     "why": "6x - 2y + 40 = 0 gives m = -6/(-2) = 3 and, from y = 3x + 20, a y-intercept of 20 (20 litres at time 0). The method is the objective's own (m = -a/b or rearranging), and the scenario is hypothetical ('Imagine'). It is clear and doesn't give the answer away.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "Slope of AB = (3-1)/(4-1) = 2/3, so the perpendicular slope is -3/2. Through (2,5): 5 = -3 + b, so b = 8, giving y = -3/2 x + 8. This is exactly the objective's method (perpendicular line plus a point). The scenario is clearly hypothetical ('Suppose') and easy to picture.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    }
+   ]
+  }
+ ]
+}

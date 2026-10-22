@@ -1,0 +1,414 @@
+{
+ "stage": "context-gen",
+ "workflow": "context-gen",
+ "prompts_version": "context-gen-v1",
+ "embedded": {
+  "source": "runbook/context-gen.workflow.js",
+  "source_sha256": "35e47fcb386e418c171433acd3116e02d29e39131379cad0d728752c7e62f57f",
+  "args_sha256": "96f2b154285aace53258db2edfa30e233e50691b9d20dca673489f7ee9929b0e",
+  "generated_sha256": "ab37ba8a05fe7adf393aecf5bab3f7364ca827dbc9b2e25ed4e6da0829c5d7d3",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "book": "prep3-parallel",
+ "lessons": [
+  {
+   "slug": "pp3u10-1",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "The lesson has no story, so a new situation is needed: a round tray cut from its centre shows central angles, arcs, a semicircle and adding adjacent arcs.",
+     "text": "Imagine a round tray of basbousa with centre $M$. One straight cut goes through the centre from $A$ to $B$, so it splits the tray into two halves. On one half, two more cuts from the centre make three slices: the first slice has a central angle of $50^\\circ$, the second $70^\\circ$, and the third slice is what is left. What is the measure of the crust arc of the third slice, and what is the measure of the arc made by the first two slices together?",
+     "numbers": []
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "The lesson has no story; a fence along part of a round flower bed needs arc length as a fraction of the circumference, with only this objective's method.",
+     "text": "Suppose a circular flower bed has a radius of $5$ m, and a gardener puts a fence only along an arc whose measure is $72^\\circ$, as seen from the centre of the bed. Take $\\pi = 3.14$. How long is the fence, in metres?",
+     "numbers": []
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "The lesson has no story; a round park with gates on its edge fits the corollary that equal arcs have equal chords, used to find an unknown length.",
+     "text": "Imagine a round park with four gates $A$, $B$, $C$, $D$ in order around its fence. The arc of fence from $A$ to $B$ has the same measure as the arc from $C$ to $D$. A straight path joins $C$ to $D$ and is $40$ m long. How long is the straight path joining $A$ to $B$, and why?",
+     "numbers": []
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "confirmed",
+     "why": "Half tray = 180°, so the third slice's arc = 180 − 50 − 70 = 60°, and the first two slices together = 50 + 70 = 120°. It uses only the arc = central angle rule, adjacent arcs and the semicircle. The setting is a familiar Egyptian sweet, with no brand or false claim.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "Arc length = 72/360 × 2 × 3.14 × 5 = 0.2 × 31.4 = 6.28 m. This is exactly the objective's formula and matches its worked example. The situation is realistic and clear.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "Arcs AB and CD have equal measure in the same circle, so by Corollary 2 their chords are equal. AB = CD = 40 m. The question asks for the reason, which matches the objective's use of the corollaries. The park setting is plausible and does not state the answer.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    }
+   ]
+  },
+  {
+   "slug": "pp3u10-2",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "The lesson has no story, so a new one is needed: a circular pond with two posts, viewed from the centre and from the edge, matches the central/inscribed angle pair.",
+     "text": "Imagine a circular pond in a park with two posts, $A$ and $B$, on its edge. A lamp at the centre $M$ lights the two posts, and the angle $\\angle AMB$ between its beams is $80^\\circ$. A boy stands at another point $C$ on the edge of the pond and looks at the same two posts. What angle $\\angle ACB$ does he see between them?",
+     "numbers": []
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "No lesson story exists. A circular running track with two gates and a kiosk on the track gives an arc and an inscribed angle subtended by it.",
+     "text": "Suppose a circular running track has two gates, $A$ and $B$, and the track between them (the arc $\\overset{\\frown}{AB}$ that does not contain the kiosk) measures $110^\\circ$. A kiosk stands at a point $C$ on the track on the other side. Looking from the kiosk, what is the angle $\\angle ACB$ between the two gates?",
+     "numbers": []
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "No lesson story exists. Two straight paths crossing inside a circular garden give two chords meeting inside the circle, with the arcs between path ends known.",
+     "text": "Imagine a circular garden with a fence round its edge. Two straight paths, $\\overline{AB}$ and $\\overline{CD}$, run between points on the fence and cross at a point $E$ inside the garden. The fence arc $\\overset{\\frown}{AC}$ measures $70^\\circ$ and the opposite fence arc $\\overset{\\frown}{BD}$ measures $50^\\circ$. What is the angle $\\angle AEC$ between the two paths where they cross?",
+     "numbers": []
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "rejected",
+     "why": "The position of C is not specified. If C is on the major arc the angle is 40°, but if C is on the minor arc AB it is 140°. The answer is not unique, so the question is ambiguous.",
+     "numbers_ok": false,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": false
+    },
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "C is on the opposite side, so the angle is half of 110°, which is 55°. This uses Corollary 1 only, and the setting is clear and plausible.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "The angle is ½(70+50) = 60°, which is correct. It uses the chords-intersecting-inside-a-circle rule from objective 3, and the arcs AC and BD are indeed opposite. The garden setting is clear.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    }
+   ]
+  },
+  {
+   "slug": "pp3u10-3",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "No lesson story exists; a round hall with guards viewing the same two doors gives equal inscribed angles on one arc.",
+     "text": "Imagine a round hall whose wall is a circle, with two doors $A$ and $B$ on the wall. Three guards stand at different points $C$, $D$ and $E$ on the wall, all on the same side of the doors, and each looks at the two doors. Suppose the guard at $C$ sees the doors with $m(\\angle ACB) = 35^\\circ$. What angle do the guards at $D$ and $E$ see, and why?",
+     "numbers": []
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "No lesson story; two equal stretches of a circular track viewed from points on the track show equal arcs giving equal inscribed angles.",
+     "text": "Imagine a circular running track with two stretches of it, $\\widehat{AC}$ and $\\widehat{DF}$, that have equal measures. A coach standing at point $B$ on the track watches the runners along $\\widehat{AC}$ and sees it at an angle of $30^\\circ$. Another coach stands at point $E$ on the same track and watches $\\widehat{DF}$. What angle does the second coach see, and how do you know?",
+     "numbers": []
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "No lesson story; two cameras seeing a gate at equal angles from the same side is the converse condition for concyclic points.",
+     "text": "Imagine a gate with posts at $A$ and $B$, and two cameras at $C$ and $D$ on the same side of the line $AB$. The camera at $C$ sees the gate with $m(\\angle ACB) = 50^\\circ$, and the camera at $D$ sees it with $m(\\angle ADB) = 50^\\circ$. Could a circular fence pass through all four points $A$, $B$, $C$ and $D$? Decide and give the reason.",
+     "numbers": []
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "confirmed",
+     "why": "D and E are on the same circle and the same side as C, so they see arc AB. Inscribed angles on the same arc are equal, so each sees 35°. This uses only this lesson's theorem, and the setting is a made-up hall with no real names.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "The arcs AC and DF are equal and lie on the same circle, so the inscribed angles B and E are equal. The second coach sees 30°, which matches the book's corollary. The numbers are consistent, since arc AC would be 60°. The setting is a made-up track.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "Angles ACB and ADB are both 50°, stand on the same base AB and are on the same side of it. By the converse theorem, A, B, C and D are concyclic, so a circular fence can pass through all four points. This uses only this objective's maths.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    }
+   ]
+  },
+  {
+   "slug": "pp3u10-4",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "The lesson has no story; a football goal gives two viewing points on one side of the same base (the goal line between the posts).",
+     "text": "Imagine a football goal with posts at $Y$ and $Z$. Two players stand on the same side of the goal line, one at $X$ and one at $L$. Each sees the two posts under the same angle, $m(\\angle YXZ)=m(\\angle YLZ)=40^\\circ$. Can we say that $X$, $Y$, $Z$ and $L$ lie on one circle, that is, that $XYZL$ is a cyclic quadrilateral? Explain why or why not.",
+     "numbers": []
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "No lesson story. A gardener checking square corners gives two right angles on the same base and on one side of it, which is the book's proof method.",
+     "text": "Imagine a gardener lays a straight rope $CD$ across a lawn. On one side of it, she places pegs $A$ and $B$ so that the corners at both pegs are square: $m(\\angle CAD)=90^\\circ$ and $m(\\angle CBD)=90^\\circ$. She wants to put a circular edging through all four points $A$, $B$, $C$ and $D$. How can you prove, using these two angles, that $ACBD$ is a cyclic quadrilateral so that such an edging is possible?",
+     "numbers": []
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "No lesson story. A circular fountain equidistant from four known points needs the centre of the circle through a proven cyclic quadrilateral.",
+     "text": "Suppose four lamp posts $A$, $B$, $C$ and $D$ stand in a park, with $CD=20$ m. The corners at $A$ and $B$ are both right angles, $m(\\angle CAD)=m(\\angle CBD)=90^\\circ$, on the same side of $CD$. The council wants to put a fountain at the same distance from all four posts. Using the fact that $ACBD$ is cyclic, where should the fountain go, and how far is it from each post?",
+     "numbers": [
+      {
+       "working": "CD is a diameter (right angles on it), so radius = 20 ÷ 2",
+       "value": "10 m"
+      }
+     ]
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "confirmed",
+     "why": "Both angles are 40° on the same base YZ and on the same side, so X, Y, Z, L are concyclic. This matches the book's statement, and the vertex order XYZL is consistent with YZ being a side.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 2,
+     "verdict": "rejected",
+     "why": "The reasoning is sound: two 90° angles on base CD on the same side make the four points concyclic. But the quadrilateral is named ACBD. In that order C and D are opposite vertices, so CD is a diagonal. A and B cannot lie on the same side of a diagonal in a convex quadrilateral, so the figure is self-crossing. The name contradicts the setup and would confuse students. It should be named ACDB or similar.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": false
+    },
+    {
+     "objective": 3,
+     "verdict": "rejected",
+     "why": "The numbers are right: CD is a diameter, so the centre is the midpoint of CD and each post is 10 m from it. But 'ACBD is cyclic' with A and B on the same side of CD has the same naming flaw: CD would be a diagonal of ACBD, which is impossible with A and B on one side. The setup is inconsistent as written.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": false
+    }
+   ]
+  },
+  {
+   "slug": "pp3u10-5",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "The lesson has no story. A quadrilateral with its corners on a circle shows opposite angles being supplementary directly.",
+     "text": "Imagine four lamp posts $A$, $B$, $C$, $D$ standing on the edge of a circular pond, joined by straight paths to make the quadrilateral $ABCD$. Suppose the angle between the paths at $A$ is $70^\\circ$ and the angle at $B$ is $95^\\circ$. What are the angles at $C$ and $D$, the corners opposite $A$ and $B$?",
+     "numbers": [
+      {
+       "working": "180 - 70",
+       "value": "110"
+      },
+      {
+       "working": "180 - 95",
+       "value": "85"
+      }
+     ]
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "The lesson has no story. A side of a quadrilateral on a circle extended past a corner gives an exterior angle that can be matched to the opposite interior angle.",
+     "text": "Imagine four gates $A$, $B$, $C$, $D$ on the circular fence of a park, joined by straight paths to make the quadrilateral $ABCD$. The path $AB$ is extended straight past $B$ to a point $E$, and suppose the angle $\\angle CBE$ between the extension and the path $BC$ is $85^\\circ$. What is the interior angle of the park quadrilateral at the opposite gate $D$?",
+     "numbers": []
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "The lesson has no story. Checking whether four points lie on one circle from their opposite angles fits the converse naturally.",
+     "text": "Imagine a school wants four posts $A$, $B$, $C$, $D$ for a running track to lie on one circle, and the quadrilateral $ABCD$ they form has an angle of $82^\\circ$ at $A$ and $98^\\circ$ at the opposite corner $C$. Can one circle pass through all four posts? Work this out from the two angles alone, without drawing the circle.",
+     "numbers": [
+      {
+       "working": "82 + 98",
+       "value": "180"
+      }
+     ]
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "confirmed",
+     "why": "Opposite angles are supplementary. C = 180 − 70 = 110° and D = 180 − 95 = 85°. This is Theorem 3 only, and the setting is a plain pond with lamp posts.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "The exterior angle CBE equals the interior angle at the opposite vertex D, so D = 85°. This uses the corollary directly, and the setting is a park fence with gates.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "The opposite angles are 82° + 98° = 180°, so by the converse of Theorem 3 the quadrilateral is cyclic and one circle passes through all four posts. The maths is in scope and the setting is realistic.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    }
+   ]
+  },
+  {
+   "slug": "pp3u10-6",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "No lesson story; a fountain with two straight paths from a gate gives equal tangent segments and the bisected angle.",
+     "text": "Imagine a circular fountain in a park with centre $O$. From the gate $P$, two straight paths touch the fountain's edge at $A$ and $B$. The path $PA$ is $12$ m long and the angle between the two paths, $\\angle APB$, is $70^\\circ$. What is the length of $PB$, and what is the measure of $\\angle APO$?",
+     "numbers": [
+      {
+       "working": "PB = PA (equal tangent segments)",
+       "value": "12 m"
+      },
+      {
+       "working": "70 ÷ 2 (PO bisects ∠APB)",
+       "value": "35°"
+      }
+     ]
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "No lesson story; a garden plot with a round pond touching all four sides is an inscribed circle in a quadrilateral.",
+     "text": "Suppose a garden is shaped like a quadrilateral $ABCD$, and a round pond inside it touches all four sides. The pond's radius is $4$ m, $AB=8$ m and $CD=10$ m. The gardener wants to put a fence around the whole garden and cover it with grass. What are the perimeter and the area of the garden?",
+     "numbers": [
+      {
+       "working": "AB + CD = BC + AD = 18, so perimeter = 2 × 18",
+       "value": "36 m"
+      },
+      {
+       "working": "½ × perimeter × radius = ½ × 36 × 4",
+       "value": "72 m²"
+      }
+     ]
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "No lesson story; a belt around two pulleys, either open or crossed, shows external and internal common tangents.",
+     "text": "Imagine two round wheels of a machine side by side, joined by a belt. In one machine the belt goes around both wheels without crossing itself. In another machine the belt crosses itself in the middle, in an X shape. In each machine, the straight parts of the belt touch both circles. Which belt shows common external tangents, which shows common internal tangents, and how can you tell from where the wheels sit?"
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "confirmed",
+     "why": "PB = PA = 12 m (equal tangent segments). PO bisects the angle between the tangents, so angle APO = 70/2 = 35°. The numbers are right, only Theorem 4 and its corollary are used, and the fountain and gate scene is clear.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "For a quadrilateral with an inscribed circle, AB + CD = BC + AD = 18, so the perimeter is 36 m. The area is r × half the perimeter = 4 × 18 = 72 m², the same method as the book's example. The figure can exist: with tangent lengths 4, 4, 2, 8 the central angles sum to 180°. The context is realistic and the answer is not given away.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "The belt that does not cross has both wheels on the same side of each straight part, so those are common external tangents. The crossed belt has the wheels on opposite sides of each straight part, so those are common internal tangents. This matches the book's definitions. Crossed belts are real, no calculation is needed, and the scene is easy to picture.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    }
+   ]
+  },
+  {
+   "slug": "pp3u10-7",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "The lesson has no story, so a new situation is written. It uses only the tangent–chord angle equal to half its arc, with the arc given and the angle asked for.",
+     "text": "Imagine a circular roundabout. A straight road touches the roundabout at point $B$ and is a tangent to it. A service lane $BA$ runs across the roundabout as a chord, and the arc $\\widehat{AB}$ between the road and the lane's far end measures $100^\\circ$. The angle $\\angle ABC$ between the straight road and the lane is an angle of tangency. How would you work out its measure from the arc?",
+     "numbers": []
+    },
+    {
+     "objective": 2,
+     "decision": "none",
+     "why": "Proving that a quadrilateral is cyclic from equal angles and parallel lines is a formal proof technique. No honest real-life situation fits it."
+    },
+    {
+     "objective": 3,
+     "decision": "none",
+     "why": "Applying the converse of theorem 5 to show a line is tangent is a formal proof technique. Any everyday story would be forced."
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "confirmed",
+     "why": "The angle of tangency is half its intercepted arc, so m(∠ABC) = ½ × 100° = 50°. The item states no wrong numbers. It uses only the objective 1 theorem. A roundabout with a tangent road and a chord lane is a real, plausible picture, with no brand or person. It is short and clear, and it asks for the method without giving the answer.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    }
+   ]
+  }
+ ]
+}

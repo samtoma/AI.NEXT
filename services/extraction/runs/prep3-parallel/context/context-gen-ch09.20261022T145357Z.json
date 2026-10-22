@@ -1,0 +1,244 @@
+{
+ "stage": "context-gen",
+ "workflow": "context-gen",
+ "prompts_version": "context-gen-v1",
+ "embedded": {
+  "source": "runbook/context-gen.workflow.js",
+  "source_sha256": "35e47fcb386e418c171433acd3116e02d29e39131379cad0d728752c7e62f57f",
+  "args_sha256": "a4bfaf4a18d194e7bb0eb194daab1b02e6d5f5f81d270d8bda6f37ac5d0a5d2c",
+  "generated_sha256": "c1e92486c0c3d4d21dc145c8041da8f8891d99468f7b934cf85f8daf1670b310",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "book": "prep3-parallel",
+ "lessons": [
+  {
+   "slug": "pp3u9-1",
+   "written": [
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "The lesson story only shows circles drawn by a wheel turning around a fixed point; it does not involve folding or splitting a circle into matching halves, so a new situation is needed.",
+     "text": "Imagine a baker cuts a round basbousa tray straight across, passing through the middle point of the tray, into two pieces. The two pieces match exactly, as if you folded one onto the other. She then tries a different straight cut through the middle, and again the two halves match. How many such cuts through the centre of a circle would give two matching halves, and what do we call each of these lines?",
+     "numbers": []
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "The lesson story has no chord or distance from the centre, so a new situation is needed. It uses the corollary that the line from the centre to a chord's midpoint is perpendicular to the chord.",
+     "text": "Suppose a circular field has its centre at a pole $M$ and a radius of $5$ m. A straight fence $\\overline{AB}$ is $8$ m long and has both ends on the edge of the field. A worker walks from the pole $M$ to the midpoint of the fence. How far is the pole from the fence, measured along the shortest path?",
+     "numbers": [
+      {
+       "working": "half the chord = 8 ÷ 2",
+       "value": "4"
+      },
+      {
+       "working": "distance = √(5² − 4²) = √(25 − 16) = √9",
+       "value": "3"
+      }
+     ]
+    }
+   ],
+   "checked": [
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "Any straight line through the centre of a circle is an axis of symmetry, so there are infinitely many such cuts, and each line is an axis of symmetry. This is exactly the objective's statement, with no other maths needed. The basbousa tray is a familiar Egyptian setting and nothing in it is false. The question is short and doesn't give the answer away.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "The line from the centre to the midpoint of the chord is perpendicular to it (corollary 1). Half the chord is 4 m and the radius is 5 m, so the distance is √(25−16) = 3 m. This is the 3-4-5 right triangle. Using the Pythagorean theorem is earlier knowledge and is normal in this lesson. The field setting is realistic and simple.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    }
+   ]
+  },
+  {
+   "slug": "pp3u9-2",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "No lesson story exists; a Wi-Fi range circle gives a natural compare-distance-with-radius situation with an unknown x.",
+     "text": "Imagine a Wi-Fi router at point $M$ that reaches phones up to $15$ m away, so its range is a circle of radius $r = 15$ m. A phone at point $A$ is $MA = 2x - 3$ metres from the router. For which values of $x$ is the phone outside the router's range?",
+     "numbers": []
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "No lesson story; a circular fountain and straight paths show outside, secant and tangent by comparing distance with radius.",
+     "text": "Suppose a circular fountain has centre $M$ and radius $5$ m. Three straight paths run past it, and the shortest distance from $M$ to each path is $3$ m, $5$ m and $7$ m. Which path misses the fountain, which cuts across it, and which just touches it at one point?",
+     "numbers": []
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "No lesson story; two routers with circular ranges give a direct comparison of MN with r1+r2 and r1−r2.",
+     "text": "Imagine two routers at points $M$ and $N$ whose ranges are circles of radii $9$ m and $4$ m. They are placed $MN = 5$ m apart. How do the two range circles sit relative to each other: separate, touching, overlapping or one inside the other?",
+     "numbers": []
+    },
+    {
+     "objective": 4,
+     "decision": "generate",
+     "why": "No lesson story; two overlapping sprinkler circles use the line of centers being perpendicular to and bisecting the common chord.",
+     "text": "Suppose two garden sprinklers at $M$ and $N$ each water a circle of radius $5$ m, and the centres are $MN = 6$ m apart. The two circles cross at points $A$ and $B$. How long is the straight line $AB$ between those two crossing points?",
+     "numbers": []
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "confirmed",
+     "why": "Outside means MA > 15, so 2x-3 > 15, 2x > 18, x > 9. This is the book's method and the numbers are right. The router scenario is generic and clear.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "With r = 5, a distance of 7 > 5 misses the circle, 3 < 5 is a secant and 5 = 5 is a tangent. This is exactly the objective's comparison and the numbers are right.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "r1 + r2 = 13 and r1 - r2 = 5. MN = 5 equals r1 - r2, so the circles touch internally. The numbers and method match the objective.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 4,
+     "verdict": "confirmed",
+     "why": "The line of centers bisects the common chord at right angles. The midpoint F of the chord has MF = 3, so AF = sqrt(25-9) = 4 and AB = 8 m. This uses the objective's line-of-centers fact and the Pythagorean theorem, and the numbers are right.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    }
+   ]
+  },
+  {
+   "slug": "pp3u9-3",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "No lesson story exists; a real-life picture of 'places at the same distance from a spot' fits circles through one point.",
+     "text": "Imagine you stand at a spot A on a football pitch, and your friends can stand anywhere on the pitch, each holding one end of a rope whose other end is tied to you... Simpler: imagine a water sprinkler that can be placed anywhere in a garden, and a flower at point $A$ must always be reached by the water. Each place $M$ you put the sprinkler, you set it to spray exactly as far as $MA$, so the water draws a circle through $A$. How many different sprinkler positions could work, and where would the sprinklers all be if every one sprays exactly 3 metres?",
+     "numbers": []
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "No lesson story; a two-fixed-points situation like two houses on a circular track fits circles through two points.",
+     "text": "Suppose two kiosks, $A$ and $B$, are 10 metres apart in a park, and a council wants to build a circular fountain path that passes through both kiosks. The centre of the fountain could be placed at many positions, but it must be equally far from $A$ and $B$. Where can the centre be placed, and what is the smallest radius the circular path could have?",
+     "numbers": []
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "No lesson story; placing a single circular fence or Wi-Fi range through three houses fits circles through three points.",
+     "text": "Imagine three houses $A$, $B$ and $C$ in a village, not in a straight line, and the village wants one circular road passing through all three. The road's centre must be equally far from $A$ and $B$, and also equally far from $B$ and $C$. How could you find the one place for the centre using a compass, and what would go wrong if the three houses stood along a single straight street?",
+     "numbers": []
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "rejected",
+     "why": "The maths is right: there are infinitely many positions, and with radius 3 m they all lie on a circle centred at A with radius 3 m. But the text still has an unfinished first attempt ('football pitch... rope... Simpler:'). That makes it confusing for a student, so it fails suits_student.",
+     "maths_fits": true,
+     "numbers_ok": true,
+     "true_to_world": true,
+     "suits_student": false
+    },
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "The centre can be any point on the perpendicular bisector (axis) of AB. The smallest radius is half of AB, which is 5 m. This matches the objective, the situation is realistic and clear, and the answer is not given away.",
+     "maths_fits": true,
+     "numbers_ok": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "The centre is where the perpendicular bisectors of AB and BC meet. Then draw the circle with radius MA. If the houses were collinear, the two bisectors would be parallel and would not meet, so no circle exists. This matches the objective, and it contains no numbers to get wrong.",
+     "maths_fits": true,
+     "numbers_ok": true,
+     "true_to_world": true,
+     "suits_student": true
+    }
+   ]
+  },
+  {
+   "slug": "pp3u9-4",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "No lesson story exists; a pizza/cutting-style situation fits chord length vs distance from the center.",
+     "text": "Imagine a circular tray of basbousa with center $M$. Two straight cuts $AB$ and $CD$ are made across it. Suppose the cut $AB$ is $3$ cm from the center and the cut $CD$ is $5$ cm from the center. Which cut is longer, and how would you write the comparison of $AB$ and $CD$ using $>$ or $<$?",
+     "numbers": []
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "No lesson story; a circular pond with two equal straight paths (chords) fits the theorem that equal chords are equidistant from the center.",
+     "text": "Imagine a circular park with center $M$ and two straight paths $AB$ and $AC$ across it, both exactly $16$ m long. A guard stands at the center and measures the shortest distance to path $AB$ and finds it is $6$ m. What would you expect the shortest distance from the center to path $AC$ to be, and why?",
+     "numbers": []
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "No lesson story; a circular table with two straight edges/cuts at equal distances from the center fits the converse.",
+     "text": "Imagine a round pizza with center $M$. Two straight cuts $AB$ and $CD$ are each exactly $7$ cm from the center, and the cut $AB$ is $20$ cm long. Without measuring $CD$, what can you say about its length, and why?",
+     "numbers": []
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "confirmed",
+     "why": "The chord 3 cm from the center is longer than the chord 5 cm from it, so AB > CD. The numbers are consistent, since the radius just has to be more than 5 cm. It uses only this objective's statement, makes no false claims, and is easy to picture.",
+     "maths_fits": true,
+     "numbers_ok": true,
+     "suits_student": true,
+     "true_to_world": true
+    },
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "AB = AC = 16 m, so by the theorem the distance to AC is also 6 m. The setup is consistent, with radius √(8²+6²) = 10 m. It uses only the equal-chords theorem, and the question is clear for students.",
+     "maths_fits": true,
+     "numbers_ok": true,
+     "suits_student": true,
+     "true_to_world": true
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "Both cuts are 7 cm from the center of the same circle, so by the converse CD = AB = 20 cm. The setup is consistent, with radius √(10²+7²) = √149 ≈ 12.2 cm. It uses only the converse theorem, and the scenario is clear.",
+     "maths_fits": true,
+     "numbers_ok": true,
+     "suits_student": true,
+     "true_to_world": true
+    }
+   ]
+  }
+ ]
+}

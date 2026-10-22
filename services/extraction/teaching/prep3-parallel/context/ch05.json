@@ -1,0 +1,442 @@
+{
+ "format": "ainext.context/1",
+ "book": "prep3-parallel",
+ "chapter": 5,
+ "made": "2026-10-22",
+ "made_by": "book_record_context.py accept (context-v2)",
+ "run": "runs/prep3-parallel/context/context-ch05.20261022T145204Z.json",
+ "lessons": [
+  {
+   "slug": "pp3u5-1",
+   "title": "Distance between two points",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "pp3u5-1:objective-1",
+     "label": "Distance between two points",
+     "description": "Calculate the distance between two points on the coordinate plane using the distance rule (including points on an axis and the distance from the origin)."
+    },
+    {
+     "n": 2,
+     "id": "pp3u5-1:objective-2",
+     "label": "Prove shapes using distances",
+     "description": "Use side and diagonal lengths found with the distance rule to prove that four points are the vertices of a parallelogram, rectangle, rhombus or square, or that a triangle is right angled (converse of the Pythagorean theorem), and calculate its area."
+    },
+    {
+     "n": 3,
+     "id": "pp3u5-1:objective-3",
+     "label": "Collinear points and circle",
+     "description": "Use distances to show that three points are collinear (the sum of two distances equals the third) or that points lie on a circle with a given center (equal distances)."
+    }
+   ],
+   "passages": [
+    {
+     "key": "pp3u5-1:linking-text-1",
+     "page": 58,
+     "text": "You represented the ordered pair on the coordinate plane. Now can you find the distance between the pairs of the following points?",
+     "type": "linking text",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "It opens the lesson by asking what the distance between two points is, with no worked numbers."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 1,
+      "why": "It opens the lesson by asking how to find the distance between points on the coordinate plane, with no worked numbers."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "placed": "the whole lesson: the readings named it and one objective",
+     "fingerprint": "a67a6c9ff0ed7121"
+    },
+    {
+     "key": "pp3u5-1:linking-text-3",
+     "page": 59,
+     "text": "If $M(x_1,y_1)$, $N(x_2,y_2)$ are two points on the coordinate plane then: $KM = |OB - OA| = |x_2 - x_1|$; $KN = |NB - KB| = |y_2 - y_1|$; since $\\triangle NKM$ is a right angle in K (Pythagorean theorem), $(MN)^2 = (KM)^2 + (KN)^2 = (x_2-x_1)^2 + (y_2-y_1)^2$, therefore $MN = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is the derivation and restatement of the distance formula, not an introduction or reflection."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It restates the distance formula and its derivation, which is a formula and not a motivating context."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c10efd40be9a7b9a"
+    },
+    {
+     "key": "pp3u5-1:linking-text-2",
+     "page": 58,
+     "text": "From the previous, we notice that :",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "cf1395c30db67b84"
+    },
+    {
+     "key": "pp3u5-1:linking-text-4",
+     "page": 61,
+     "text": "For More Exercises, go to MOE website",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "620bdbb5fcf0bd5e"
+    }
+   ],
+   "bridges": [],
+   "bridges_disputed": []
+  },
+  {
+   "slug": "pp3u5-2",
+   "title": "The Two Coordinates of the midpoint segment",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "pp3u5-2:objective-1",
+     "label": "Midpoint from the figure",
+     "description": "Find the two coordinates of the midpoint of a straight segment parallel to an axis, or from a drawing, given its two ends."
+    },
+    {
+     "n": 2,
+     "id": "pp3u5-2:objective-2",
+     "label": "Calculate midpoint coordinates",
+     "description": "Calculate the coordinates of the midpoint of a straight segment given its two ends, using M((x1+x2)/2, (y1+y2)/2), the average of the coordinates."
+    },
+    {
+     "n": 3,
+     "id": "pp3u5-2:objective-3",
+     "label": "Find missing end point",
+     "description": "Determine the coordinates of an end point of a segment, or the fourth vertex of a parallelogram (and the intersection of its diagonals), given the midpoint, by solving the midpoint formula for the unknown."
+    }
+   ],
+   "passages": [
+    {
+     "key": "pp3u5-2:linking-text-1",
+     "page": 62,
+     "text": "First: The line segement, which its end are the two points (2, 6), B (6, 6), is parallel to the x-axes and the two coordinate of the point of its midpoint C (4, 6)",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked example of a horizontal segment's midpoint, with numbers and no motivating idea."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked example of a segment parallel to the x-axis."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "82fe6452a949fe9b"
+    },
+    {
+     "key": "pp3u5-2:linking-text-2",
+     "page": 62,
+     "text": "Second : The straight segment with the two ends A (-2, -5), B (-2, -1) is parallel to the y-coordinate. The two coordinates of its midpoints C are (-2, -3) .",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked example of a vertical segment's midpoint, not a context or reflection."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked example of a segment parallel to the y-axis."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "58466b34a2eaa939"
+    },
+    {
+     "key": "pp3u5-2:linking-text-3",
+     "page": 62,
+     "text": "Third : In the figure opposite : Consider that the C is the midpoint of the straight segment with the two ends A(1, 2), B (5, 6) from the drawing, we find that the two coordinates of C are (3, 4).",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked example reading the midpoint from a figure."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked example reading the midpoint from a drawing."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "8f52539cf5071ed8"
+    },
+    {
+     "key": "pp3u5-2:linking-text-4",
+     "page": 63,
+     "text": "In general, you can deduce the law of the coordinate of the midpoint of a straight segment as follows.",
+     "type": "linking text",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 2,
+      "why": "It introduces the general midpoint law, which sets up calculating coordinates by formula."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 2,
+      "why": "The book introduces the general law for the midpoint coordinates before deriving it."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 2,
+     "fingerprint": "5cd10aaace716dce"
+    },
+    {
+     "key": "pp3u5-2:linking-text-5",
+     "page": 64,
+     "text": "For More Exercises, go to MOE website",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "a35caff4e8c6b710"
+    }
+   ],
+   "bridges": [],
+   "bridges_disputed": []
+  },
+  {
+   "slug": "pp3u5-3",
+   "title": "The slope of the straight line",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "pp3u5-3:objective-1",
+     "label": "Slope from points or angle",
+     "description": "Calculate the slope of a straight line from two points, and from the positive angle it makes with the positive direction of the x-axis using m = tan E, and find the angle from a given slope with the calculator."
+    },
+    {
+     "n": 2,
+     "id": "pp3u5-3:objective-2",
+     "label": "Parallel lines and slopes",
+     "description": "Use equal slopes to prove that two straight lines are parallel and to find unknown coordinates for lines parallel to an axis."
+    },
+    {
+     "n": 3,
+     "id": "pp3u5-3:objective-3",
+     "label": "Perpendicular lines and slopes",
+     "description": "Use the product of slopes equal to -1 to prove two straight lines are perpendicular, and to find a missing slope or coordinate."
+    }
+   ],
+   "passages": [
+    {
+     "key": "pp3u5-3:linking-text-1",
+     "page": 65,
+     "text": "From the previous, you can draw the straight lines passing through the previous pairs of points in the perpendicular coordinate plane as in the following figure:",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a instruction-like step to draw lines through the points, with no real situation or idea."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "An instruction to draw lines through the points, not a motivating context."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "d2f09ce1f2190fc2"
+    },
+    {
+     "key": "pp3u5-3:linking-text-2",
+     "page": 65,
+     "text": "From the previous figures, we deduce that:",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It only introduces a deduction from figures, with no stated idea or context."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A restated deduction from figures, a formula statement."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c765c32e19f0b939"
+    },
+    {
+     "key": "pp3u5-3:linking-text-3",
+     "page": 66,
+     "text": "We can deduce the slope of the straight line as follows:",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It leads into a formula derivation step, not a why or what introduction."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A lead-in to a derivation of the slope formula, a step of the method."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "11ecba4364652eeb"
+    },
+    {
+     "key": "pp3u5-3:linking-text-4",
+     "page": 67,
+     "text": "The figure opposite: Represents two parallel straight lines L1, L2 with two slpes m1, m2, making two positive angles of measures E1, E2 in the positive direction of the x-axes.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It describes a figure of two parallel lines as setup for the activity, not a motivating idea."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A description of a figure with parallel lines, not a real situation or a why-idea."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "a446b0ed76743834"
+    },
+    {
+     "key": "pp3u5-3:linking-text-6",
+     "page": 68,
+     "text": "From the previous table, we deduce that:",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It leads into a conclusion from a table, a restated result rather than an introduction."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A restated conclusion from a table, not an introduction or reflection."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "11b69805cbd3fa1b"
+    },
+    {
+     "key": "pp3u5-3:open-prompt-1",
+     "page": 65,
+     "text": "What do you notice?",
+     "type": "open prompt",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e98e551d07fe462e"
+    },
+    {
+     "key": "pp3u5-3:linking-text-5",
+     "page": 67,
+     "text": "from the previous, we deduce that :",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "7b1339e70c16a7b2"
+    },
+    {
+     "key": "pp3u5-3:linking-text-7",
+     "page": 69,
+     "text": "For More Exercises, go to MOE website",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "b93c948718097926"
+    }
+   ],
+   "bridges": [],
+   "bridges_disputed": []
+  },
+  {
+   "slug": "pp3u5-4",
+   "title": "The Equation of the straight line given its slope and its y - intercept",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "pp3u5-4:objective-1",
+     "label": "Slope and y-intercept from equation",
+     "description": "Determine the slope and the length of the y-intercept of a straight line from its equation, by writing it in the form y = mx + b or using m = -a/b, and use them to represent the line graphically."
+    },
+    {
+     "n": 2,
+     "id": "pp3u5-4:objective-2",
+     "label": "Find equation of a line",
+     "description": "Find the equation of a straight line in the form y = mx + b, given its slope (found from two points, a perpendicular line, or a bisected segment's mid-point) and a point on it."
+    }
+   ],
+   "passages": [
+    {
+     "key": "pp3u5-4:think-and-discuss-1",
+     "page": 70,
+     "text": "You learned the linear relation between two variables x, y, it is: $Ax + By + C = 0$ where A, B (each of both) $\\neq 0$. Is represented graphically by a straight line.",
+     "type": "linking text",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The book recalls that Ax + By + C = 0 is a linear relation drawn as a straight line, introducing the lesson's idea with no worked numbers."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 1,
+      "why": "The book recalls that Ax + By + C = 0 is a straight line, which sets up reading slope and y-intercept from an equation, with no worked numbers."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "placed": "the whole lesson: the readings named it and one objective",
+     "fingerprint": "770a13b803523712"
+    },
+    {
+     "key": "pp3u5-4:linking-text-1",
+     "page": 72,
+     "text": "For More Exercises, go to MOE website",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "aa0b939c823cd85f"
+    }
+   ],
+   "bridges": [],
+   "bridges_disputed": []
+  }
+ ]
+}

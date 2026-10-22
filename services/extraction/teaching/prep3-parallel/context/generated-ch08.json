@@ -1,0 +1,96 @@
+{
+ "format": "ainext.context-generated/1",
+ "book": "prep3-parallel",
+ "chapter": 8,
+ "made": "2026-10-22",
+ "made_by": "book_record_context.py generate-accept (context-gen-v1)",
+ "run": "runs/prep3-parallel/context/context-gen-ch08.20261022T145357Z.json",
+ "lessons": [
+  {
+   "slug": "pp3u8-1",
+   "gaps": [
+    2,
+    3
+   ],
+   "entries": [
+    {
+     "objective": 2,
+     "decision": "generate",
+     "text": "Imagine 10 students on a school trip, numbered 1 to 10, and the teacher picks one number at random. Suppose students 1 to 6 brought sandwiches (event $A$), students 4 to 7 brought juice (event $B$), and students 9 and 10 brought nothing (event $C$). Which students are in both $A$ and $B$, that is $A \\cap B$, and what is the probability that the chosen student brought sandwiches and juice? Then decide whether $A$ and $C$ can happen at the same time.",
+     "numbers": [],
+     "why": "The lesson has no story, so a new one: a school-trip bus where one student is picked at random. Both events can happen together (intersection), and a third event can be disjoint (mutually exclusive).",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "A={1..6}, B={4..7}, so A∩B={4,5,6} and P=3/10. C={9,10} shares nothing with A, so A∩C=φ and A and C are mutually exclusive. This uses only intersection, its probability and mutually exclusive events. The context is a plain school trip and is easy to picture."
+     },
+     "status": "confirmed",
+     "fingerprint": "3c89ddd6cfee030b"
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "text": "Imagine a school raffle with 10 tickets numbered 1 to 10 in a box, and one ticket is drawn at random. You win a prize if the ticket is an even number (event $A$) or a multiple of 5 (event $B$), or both. What is the probability of winning, $P(A \\cup B)$? Try to work it out using $P(A)$, $P(B)$ and $P(A \\cap B)$, so the overlapping ticket is not counted twice.",
+     "numbers": [],
+     "why": "The lesson has no story, so a new one: a raffle with tickets 1 to 10. Two events overlap (ticket 10), so the student must account for the overlap when counting 'A or B'.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "A={2,4,6,8,10} so P(A)=5/10. B={5,10} so P(B)=2/10. A∩B={10} so P(A∩B)=1/10. P(A∪B)=5/10+2/10−1/10=6/10=3/5, which matches counting {2,4,5,6,8,10}. This uses exactly the union formula for this objective. The raffle context is clear and the item does not state the answer."
+     },
+     "status": "confirmed",
+     "fingerprint": "b20092e5c242cea2"
+    }
+   ]
+  },
+  {
+   "slug": "pp3u8-2",
+   "gaps": [
+    1,
+    2
+   ],
+   "entries": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "text": "Imagine a class of $30$ students in which $12$ come to school by bus. The teacher picks one student at random. Let $A$ be the event \"the student comes by bus\". What is the probability that the student does not come by bus, that is, the probability of the complementary event $A'$?",
+     "numbers": [],
+     "why": "The lesson has no story of its own, so a new situation is written that uses only the event A, its complement A' and P(A') = 1 - P(A).",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "P(A)=12/30=2/5, so P(A')=18/30=3/5. Uses only 1-P(A). Realistic and clear."
+     },
+     "status": "confirmed",
+     "fingerprint": "c1f14b2487b513a2"
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "text": "Suppose a sports club has $30$ students. $14$ of them play football, $10$ play volleyball, and $4$ play both games. One student is chosen at random. Let $A$ be the event \"plays football\" and $B$ the event \"plays volleyball\". What is the probability that the student plays football only, that is, the probability of $A - B$?",
+     "numbers": [],
+     "why": "The lesson has no story of its own, so a new situation is written that uses only A - B, found from the counts of A and of A ∩ B.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "Football only = 14-4 = 10, so P(A-B)=10/30=1/3. Counts are consistent (10 play neither). Uses the A-B method with counts."
+     },
+     "status": "confirmed",
+     "fingerprint": "7dfd4b5b59177752"
+    }
+   ]
+  }
+ ]
+}

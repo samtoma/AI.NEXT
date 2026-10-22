@@ -1,0 +1,161 @@
+{
+ "stage": "context-gen",
+ "workflow": "context-gen",
+ "prompts_version": "context-gen-v1",
+ "embedded": {
+  "source": "runbook/context-gen.workflow.js",
+  "source_sha256": "35e47fcb386e418c171433acd3116e02d29e39131379cad0d728752c7e62f57f",
+  "args_sha256": "fd3f398d070506e327cfa5333d4a94de75b08c14a5e3dc74b05cba4e1b530f08",
+  "generated_sha256": "db6c136421dcf9d28c49a7fc4d7cc2c09be3ee7047300eae60a6b60876cbfb62",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "book": "prep3-parallel",
+ "lessons": [
+  {
+   "slug": "pp3u4-1",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "The lesson has no story; a measured angle in degrees, minutes and seconds is a natural opener for conversion.",
+     "text": "Imagine a surveyor measures the slope of a hill with an instrument and reads the angle as $35^\\circ 24' 42''$. Her calculator, though, only accepts angles written as decimal degrees. The student will be asked to rewrite this angle in degrees only, using $1^\\circ = 60'$ and $1' = 60''$.",
+     "numbers": []
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "No lesson story; a ladder against a wall gives a right-angled triangle where side lengths and ratios to 1 can be compared.",
+     "text": "Suppose a $5$ m ladder leans against a wall, reaching $4$ m up the wall, with its foot $3$ m from the wall. The ladder, the wall and the ground form a right-angled triangle. The student will be asked to compare each of the wall height and the foot distance with the ladder length, and to decide whether each ratio is $>1$, $<1$ or $=1$.",
+     "numbers": []
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "No lesson story; a supported pole gives a right-angled triangle with one missing side, then the three ratios.",
+     "text": "Imagine a vertical flagpole held by a straight steel cable that is $13$ m long and fixed to the pole at a height of $12$ m. The cable, the pole and the flat ground form a right-angled triangle, and the cable makes an acute angle with the ground. The student will be asked to find how far the cable's anchor is from the pole's base, then to find $\\sin$, $\\cos$ and $\\tan$ of the angle between the cable and the ground.",
+     "numbers": [
+      {
+       "working": "\\sqrt{13^2 - 12^2} = \\sqrt{169 - 144} = \\sqrt{25}",
+       "value": "5 m"
+      }
+     ]
+    },
+    {
+     "objective": 4,
+     "decision": "generate",
+     "why": "No lesson story; a ladder of any length and angle shows a relationship that holds for every right-angled triangle, which is what must be proved.",
+     "text": "Imagine a ladder of any length leaning on a wall, reaching a height $h$ up the wall with its foot a distance $d$ from the wall, and the ladder length is $L$. The ladder, wall and ground form a right-angled triangle. The student will be asked to show that, whatever the ladder and its angle with the ground, $\\sin^2 A + \\cos^2 A = 1$ for that angle $A$.",
+     "numbers": []
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "confirmed",
+     "why": "35° + 24/60° + 42/3600° = 35 + 0.4 + 0.01167 ≈ 35.4117°. This uses only 1°=60' and 1'=60''. The situation is realistic and clear.",
+     "maths_fits": true,
+     "numbers_ok": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "The 3-4-5 triangle is consistent. Wall/ladder = 4/5 < 1 and foot/ladder = 3/5 < 1, since each leg is shorter than the hypotenuse. This is comparing sides and ratios to 1. The situation is a familiar one.",
+     "maths_fits": true,
+     "numbers_ok": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "Anchor distance = √(13²−12²) = 5 m. sin = 12/13, cos = 5/13, tan = 12/5. This matches the objective's method and mirrors the book's 13-12-5 example. The flagpole and cable setup is realistic.",
+     "maths_fits": true,
+     "numbers_ok": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 4,
+     "verdict": "confirmed",
+     "why": "With sin A = h/L and cos A = d/L, sin²A + cos²A = (h²+d²)/L² = 1 by Pythagoras (h²+d²=L²). This is a proof of a ratio relationship, as the objective requires. No numbers are needed, and the ladder setup is clear.",
+     "maths_fits": true,
+     "numbers_ok": true,
+     "true_to_world": true,
+     "suits_student": true
+    }
+   ]
+  },
+  {
+   "slug": "pp3u4-2",
+   "written": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "why": "No lesson story. An equilateral triangle halved gives the 30°–60° right triangle the book uses.",
+     "text": "Imagine a park has a flower bed shaped like an equilateral triangle with each side 8 m. A straight path runs from one corner to the middle of the opposite side, cutting the bed into two right-angled triangles. The path makes a $30^\\circ$ angle with a side of the bed, and the short side opposite that angle is half of the 8 m side. How could you use these side lengths to find $\\sin 30^\\circ$?",
+     "numbers": [
+      {
+       "working": "8 ÷ 2",
+       "value": "4 m"
+      }
+     ]
+    },
+    {
+     "objective": 2,
+     "decision": "none",
+     "why": "Evaluating and proving expressions with exact special-angle values is purely symbolic manipulation. Any real-life story would be forced."
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "No lesson story. A ladder's height-to-length ratio gives a simple context for reading a ratio of a given angle off the calculator.",
+     "text": "Suppose a ladder leans against a wall and makes a $43^\\circ$ angle with the ground. The ratio of the height it reaches on the wall to its length is the sine of that angle. Use your calculator to find this ratio, $\\sin 43^\\circ$, to four decimal places.",
+     "numbers": []
+    },
+    {
+     "objective": 4,
+     "decision": "generate",
+     "why": "No lesson story. A ramp's rise and length give a known ratio, and the student must recover the angle from it.",
+     "text": "Imagine a ramp at a school entrance is 5 m long and rises 3 m. The ratio of the rise to the ramp's length is $\\sin$ of the angle the ramp makes with the ground. Work out this ratio, then find the angle.",
+     "numbers": [
+      {
+       "working": "3 ÷ 5",
+       "value": "0.6"
+      }
+     ]
+    }
+   ],
+   "checked": [
+    {
+     "objective": 1,
+     "verdict": "confirmed",
+     "why": "Altitude of an equilateral triangle of side 8 gives a 30-60-90 triangle with short side 4 and hypotenuse 8, so sin 30° = 4/8 = 1/2. This is the book's own derivation and uses only this objective's maths. It is a plausible flower bed and clear. The question asks for the method, so the answer is not given away.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "Height divided by ladder length is the sine of the angle with the ground. sin 43° ≈ 0.6820 to four decimal places, which matches the book's example. A calculator is the method this objective teaches. The ladder scene is familiar and clear.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 4,
+     "verdict": "rejected",
+     "why": "The numbers are right: sin = 3/5 = 0.6 and the angle is about 36°52'12''. The scenario is not true to the world. A school entrance ramp 5 m long that rises 3 m is about 37° steep, which no real accessibility ramp would be. A more realistic rise, or a different object such as a ladder or roof, would fix it.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": false,
+     "suits_student": true
+    }
+   ]
+  }
+ ]
+}
