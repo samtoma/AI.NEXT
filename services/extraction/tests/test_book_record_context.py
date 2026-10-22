@@ -45,6 +45,33 @@ class Readings(unittest.TestCase):
         self.assertEqual(C.reading(None, {0, 1}), ({}, set()))
 
 
+class Accept(unittest.TestCase):
+    def accept(self, A: dict, B: dict) -> dict:
+        view = {"slug": "l-1", "title": "L", "objectives": [{"n": 1, "id": "l-1:objective-1", "label": "a", "description": ""},
+                                                            {"n": 2, "id": "l-1:objective-2", "label": "b", "description": ""}],
+                "passages": [{"key": "p", "page": 1, "text": "a story"}], "dropped": [], "questions": []}
+        run = {"stage": "context", "lessons": [{"slug": "l-1", "A": {"passages": [A], "real_life_questions": []},
+                                                "B": {"passages": [B], "real_life_questions": []}}]}
+        with tempfile.TemporaryDirectory() as d:
+            f, out = Path(d) / "run.json", Path(d) / "ch01.json"
+            f.write_text(json.dumps(run))
+            with mock.patch.object(C, "unit_slugs", return_value=["l-1"]), mock.patch.object(C, "lesson_view", return_value=view), \
+                    mock.patch.object(C, "out_path", return_value=out):
+                C.accept("book", 1, f)
+            return json.loads(out.read_text())["lessons"][0]["passages"][0]
+
+    def test_only_the_place_disputed_between_the_lesson_and_an_objective_goes_to_the_whole_lesson(self):
+        e = self.accept({"key": "p", "kind": "real_life", "objective": 0, "why": ""}, {"key": "p", "kind": "real_life", "objective": 2, "why": ""})
+        self.assertEqual((e["status"], e["kind"], e["objective"]), ("agreed", "real_life", 0))
+        self.assertIn("placed", e)
+
+    def test_two_objectives_or_two_kinds_stay_held(self):
+        e = self.accept({"key": "p", "kind": "real_life", "objective": 1, "why": ""}, {"key": "p", "kind": "real_life", "objective": 2, "why": ""})
+        self.assertEqual(e["status"], "held")
+        e = self.accept({"key": "p", "kind": "real_life", "objective": 0, "why": ""}, {"key": "p", "kind": "concept_intro", "objective": 0, "why": ""})
+        self.assertEqual(e["status"], "held")
+
+
 class Resolved(unittest.TestCase):
     def resolve(self, passages: list[dict], decisions: list[dict]) -> list[dict]:
         with tempfile.TemporaryDirectory() as d:
@@ -64,6 +91,9 @@ class Resolved(unittest.TestCase):
             {"ref": "held", "decision": "keep", "kind": "concept_intro", "objective": 2, "by": "TD", "fingerprint": held["fingerprint"]},
             {"ref": "used", "decision": "drop", "by": "TD", "fingerprint": used["fingerprint"]}])
         self.assertEqual([(p["key"], p["kind"], p["objective"], p["by"]) for p in out], [("held", "concept_intro", 2, "TD (review tool)")])
+        # a closing reflection is used like the other kinds (it closes its objective in the lesson)
+        refl = passage("refl", "agreed", "closing_reflection", 1)
+        self.assertEqual([p["kind"] for p in self.resolve([refl], [])], ["closing_reflection"])
         # decided on another wording: the readings decide again (and the held one stays out)
         stale = self.resolve([held, used], [{"ref": "held", "decision": "keep", "kind": "real_life", "objective": 1, "by": "TD",
                                              "fingerprint": "something-else"}])
@@ -72,3 +102,34 @@ class Resolved(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Generated(unittest.TestCase):
+    """S1G: a written example is used only when the blind checker confirms it; a doubted one is held, never shown."""
+
+    def test_only_a_confirmed_example_is_used_and_it_is_marked_generated(self):
+        lesson = {"slug": "l-1", "title": "L", "objectives": [{"n": 1, "id": "l-1:objective-1", "label": "a", "description": ""},
+                                                              {"n": 2, "id": "l-1:objective-2", "label": "b", "description": ""},
+                                                              {"n": 3, "id": "l-1:objective-3", "label": "c", "description": ""}],
+                  "passages": [passage("story", "agreed", "real_life", 0)]}
+        run = {"stage": "context-gen", "lessons": [{"slug": "l-1",
+               "written": [{"objective": 2, "decision": "generate", "text": "Suppose a tank loses 3 litres a day.", "why": "w"},
+                           {"objective": 3, "decision": "generate", "text": "Suppose a phone plan doubles.", "why": "w"},
+                           {"objective": 1, "decision": "generate", "text": "not a gap: the lesson's story opens objective 1", "why": "w"}],
+               "checked": [{"objective": 2, "verdict": "confirmed", "why": "right"},
+                           {"objective": 3, "verdict": "rejected", "why": "the numbers are off"}]}]}
+        with tempfile.TemporaryDirectory() as d:
+            ctx = Path(d) / "context"
+            ctx.mkdir()
+            (ctx / "ch01.json").write_text(json.dumps({"lessons": [lesson]}))
+            (Path(d) / "run.json").write_text(json.dumps(run))
+            with mock.patch.object(C, "HERE", Path(d)), mock.patch.object(C, "out_path", return_value=ctx / "ch01.json"), \
+                    mock.patch.object(C, "gen_out_path", return_value=ctx / "generated-ch01.json"), \
+                    mock.patch.object(C, "review_path", return_value=Path(d) / "none.json"):
+                (Path(d) / "teaching" / "book").mkdir(parents=True)
+                (Path(d) / "teaching" / "book" / "context").symlink_to(ctx, target_is_directory=True)
+                rep = C.gen_accept("book", 1, Path(d) / "run.json")
+                gen = C.generated_passages("book", "l-1")
+        self.assertEqual((rep["generated"], rep["held"]), (1, 1))
+        self.assertEqual({(g["objective"], g["status"]) for g in gen}, {(2, "agreed"), (None, "held")})
+        self.assertTrue(all(g["generated"] and g["page"] is None for g in gen))

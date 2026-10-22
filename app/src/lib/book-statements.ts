@@ -37,17 +37,20 @@ export interface BookStatement {
 
 /**
  * The book's own context for an objective (services/extraction/book_record_context.py,
- * S1C; Tamer, 2026-10-22): a real-life opener or a concept introduction, as
- * the book prints it. The tutor opens the objective with it; never one the
- * book does not print.
+ * S1C; Tamer, 2026-10-22): a real-life opener, a concept introduction or
+ * guiding question, or a closing reflection, as the book prints it. The tutor
+ * opens the objective with the first two and closes it with the third; never
+ * one the book does not print.
  */
 export interface BookContext {
   /** the book-record id of the passage, e.g. "eb11c2-2:linking-text-1" */
   id: string;
-  /** real_life | concept_intro */
+  /** real_life | concept_intro (an introduction or the book's guiding question) | closing_reflection */
   kind: string;
   text: string;
   page: number | null;
+  /** written by the pipeline where the book gives none (S1G), checked blind; never cited to a page */
+  generated: boolean;
 }
 
 export interface BookStatementGroup {
@@ -96,8 +99,9 @@ function normGroup(raw: unknown): BookStatementGroup | null {
       if (!c || typeof c !== "object") return null;
       const x = c as Record<string, unknown>;
       if (typeof x.id !== "string" || typeof x.text !== "string" || !x.text.trim()) return null;
-      if (x.kind !== "real_life" && x.kind !== "concept_intro") return null;
-      return { id: x.id, kind: x.kind, text: x.text.trim(), page: typeof x.page === "number" ? x.page : null };
+      if (x.kind !== "real_life" && x.kind !== "concept_intro" && x.kind !== "closing_reflection") return null;
+      const generated = x.generated === true;
+      return { id: x.id, kind: x.kind, text: x.text.trim(), page: generated || typeof x.page !== "number" ? null : x.page, generated };
     })
     .filter((c): c is BookContext => c !== null);
   const realLifeQuestions = (Array.isArray(g.real_life_questions) ? g.real_life_questions : []).filter(
@@ -179,7 +183,11 @@ THE BOOK'S STATEMENTS — the definitions, rules, cautions, conventions, methods
 ${groups}`;
 }
 
-const CONTEXT_LABEL: Record<string, string> = { real_life: "real-life opener", concept_intro: "introduction" };
+const CONTEXT_LABEL: Record<string, string> = {
+  real_life: "real-life opener",
+  concept_intro: "introduction",
+  closing_reflection: "closing reflection",
+};
 
 /** The book's context per objective, and its questions set in a real situation. "" for a lesson with none. */
 function contextSection(s: BookStatements | null | undefined): string {
@@ -187,8 +195,10 @@ function contextSection(s: BookStatements | null | undefined): string {
   const groups = s!.groups
     .filter((g) => g.context.length || g.realLifeQuestions.length)
     .map((g) => {
-      const lines = g.context.map(
-        (x) => `- (${CONTEXT_LABEL[x.kind] ?? x.kind}${x.page != null ? `, p.${x.page}` : ""}) ${x.text}`
+      const lines = g.context.map((x) =>
+        x.generated
+          ? `- (real-life example, WRITTEN FOR NOOR — not from the book, no page) ${x.text}`
+          : `- (${CONTEXT_LABEL[x.kind] ?? x.kind}${x.page != null ? `, p.${x.page}` : ""}) ${x.text}`
       );
       if (g.realLifeQuestions.length) lines.push(`- real-life questions: ${g.realLifeQuestions.join(", ")}`);
       return `${groupHead(g)}\n${lines.join("\n")}`;
@@ -196,6 +206,6 @@ function contextSection(s: BookStatements | null | undefined): string {
     .join("\n");
   return `
 
-THE BOOK'S CONTEXT — the real-life openers and introductions the textbook prints, by objective ("the whole lesson" sets up all of them), and the questions in the QUESTION BANK that are set in a real situation. Retell it in your own words and cite the page; never a situation, number or fact it does not give.
+THE BOOK'S CONTEXT — the real-life openers, introductions and guiding questions, and the closing reflections the textbook prints, by objective ("the whole lesson" sets up all of them), and the questions in the QUESTION BANK that are set in a real situation. Retell it in your own words and cite the page (an example written for Noor has none: never cite one); never a situation, number or fact it does not give.
 ${groups}`;
 }

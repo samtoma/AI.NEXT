@@ -165,6 +165,9 @@ def plan(name: str, unit: int) -> dict:
     add("S1C", "the book's context per objective: real-life openers, concept introductions, questions set in a real situation "
         "(two readings; the rest held for the Context task, never blocking)",
         f"{UV} book_record_context.py run {bk} {unit}", ex("teaching", bk, "context", f"{ch}.json"))
+    add("S1G", "a real-life example where the book gives none: the lesson's own story if it serves, else one written from the "
+        "objective's maths, recomputed by a blind checker (the rest held for the Context task, never blocking)",
+        f"{UV} book_record_context.py generate {bk} {unit}", ex("teaching", bk, "context", f"generated-{ch}.json"))
     add("S2", "answers for unanswered questions (answer, blind, judge) + blind check of printed answers",
         f"{UV} --with pymupdf answer_gen.py run book-records/{bk}/<lesson>.json  ·  … check-printed …",
         all_of(lambda s: ex("teaching", bk, "answers", f"{s}.json")))
@@ -267,6 +270,7 @@ def stages(name: str, unit: int, dsn: str | None, cap: float | None) -> tuple[li
     # the book's context per objective (Tamer, 2026-10-22): by default, no setting; what the readings disagree on is held
     # for the review tool's Context task and never waited for
     out.append(("S1C", ex("teaching", bk, "context", f"{ch}.json"), [U("book_record_context.py", "run", bk, str(unit), *c())]))
+    out.append(("S1G", ex("teaching", bk, "context", f"generated-{ch}.json"), [U("book_record_context.py", "generate", bk, str(unit), *c())]))
     out.append(("S2", all_of(lambda s: ex("teaching", bk, "answers", f"{s}.json")),
                 [U("answer_gen.py", "run", f"book-records/{bk}/{s}.json", *c(), w=("pymupdf",)) for s in slugs]
                 + [U("answer_gen.py", "check-printed", f"book-records/{bk}/{s}.json", *c(), w=("pymupdf",)) for s in slugs]))

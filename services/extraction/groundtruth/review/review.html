@@ -799,13 +799,15 @@ function plainBox(task, a = {}) {
     theirs = (d.reasons || []).join(" · ");
     choices = "Send back: it's rewritten on the next pipeline run (paid). Drop: final — this lesson gets less practice.";
   } else if (task === "context") {
-    const d = a.d, p = d.passage, KN = { real_life: "a real-life opener", concept_intro: "an introduction to the idea", none: "not context" };
-    head = `A passage from the book${where(p.page)}, used to open a lesson goal`;
-    problem = d.state === "held"
+    const d = a.d, p = d.passage, KN = { real_life: "a real-life opener", concept_intro: "an introduction to the idea", closing_reflection: "a closing reflection", none: "not context" };
+    head = p.generated ? "A real-life example we wrote, because the book gives none for this goal" : `A passage from the book${where(p.page)}, used to open or close a lesson goal`;
+    problem = p.generated ? (d.state === "held" ? `Our checker, working it out blind, didn't confirm it: ${esc((d.B && d.B.why || "").replace(/^checked blind: /, ""))}. It is kept out of lessons until you keep it.`
+        : d.state === "used" ? "Our checker worked every number out again and confirmed it, so lessons already use it, marked as not from the book." : "None found.")
+      : d.state === "held"
       ? `Our two sorts disagree: one says ${esc(d.A ? KN[d.A.kind] + " for " + d.A.objective : "nothing")}, the other ${esc(d.B ? KN[d.B.kind] + " for " + d.B.objective : "nothing")}. It is kept out of lessons until you decide.`
       : d.state === "used" ? `Both sorts agree it's ${esc(KN[p.kind])} for ${esc(d.objective)}, so lessons already use it.`
       : d.state === "not_context" ? "Both sorts agree it isn't context, so lessons don't use it." : "None found.";
-    choices = "Keep: pick what it is and which goal it opens (or the whole lesson); the lesson retells it there. Drop: lessons never use it.";
+    choices = "Keep: pick what it is and which goal it belongs to (or the whole lesson). An opener or introduction opens the goal; a closing reflection is asked as the goal closes. Drop: lessons never use it.";
   } else if (task === "tiers") {
     const t = a.d.tier, rs = (t.readings || []).map((r) => r.tier).filter(Boolean);
     head = `How hard is this question?${where(t.page)}`;
@@ -985,7 +987,7 @@ async function renderHome() {
       then: "\"Send back\" has it rewritten on the next pipeline run (paid); \"Drop\" is final. Neither needs a refresh to be recorded.",
       open: () => show("held") },
     context: { band: "should", title: "Real-life context for each goal", n: cOpen.length, unit: "to decide",
-      what: "The book's own real-life stories and introductions, sorted twice and filed under the goal each one opens. The lesson opens each goal with it.",
+      what: "The book's own real-life stories, guiding questions and closing reflections, sorted twice and filed under a goal. Lessons open each goal with its story and guiding question, and close it with its reflection.",
       ifNot: "Passages both sorts agreed on are already used. The ones they disagreed on stay out of lessons until you keep them.",
       then: "Refresh (free) to use what you kept and drop what you dropped.",
       sub: `${cs.filter((c) => c.state === "used" || (c.state === "decided" && c.kind !== "dropped")).length} passages in use · ${cs.filter((c) => c.state === "not_context").length} sorted as not context`,
@@ -1509,7 +1511,7 @@ async function heldDecide(decision) {
 /* ---------- Real-life context (S1C) ---------- */
 let ctxRows = [], ci = -1, cDetail = null;
 const CSTATE = { decided: "Decided", changed: "The passage or the lesson's goals changed since it was decided", held: "The two sorts disagree: kept out of lessons", used: "Both sorts agree: in use", not_context: "Both sorts agree: not context" };
-const CKIND = { real_life: "Real-life opener", concept_intro: "Introduction to the idea", dropped: "Dropped", none: "Not context" };
+const CKIND = { real_life: "Real-life opener", concept_intro: "Introduction to the idea", closing_reflection: "Closing reflection", dropped: "Dropped", none: "Not context" };
 function cVisible() {
   const l = $("#clesson").value, w = $("#cshow").value;
   return ctxRows.map((c, i) => ({ c, i })).filter(({ c }) => (l === "all" || c.lesson === l) && (
@@ -1570,12 +1572,15 @@ async function showContext(row) {
   const reading = (r, name) => `<div style="margin-top:4px"><b>${esc(name)}:</b> ${r ? `${esc(CKIND[r.kind] || r.kind)}${r.kind !== "none" ? ` for ${esc(r.objective)}` : ""} <span class="muted">— ${esc(r.why || "")}</span>` : "no answer"}</div>`;
   $("#detail").innerHTML = `<div class="card">${plainBox("context", { d })}
     <div class="muted">Real-life context · ${esc(book)} · chapter ${esc(d.chapter)} · ${esc(d.lesson)} ${esc(d.title || "")} · printed p.${esc(p.page ?? "?")} · <span style="font-family:var(--stack-mono),monospace;font-size:12px">${esc(p.key)}</span></div>
-    <div class="why"><span class="label">The book says</span><div style="font-size:15px">${md(p.text || "")}</div></div>
-    <div class="${d.state === "held" || d.state === "changed" ? "warn" : "gen"}"><span class="label">The two sorts</span>${reading(d.A, "First")}${reading(d.B, "Second")}</div>
+    <div class="why"><span class="label">${p.generated ? "We wrote (not from the book)" : "The book says"}</span><div style="font-size:15px">${md(p.text || "")}</div>
+      ${p.generated && (p.numbers || []).length ? `<div class="muted" style="margin-top:6px">${p.numbers.map((n) => `${md(n.working)} = ${md(String(n.value))}`).join(" · ")}</div>` : ""}</div>
+    <div class="${d.state === "held" || d.state === "changed" ? "warn" : "gen"}"><span class="label">${p.generated ? "The writer and the blind checker" : "The two sorts"}</span>${p.generated
+      ? `<div style="margin-top:4px">${md((d.A && d.A.why) || "")}</div><div style="margin-top:4px">${md((d.B && d.B.why) || "")}</div>`
+      : reading(d.A, "First") + reading(d.B, "Second")}</div>
     ${d.real_life_questions.length ? `<div class="why"><span class="label">This lesson's questions set in a real situation</span><div class="muted">${d.real_life_questions.map(esc).join(" · ")}</div></div>` : ""}
     <div class="why"><span class="label">Keep it as</span><div class="actions" style="flex-wrap:wrap">
-      <label>What it is <select id="ckind"><option value="real_life">Real-life opener</option><option value="concept_intro">Introduction to the idea</option></select></label>
-      <label>Opens <select id="cobj"><option value="0">the whole lesson</option>${d.objectives.map((o) => `<option value="${o.n}">${o.n}. ${esc(o.label)}</option>`).join("")}</select></label>
+      <label>What it is <select id="ckind"><option value="real_life">Real-life opener</option><option value="concept_intro">Introduction to the idea</option><option value="closing_reflection">Closing reflection</option></select></label>
+      <label>Goal <select id="cobj"><option value="0">the whole lesson</option>${d.objectives.map((o) => `<option value="${o.n}">${o.n}. ${esc(o.label)}</option>`).join("")}</select></label>
     </div></div>
     <div class="who">${dec ? `<b>${dec.decision === "keep" ? `Kept as ${esc(CKIND[dec.kind])}` : "Dropped"}</b> by ${esc(dec.by)} on ${esc(dec.at)}${dec.note ? ` · ${md(dec.note)}` : ""}${d.state === "changed" ? " · <b>it changed since</b>, so it is back" : ""}` : esc(CSTATE[d.state])}</div>
     <div class="actions">

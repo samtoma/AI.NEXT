@@ -1,6 +1,7 @@
 """The review tool's Context task: the book's own context for each objective, as two readings sorted it (S1C).
 
-Reads `services/extraction/teaching/<book>/context/ch<NN>.json` (format `ainext.context/1`, written by
+Also the examples S1G wrote where the book has none (generated-ch<NN>.json, marked generated: a blind checker
+recomputed them; a doubted one is held). Reads `services/extraction/teaching/<book>/context/ch<NN>.json` (format `ainext.context/1`, written by
 book_record_context.py: the lesson's linking text, each passage read twice and blind — real-life opener, concept
 introduction, or not context — and filed under the objective it introduces, or the whole lesson). A passage both
 readings agree on is already used; one they disagree on is HELD and never shown until a person decides it. Nothing here
@@ -21,7 +22,7 @@ EXTRACTION = Path(__file__).resolve().parents[2]
 TEACHING = EXTRACTION / "teaching"
 REVIEWS = EXTRACTION / "reviews"
 NAME = re.compile(r"^[a-z0-9][a-z0-9.-]{0,63}$")
-KINDS = ("real_life", "concept_intro")
+KINDS = ("real_life", "concept_intro", "closing_reflection")
 DECISIONS = ("keep", "drop")
 
 
@@ -34,10 +35,13 @@ def _load(book: str) -> list[tuple[dict, dict, dict]]:
     if not NAME.match(book):
         raise FileNotFoundError(book)
     out = []
+    import sys  # noqa: PLC0415
+    sys.path.insert(0, str(EXTRACTION))
+    import book_record_context as BRC  # noqa: PLC0415  (the generated examples, S1G, read as passages)
     for p in sorted((TEACHING / book / "context").glob("ch*.json")):
         d = json.loads(p.read_text())
         for L in d.get("lessons") or []:
-            for e in L.get("passages") or []:
+            for e in (L.get("passages") or []) + BRC.generated_passages(book, L["slug"]):
                 if e.get("status") != "instruction":
                     out.append((d, L, e))
     return out
@@ -81,7 +85,8 @@ def summary(book: str) -> list[dict]:
         kind = x.get("kind") if st == "decided" and x["decision"] == "keep" else ("dropped" if st == "decided" else e.get("kind"))
         obj = x.get("objective") if st == "decided" and x["decision"] == "keep" else e.get("objective")
         out.append({"ref": e["key"], "chapter": d.get("chapter"), "lesson": L["slug"], "state": st, "kind": kind,
-                    "objective": _objective_name(L, obj), "title": e["text"][:90]})
+                    "objective": _objective_name(L, obj), "title": ("[generated] " if e.get("generated") else "") + e["text"][:90],
+                    "generated": bool(e.get("generated"))})
     return out
 
 
@@ -91,7 +96,7 @@ def detail(book: str, ref: str) -> dict:
             continue
         dec = latest(book).get(ref)
         reading = lambda r: None if not r else {"kind": r.get("kind"), "objective": _objective_name(L, r.get("objective")), "why": r.get("why")}
-        return {"passage": {k: e.get(k) for k in ("key", "page", "text", "status", "kind")},
+        return {"passage": {k: e.get(k) for k in ("key", "page", "text", "status", "kind", "generated", "numbers")},
                 "objective": _objective_name(L, e.get("objective")), "A": reading(e.get("A")), "B": reading(e.get("B")),
                 "lesson": L["slug"], "title": L.get("title"), "chapter": d.get("chapter"), "state": state_of(e, dec),
                 "objectives": [{"n": o["n"], "label": o["label"]} for o in L.get("objectives") or []],
@@ -115,7 +120,7 @@ def decide(body: dict) -> dict:
         except (TypeError, ValueError):
             n = -1
         if kind not in KINDS or n not in {o["n"] for o in L.get("objectives") or []} | {0}:
-            raise ValueError("keep needs a kind (real_life or concept_intro) and an objective of the lesson (0: the whole lesson)")
+            raise ValueError("keep needs a kind (real_life, concept_intro or closing_reflection) and an objective of the lesson (0: the whole lesson)")
         entry["kind"], entry["objective"] = kind, n
     note = (body.get("note") or "").strip()
     if note:

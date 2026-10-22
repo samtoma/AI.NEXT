@@ -883,7 +883,8 @@ def lesson_statements(slug: str, record: dict, decimal: str, counts: Counter) ->
 def objective_context(book: str, slug: str, st: dict, questions: list[dict], decimal: str, counts: Counter,
                       report: dict) -> None:
     """The book's context per objective (book_record_context.py, S1C; Tamer, 2026-10-22) into the lesson's statements
-    file: each group gains `context` (the book's real-life openers and concept introductions, as printed, notation
+    file: each group gains `context` (the book's real-life openers, concept introductions and guiding questions, and its
+    closing reflections, as printed, notation
     normalised, KaTeX-checked) and `real_life_questions` (live questions of that objective set in a real situation). A passage for
     the whole lesson goes to the group with no objective. A lesson the stage has not run on is left exactly as it was."""
     import book_record_context as BRC  # noqa: PLC0415
@@ -899,14 +900,17 @@ def objective_context(book: str, slug: str, st: dict, questions: list[dict], dec
             groups[lo] = {"lo": lo, "label": label.get(lo) if lo else None, "statements": []}
         return groups[lo]
 
-    rows = [{**p, "text": normalise(p["text"], decimal, counts)} for p in BRC.resolved(book, L)]
+    live_items = {q.get("_item") for q in questions if not q.get("hold_reason")}
+    # an open prompt that became a live question stays in the question bank: never the same text twice
+    rows = [{**p, "text": normalise(p["text"], decimal, counts)} for p in BRC.resolved(book, L) if p["key"] not in live_items]
     bad = {e["where"] for e in ALB.katex_errors([{"where": p["key"], "text": p["text"]} for p in rows])}
     report["warnings"] += [f"{k}: left out of the tutor's context, KaTeX cannot render it" for k in sorted(bad)]
     for p in rows:
         if p["key"] in bad:
             continue
         group(id_of.get(p["objective"])).setdefault("context", []).append(
-            {"id": p["key"], "kind": p["kind"], "text": p["text"], "page": p["page"], "by": p["by"]})
+            {"id": p["key"], "kind": p["kind"], "text": p["text"], "page": p["page"], "by": p["by"],
+             **({"generated": True} if p.get("generated") else {})})
     live = [q for q in questions if not q.get("hold_reason")]
     for b in L.get("bridges") or []:
         for q in live:

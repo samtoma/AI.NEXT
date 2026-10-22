@@ -47,7 +47,11 @@ writeFileSync(path.join(DIR, "u2-1.json"), JSON.stringify({
     ], context: [
       { id: "u2-1:linking-text-3", kind: "concept_intro", text: "Multiplying by the same number each step makes a geometric sequence.", page: 60 },
       { id: "u2-1:linking-text-4", kind: "none", text: "Solve the following problems.", page: 60 },
+      { id: "u2-1:open-prompt-2", kind: "closing_reflection", text: "How does changing r from 2 to 1/2 change the sequence?", page: 67 },
     ], real_life_questions: ["q:u2-1-1:bk-challenge-2", "u2-1:challenge-2"] },
+    { lo: "lo:u2-1-2", label: "Sum of n terms", statements: [], context: [
+      { id: "u2-1:generated-2", kind: "real_life", generated: true, page: 61, text: "Suppose a bakery doubles its order of loaves every week, starting at 5." },
+    ] },
     { lo: null, label: null, statements: [], context: [
       { id: "u2-1:linking-text-1", kind: "real_life", text: "A single E. coli bacterium enters a bloodstream and doubles every 20 minutes.", page: 59 },
     ] },
@@ -107,17 +111,22 @@ test("a lesson with statements: the grounding rule names them, and both modes ma
 test("the book's context: read beside the statements, a group may carry context alone, and nothing unknown is read", async () => {
   const s = await getBookStatements("u2-1", ON);
   assert.equal(statementCount(s), 1);
-  assert.equal(contextCount(s), 2, "the 'none' passage is dropped");
+  assert.equal(contextCount(s), 4, "the 'none' passage is dropped");
+  const gen = s?.groups.find((g) => g.lo === "lo:u2-1-2")?.context[0];
+  assert.equal(gen?.generated, true);
+  assert.equal(gen?.page, null, "a generated example is never cited to a page, whatever the file says");
   assert.deepEqual(s?.groups[0].realLifeQuestions, ["q:u2-1-1:bk-challenge-2"], "only question ids");
-  assert.equal(s?.groups[1].lo, null, "the whole lesson's opener, with no statements of its own");
+  assert.equal(s?.groups[2].lo, null, "the whole lesson's opener, with no statements of its own");
   assert.equal(contextCount(await getBookStatements("u1-1", ON)), 0, "a lesson the stage never ran on");
 });
 
 test("the context block names each objective's opener, its kind and page, and the real-life questions", async () => {
   const block = bookStatementsBlock(await getBookStatements("u2-1", ON));
   assert.match(block, /THE BOOK'S CONTEXT/);
-  assert.match(block, /lo:u2-1-1 — Geometric sequences\n- \(introduction, p\.60\) Multiplying[^\n]*\n- real-life questions: q:u2-1-1:bk-challenge-2/);
+  assert.match(block, /lo:u2-1-1 — Geometric sequences\n- \(introduction, p\.60\) Multiplying[^\n]*\n(- [^\n]*\n)*- real-life questions: q:u2-1-1:bk-challenge-2/);
   assert.match(block, /\(the whole lesson\)\n- \(real-life opener, p\.59\) A single E\. coli/);
+  assert.match(block, /- \(closing reflection, p\.67\) How does changing r/);
+  assert.match(block, /lo:u2-1-2 — Sum of n terms\n- \(real-life example, WRITTEN FOR NOOR — not from the book, no page\) Suppose a bakery/);
   assert.doesNotMatch(block, /Solve the following problems/);
   // the statements section is the one it always was: a context-only group is not listed in it
   assert.equal(block.split("THE BOOK'S CONTEXT")[0].match(/\(the whole lesson\)/), null);
@@ -131,6 +140,8 @@ test("a lesson with context opens each objective with it; one without keeps the 
   const withContext = learnPrompt(lesson({ bookStatements: await getBookStatements("u2-1", ON) }), false);
   assert.match(withContext, /in one line and open the first objective with its context → lo:u1-1-1 "Ordered pairs" \(its context, then 1–2 messages\)/);
   assert.match(withContext, /OPEN EACH OBJECTIVE WITH ITS CONTEXT/);
+  assert.match(withContext, /the book's guiding question or introduction, when there is one, as the ask/);
+  assert.match(withContext, /CLOSE EACH OBJECTIVE WITH ITS CLOSING REFLECTION/);
   assert.match(withContext, /THE DRILLS STAY AS THEY ARE: never rephrase a question into the story/);
   assert.match(withContext, /Never invent a situation, a number or a fact/);
   assert.doesNotMatch(reviewPrompt(lesson({ bookStatements: await getBookStatements("u2-1", ON) })), /OBJECTIVE CONTEXT/, "review mode stays a 3-minute lock-in");
