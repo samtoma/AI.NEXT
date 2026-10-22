@@ -68,11 +68,12 @@ const EXTRACTION = join(REPO, "services/extraction");
 /* The registries on their own                                         */
 /* ------------------------------------------------------------------ */
 
-test("curricula: National first, then American — the two ids Samuel decided (decision 3)", () => {
-  assert.deepEqual(CURRICULUM_IDS, ["eg-national-en", "us-american-en"]);
+test("curricula: National first, then American — the two ids Samuel decided (decision 3) — then the Egyptian Baccalaureate (Tamer's proposal, 2026-10-21)", () => {
+  assert.deepEqual(CURRICULUM_IDS, ["eg-national-en", "us-american-en", "eg-baccalaureate-en"]);
   assert.equal(DEFAULT_CURRICULUM, "eg-national-en", "the column's default (009): every pre-003 student");
   assert.equal(CURRICULA["us-american-en"].label, "American");
   assert.equal(CURRICULA["eg-national-en"].label, "National");
+  assert.equal(CURRICULA["eg-baccalaureate-en"].label, "Egyptian Baccalaureate");
 });
 
 test("curricula are labelled flatly, never as a tier (FR-4016, privacy review F1)", () => {
@@ -124,13 +125,14 @@ test("a curriculum is validated exactly: no case folding, no default, no trimmin
   assert.match(curriculumLabel("x-y"), /unknown curriculum \(x-y\)/);
 });
 
-test("courses: the five, in course order — curriculum, then subject — each in exactly one curriculum (FR-4002)", () => {
+test("courses: the six, in course order — curriculum, then subject — each in exactly one curriculum (FR-4002)", () => {
   assert.deepEqual(COURSE_IDS, [
     "course:prep3-math-en",
     "course:prep3-parallel-math-en",
     "course:prep3-social-ar",
     "course:prep3-arabic-ar",
     "course:us-g10-math-en",
+    "course:egb-g11-math-en",
   ]);
   for (const id of COURSE_IDS) {
     assert.match(id, /^course:[a-z0-9-]+$/);
@@ -173,7 +175,7 @@ test("the subject registry names no course: two courses share maths (decision E)
     assert.ok(!("courseId" in SUBJECTS[id]), `${id} still carries a courseId`);
     assert.ok(!("book" in SUBJECTS[id]), `${id} still carries a book`);
   }
-  assert.deepEqual(coursesOfSpineKey("math"), ["course:prep3-math-en", "course:prep3-parallel-math-en", "course:us-g10-math-en"]);
+  assert.deepEqual(coursesOfSpineKey("math"), ["course:prep3-math-en", "course:prep3-parallel-math-en", "course:us-g10-math-en", "course:egb-g11-math-en"]);
   assert.deepEqual(coursesOfSpineKey("social"), ["course:prep3-social-ar"]);
   assert.deepEqual(coursesOfSpineKey("geography"), []);
 });

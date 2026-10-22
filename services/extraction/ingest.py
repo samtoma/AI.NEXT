@@ -162,6 +162,9 @@ def plan(name: str, unit: int) -> dict:
         f"{UV} book_record_filing.py apply {bk} {unit}", False, gate=True)
     add("S1R", "move generated content made before G1 onto the approved objectives (through its book question / sources)",
         f"{UV} book_record_remap.py {bk} {unit}", ex("teaching", bk, "generated", f"remap-ch{unit:02d}.json"))
+    add("S1C", "the book's context per objective: real-life openers, concept introductions, questions set in a real situation "
+        "(two readings; the rest held for the Context task, never blocking)",
+        f"{UV} book_record_context.py run {bk} {unit}", ex("teaching", bk, "context", f"{ch}.json"))
     add("S2", "answers for unanswered questions (answer, blind, judge) + blind check of printed answers",
         f"{UV} --with pymupdf answer_gen.py run book-records/{bk}/<lesson>.json  ·  … check-printed …",
         all_of(lambda s: ex("teaching", bk, "answers", f"{s}.json")))
@@ -261,6 +264,9 @@ def stages(name: str, unit: int, dsn: str | None, cap: float | None) -> tuple[li
         out.append(("S1X apply", False, [U("book_record_links.py", "apply", bk, str(unit))]))
     out.append(("S1F", ex("teaching", bk, "filing", f"{ch}.json"), [U("book_record_filing.py", "run", bk, str(unit), *c(), w=("jsonschema",))]))
     out.append(("S1R", False, [U("book_record_remap.py", bk, str(unit), w=("jsonschema",))]))
+    # the book's context per objective (Tamer, 2026-10-22): by default, no setting; what the readings disagree on is held
+    # for the review tool's Context task and never waited for
+    out.append(("S1C", ex("teaching", bk, "context", f"{ch}.json"), [U("book_record_context.py", "run", bk, str(unit), *c())]))
     out.append(("S2", all_of(lambda s: ex("teaching", bk, "answers", f"{s}.json")),
                 [U("answer_gen.py", "run", f"book-records/{bk}/{s}.json", *c(), w=("pymupdf",)) for s in slugs]
                 + [U("answer_gen.py", "check-printed", f"book-records/{bk}/{s}.json", *c(), w=("pymupdf",)) for s in slugs]))

@@ -57,6 +57,9 @@ HOW A BOOK PROMPT BECOMES A QUESTION
     by objective, misprints corrected, notation normalised and KaTeX-checked, go to compiled/<book>/content/<slug>.json
     (`ainext.book-statements/1`). The maths tutor reads them in learn and review mode, for book-record lessons only:
     only where AINEXT_BOOK_STATEMENTS_DIR points at that folder (app/src/lib/book-statements.ts; Tamer, 2026-10-16).
+    With them, each objective's context (book_record_context.py, S1C; Tamer, 2026-10-22): the book's real-life
+    openers and concept introductions as printed, and the live questions set in a real situation (`real_life_questions`), from the
+    two readings' agreements and the review tool's Context decisions; a held passage is never written.
 
 WHAT THE OLD ASSEMBLY DID ON THE WAY TO THE TUTOR, DONE HERE TOO (teachability, 2026-10-16)
   * Notation, by the book's PRINTED notation (book config `printed_notation.decimal`, default "point"): a
@@ -877,6 +880,44 @@ def lesson_statements(slug: str, record: dict, decimal: str, counts: Counter) ->
             "groups": [{"lo": lo_of(slug, k) if k else None, "label": labels.get(k) if k else None, "statements": groups[k]} for k in ordered]}
 
 
+def objective_context(book: str, slug: str, st: dict, questions: list[dict], decimal: str, counts: Counter,
+                      report: dict) -> None:
+    """The book's context per objective (book_record_context.py, S1C; Tamer, 2026-10-22) into the lesson's statements
+    file: each group gains `context` (the book's real-life openers and concept introductions, as printed, notation
+    normalised, KaTeX-checked) and `real_life_questions` (live questions of that objective set in a real situation). A passage for
+    the whole lesson goes to the group with no objective. A lesson the stage has not run on is left exactly as it was."""
+    import book_record_context as BRC  # noqa: PLC0415
+    L = BRC.for_lesson(book, slug)
+    if L is None:
+        return
+    id_of = {o["n"]: lo_of(slug, o["id"]) for o in L["objectives"]}
+    groups = {g["lo"]: g for g in st["groups"]}
+    label = {lo_of(slug, o["id"]): o["label"] for o in L["objectives"]}
+
+    def group(lo: str | None) -> dict:
+        if lo not in groups:
+            groups[lo] = {"lo": lo, "label": label.get(lo) if lo else None, "statements": []}
+        return groups[lo]
+
+    rows = [{**p, "text": normalise(p["text"], decimal, counts)} for p in BRC.resolved(book, L)]
+    bad = {e["where"] for e in ALB.katex_errors([{"where": p["key"], "text": p["text"]} for p in rows])}
+    report["warnings"] += [f"{k}: left out of the tutor's context, KaTeX cannot render it" for k in sorted(bad)]
+    for p in rows:
+        if p["key"] in bad:
+            continue
+        group(id_of.get(p["objective"])).setdefault("context", []).append(
+            {"id": p["key"], "kind": p["kind"], "text": p["text"], "page": p["page"], "by": p["by"]})
+    live = [q for q in questions if not q.get("hold_reason")]
+    for b in L.get("bridges") or []:
+        for q in live:
+            if q.get("_item") == b["key"]:
+                g = group(q["lo"])
+                if q["id"] not in g.setdefault("real_life_questions", []):
+                    g["real_life_questions"].append(q["id"])
+    order = {lo_of(slug, o["id"]): o["n"] for o in L["objectives"]}
+    st["groups"] = sorted(groups.values(), key=lambda g: (g["lo"] is None, order.get(g["lo"], 0)))
+
+
 def marker_check(questions: list[dict]) -> dict[str, str]:
     """The app's own reader and key check (marker_check.mjs) on every marker question: id → why it was refused."""
     rows = [{"id": q["id"], "choices": q["choices"]} for q in questions if isinstance(q.get("choices"), dict)]
@@ -1162,6 +1203,7 @@ def main(argv: list[str]) -> int:
             report["warnings"] += [f"{x['id']}: left out of the tutor's statements, KaTeX cannot render it" for x in g["statements"] if x["id"] in bad]
             g["statements"] = [x for x in g["statements"] if x["id"] not in bad]
         st["groups"] = [g for g in st["groups"] if g["statements"]]
+        objective_context(a.book, slug, st, new_questions[slug], decimal, counts, report)
         st["source"] = f"book-records/{a.book}/{slug}.json"
         new_statements[slug] = st
     for slug in slugs:
@@ -1190,6 +1232,8 @@ def main(argv: list[str]) -> int:
                                    "marker": sum(1 for q in qs if isinstance(q.get("choices"), dict)),
                                    "by_tier": dict(Counter(q["tier"] for q in qs)),
                                    "statements": sum(len(g["statements"]) for g in new_statements[slug]["groups"]),
+                                   "context": sum(len(g.get("context") or []) for g in new_statements[slug]["groups"]),
+                                   "real_life_questions": sum(len(g.get("real_life_questions") or []) for g in new_statements[slug]["groups"]),
                                    "library_entries": len(new_entries[slug]),
                                    "visuals": sum(1 for v in new_visuals[slug] if v["kind"] != "book_image"),
                                    "book_pictures": sum(1 for v in new_visuals[slug] if v["kind"] == "book_image")}

@@ -287,7 +287,7 @@ test("003: switched off, an unknown curriculum or an unregistered loaded course 
 
 test("003: courseForSubject — her own curriculum's visible course, else a course that 404s, never maths by default", () => {
   const maths = coursesOfSpineKey("math");
-  assert.deepEqual(maths, [MATH, PARALLEL, G10], "the three maths courses, in course order");
+  assert.deepEqual(maths, [MATH, PARALLEL, G10, "course:egb-g11-math-en"], "the four maths courses, in course order");
   const sees = (...ids: string[]) => (c: string) => ids.includes(c);
   // the book-record ingestion of the same book (2026-10-16): National too, after the launch course
   assert.equal(courseForSubject(maths, sees(PARALLEL), NATIONAL), PARALLEL, "the only visible one");

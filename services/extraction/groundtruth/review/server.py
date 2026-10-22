@@ -30,6 +30,9 @@ Tasks (docs/design/review-console.md, built here as a local tool):
   Held generation   every question family and widget template S6/S7 held (nothing generated from it), with the
                     checks' reasons: drop it, or send it back with a note to be authored again (book_record_held.py
                     reauthor); decisions are appended to reviews/<book>/held-generation.json (held.py).
+  Real-life context the book's linking text sorted twice (book_record_context.py, S1C, teaching/<book>/context/): what
+                    the two sorts disagree on is held out of lessons until a person keeps (with its kind and goal) or
+                    drops it; decisions are appended to reviews/<book>/context-review.json (context.py), compile applies.
   Maths reading     where the two readings of a page-image book's formula disagree (book_record_maths.py,
                     book-records/<book>/maths-reading/), a person says what is printed; decisions are appended to
                     reviews/<book>/maths-reading.json (maths_reading.py).
@@ -66,6 +69,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import score_book_record  # noqa: E402
 import generated  # noqa: E402
 import held  # noqa: E402
+import context as context_task  # noqa: E402  (the Context task: the book's context per objective, S1C)
 
 HERE = Path(__file__).resolve().parent
 GT_DIR = HERE.parent
@@ -376,7 +380,7 @@ SCRATCH_DSN: list[str] = []   # --scratch-dsn: a refresh also loads this LOCAL s
 # the book does not have yet. (Decisions made before the log existed are not counted: the log starts empty.)
 TASK_OF = {"/api/misprint-decision": "misprints", "/api/answers/decision": "answers", "/api/objectives/decision": "objectives",
            "/api/g2/decision": "g2", "/api/maths/decision": "maths", "/api/tiers/decision": "tiers",
-           "/api/held/decision": "held", "/api/generated/decision": "generated"}
+           "/api/held/decision": "held", "/api/generated/decision": "generated", "/api/context/decision": "context"}
 
 
 def _now() -> str:
@@ -553,6 +557,12 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send_json(maths_reading.summary(q["book"]))
             if u.path == "/api/maths/item":
                 return self.send_json(maths_reading.detail(q["book"], q["ref"]))
+            if u.path == "/api/context/books":
+                return self.send_json(context_task.books())
+            if u.path == "/api/context":
+                return self.send_json(context_task.summary(q["book"]))
+            if u.path == "/api/context/item":
+                return self.send_json(context_task.detail(q["book"], q["ref"]))
             if u.path == "/api/tiers/books":
                 return self.send_json(tiers.books())
             if u.path == "/api/tiers":
@@ -607,7 +617,8 @@ class Handler(BaseHTTPRequestHandler):
                 decide = {"/api/misprint-decision": decide_misprint, "/api/answers/decision": answers.decide,
                           "/api/objectives/decision": objectives.decide, "/api/g2/decision": book_questions.decide,
                           "/api/maths/decision": maths_reading.decide, "/api/tiers/decision": tiers.decide,
-                          "/api/held/decision": held.decide, "/api/generated/decision": generated.decide}[u.path]
+                          "/api/held/decision": held.decide, "/api/generated/decision": generated.decide,
+                          "/api/context/decision": context_task.decide}[u.path]
                 entry = decide(body)
                 journal(body.get("book"), TASK_OF[u.path], body)   # saved: the next refresh has it to take in
                 return self.send_json({"ok": True, "decision": entry})

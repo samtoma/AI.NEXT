@@ -735,7 +735,7 @@ $("#next").onclick = () => showPage(page + 1);
 $("#pg").onchange = () => showPage(Number($("#pg").value));
 
 /* ---------- the tasks ---------- */
-const TASKS = { home: "", label: "› Spot-check what we read from the book", misprints: "› Mistakes printed in the book", generated: "› Generated content", answers: "› Answers we wrote", tiers: "› How hard each book question is", objectives: "› Lesson goals and how they connect", maths: "› Formulas read two ways", g2: "› Book questions we're unsure about", held: "› Practice sets that failed our checks" };
+const TASKS = { home: "", label: "› Spot-check what we read from the book", misprints: "› Mistakes printed in the book", generated: "› Generated content", answers: "› Answers we wrote", tiers: "› How hard each book question is", objectives: "› Lesson goals and how they connect", maths: "› Formulas read two ways", g2: "› Book questions we're unsure about", held: "› Practice sets that failed our checks", context: "› Real-life context for each goal" };
 // ---- PLAIN ENGLISH (Tamer, 2026-10-21: "easier to comprehend by someone non technical … clear about what is the issue").
 // Every item opens with the same three lines, written from fixed rules (no AI): what it is, the problem (or that
 // there is none), and what each choice does for students. Where a checker explained the problem in its own words,
@@ -798,6 +798,14 @@ function plainBox(task, a = {}) {
     problem = `Nothing was made from it, because ${heldReason(d.reasons)}.`;
     theirs = (d.reasons || []).join(" · ");
     choices = "Send back: it's rewritten on the next pipeline run (paid). Drop: final — this lesson gets less practice.";
+  } else if (task === "context") {
+    const d = a.d, p = d.passage, KN = { real_life: "a real-life opener", concept_intro: "an introduction to the idea", none: "not context" };
+    head = `A passage from the book${where(p.page)}, used to open a lesson goal`;
+    problem = d.state === "held"
+      ? `Our two sorts disagree: one says ${esc(d.A ? KN[d.A.kind] + " for " + d.A.objective : "nothing")}, the other ${esc(d.B ? KN[d.B.kind] + " for " + d.B.objective : "nothing")}. It is kept out of lessons until you decide.`
+      : d.state === "used" ? `Both sorts agree it's ${esc(KN[p.kind])} for ${esc(d.objective)}, so lessons already use it.`
+      : d.state === "not_context" ? "Both sorts agree it isn't context, so lessons don't use it." : "None found.";
+    choices = "Keep: pick what it is and which goal it opens (or the whole lesson); the lesson retells it there. Drop: lessons never use it.";
   } else if (task === "tiers") {
     const t = a.d.tier, rs = (t.readings || []).map((r) => r.tier).filter(Boolean);
     head = `How hard is this question?${where(t.page)}`;
@@ -880,7 +888,7 @@ function show(v) {
   $("#tools").innerHTML = "";
   if ($("#detail")) $("#detail").innerHTML = "";   // never leave the previous task's item showing in this one
   if (location.hash.slice(1) !== v) history.replaceState(null, "", "#" + v);
-  return v === "home" ? renderHome() : v === "label" ? openLabel() : v === "misprints" ? openMisprints() : v === "answers" ? openAnswers() : v === "tiers" ? openTiers() : v === "objectives" ? openObjectives() : v === "maths" ? openMaths() : v === "g2" ? openG2() : v === "held" ? openHeld() : openGenerated();
+  return v === "home" ? renderHome() : v === "label" ? openLabel() : v === "misprints" ? openMisprints() : v === "answers" ? openAnswers() : v === "tiers" ? openTiers() : v === "objectives" ? openObjectives() : v === "maths" ? openMaths() : v === "g2" ? openG2() : v === "held" ? openHeld() : v === "context" ? openContext() : openGenerated();
 }
 $("#homelink").onclick = () => show("home");
 window.addEventListener("hashchange", () => { const v = location.hash.slice(1); if (v in TASKS && v !== view) show(v); });
@@ -890,14 +898,15 @@ const homeBook = () => store.get("rv-home-book") || "all";
 function openOnHomeBook(lessons) {
   const b = homeBook();
   if (b === "all") return;
-  for (const k of ["rv-abook", "rv-tbook", "rv-mbook", "rv-g2book", "rv-gbook", "rv-obook", "rv-hbook"]) store.set(k, b);
+  for (const k of ["rv-abook", "rv-tbook", "rv-mbook", "rv-g2book", "rv-gbook", "rv-obook", "rv-hbook", "rv-cbook"]) store.set(k, b);
   const last = store.get("rv-lesson") || "";
   if (!last.startsWith(b + "|")) { const l = lessons.find((x) => x.book === b); if (l) store.set("rv-lesson", `${l.book}|${l.slug}`); }
 }
 async function renderHome() {
   const [ls0, ms0, gb, ab, tb, ob, mb, g2b] = await Promise.all([getJSON("/api/lessons"), getJSON("/api/misprints"), getJSON("/api/generated/books"), getJSON("/api/answers/books"), getJSON("/api/tiers/books"), getJSON("/api/objectives/books"), getJSON("/api/maths/books"), getJSON("/api/g2/books")]);
   const hb0 = await getJSON("/api/held/books");
-  const allBooks = [...new Set([...ls0.map((l) => l.book), ...ms0.map((m) => m.book), ...gb, ...ab, ...tb, ...ob, ...mb, ...g2b, ...hb0])].sort();
+  const cb0 = await getJSON("/api/context/books");
+  const allBooks = [...new Set([...ls0.map((l) => l.book), ...ms0.map((m) => m.book), ...gb, ...ab, ...tb, ...ob, ...mb, ...g2b, ...hb0, ...cb0])].sort();
   let hb = homeBook();
   if (hb !== "all" && !allBooks.includes(hb)) { hb = "all"; store.set("rv-home-book", hb); }
   const mine = (b) => hb === "all" || b === hb;
@@ -905,6 +914,8 @@ async function renderHome() {
   const g2s = (await Promise.all(g2books.map((b) => getJSON(`/api/g2?book=${encodeURIComponent(b)}`)))).flat();
   const hs = (await Promise.all(hb0.filter(mine).map((b) => getJSON(`/api/held?book=${encodeURIComponent(b)}`)))).flat();
   const hOpen = hs.filter((h) => h.state === "open" || h.state === "changed");
+  const cs = (await Promise.all(cb0.filter(mine).map((b) => getJSON(`/api/context?book=${encodeURIComponent(b)}`)))).flat();
+  const cOpen = cs.filter((c) => c.state === "held" || c.state === "changed");
   const g2Open = g2s.filter((x) => x.state === "open" || x.state === "changed");
   const mrs = (await Promise.all(mbooks.map((b) => getJSON(`/api/maths?book=${encodeURIComponent(b)}`)))).flat();
   const mrOpen = mrs.filter((m) => m.state === "open" || m.state === "changed");
@@ -973,6 +984,12 @@ async function renderHome() {
       ifNot: "That lesson gets less practice than planned.",
       then: "\"Send back\" has it rewritten on the next pipeline run (paid); \"Drop\" is final. Neither needs a refresh to be recorded.",
       open: () => show("held") },
+    context: { band: "should", title: "Real-life context for each goal", n: cOpen.length, unit: "to decide",
+      what: "The book's own real-life stories and introductions, sorted twice and filed under the goal each one opens. The lesson opens each goal with it.",
+      ifNot: "Passages both sorts agreed on are already used. The ones they disagreed on stay out of lessons until you keep them.",
+      then: "Refresh (free) to use what you kept and drop what you dropped.",
+      sub: `${cs.filter((c) => c.state === "used" || (c.state === "decided" && c.kind !== "dropped")).length} passages in use · ${cs.filter((c) => c.state === "not_context").length} sorted as not context`,
+      open: () => show("context") },
     label: { band: "optional", title: "Spot-check what we read from the book", n: all - done, unit: "unchecked",
       what: "Compare what the pipeline read with the page itself. What you confirm becomes our answer key for measuring it.",
       ifNot: "Nothing changes for students — this measures how well we read the book.",
@@ -994,7 +1011,7 @@ async function renderHome() {
       </button>`;
   // what the book has not taken in yet, and the follow-ups a refresh cannot do
   const pend = hb === "all" ? null : await getJSON(`/api/pending?book=${encodeURIComponent(hb)}`);
-  const TASK_NAMES = { misprints: "mistakes in the book", answers: "answers", objectives: "lesson goals", g2: "book questions", maths: "formulas", tiers: "question levels", held: "failed practice sets", generated: "generated content" };
+  const TASK_NAMES = { misprints: "mistakes in the book", answers: "answers", objectives: "lesson goals", g2: "book questions", maths: "formulas", tiers: "question levels", held: "failed practice sets", generated: "generated content", context: "real-life context" };
   const paid = [
     [as.filter((a) => a.state === "fix_requested").length, "answer", "answers", "to be rewritten"],
     [gs.filter((g) => g.state === "fix_requested").length, "generated item", "generated items", "to be rewritten"],
@@ -1487,6 +1504,110 @@ async function heldDecide(decision) {
   const vis = hVisible().map((x) => x.i);
   hi = vis.find((i) => i > hi) ?? vis[0] ?? -1;
   renderHeld();
+}
+
+/* ---------- Real-life context (S1C) ---------- */
+let ctxRows = [], ci = -1, cDetail = null;
+const CSTATE = { decided: "Decided", changed: "The passage or the lesson's goals changed since it was decided", held: "The two sorts disagree: kept out of lessons", used: "Both sorts agree: in use", not_context: "Both sorts agree: not context" };
+const CKIND = { real_life: "Real-life opener", concept_intro: "Introduction to the idea", dropped: "Dropped", none: "Not context" };
+function cVisible() {
+  const l = $("#clesson").value, w = $("#cshow").value;
+  return ctxRows.map((c, i) => ({ c, i })).filter(({ c }) => (l === "all" || c.lesson === l) && (
+    w === "all" ? true : w === "todo" ? c.state === "held" || c.state === "changed" : w === "used" ? c.state === "used" || (c.state === "decided" && c.kind !== "dropped") : c.state === "decided"));
+}
+async function openContext() {
+  const books = await getJSON("/api/context/books");
+  $("#tools").innerHTML = `
+    <label>Book <select id="cbook">${books.map((b) => `<option>${esc(b)}</option>`).join("")}</select></label>
+    <label>Lesson <select id="clesson"></select></label>
+    <label>Show <select id="cshow"><option value="todo">To decide</option><option value="used">In use</option><option value="done">Decided</option><option value="all">All</option></select></label>
+    <div class="progress"><div class="bar"><div id="cbar" style="width:0"></div></div><div id="cprog" class="muted"></div></div>
+    <span class="grow"></span>
+    <span class="kbd muted">j/k move · a keep · x drop</span>`;
+  if (!books.length) {
+    $("#list").innerHTML = '<p class="muted" style="padding:8px">No context yet. It is made by the pipeline after the goals are approved (book_record_context.py).</p>';
+    $("#detail").innerHTML = ""; return;
+  }
+  const saved = store.get("rv-cbook"); if (saved && books.includes(saved)) $("#cbook").value = saved;
+  $("#cbook").onchange = () => { store.set("rv-cbook", $("#cbook").value); $("#cbook").blur(); loadContext(); };
+  $("#cshow").value = store.get("rv-cshow") || "todo";
+  $("#cshow").onchange = () => { store.set("rv-cshow", $("#cshow").value); $("#cshow").blur(); ci = -1; renderContext(); };
+  $("#clesson").onchange = () => { $("#clesson").blur(); ci = -1; renderContext(); };
+  await loadContext();
+}
+async function loadContext() {
+  ctxRows = await getJSON(`/api/context?book=${encodeURIComponent($("#cbook").value)}`);
+  const lessons = [...new Set(ctxRows.map((c) => c.lesson))];
+  $("#clesson").innerHTML = `<option value="all">All lessons</option>${lessons.map((l) => `<option>${esc(l)}</option>`).join("")}`;
+  ci = -1; renderContext();
+}
+function renderContext() {
+  const used = ctxRows.filter((c) => c.state === "used" || (c.state === "decided" && c.kind !== "dropped")).length;
+  const left = ctxRows.filter((c) => c.state === "held" || c.state === "changed").length;
+  $("#cbar").style.width = `${ctxRows.length ? (100 * (ctxRows.length - left)) / ctxRows.length : 0}%`;
+  $("#cprog").textContent = `${left} to decide · ${used} in use · ${ctxRows.length} passages read`;
+  const vis = cVisible();
+  if (!vis.some((x) => x.i === ci)) ci = vis[0]?.i ?? -1;
+  const dot = (c) => c.state === "decided" ? '<span class="dot s-done">✓</span>' : c.state === "used" ? '<span class="dot s-done">·</span>'
+    : c.state === "not_context" ? '<span class="dot s-none">·</span>' : '<span class="dot s-disp" title="the sorts disagree">!</span>';
+  let last = null, html = "";
+  for (const { c, i } of vis) {
+    if (c.lesson !== last) { html += `<h3>${esc(c.lesson)}</h3>`; last = c.lesson; }
+    html += `<button class="rec${i === ci ? " sel" : ""}" data-i="${i}">${dot(c)}<span class="t">${esc(c.title)} <span class="muted">· ${esc(CKIND[c.kind] || "undecided")}${c.kind && c.kind !== "none" && c.kind !== "dropped" ? ` → ${esc(c.objective)}` : ""}</span></span></button>`;
+  }
+  $("#list").innerHTML = html || '<p class="muted" style="padding:8px">Nothing here. Change the filters above.</p>';
+  $("#list").querySelectorAll(".rec").forEach((b) => (b.onclick = () => { ci = Number(b.dataset.i); renderContext(); }));
+  $("#list .rec.sel")?.scrollIntoView({ block: "nearest" });
+  if (ci < 0) { $("#detail").innerHTML = '<div class="card"><h2>Nothing to show</h2><div class="muted">Every passage in this view is decided.</div></div>'; return; }
+  showContext(ctxRows[ci]);
+}
+async function showContext(row) {
+  const book = $("#cbook").value;
+  const d = cDetail = await getJSON(`/api/context/item?book=${encodeURIComponent(book)}&ref=${encodeURIComponent(row.ref)}`);
+  const p = d.passage, dec = d.decision, me = meNow();
+  const kindNow = dec && dec.decision === "keep" ? dec.kind : p.kind && p.kind !== "none" ? p.kind : (d.A && d.A.kind !== "none" ? d.A.kind : "real_life");
+  const objNow = dec && dec.decision === "keep" ? dec.objective : (p.kind && p.kind !== "none" ? (d.objectives.find((o) => d.objective.startsWith(`${o.n}.`)) || { n: 0 }).n : 0);
+  const reading = (r, name) => `<div style="margin-top:4px"><b>${esc(name)}:</b> ${r ? `${esc(CKIND[r.kind] || r.kind)}${r.kind !== "none" ? ` for ${esc(r.objective)}` : ""} <span class="muted">— ${esc(r.why || "")}</span>` : "no answer"}</div>`;
+  $("#detail").innerHTML = `<div class="card">${plainBox("context", { d })}
+    <div class="muted">Real-life context · ${esc(book)} · chapter ${esc(d.chapter)} · ${esc(d.lesson)} ${esc(d.title || "")} · printed p.${esc(p.page ?? "?")} · <span style="font-family:var(--stack-mono),monospace;font-size:12px">${esc(p.key)}</span></div>
+    <div class="why"><span class="label">The book says</span><div style="font-size:15px">${md(p.text || "")}</div></div>
+    <div class="${d.state === "held" || d.state === "changed" ? "warn" : "gen"}"><span class="label">The two sorts</span>${reading(d.A, "First")}${reading(d.B, "Second")}</div>
+    ${d.real_life_questions.length ? `<div class="why"><span class="label">This lesson's questions set in a real situation</span><div class="muted">${d.real_life_questions.map(esc).join(" · ")}</div></div>` : ""}
+    <div class="why"><span class="label">Keep it as</span><div class="actions" style="flex-wrap:wrap">
+      <label>What it is <select id="ckind"><option value="real_life">Real-life opener</option><option value="concept_intro">Introduction to the idea</option></select></label>
+      <label>Opens <select id="cobj"><option value="0">the whole lesson</option>${d.objectives.map((o) => `<option value="${o.n}">${o.n}. ${esc(o.label)}</option>`).join("")}</select></label>
+    </div></div>
+    <div class="who">${dec ? `<b>${dec.decision === "keep" ? `Kept as ${esc(CKIND[dec.kind])}` : "Dropped"}</b> by ${esc(dec.by)} on ${esc(dec.at)}${dec.note ? ` · ${md(dec.note)}` : ""}${d.state === "changed" ? " · <b>it changed since</b>, so it is back" : ""}` : esc(CSTATE[d.state])}</div>
+    <div class="actions">
+      <button class="confirm" id="ckeep" ${!me ? "disabled" : ""}>Keep (a)</button><button class="dispute" id="cdrop" ${!me ? "disabled" : ""}>Drop (x)</button>
+      <span class="grow"></span><button id="cprev">‹ Prev (k)</button><button id="cnext">Next (j) ›</button>
+    </div>
+    ${!me ? '<div class="muted" style="margin-top:8px">Type your initials at the top to decide.</div>' : ""}
+    <div class="muted" style="margin-top:8px">Decisions are kept in services/extraction/reviews/${esc(book)}/context-review.json. Lessons retell the book's words; they never add a story the book doesn't print.</div>
+  </div>`;
+  $("#ckind").value = kindNow; $("#cobj").value = String(objNow);
+  renderMathInElement($("#detail"), { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false });
+  $("#ckeep").onclick = () => ctxDecide("keep"); $("#cdrop").onclick = () => ctxDecide("drop");
+  $("#cprev").onclick = () => ctxMove(-1); $("#cnext").onclick = () => ctxMove(1);
+}
+function ctxMove(dir) {
+  const vis = cVisible().map((x) => x.i); if (!vis.length) return;
+  let q = vis.indexOf(ci); q = q < 0 ? 0 : Math.min(Math.max(q + dir, 0), vis.length - 1);
+  ci = vis[q]; renderContext();
+}
+async function ctxDecide(decision) {
+  const row = ctxRows[ci]; if (!row || !meNow()) return;
+  const body = { book: $("#cbook").value, ref: row.ref, decision, by: meNow() };
+  if (decision === "keep") { body.kind = $("#ckind").value; body.objective = Number($("#cobj").value); }
+  $("#saved").textContent = "Saving…";
+  const res = await fetch("/api/context/decision", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  const out = await res.json().catch(() => ({}));
+  if (!res.ok) { $("#saved").textContent = "Save failed: " + (out.error || res.status); return; }
+  $("#saved").textContent = `Saved ${new Date().toLocaleTimeString()}`;
+  ctxRows = await getJSON(`/api/context?book=${encodeURIComponent($("#cbook").value)}`);
+  const vis = cVisible().map((x) => x.i);
+  ci = vis.find((i) => i > ci) ?? vis[0] ?? -1;
+  renderContext();
 }
 
 /* ---------- Question tiers ---------- */
@@ -2251,7 +2372,7 @@ async function genDecide(decision, note, correction) {
 
 /* ---------- boot ---------- */
 $("#me").value = store.get("gt-me") || "";
-$("#me").oninput = () => { store.set("gt-me", meNow()); if (view === "label") renderAll(); else if (view === "misprints") renderMp(false); else if (view === "generated" && gi >= 0) showGenItem(gen[gi]); else if (view === "answers" && ai >= 0) showAnswer(ans[ai]); else if (view === "tiers" && ti >= 0) showTier(tiersRows[ti]); else if (view === "objectives" && oi >= 0) showObjective(objRows[oi]); else if (view === "maths" && mri >= 0) showMaths(mrRows[mri]); else if (view === "g2" && g2i >= 0) showG2(g2Rows[g2i]); else if (view === "held" && hi >= 0) showHeld(heldRows[hi]); };
+$("#me").oninput = () => { store.set("gt-me", meNow()); if (view === "label") renderAll(); else if (view === "misprints") renderMp(false); else if (view === "generated" && gi >= 0) showGenItem(gen[gi]); else if (view === "answers" && ai >= 0) showAnswer(ans[ai]); else if (view === "tiers" && ti >= 0) showTier(tiersRows[ti]); else if (view === "objectives" && oi >= 0) showObjective(objRows[oi]); else if (view === "maths" && mri >= 0) showMaths(mrRows[mri]); else if (view === "g2" && g2i >= 0) showG2(g2Rows[g2i]); else if (view === "held" && hi >= 0) showHeld(heldRows[hi]); else if (view === "context" && ci >= 0) showContext(ctxRows[ci]); };
 show(location.hash.slice(1) in TASKS ? location.hash.slice(1) : "home");
 
 document.addEventListener("keydown", (e) => {
@@ -2297,6 +2418,12 @@ document.addEventListener("keydown", (e) => {
     if (e.key === "j") heldMove(1); else if (e.key === "k") heldMove(-1);
     else if (e.key === "d" && meNow()) heldDecide("drop");
     else if (e.key === "s" && meNow()) { e.preventDefault(); $("#hnote")?.focus(); }
+    return;
+  }
+  if (view === "context") {
+    if (e.key === "j") ctxMove(1); else if (e.key === "k") ctxMove(-1);
+    else if (e.key === "a" && meNow()) ctxDecide("keep");
+    else if (e.key === "x" && meNow()) ctxDecide("drop");
     return;
   }
   if (view === "tiers") {

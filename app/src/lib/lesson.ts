@@ -10,7 +10,7 @@ import { masteryLabel } from "./mastery";
 import { gradeLabel } from "./profile";
 import type { AskContext } from "./ask";
 import { getLessonContent, type LessonContent } from "./lesson-content";
-import { bookStatementsBlock, getBookStatements, statementCount } from "./book-statements";
+import { bookStatementsBlock, contextCount, getBookStatements, statementCount } from "./book-statements";
 import { getLessonBridges } from "./subject-queries";
 import { resolveStudentScope, visibleCoursesFor } from "./catalog-queries";
 import { getVisualsForLos } from "./visuals";
@@ -1566,6 +1566,18 @@ function lessonPromptKit(subject: Subject): LessonPromptKit {
  * decided. `false` renders the prompt v0.6.0 sent, byte for byte
  * (`probing-prompts.test.mts`).
  */
+/**
+ * How the tutor uses THE BOOK'S CONTEXT (lib/book-statements.ts; Tamer, 2026-10-22: "context and real life
+ * examples for each learning objective", continuity without a story on every drill). Only in a lesson that
+ * carries context; it ends with a newline so the line after it starts as it always did.
+ */
+const CONTEXT_RULES = (a: AddressForms) => `OBJECTIVE CONTEXT (THE BOOK'S CONTEXT in the data block):
+- OPEN EACH OBJECTIVE WITH ITS CONTEXT before asking anything about it: 1–2 beats retelling the book's real-life opener or introduction for that objective in your own words, cited [[page:N]], then an ask about it — a question about the situation that uses only the numbers the book's text gives, or the objective's first question. An objective with no context of its own: the lesson's opener ("the whole lesson") when it fits this objective, otherwise one beat on why the idea matters, from the objective's description and THE BOOK'S STATEMENTS.
+- COME BACK TO THE STORY AT MOST TWICE MORE PER OBJECTIVE: once with one of that objective's real-life questions (shown with {{show_question}} exactly as it is), and once as the objective closes ("back to the doses: …"). Carry the same story into the next objective when it sets that one up too.
+- THE DRILLS STAY AS THEY ARE: never rephrase a question into the story or add a story to its stem; at most one short line linking a drill back to it.
+- Never invent a situation, a number or a fact about the world that THE BOOK'S CONTEXT does not give. No context for anything: teach as usual.
+`;
+
 export function learnPrompt(data: LessonData, probing: boolean): string {
   const kit = lessonPromptKit(data.subject);
   // the course's facts: its Arabic touches, or none (answer 9 (decisions.md #30))
@@ -1573,8 +1585,11 @@ export function learnPrompt(data: LessonData, probing: boolean): string {
   // The register this student is addressed in (FR-2602). Every pronoun below
   // reads from it; there is no longer a literal one anywhere in this prompt.
   const a = addressForms(data.gender, data.studentName);
+  // A lesson carrying the book's context (lib/book-statements.ts, S1C) opens each objective with it; a lesson
+  // without any gets the prompt it always had, byte for byte.
+  const withContext = contextCount(data.bookStatements) > 0;
   const arc = data.los
-    .map((l, i) => `${l.id} "${l.label}" (${i === data.los.length - 1 ? "1–2" : "2–3"} messages)`)
+    .map((l, i) => `${l.id} "${l.label}" (${withContext ? "its context, then " : ""}${i === data.los.length - 1 ? "1–2" : "2–3"} messages)`)
     .join(" → ");
   // the subject's tap-only widgets (registry) — what a stuck student gets next.
   // A course that names its own unit's widgets offers only the tap widgets
@@ -1614,9 +1629,9 @@ ${kit.groundingRules(data)}
 
 ${languageContract(data.subject, facts, wordsExampleLo(data, facts))}
 
-LESSON ARC: greet ${a.them} in one line and start immediately → ${arc} → FINAL RETRIEVAL, then closing recap message with {{finish_lesson}}.
+LESSON ARC: greet ${a.them} in one line and ${withContext ? "open the first objective with its context" : "start immediately"} → ${arc} → FINAL RETRIEVAL, then closing recap message with {{finish_lesson}}.
 FINAL RETRIEVAL is its own message and it is not optional: before any recap, ask ${a.them} to bring back today's main idea FROM MEMORY, in ${a.their} own words, with nothing on screen to copy from — "without scrolling up, tell me what a radius actually is" / "what was the trick we used, in your own words?". Not a question card, not a widget: an open question. Then react to what ${a.they} say${a.s}, and only then recap and finish. A lesson that ends by telling ${a.them} what ${a.they} learned has skipped the part that makes it stick.
-If ${a.they} say${a.s} ${a.they} want${a.s} to stop, or a [live event] says ${a.they} tapped Finish, give one warm closing line then {{finish_lesson}}.
+${withContext ? CONTEXT_RULES(a) : ""}If ${a.they} say${a.s} ${a.they} want${a.s} to stop, or a [live event] says ${a.they} tapped Finish, give one warm closing line then {{finish_lesson}}.
 
 ${sharedProtocol(data, rhythm)}`;
 }
