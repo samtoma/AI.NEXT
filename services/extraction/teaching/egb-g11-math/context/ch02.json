@@ -1,0 +1,1822 @@
+{
+ "format": "ainext.context/1",
+ "book": "egb-g11-math",
+ "chapter": 2,
+ "made": "2026-10-22",
+ "made_by": "book_record_context.py accept (context-v2)",
+ "run": "runs/egb-g11-math/context/context-ch02.20261022T142253Z.json",
+ "lessons": [
+  {
+   "slug": "eb11c2-1",
+   "title": "Arithmetic Sequences",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c2-1:objective-1",
+     "label": "General term of a sequence",
+     "description": "Calculate terms of a sequence from its general term, and deduce the general term of a sequence from the pattern of its first few terms."
+    },
+    {
+     "n": 2,
+     "id": "eb11c2-1:objective-2",
+     "label": "General term of an arithmetic sequence",
+     "description": "Determine the first term and common difference of an arithmetic sequence, find missing terms, and calculate its general term and specific terms using a_n = a + (n-1)d."
+    },
+    {
+     "n": 3,
+     "id": "eb11c2-1:objective-3",
+     "label": "General term from given conditions",
+     "description": "Determine the general term of an arithmetic sequence from two given conditions, find which term has a given value, and use 2b = a + c when three numbers form an arithmetic sequence."
+    },
+    {
+     "n": 4,
+     "id": "eb11c2-1:objective-4",
+     "label": "Sum of an arithmetic sequence",
+     "description": "Calculate the sum S_n of an arithmetic sequence, including sums of a block of terms, sums of natural numbers or multiples, finding the number of terms first when unknown."
+    },
+    {
+     "n": 5,
+     "id": "eb11c2-1:objective-5",
+     "label": "Use a given sum",
+     "description": "Determine the number of terms or the general term from a given sum, and determine the number of terms giving the maximum sum of an arithmetic sequence."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c2-1:linking-text-1",
+     "page": 40,
+     "text": "Imagine you are a personal trainer designing a recovery program for an injured athlete. You have them jog for 10 minutes a day on week one, increasing it by exactly 3 minutes every subsequent week (13 minutes, then 16, then 19...). This constant linear increase is an arithmetic sequence in action. In medicine and biology, these fixed patterns govern critical processes like the hourly rate at which the liver clears toxins or how cells divide over time. Instead of adding the schedule week by week to find your patient's training duration on Week 24 or their total accumulated running time over several months, arithmetic formulas deliver these exact answers instantly.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "A trainer's jogging schedule rising 3 minutes a week pictures the arithmetic sequence and sets up the whole lesson (terms and sums)."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "A personal trainer's recovery program with weekly jogging increases motivates arithmetic sequences, term and total, for the whole lesson."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 0,
+     "fingerprint": "4da58da1d8ba55b1"
+    },
+    {
+     "key": "eb11c2-1:open-prompt-1",
+     "page": 40,
+     "text": "Guiding Question: How can constant rates of additive change be modeled mathematically to determine both specific individual terms and total cumulative sums across a sequence?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's Guiding Question asks why and how constant additive change is modelled, covering terms and sums."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's Guiding Question introduces why and what of modelling constant additive change, covering terms and sums for the whole lesson."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "77aa415539e79f70"
+    },
+    {
+     "key": "eb11c2-1:linking-text-2",
+     "page": 41,
+     "text": "1. Substitute $n=1,2,3$ into $a_n=\\frac{n}{n+1}$: $a_1=\\frac{1}{1+1}=\\frac{1}{2}$, $a_2=\\frac{2}{2+1}=\\frac{2}{3}$, $a_3=\\frac{3}{3+1}=\\frac{3}{4}$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked step substituting n=1,2,3 into a formula."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a worked substitution of n=1,2,3 into a formula."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "add200ff9e00ee52"
+    },
+    {
+     "key": "eb11c2-1:linking-text-3",
+     "page": 41,
+     "text": "2. Create a formula by considering the regularity. (a) Since it is $(\\text{term number}-1)^2$, $a_n=(n-1)^2$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked step of deducing a formula from a pattern."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a step of a worked solution finding a formula from a pattern."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c627fdc255f36641"
+    },
+    {
+     "key": "eb11c2-1:linking-text-4",
+     "page": 41,
+     "text": "(b) For sequences with alternating signs, consider the sign part and the number part separately. Sign: the first term is \"+\" and it alternates, $(-1)^{n-1}$. Number: it is $2\\times(\\text{term number})$, $2n$. Therefore, $a_n=(-1)^{n-1}\\times 2n$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked step on alternating signs in a solution."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a step of a worked solution for an alternating sign sequence."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "a77da5ee72e58880"
+    },
+    {
+     "key": "eb11c2-1:linking-text-5",
+     "page": 41,
+     "text": "(c) For fractional sequences, consider the denominator and numerator separately. The denominator is $2\\times(\\text{term number})-1$, so $2n-1$. The numerator is (term number), so $n$. Therefore, $a_n=\\frac{n}{2n-1}$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked step on numerator and denominator in a solution."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a step of a worked solution for a fractional sequence."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e97884006369af46"
+    },
+    {
+     "key": "eb11c2-1:linking-text-11",
+     "page": 43,
+     "text": "Example: An arithmetic sequence with the first term 1 and the common difference 3: 1, 4, 7, 10, 13, ... (each step +3)",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A numerical example of a sequence, with no outside situation or reason why."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a bare example of an arithmetic sequence, not a motivating situation or introduction."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "2c3284b3d6a064d5"
+    },
+    {
+     "key": "eb11c2-1:reflect-1",
+     "page": 56,
+     "text": "\"If the water level in a lake decreases by a fixed amount each day, how can understanding arithmetic sequences help us predict when the water will run out?\"",
+     "type": "open prompt",
+     "A": {
+      "kind": "closing_reflection",
+      "objective": 0,
+      "why": "It looks back on what arithmetic sequences let us predict, across the whole lesson."
+     },
+     "B": {
+      "kind": "closing_reflection",
+      "objective": 5,
+      "why": "Asks, after the work on sums, how arithmetic sequences predict when a lake's water runs out, looking back on using sums/terms to find when a limit is reached."
+     },
+     "status": "agreed",
+     "kind": "closing_reflection",
+     "objective": 0,
+     "placed": "the whole lesson: the readings named it and one objective",
+     "fingerprint": "a8db96c03e40e083"
+    },
+    {
+     "key": "eb11c2-1:linking-text-6",
+     "page": 41,
+     "text": "Side note: If the first term is \"−\" and it alternates, it is $(-1)^n$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "df125170b499e042"
+    },
+    {
+     "key": "eb11c2-1:linking-text-7",
+     "page": 41,
+     "text": "Side note: Even numbers are $2n$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "1fbbe3229ead4943"
+    },
+    {
+     "key": "eb11c2-1:linking-text-8",
+     "page": 41,
+     "text": "Side note: Odd numbers are $2n-1$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "ed7d902c4e501902"
+    },
+    {
+     "key": "eb11c2-1:linking-text-9",
+     "page": 41,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "fd8324c16c889d85"
+    },
+    {
+     "key": "eb11c2-1:linking-text-10",
+     "page": 42,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "f59484393fe7ee55"
+    },
+    {
+     "key": "eb11c2-1:linking-text-12",
+     "page": 43,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "df8e16ebfc8ae1d7"
+    },
+    {
+     "key": "eb11c2-1:linking-text-13",
+     "page": 44,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "40fb3e858fef74d6"
+    },
+    {
+     "key": "eb11c2-1:linking-text-14",
+     "page": 46,
+     "text": "Side note: Considering a, b, c with +d from a to b and +d from b to c: 2b = (a + d) + (c − d) = a + c.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e3f8334cccf40a37"
+    },
+    {
+     "key": "eb11c2-1:linking-text-15",
+     "page": 46,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "baaeae6ec2815ece"
+    },
+    {
+     "key": "eb11c2-1:linking-text-16",
+     "page": 47,
+     "text": "Side note beside the start: First find the general term.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "317922e6d6a2beaf"
+    },
+    {
+     "key": "eb11c2-1:linking-text-17",
+     "page": 47,
+     "text": "Side note beside part (b): Convert to decimal to consider.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e38fc7ad66493b91"
+    },
+    {
+     "key": "eb11c2-1:linking-text-18",
+     "page": 47,
+     "text": "Side note beside example 3: $2b = a + c$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "1e8497dffed4b9f4"
+    },
+    {
+     "key": "eb11c2-1:linking-text-19",
+     "page": 47,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "bea9f95907a66afd"
+    },
+    {
+     "key": "eb11c2-1:linking-text-20",
+     "page": 47,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "0a266868b62d1aaa"
+    },
+    {
+     "key": "eb11c2-1:linking-text-21",
+     "page": 48,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "572060f2a127c3a1"
+    },
+    {
+     "key": "eb11c2-1:linking-text-22",
+     "page": 49,
+     "text": "Side note: Substitute $l=a+(n-1)d$ into the above formula.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c5d2c6dac4f522f1"
+    },
+    {
+     "key": "eb11c2-1:linking-text-23",
+     "page": 50,
+     "text": "Side note beside (d): Since the number of terms is $n$, evaluate the expression in terms of $n$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "286d3b90e8c950fb"
+    },
+    {
+     "key": "eb11c2-1:linking-text-24",
+     "page": 50,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "892c2a963debbffd"
+    },
+    {
+     "key": "eb11c2-1:linking-text-25",
+     "page": 50,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "2d273bd30a9f568a"
+    },
+    {
+     "key": "eb11c2-1:linking-text-26",
+     "page": 51,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "459ec6d5e2a4877e"
+    },
+    {
+     "key": "eb11c2-1:linking-text-27",
+     "page": 53,
+     "text": "Side note: Since the number of terms $n$ is unknown, find $n$ using $l = a + (n-1)d$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "095e9ca7152a9224"
+    },
+    {
+     "key": "eb11c2-1:linking-text-28",
+     "page": 53,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "dfff7043b0a2c337"
+    },
+    {
+     "key": "eb11c2-1:linking-text-29",
+     "page": 54,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "4cfab314aca8a98e"
+    },
+    {
+     "key": "eb11c2-1:linking-text-30",
+     "page": 55,
+     "text": "Side note (to point 2): To find the general term, you need the first term $a$ and the common difference $d$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "1e19dc760a8d068c"
+    },
+    {
+     "key": "eb11c2-1:linking-text-31",
+     "page": 55,
+     "text": "Side note (to point 3): Find up to which term the terms are positive.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "de753a7896ef08c1"
+    },
+    {
+     "key": "eb11c2-1:linking-text-32",
+     "page": 55,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "b888a5889200fcf5"
+    },
+    {
+     "key": "eb11c2-1:linking-text-33",
+     "page": 55,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "b35e2303edff99d6"
+    }
+   ],
+   "bridges": [],
+   "bridges_disputed": []
+  },
+  {
+   "slug": "eb11c2-2",
+   "title": "Geometric Sequences",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c2-2:objective-1",
+     "label": "General term from first term, ratio",
+     "description": "Calculate the general term a_n = ar^{n-1} of a geometric sequence from its first term and common ratio or from listed terms, and find the common ratio and missing terms."
+    },
+    {
+     "n": 2,
+     "id": "eb11c2-2:objective-2",
+     "label": "Terms given; b² = ac",
+     "description": "Determine the general term of a geometric sequence from two given terms, and use b² = ac for three numbers in a geometric sequence, including with an arithmetic sequence."
+    },
+    {
+     "n": 3,
+     "id": "eb11c2-2:objective-3",
+     "label": "Sum of n terms",
+     "description": "Calculate the sum S_n of a geometric sequence of n terms using the formula for S_n."
+    },
+    {
+     "n": 4,
+     "id": "eb11c2-2:objective-4",
+     "label": "First term, ratio from sums",
+     "description": "Determine the first term and common ratio of a geometric sequence from conditions on a term and sums of some of its terms."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c2-2:linking-text-1",
+     "page": 57,
+     "text": "A single E. coli bacterium enters a bloodstream. Under ideal conditions, it does not just split into two; those two split into four, those four split into eight, doubling every 20 minutes. Within 24 hours, that single cell multiplies into a colony numbering in the sextillions—outnumbering the stars in the galaxy. This is the reality of geometric growth.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "A single E. coli bacterium doubling every 20 minutes is a picturable situation that motivates geometric growth for the whole lesson."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "A bacterium doubling every 20 minutes in the bloodstream motivates geometric growth for the whole lesson."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 0,
+     "fingerprint": "9a31b23f5285f4de"
+    },
+    {
+     "key": "eb11c2-2:guiding-question-1",
+     "page": 57,
+     "text": "How do processes with small starting values escalate rapidly, and how can we mathematically predict their cumulative impact over time?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question asks why small starting values escalate and how to predict their cumulative impact, which sets up the whole lesson."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's opening guiding question about rapid escalation and cumulative impact, setting up the whole lesson."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "13332a608cc7b24c"
+    },
+    {
+     "key": "eb11c2-2:linking-text-2",
+     "page": 57,
+     "text": "Example: A geometric sequence with the first term 1 and the common ratio 2: 1, 2, 4, 8, 16, ... (each step marked ×2)",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a bare example of a sequence (1, 2, 4, 8, 16, ...) with numbers, not a motivating situation or introduction."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A numeric example of a geometric sequence, not a motivating situation or intro sentence."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "3126f4313b033f10"
+    },
+    {
+     "key": "eb11c2-2:reflect-1",
+     "page": 67,
+     "text": "How does changing the common ratio r from a value greater than 1 to a value between 0 and 1 fundamentally alter the real-world behavior modeled by a geometric sequence?",
+     "type": "open prompt",
+     "A": {
+      "kind": "closing_reflection",
+      "objective": 0,
+      "why": "It looks back on how the ratio r changes the behaviour modelled, which covers the whole lesson rather than one objective."
+     },
+     "B": {
+      "kind": "closing_reflection",
+      "objective": 3,
+      "why": "Asks the student to look back on how the ratio changes the behavior of a geometric sequence after the sum work."
+     },
+     "status": "agreed",
+     "kind": "closing_reflection",
+     "objective": 0,
+     "placed": "the whole lesson: the readings named it and one objective",
+     "fingerprint": "41daa2a40e62dc11"
+    },
+    {
+     "key": "eb11c2-2:linking-text-3",
+     "page": 59,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "ac9517e9249c31be"
+    },
+    {
+     "key": "eb11c2-2:linking-text-4",
+     "page": 59,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "d5335ff08d85201e"
+    },
+    {
+     "key": "eb11c2-2:linking-text-5",
+     "page": 59,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e2a5839b341ba39f"
+    },
+    {
+     "key": "eb11c2-2:linking-text-6",
+     "page": 60,
+     "text": "Side note: Considering a, b, c with each term multiplied by r: b = ar, c = ar². b² = (ar)² = a²r² ......(i); ac = a × ar² = a²r² ......(ii). From (i) and (ii), b² = ac.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "95c9bd5aa272f4ce"
+    },
+    {
+     "key": "eb11c2-2:linking-text-7",
+     "page": 60,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c1182a854b672421"
+    },
+    {
+     "key": "eb11c2-2:linking-text-8",
+     "page": 61,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "94bc9742a3fb7e8a"
+    },
+    {
+     "key": "eb11c2-2:linking-text-9",
+     "page": 61,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "18b1cf04c5b82e8b"
+    },
+    {
+     "key": "eb11c2-2:linking-text-10",
+     "page": 63,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "b30d9b6aae2948c6"
+    },
+    {
+     "key": "eb11c2-2:linking-text-11",
+     "page": 66,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "98736c5c7135d721"
+    }
+   ],
+   "bridges": [
+    {
+     "key": "eb11c2-2:challenge-2",
+     "objective": 2
+    },
+    {
+     "key": "eb11c2-2:challenge-3",
+     "objective": 3
+    }
+   ],
+   "bridges_disputed": []
+  },
+  {
+   "slug": "eb11c2-3",
+   "title": "Summation",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c2-3:objective-1",
+     "label": "Write and expand Σ",
+     "description": "Write a sum given with the summation symbol Σ as a sum of terms, and express a sum of terms or of a general term using Σ."
+    },
+    {
+     "n": 2,
+     "id": "eb11c2-3:objective-2",
+     "label": "Evaluate sums with formulas",
+     "description": "Calculate sums in terms of n using the summation properties and the formulas for constants, k, k², k³ and geometric sequences, and evaluate sums with numerical limits."
+    },
+    {
+     "n": 3,
+     "id": "eb11c2-3:objective-3",
+     "label": "Sum fractional sequences",
+     "description": "Calculate the sum of fractional sequences by decomposing each term into partial fractions (or rationalizing square-root denominators) and cancelling terms."
+    },
+    {
+     "n": 4,
+     "id": "eb11c2-3:objective-4",
+     "label": "Sum arithmetic × geometric",
+     "description": "Find the sum of the product of an arithmetic sequence and a geometric sequence using S − rS."
+    },
+    {
+     "n": 5,
+     "id": "eb11c2-3:objective-5",
+     "label": "General term and sum S_n",
+     "description": "Find the k-th term and the sum S_n of a sequence whose terms are themselves sums, and find the general term a_n from S_n using a_n = S_n − S_{n−1} for n ≥ 2 and a_1 = S_1."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c2-3:linking-text-1",
+     "page": 68,
+     "text": "Forest recovery example: after a wildfire conservationists plant 200 saplings, adding 100 more each year (arithmetic progression 200, 300, 400...), while only 60% of trees survive from one year to the next (geometric decay, ratio 0.6). Calculating the total surviving population after a decade needs tracking how each year's planting cycle decays; summation notation gives a unified framework to analyze linear growth and exponential decay.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "Wildfire reforestation with yearly plantings that decay at 60% survival is a picturable story motivating summation for the whole lesson."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "Forest recovery after a wildfire motivates summation for combined linear growth and geometric decay across the lesson."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 0,
+     "fingerprint": "4b7b05c475685aaa"
+    },
+    {
+     "key": "eb11c2-3:open-prompt-1",
+     "page": 68,
+     "text": "Guiding Question: How can we simplify operations on sequences, such as multiplying terms or adding nested sums, to find a clear algebraic formula?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The Guiding Question asks why/what summation tools simplify sequence operations, introducing the lesson as a whole."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's Guiding Question about simplifying operations on sequences to get an algebraic formula."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "8a5a947c250ccc31"
+    },
+    {
+     "key": "eb11c2-3:linking-text-6",
+     "page": 71,
+     "text": "(a) $\\sum_{k=1}^{n} (-3) = -3n$ (explanation of Warm Up (a); continues on next page)",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a worked explanation of a Warm Up answer, not a motivating context."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "Explanation of a warm-up answer, not an introduction."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "de8470ab1b4b6338"
+    },
+    {
+     "key": "eb11c2-3:linking-text-17",
+     "page": 79,
+     "text": "The sum to be found is the sum of (Arithmetic sequence with first term 3, the common difference 2) × (Geometric sequence with the first term 1, the common ratio 3). Then S = 3×1+5×3+7×3²+9×3³+…+(2n+1)×3^{n−1}. Multiply both sides by the common ratio 3 of the geometric sequence: 3S = 3×3+5×3²+7×3³+9×3⁴+…+(2n+1)×3^n. Subtract the sides of the two equations: S−3S gives −2S = 3×1+2×3+2×3²+2×3³+…+2×3^{n−1} −(2n+1)×3^n; then −2S = 3 + 2(3^n−1)/(3−1) −2 −(2n+1)×3^n; −2S = 3^n −(2n+1)×3^n; −2S = −2n×3^n; S = n×3^n.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a worked solution applying S − rS step by step."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A step-by-step worked solution of the S − rS method."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e1622c60ba1b7b8b"
+    },
+    {
+     "key": "eb11c2-3:reflect-1",
+     "page": 84,
+     "text": "How did breaking down a complex, combined sequence (AGS) into its simpler parts (arithmetic and geometric components) change your perspective on tackling intimidating multi-step problems in life or science?",
+     "type": "open prompt",
+     "A": {
+      "kind": "closing_reflection",
+      "objective": 4,
+      "why": "It looks back on splitting an arithmetic-geometric sequence into its arithmetic and geometric parts, which is the S − rS method."
+     },
+     "B": {
+      "kind": "closing_reflection",
+      "objective": 4,
+      "why": "Asks the student to look back on how splitting an arithmetic×geometric sequence into parts helped."
+     },
+     "status": "agreed",
+     "kind": "closing_reflection",
+     "objective": 4,
+     "fingerprint": "48635e22d82a437a"
+    },
+    {
+     "key": "eb11c2-3:linking-text-2",
+     "page": 68,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "90fe46abafdb3734"
+    },
+    {
+     "key": "eb11c2-3:linking-text-3",
+     "page": 69,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "26cbe14d0254cdd3"
+    },
+    {
+     "key": "eb11c2-3:linking-text-4",
+     "page": 69,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "499e2effb1aa628e"
+    },
+    {
+     "key": "eb11c2-3:linking-text-5",
+     "page": 70,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "f5b416b42e764a50"
+    },
+    {
+     "key": "eb11c2-3:linking-text-7",
+     "page": 72,
+     "text": "Side note at (b) step 3: Do not expand the parentheses; factor out the fraction and common factor.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "529d6e279b37dcc9"
+    },
+    {
+     "key": "eb11c2-3:linking-text-8",
+     "page": 72,
+     "text": "Side note at (c) first line: Write using summation notation Σ",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e12d1c1c5784a38f"
+    },
+    {
+     "key": "eb11c2-3:linking-text-9",
+     "page": 72,
+     "text": "Side note at (c) k(5k − 2) step: Expand the expression inside the summation.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "3d6674cb24c92e4e"
+    },
+    {
+     "key": "eb11c2-3:linking-text-10",
+     "page": 72,
+     "text": "Side note at (c) step 5/6 n(n+1)(2n+1) − n(n+1): Do not expand the parentheses; factor out the fraction and common factor.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c6213c412510da6c"
+    },
+    {
+     "key": "eb11c2-3:linking-text-11",
+     "page": 72,
+     "text": "Side note at (d): Substitute 4 for n in the formula.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "916e802606d1e51a"
+    },
+    {
+     "key": "eb11c2-3:linking-text-12",
+     "page": 75,
+     "text": "Side note beside the line 1/12 n(n+1)(3n²+7n+2): Factorise if possible.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "b647d04f618b04ab"
+    },
+    {
+     "key": "eb11c2-3:linking-text-13",
+     "page": 75,
+     "text": "Side note beside (b): First term: 2, Common ratio: −3",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "13c8ca4b0d795078"
+    },
+    {
+     "key": "eb11c2-3:linking-text-14",
+     "page": 75,
+     "text": "Side note beside (c) $\\sum 4^k$: Write in the form $ar^{n-1}$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "0297d782d27874b5"
+    },
+    {
+     "key": "eb11c2-3:linking-text-15",
+     "page": 75,
+     "text": "Side note beside (c): First term: 4, Common ratio: 4",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c45d3d0e282fa3b4"
+    },
+    {
+     "key": "eb11c2-3:linking-text-16",
+     "page": 77,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "7a81959bc35f40b8"
+    },
+    {
+     "key": "eb11c2-3:linking-text-18",
+     "page": 79,
+     "text": "Side notes beside the explanation: 'Use S − rS.'; 'Write the equations so that the powers of the common ratio align vertically.'; 'Supplement terms to make subtraction easier.'; 'The sum from the 2nd term to the n-th term of a geometric sequence with first term 2, common ratio 3. (The sum from the first term to the n-th term The first term)'; 'Divide both sides by -2 Watch the '-' sign.'",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "8ad3b8a0615eab0c"
+    },
+    {
+     "key": "eb11c2-3:linking-text-19",
+     "page": 81,
+     "text": "Point! Calculate the k-th term of a sequence where each term is expressed as a sum using summation notation Σ.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "525541d3d341fedf"
+    },
+    {
+     "key": "eb11c2-3:linking-text-20",
+     "page": 81,
+     "text": "Side note: Create a formula considering the regularity.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "82a224f2d722d419"
+    },
+    {
+     "key": "eb11c2-3:linking-text-21",
+     "page": 81,
+     "text": "Side note: Calculate using summation notation Σ.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "30d70d2262aba26a"
+    },
+    {
+     "key": "eb11c2-3:linking-text-22",
+     "page": 81,
+     "text": "Side note: Since it is the sum from the first term to the k—th term, we use the variable i.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "ac75224adb3210a5"
+    },
+    {
+     "key": "eb11c2-3:linking-text-23",
+     "page": 81,
+     "text": "Side note: Put $a_k$ inside Σ. $S_n=\\sum_{k=1}^{n}a_k$",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e90f7f5c078b3cf1"
+    },
+    {
+     "key": "eb11c2-3:linking-text-24",
+     "page": 81,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c7fa4927a02c8504"
+    },
+    {
+     "key": "eb11c2-3:linking-text-25",
+     "page": 82,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "f8c017b931616022"
+    },
+    {
+     "key": "eb11c2-3:linking-text-26",
+     "page": 83,
+     "text": "Side notes next to the explanation: 'Deduction if not written.' (at When n ≥ 2); '$S_{n-1}=(n-1)^2-3(n-1)$' (n−1 underlined in red); 'Deduction if not written.' (at first term); 'Deduction if not written. Check by substituting n = 1 into formula (i).'",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "939192a5c0badca4"
+    },
+    {
+     "key": "eb11c2-3:linking-text-27",
+     "page": 84,
+     "text": "Side note beside \"When n ≥ 2\": Deduction if not written.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "466d4330bc6acca4"
+    },
+    {
+     "key": "eb11c2-3:linking-text-28",
+     "page": 84,
+     "text": "Side note beside $5^n-5^{n-1}$: $5^n = 5^1 \\times 5^{n-1}$",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "7039a4865c87a266"
+    },
+    {
+     "key": "eb11c2-3:linking-text-29",
+     "page": 84,
+     "text": "Side note beside \"The first term is a_1 = S_1\": Deduction if not written.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "0a584ff35ef69b59"
+    },
+    {
+     "key": "eb11c2-3:linking-text-30",
+     "page": 84,
+     "text": "Side note beside \"also holds when n = 1\": Deduction if not written.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "3f3489e7ff81fbdc"
+    },
+    {
+     "key": "eb11c2-3:linking-text-31",
+     "page": 84,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "28d36ded25e595e7"
+    }
+   ],
+   "bridges": [
+    {
+     "key": "eb11c2-3:challenge-1",
+     "objective": 1
+    }
+   ],
+   "bridges_disputed": []
+  },
+  {
+   "slug": "eb11c2-4",
+   "title": "Advanced Sequences",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c2-4:objective-1",
+     "label": "General term by differences",
+     "description": "Find the general term of a sequence by writing its difference sequence and using a_n = a_1 + sum of the first n-1 terms of the difference sequence, then check whether the formula holds for n=1."
+    },
+    {
+     "n": 2,
+     "id": "eb11c2-4:objective-2",
+     "label": "Solving group sequence problems",
+     "description": "Solve group sequence problems: divide a sequence into groups to find the first term of a given group, the sum of the terms in a group, and which group and position a given term is in."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c2-4:linking-text-1",
+     "page": 85,
+     "text": "Consider how a single viral cell reproduces inside a host, or how a public health department tracks the spread of an epidemic. On Day 1, maybe 2 people are infected. On Day 2, 5 people. On Day 3, 10 people. On Day 4, 17 people. If you look closely at the changes day by day, the virus isn't spreading at a constant speed, but the acceleration of the spread follows a predictable, hidden pattern. By analyzing these layers of changes, epidemiologists can predict peak infection rates and allocate hospital resources effectively.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 1,
+      "why": "An epidemic's daily infection counts (2, 5, 10, 17) motivate finding a pattern through layers of changes."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 1,
+      "why": "It uses the day-by-day spread of an epidemic, with changing differences, to motivate the difference-sequence method."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 1,
+     "fingerprint": "9bcc568da6953aab"
+    },
+    {
+     "key": "eb11c2-4:guiding-question-1",
+     "page": 85,
+     "text": "Guiding Question: How can we discover a hidden, constant pattern in a sequence of numbers when the initial differences between them keep changing?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 1,
+      "why": "The lesson's guiding question asks why and how to find a hidden pattern when the differences keep changing, which is the difference-sequence idea."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 1,
+      "why": "The guiding question asks how to find a hidden pattern when the differences keep changing, which is the difference-sequence idea."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 1,
+     "fingerprint": "e45c1b1f491ac091"
+    },
+    {
+     "key": "eb11c2-4:linking-text-3",
+     "page": 88,
+     "text": "Divide the sequence of natural numbers into groups as shown below. Solve the following problems. 2| 4, 6, 8 | 10, 12, 14, 16, 18 | 20, 22, …",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It sets up the grouping and tells the student to solve the problems, so it is an instruction."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is an instruction with the example sequence to be grouped."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "fd0b1c3399664a60"
+    },
+    {
+     "key": "eb11c2-4:linking-text-4",
+     "page": 88,
+     "text": "Let $\\{a_n\\}$ be the sequence before grouping. Since it is an arithmetic sequence with the first term 2 and the common difference 2, $a_n=2n$. Let $\\{b_n\\}$ be the sequence of the number of terms in each group. Since it is an arithmetic sequence with the first term 1 and the common difference 2, $b_n=2n-1$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a step in a worked solution that defines a_n and b_n."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a step of the worked solution with a_n and b_n."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "7279e70cc047bf82"
+    },
+    {
+     "key": "eb11c2-4:linking-text-9",
+     "page": 90,
+     "text": "Exercise: Divide the sequence of natural numbers into groups as shown below. Solve the following problems.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is an exercise instruction."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is an instruction to solve the exercise problems."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "b3d6f0ff86005e63"
+    },
+    {
+     "key": "eb11c2-4:reflect-1",
+     "page": 90,
+     "text": "When analyzing an unfamiliar sequence of real-world data, what indicators or visual clues would lead you to choose difference sequence method over a group sequence method?",
+     "type": "open prompt",
+     "A": {
+      "kind": "closing_reflection",
+      "objective": 0,
+      "why": "It looks back on both methods and asks when to choose the difference method over the group method."
+     },
+     "B": {
+      "kind": "closing_reflection",
+      "objective": 0,
+      "why": "It asks the student to look back and compare the difference-sequence and group-sequence methods, covering the whole lesson."
+     },
+     "status": "agreed",
+     "kind": "closing_reflection",
+     "objective": 0,
+     "fingerprint": "b4179e3bc1d4826e"
+    },
+    {
+     "key": "eb11c2-4:linking-text-2",
+     "page": 87,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "ba1e3999f8db6fc5"
+    },
+    {
+     "key": "eb11c2-4:linking-text-5",
+     "page": 89,
+     "text": "Side note beside 'Therefore, the last term of the n-th group is 2n^2': $a_n=2n$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "f0449584149e0713"
+    },
+    {
+     "key": "eb11c2-4:linking-text-6",
+     "page": 89,
+     "text": "Side note beside 'The number of terms in the n-th group is 2n-1': $b_n=2n-1$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "fcece42a5e3a5032"
+    },
+    {
+     "key": "eb11c2-4:linking-text-7",
+     "page": 90,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "5549677b08019ccd"
+    },
+    {
+     "key": "eb11c2-4:linking-text-8",
+     "page": 90,
+     "text": "Try: Divide the sequence of natural numbers into groups as shown below. Solve the following problems. $1 | 3, 5 | 7, 9, 11 | 13, 15, 17, 19 | 21, 23, \\dots$",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "7db2b7b00b800fcb"
+    }
+   ],
+   "bridges": [
+    {
+     "key": "eb11c2-4:challenge-1",
+     "objective": 1
+    }
+   ],
+   "bridges_disputed": []
+  },
+  {
+   "slug": "eb11c2-5",
+   "title": "Recurrence and Induction",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c2-5:objective-1",
+     "label": "Basic recurrence relations",
+     "description": "Calculate terms and find the general term of a sequence given by a recurrence relation of the form a_{n+1}=a_n+d or a_{n+1}=ra_n."
+    },
+    {
+     "n": 2,
+     "id": "eb11c2-5:objective-2",
+     "label": "General term from recurrences",
+     "description": "Find the general term of a sequence from a_{n+1}=a_n+f(n) using the sum of the difference sequence, and from a_{n+1}=pa_n+q by solving c=pc+q and writing a_{n+1}-c=p(a_n-c) (a geometric sequence {b_n})."
+    },
+    {
+     "n": 3,
+     "id": "eb11c2-5:objective-3",
+     "label": "Prove by mathematical induction",
+     "description": "Prove equalities, inequalities and divisibility statements for natural numbers by mathematical induction: show n=1, then show n=k implies n=k+1."
+    },
+    {
+     "n": 4,
+     "id": "eb11c2-5:objective-4",
+     "label": "Estimate and prove general term",
+     "description": "Estimate the general term of a sequence defined by a recurrence relation from its first terms, and prove the estimate by mathematical induction."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c2-5:linking-text-1",
+     "page": 91,
+     "text": "A doctor prescribes an antibiotic to maintain a therapeutic amount of the drug in the bloodstream; each 24 hours a new dose is taken while the body eliminates a fixed percentage of the drug present. The amount tomorrow depends directly on the amount left over today; this step-by-step dependency is the essence of a recurrence relation. To prove the pattern remains safe over infinitely many days, mathematicians use a logical domino effect called mathematical induction.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "A doctor's daily antibiotic dose with a fixed fraction eliminated sets up recurrence and induction for the whole lesson."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "A doctor's daily antibiotic dose with a fixed percentage eliminated motivates both recurrence and induction across the lesson."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 0,
+     "fingerprint": "29346315abcd9e6d"
+    },
+    {
+     "key": "eb11c2-5:guiding-question-1",
+     "page": 91,
+     "text": "How can we mathematically prove that a step-by-step, repeating process will remain stable and predictable forever?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question asks why a repeating process can be proved stable forever, introducing the whole lesson."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "It is the lesson's opening guiding question about proving a repeating process stays stable, which covers the whole lesson."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "53da4e5ba3e4478c"
+    },
+    {
+     "key": "eb11c2-5:linking-text-17",
+     "page": 102,
+     "text": "Let “(A)” be “$n^3+(n+1)^3+(n+2)^3$ is a multiple of 9”. [1] When $n=1$: $1^3+(1+1)^3+(1+2)^3=1+8+27=36$ (side note: 36 is a multiple of 9). Therefore (A) holds when $n=1$. [2] Assuming (A) holds when $n=k$, it can be expressed using an integer $m$ as $k^3+(k+1)^3+(k+2)^3=9m$ (side note: Using this equation, show that (A) holds when $n=k+1$). Considering $n=k+1$: $(k+1)^3+(k+2)^3+(k+3)^3=9m-k^3+(k+3)^3=9m-k^3+k^3+9k^2+27k+27=9(m+k^2+3k+3)$. Since $m+k^2+3k+3$ is an integer, $9(m+k^2+3k+3)$ is a multiple of 9. Therefore $(k+1)^3+(k+2)^3+(k+3)^3$ is a multiple of 9, and (A) also holds when $n=k+1$. From [1] and [2], (A) holds for all natural numbers. Side note: Since $(k+1)^3+(k+2)^3=9m-k^3$ from $k^3+(k+1)^3+(k+2)^3=9m$: $(k+1)^3+(k+2)^3+(k+3)^3=9m-k^3+(k+3)^3$ $n=k+1$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "This is a worked induction example with its steps and side notes, not an introduction."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a worked induction solution with side notes, not an introduction."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "6e7277d0a524d252"
+    },
+    {
+     "key": "eb11c2-5:linking-text-18",
+     "page": 104,
+     "text": "For the sequence $\\{a_n\\}$ determined by the conditions $a_1=3$, $a_{n+1}=\\frac{a_n^2-1}{n+1}$, solve the following problems.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "This is an instruction to solve problems about a given sequence."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is an instruction that sets up the exercise problems."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "39098467831e87e8"
+    },
+    {
+     "key": "eb11c2-5:reflect-1",
+     "page": 105,
+     "text": "How can mathematical induction help us confirm the correctness of a general formula for a sequence defined by a recurrence relation? Explain your answer.",
+     "type": "open prompt",
+     "A": {
+      "kind": "closing_reflection",
+      "objective": 4,
+      "why": "It looks back on how induction confirms a general formula for a recurrence sequence, closing objective 4."
+     },
+     "B": {
+      "kind": "closing_reflection",
+      "objective": 4,
+      "why": "It asks the student to look back on how induction confirms a formula guessed for a recurrence, which closes objective 4."
+     },
+     "status": "agreed",
+     "kind": "closing_reflection",
+     "objective": 4,
+     "fingerprint": "91fb1e48284b97a5"
+    },
+    {
+     "key": "eb11c2-5:linking-text-2",
+     "page": 91,
+     "text": "Side notes: \"Adding $d$ to $a_n$ gives $a_{n+1}$\"; \"Multiplying $a_n$ by $r$ gives $a_{n+1}$\".",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "9025ff280f13e51f"
+    },
+    {
+     "key": "eb11c2-5:linking-text-3",
+     "page": 92,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "d934d9019d951cf1"
+    },
+    {
+     "key": "eb11c2-5:linking-text-4",
+     "page": 96,
+     "text": "Point! Steps to find the general term from a recurrence relation of the form $a_{n+1}=pa_n+q$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "330122f52bd5d46a"
+    },
+    {
+     "key": "eb11c2-5:linking-text-5",
+     "page": 96,
+     "text": "Side note: Substitute $c=-2$ into $a_{n+1}-c=p(a_n-c)$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "d74101a520459341"
+    },
+    {
+     "key": "eb11c2-5:linking-text-6",
+     "page": 96,
+     "text": "Side note: $\\{b_n\\}$ is a geometric sequence with the first term 3, the common ratio 3",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "1106b42e1b429a79"
+    },
+    {
+     "key": "eb11c2-5:linking-text-7",
+     "page": 97,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "918e1e422066e1ea"
+    },
+    {
+     "key": "eb11c2-5:linking-text-8",
+     "page": 98,
+     "text": "Side note (beside LHS line): Derive the expression that holds for n = k + 1 using (i).",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "5a32dae65004fa38"
+    },
+    {
+     "key": "eb11c2-5:linking-text-9",
+     "page": 98,
+     "text": "Side note (beside the second line): Do not expand; factor out $\\frac{1}{2}(k+1)$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "6151c2281cf6db4e"
+    },
+    {
+     "key": "eb11c2-5:linking-text-10",
+     "page": 98,
+     "text": "Side note (beside the third line): Transform into the form obtained by substituting $n=k+1$ into the RHS of (A).",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "f9732da719b51bbc"
+    },
+    {
+     "key": "eb11c2-5:linking-text-11",
+     "page": 99,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "605b88052fedb786"
+    },
+    {
+     "key": "eb11c2-5:linking-text-12",
+     "page": 100,
+     "text": "Side note (beside step [1]): Since we are proving this for $n\\ge4$ or more, show it holds when $n=4$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e80d64cde188835c"
+    },
+    {
+     "key": "eb11c2-5:linking-text-13",
+     "page": 100,
+     "text": "Side note (beside $2^k>3k$): Using this expression, show (A) for $n=k+1$, which is $2^{k+1}>3(k+1)$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "6bf84f95b964b8cb"
+    },
+    {
+     "key": "eb11c2-5:linking-text-14",
+     "page": 100,
+     "text": "Side note (beside comparing $6k$ and $3(k+1)$): Since the RHS when substituting $n=k+1$ into (A) is $3(k+1)$, show $2^{k+1}>6k>3(k+1)$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "2de95d4f77d3d517"
+    },
+    {
+     "key": "eb11c2-5:linking-text-15",
+     "page": 101,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "42c0b9bbd26d8091"
+    },
+    {
+     "key": "eb11c2-5:linking-text-16",
+     "page": 101,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "a5bb9b2a078c8ea5"
+    },
+    {
+     "key": "eb11c2-5:linking-text-19",
+     "page": 104,
+     "text": "Margin note beside the computation of a_2, a_3, a_4: $\\{a_n\\}, 3, 4, 5, 6, \\ldots$",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "84655f3e821fc599"
+    },
+    {
+     "key": "eb11c2-5:linking-text-20",
+     "page": 104,
+     "text": "Margin note: Substitute $a_k=k+2$",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "267f96c3f479679d"
+    },
+    {
+     "key": "eb11c2-5:linking-text-21",
+     "page": 104,
+     "text": "Margin note: Transform into the form obtained by substituting $n=k+1$ into the RHS of (A)",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "ad1c47db8dfc979c"
+    },
+    {
+     "key": "eb11c2-5:linking-text-22",
+     "page": 105,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "10a0b01a9576ab2a"
+    }
+   ],
+   "bridges": [
+    {
+     "key": "eb11c2-5:challenge-2",
+     "objective": 2
+    }
+   ],
+   "bridges_disputed": []
+  }
+ ]
+}

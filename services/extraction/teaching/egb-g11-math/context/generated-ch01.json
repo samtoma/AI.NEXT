@@ -1,0 +1,325 @@
+{
+ "format": "ainext.context-generated/1",
+ "book": "egb-g11-math",
+ "chapter": 1,
+ "made": "2026-10-22",
+ "made_by": "book_record_context.py generate-accept (context-gen-v1)",
+ "run": "runs/egb-g11-math/context/context-gen-ch01.20261022T143355Z.json",
+ "lessons": [
+  {
+   "slug": "eb11c1-1",
+   "gaps": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "entries": [
+    {
+     "objective": 1,
+     "decision": "generate",
+     "text": "Imagine a football coach has 5 players who could take penalties, and he must choose 3 of them for the shoot-out, without caring about the order. The number of different groups he can pick is $_5C_3$. Work out how many different groups of 3 the coach can choose.",
+     "numbers": [],
+     "why": "Uses only nC r = nPr/r! with a small selection count; no expansion method needed.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "5C3 = (5×4×3)/(3×2×1) = 10. It uses only the nCr formula from this objective. The scenario is realistic and the answer is not given."
+     },
+     "status": "confirmed",
+     "fingerprint": "c18cf0fa93d6f73b"
+    },
+    {
+     "objective": 2,
+     "decision": "generate",
+     "text": "Suppose a water tank is a cube whose side is $(x+2)$ metres, so its volume is $(x+2)^3$ cubic metres. Imagine you want the volume written as separate terms in powers of $x$. Expand $(x+2)^3$ fully to find that expression.",
+     "numbers": [
+      {
+       "working": "3C1 × 2 = 3 × 2 (coefficient of x^2 term)",
+       "value": "6"
+      },
+      {
+       "working": "3C2 × 2^2 = 3 × 4 (coefficient of x term)",
+       "value": "12"
+      },
+      {
+       "working": "3C3 × 2^3 = 1 × 8 (constant term)",
+       "value": "8"
+      }
+     ],
+     "why": "A cube of side x+2 gives (a+b)^3, expanded term by term with the Binomial Theorem.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "(x+2)^3 = x^3 + 6x^2 + 12x + 8. It uses the Binomial Theorem with n=3, as in the book's (x+2)^5 example. A cube with side x+2 gives volume (x+2)^3."
+     },
+     "status": "confirmed",
+     "fingerprint": "69b9be9034d19365"
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "text": "Suppose a student eats lunch at school on 4 days, and each day she picks one of three sandwiches: $a$ (falafel), $b$ (cheese) or $c$ (egg). The expansion of $(a+b+c)^4$ has a term $a^2bc$, standing for 2 days of falafel, 1 of cheese and 1 of egg. Find the coefficient of $a^2bc$ in $(a+b+c)^4$.",
+     "numbers": [],
+     "why": "Three choices repeated 4 times, with a coefficient of a^2bc found by n!/(p!q!r!).",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "The coefficient is 4!/(2!1!1!) = 24/2 = 12. It uses the multinomial term formula only. The lunch story matches: 2 falafel, 1 cheese, 1 egg over 4 days."
+     },
+     "status": "confirmed",
+     "fingerprint": "85713d9076c14159"
+    },
+    {
+     "objective": 4,
+     "decision": "generate",
+     "text": "Imagine a juice stand offers $n$ different fruits, and you may add any number of them to your cup, from none up to all $n$. Counting the choices by how many fruits you add gives $_nC_0 + {}_nC_1 + {}_nC_2 + \\dots + {}_nC_n$. Use the expansion of $(1+x)^n$ and a suitable value of $x$ to show what this total equals.",
+     "numbers": [],
+     "why": "Counting selections of any size from n items gives the sum of nCr, which the (1+x)^n expansion with x=1 proves equals 2^n.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "Setting x=1 in (1+x)^n gives the sum = 2^n, which matches the book's proof. The number of choices (each fruit in or out) is also 2^n, so the story is consistent. The item does not state the result."
+     },
+     "status": "confirmed",
+     "fingerprint": "e6c78e6d5cf60d5f"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c1-2",
+   "gaps": [
+    2
+   ],
+   "entries": [
+    {
+     "objective": 2,
+     "decision": "generate",
+     "text": "Imagine a bakery packs loaves into boxes of 12 ($B = 12$). At the end of the day the baker filled 7 full boxes ($Q = 7$) and had 5 loaves left over ($R = 5$). The owner wants to know how many loaves were baked in total. Using $A = B \\times Q + R$, work out the total number of loaves $A$.",
+     "numbers": [
+      {
+       "working": "12 × 7 + 5 = 84 + 5",
+       "value": "89"
+      }
+     ],
+     "why": "The lesson story is about dividing total orders by riders to get a share, which is the forward division. This objective works backwards, rebuilding the dividend or divisor from the quotient and remainder, so the story doesn't set it up directly. A short new situation is clearer.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "A = 12×7 + 5 = 84 + 5 = 89 loaves. The problem uses the objective's formula A = B×Q + R to find the dividend from the divisor, quotient and remainder, with no other method. The remainder 5 is less than 12, so it is a valid division. The setting is a plain, invented bakery with no real brand, and it is introduced with 'Imagine'. It is short and easy for a Grade 11 student to picture. It states the formula but not the result."
+     },
+     "status": "confirmed",
+     "fingerprint": "10aa103e5e8d47db"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c1-3",
+   "gaps": [
+    2,
+    3,
+    4
+   ],
+   "entries": [
+    {
+     "objective": 2,
+     "decision": "generate",
+     "text": "Imagine a rectangular school courtyard whose area is $\\frac{x^2-9}{x+2}$ square metres and whose width is $\\frac{x+3}{x^2-4}$ metres. To find the length, you divide the area by the width. Can you work out the length as one simplified expression?",
+     "numbers": [],
+     "why": "The lesson's drug-concentration story does not involve multiplying or dividing expressions, so a new example is needed: a rectangle's side found by dividing area by width.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "Reciprocal, factorise, cancel gives (x-3)(x+3)/(x+2) × (x-2)(x+2)/(x+3) = (x-3)(x-2). Only the objective's method is used. The setting is hypothetical and makes no false claims."
+     },
+     "status": "confirmed",
+     "fingerprint": "9db1f9a7b0833768"
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "text": "Suppose one pipe fills a water tank in $x$ hours, and a second, narrower pipe fills the same tank in $x+3$ hours. In one hour the first pipe fills $\\frac{1}{x}$ of the tank and the second fills $\\frac{1}{x+3}$ of it. Can you work out, as a single fraction, what part of the tank both pipes fill together in one hour?",
+     "numbers": [],
+     "why": "The drug story does not add fractions with different denominators; two pipes filling a tank give a natural sum of two rational expressions with different denominators.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "1/x + 1/(x+3) = (x+3+x)/(x(x+3)) = (2x+3)/(x(x+3)). The common denominator is found as in the worked examples, and the result does not reduce. The narrower pipe taking longer is sensible."
+     },
+     "status": "confirmed",
+     "fingerprint": "cd44ce397dde218d"
+    },
+    {
+     "objective": 4,
+     "decision": "generate",
+     "text": "Imagine a bus drives a 60 km route to a town at $x$ km/h and returns the same 60 km at $(x+10)$ km/h. The total distance is 120 km and the total time is $\\frac{60}{x}+\\frac{60}{x+10}$ hours, so the average speed is $\\frac{120}{\\frac{60}{x}+\\frac{60}{x+10}}$ km/h. Can you simplify this compound fraction into a single rational expression?",
+     "numbers": [
+      {
+       "value": "120",
+       "working": "60 + 60"
+      }
+     ],
+     "why": "The drug story has no fraction inside a fraction; the average speed of a round trip naturally gives a compound fraction.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "Multiply top and bottom by x(x+10): 120x(x+10) / (60(x+10)+60x) = 120x(x+10)/(120x+600) = x(x+10)/(x+5). The total distance of 120 km and the average speed set-up are correct. The method is the objective's."
+     },
+     "status": "confirmed",
+     "fingerprint": "5d667fecc49343af"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c1-4",
+   "gaps": [
+    2,
+    3,
+    4
+   ],
+   "entries": [
+    {
+     "objective": 2,
+     "decision": "lesson_story",
+     "text": null,
+     "numbers": [],
+     "why": "The lesson's story is about two different-looking expressions giving the same output, which engineers swap for a simpler one. Proving an equality by simplifying both sides to the same expression is exactly showing that two pathways are the same, so no new text is needed.",
+     "check": {
+      "verdict": "rejected",
+      "numbers_ok": null,
+      "maths_fits": null,
+      "true_to_world": null,
+      "suits_student": null,
+      "why": "The story is general prose about identities and simplified wave formulas in pacemakers. No algebraic equality is proved by expanding and simplifying both sides inside it. The objective's maths does not happen in the story."
+     },
+     "status": "held",
+     "fingerprint": "8e458c05ed817774"
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "text": "Imagine a farmer fences a rectangular vegetable plot with 20 m of wire, so the length $x$ and width $y$ satisfy $x+y=10$. She wants to write the area $xy$ using only $x$. Using the condition to express $y$ in terms of $x$ and substituting, what does the area become?",
+     "numbers": [
+      {
+       "working": "20 / 2 = 10, half the perimeter, so x + y = 10",
+       "value": "10"
+      }
+     ],
+     "why": "A fixed-perimeter fence gives a natural condition x+y=10 that is used to eliminate one variable.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "Wire 20 m means perimeter 2(x+y)=20, so x+y=10. Then y=10−x, and the area is xy = x(10−x) = 10x − x². This is the objective's substitution method. The context is realistic and clear."
+     },
+     "status": "confirmed",
+     "fingerprint": "036da3f1632e2fdc"
+    },
+    {
+     "objective": 4,
+     "decision": "generate",
+     "text": "Suppose a juice shop mixes orange, mango and guava juice in the ratio $x:y:z=2:3:5$, where $x$, $y$, $z$ are the litres of each. Imagine one \"part\" is $k$ litres. Write the three amounts using $k$, then use them to work out what fraction of the whole mix is guava juice.",
+     "numbers": [],
+     "why": "A recipe with parts in a ratio matches x:y:z = a:b:c and letting a constant k stand for one part.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "x=2k, y=3k, z=5k. The total is 10k, so guava is 5k/10k = 1/2. This uses the let-k method for x:y:z. The context is plausible and clear."
+     },
+     "status": "confirmed",
+     "fingerprint": "44a45a5e03b1c54d"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c1-5",
+   "gaps": [
+    2,
+    3,
+    4
+   ],
+   "entries": [
+    {
+     "objective": 2,
+     "decision": "generate",
+     "text": "Imagine a farmer has two square plots, one with side $a$ metres and one with side $2b$ metres, so their total area is $a^2+4b^2$. She also considers two rectangular plots, each $a$ metres by $2b$ metres, with total area $4ab$. You are asked to show that the two squares never have less total area than the two rectangles, whatever positive or negative values $a$ and $b$ take, and to find exactly when the two areas are equal.",
+     "numbers": [],
+     "why": "The lesson's capsule story is about maximising volume under a surface limit, which is AM-GM territory, not completing the square. A separate area comparison fits this objective.",
+     "check": {
+      "verdict": "rejected",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": false,
+      "suits_student": false,
+      "why": "The algebra is right: a²+4b²−4ab = (a−2b)² ≥ 0, with equality when a = 2b. But the item says a and b can take 'positive or negative values', and they are side lengths in metres. A side length cannot be negative, so this is not true to the situation. The item is also the book's Warm Up 1 with a farm story added."
+     },
+     "status": "held",
+     "fingerprint": "130a02680d654af8"
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "text": "Suppose a shop sells two square rugs, one with side $a$ metres and one with side $b$ metres, both positive. A new square rug is made whose area is the average of the two rug areas, so its side is $\\sqrt{\\frac{a^2+b^2}{2}}$. Compare that side with the average of the two sides, $\\frac{a+b}{2}$. You are asked to show which one is at least as big, and when they are equal.",
+     "numbers": [],
+     "why": "The lesson's capsule story does not involve square roots or comparing squared sides. A separate rug example fits this objective.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "The new rug has area (a²+b²)/2, so its side is √((a²+b²)/2). That is right. (LHS)²−(RHS)² = ((a−b)/2)² ≥ 0, and both sides are positive, so the side of the averaged-area rug is at least (a+b)/2. Equality holds when a = b. The method is this objective's: square both sides, take the difference, and check positivity. The situation is a plain rug shop with no real brand or person, and a Grade 11 student can picture it."
+     },
+     "status": "confirmed",
+     "fingerprint": "d0d6c2f8ca39e139"
+    },
+    {
+     "objective": 4,
+     "decision": "lesson_story",
+     "text": null,
+     "numbers": [],
+     "why": "The bio-engineer wants the largest volume from a fixed amount of polymer for the surface. That is a maximise-under-a-fixed-limit problem, which AM-GM solves. Equality when the quantities are equal gives the best shape, so the maths happens inside the same situation.",
+     "check": {
+      "verdict": "rejected",
+      "numbers_ok": true,
+      "maths_fits": false,
+      "true_to_world": true,
+      "suits_student": false,
+      "why": "The story is about maximising a capsule's volume with a fixed surface area of polymer. This objective is the two-term AM-GM inequality (a+b)/2 ≥ √(ab) for positive a and b, used to show inequalities and find maximum values such as an area. The story gives no shape, formula or pair of positive quantities, so the objective's maths does not happen inside it. A volume-for-fixed-surface problem would need three-variable AM-GM or calculus, which is beyond this objective."
+     },
+     "status": "held",
+     "fingerprint": "60ad856be75b4e07"
+    }
+   ]
+  }
+ ]
+}

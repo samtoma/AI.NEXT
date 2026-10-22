@@ -15,6 +15,11 @@
   "syllabus_version": "book-record-2",
   "nodes": [
     {
+      "id": "program:eg-baccalaureate-en",
+      "kind": "program",
+      "label": "Egyptian Baccalaureate"
+    },
+    {
       "id": "course:egb-g11-math-en",
       "kind": "course",
       "label": "Mathematics II — Textbook for Grade XI (Egyptian Baccalaureate, 2nd Year), Part One, English"
@@ -190,6 +195,11 @@
     }
   ],
   "edges": [
+    {
+      "src": "course:egb-g11-math-en",
+      "dst": "program:eg-baccalaureate-en",
+      "type": "part_of"
+    },
     {
       "src": "module:eb11c1",
       "dst": "course:egb-g11-math-en",
@@ -375,7 +385,7 @@
       "lo": "lo:eb11c1-1-1",
       "tier": "basic",
       "type": "numeric",
-      "stem": "Calculate $_5C_3$.",
+      "stem": "Calculate ${}_5C_3$.",
       "answer": "10",
       "solution": [
         "${}_5C_3 = \\frac{5\\times4\\times3}{3\\times2\\times1} = 10$"
@@ -391,7 +401,7 @@
       "lo": "lo:eb11c1-1-1",
       "tier": "basic",
       "type": "numeric",
-      "stem": "Calculate $_5C_0$.",
+      "stem": "Calculate ${}_5C_0$.",
       "answer": "1",
       "solution": [
         "${}_5C_0 = 1$"
@@ -407,7 +417,7 @@
       "lo": "lo:eb11c1-1-1",
       "tier": "basic",
       "type": "numeric",
-      "stem": "Calculate $_5C_5$.",
+      "stem": "Calculate ${}_5C_5$.",
       "answer": "1",
       "solution": [
         "${}_5C_5 = 1$"
@@ -3733,19 +3743,19 @@
       "content": [
         {
           "kind": "problem",
-          "text_md": "Prove ${}_nC_0 + {}_nC_1 + {}_nC_2 + \\dots + {}_nC_n = 2^n$."
+          "text_md": "Prove ${}_{n}C_0 + {}_{n}C_1 + {}_{n}C_2 + \\cdots\\cdots + {}_{n}C_n = 2^n$."
         },
         {
           "step": 1,
-          "text_md": "Expanding $(1+x)^n$ using the Binomial Theorem: $(1+x)^n = {}_nC_0 + {}_nC_1 x + {}_nC_2 x^2 + \\dots + {}_nC_n x^n$"
+          "text_md": "Expanding $(1+x)^n$ using the Binomial Theorem: $(1+x)^n = {}_{n}C_0 + {}_{n}C_1 x + {}_{n}C_2 x^2 + \\cdots\\cdots + {}_{n}C_n x^n$"
         },
         {
           "step": 2,
-          "text_md": "Substituting $x=1$ into this expression, $2^n = {}_nC_{0+}\\,1\\times {}_nC_1 + 1^2\\times {}_nC_2 + \\dots + 1^n\\times {}_nC_n$"
+          "text_md": "Substituting $x=1$ into this expression, $2^n = {}_{n}C_{0+}\\,1 \\times {}_{n}C_1 + 1^2 \\times {}_{n}C_2 + \\cdots\\cdots + 1^n \\times {}_{n}C_n$"
         },
         {
           "step": 3,
-          "text_md": "$2^n = {}_nC_0 + {}_nC_1 + {}_nC_2 + \\dots + {}_nC_n$"
+          "text_md": "$2^n = {}_{n}C_0 + {}_{n}C_1 + {}_{n}C_2 + \\cdots\\cdots + {}_{n}C_n$"
         },
         {
           "step": 4,
@@ -4134,7 +4144,7 @@
         },
         {
           "step": 1,
-          "text_md": "Let $\\frac{a}{b}=\\frac{c}{d}=k$, then $a=bk, \\ c=dk\\ldots\\ldots$(i)"
+          "text_md": "Let $\\frac{a}{b}=\\frac{c}{d}=k$, then $a=bk, \\ c=dk$(i)"
         },
         {
           "step": 2,
@@ -4199,7 +4209,7 @@
         },
         {
           "step": 2,
-          "text_md": "$x=2k, \\ y=3k, \\ z=5k\\ldots\\ldots$(i)"
+          "text_md": "$x=2k, \\ y=3k, \\ z=5k$(i)"
         },
         {
           "step": 3,

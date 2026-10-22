@@ -1,0 +1,1144 @@
+{
+ "format": "ainext.context/1",
+ "book": "egb-g11-math",
+ "chapter": 1,
+ "made": "2026-10-22",
+ "made_by": "book_record_context.py accept (context-v2)",
+ "run": "runs/egb-g11-math/context/context-ch01.20261022T142253Z.json",
+ "lessons": [
+  {
+   "slug": "eb11c1-1",
+   "title": "Binomial and Multinomial Theorems",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c1-1:objective-1",
+     "label": "Coefficients in binomial expansions",
+     "description": "Calculate combinations nCr and determine the term or the coefficient of a specified term in the expansion of (a+b)^n."
+    },
+    {
+     "n": 2,
+     "id": "eb11c1-1:objective-2",
+     "label": "Expand using Binomial Theorem",
+     "description": "Expand expressions of the form (a+b)^n in full using the Binomial Theorem."
+    },
+    {
+     "n": 3,
+     "id": "eb11c1-1:objective-3",
+     "label": "Multinomial Theorem coefficients",
+     "description": "Determine the coefficient of a specified term in the expansion of a three-term expression such as (a+b+c)^n using the Multinomial Theorem."
+    },
+    {
+     "n": 4,
+     "id": "eb11c1-1:objective-4",
+     "label": "Prove identities with the binomial expansion",
+     "description": "Prove identities involving binomial coefficients (sums of combinations) and divisibility by expanding (1+x)^n and substituting an appropriate value for x."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c1-1:open-prompt-1",
+     "page": 4,
+     "text": "Consider the first rows of Pascal's triangle, and notice how the number of terms changes in each horizontal row as shown in the figure. If you follow this pattern, how many terms will there be in the tenth row?",
+     "type": "open prompt",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It asks the student to count terms in a Pascal's triangle row, which is a pattern task and not a real situation or an introduction."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A pattern-counting task on Pascal's triangle that asks the student to work something out."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "99efa0d9ad3c3402"
+    },
+    {
+     "key": "eb11c1-1:open-prompt-2",
+     "page": 4,
+     "text": "Guiding question: How can algebraic formulas and combinatorial coefficients predict the precise coefficient of any term in an expanded polynomial $(x_1 + x_2)^n$ without performing sequential multiplication?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "This is the lesson's guiding question about predicting the coefficient of any term without multiplying, so it introduces the whole lesson."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question about predicting coefficients without sequential multiplication."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "1bc19d2222952456"
+    },
+    {
+     "key": "eb11c1-1:open-prompt-3",
+     "page": 7,
+     "text": "If you want to expand an expression consisting of three terms: $(x+y+z)^4$. Without performing the multiplication operation, how can you determine the coefficient of the term containing $x^2yz$? How do I write without needing to remove the brackets?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 3,
+      "why": "It asks why and how to find the coefficient of x^2yz in (x+y+z)^4 without expanding, which introduces the multinomial idea."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 3,
+      "why": "Introduces why a multinomial coefficient is needed for (x+y+z)^4 without multiplying out."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 3,
+     "fingerprint": "5a78d1b1fe13f61a"
+    },
+    {
+     "key": "eb11c1-1:linking-text-5",
+     "page": 7,
+     "text": "(a) When expanding $(a+b+c)^8$, the term $a^4b^3c$ is $\\frac{8!}{4!3!1!}a^4b^3c^1 = 280a^4b^3c$. Therefore, the required coefficient is 280.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "This is a step in a worked solution."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A step of a worked solution."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "ac45c0512a9556e5"
+    },
+    {
+     "key": "eb11c1-1:linking-text-6",
+     "page": 7,
+     "text": "(b) When expanding $(a-2b+3c)^8$, the term $a^4b^3c$ is $\\frac{8!}{4!3!1!}a^4\\times(-2b)^3\\times(3c)^1 = -6720a^4b^3c$. Therefore, the required coefficient is $-6720$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "This is a step in a worked solution."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A step of a worked solution."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "b9661a390dde522c"
+    },
+    {
+     "key": "eb11c1-1:reflect-1",
+     "page": 9,
+     "text": "Compare binomial expansion and multinomial expansion. In what ways are they similar, and how does seeing the binomial as a special case of the multinomial help you unify your understanding of algebraic powers and combinatorial counting methods?",
+     "type": "open prompt",
+     "A": {
+      "kind": "closing_reflection",
+      "objective": 3,
+      "why": "It looks back by comparing binomial and multinomial expansions, so it closes the multinomial work."
+     },
+     "B": {
+      "kind": "closing_reflection",
+      "objective": 3,
+      "why": "Asks the student to look back and compare binomial and multinomial expansions after the work."
+     },
+     "status": "agreed",
+     "kind": "closing_reflection",
+     "objective": 3,
+     "fingerprint": "cb86ec97de42715d"
+    },
+    {
+     "key": "eb11c1-1:linking-text-1",
+     "page": 5,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "7bc35cbc023e5bff"
+    },
+    {
+     "key": "eb11c1-1:linking-text-2",
+     "page": 5,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "bace3fe1f09f7a75"
+    },
+    {
+     "key": "eb11c1-1:linking-text-3",
+     "page": 5,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "3a4c2b983975badc"
+    },
+    {
+     "key": "eb11c1-1:linking-text-4",
+     "page": 6,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "907266e9680a4871"
+    },
+    {
+     "key": "eb11c1-1:linking-text-7",
+     "page": 7,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c3997c34a9a7caa9"
+    },
+    {
+     "key": "eb11c1-1:linking-text-8",
+     "page": 7,
+     "text": "Work with a partner: Collaborate with your group to answer question 2, then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "0ad40ef518466152"
+    },
+    {
+     "key": "eb11c1-1:linking-text-9",
+     "page": 8,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "3eb2b2f169d1e5a3"
+    },
+    {
+     "key": "eb11c1-1:linking-text-10",
+     "page": 9,
+     "text": "Side note: Substitute $x=1$ to make $(1+x)^n = 2^n$",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "639c639e7c9462c4"
+    }
+   ],
+   "bridges": [],
+   "bridges_disputed": []
+  },
+  {
+   "slug": "eb11c1-2",
+   "title": "Polynomial Division",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c1-2:objective-1",
+     "label": "Polynomial long division",
+     "description": "Divide one polynomial by another using the long division algorithm, state the quotient and the remainder, and treat other variables as constants when dividing as a polynomial in x."
+    },
+    {
+     "n": 2,
+     "id": "eb11c1-2:objective-2",
+     "label": "Use A = BQ + R",
+     "description": "Use A = B × Q + R to find the dividend A or the divisor B when the quotient and the remainder are given."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c1-2:linking-text-1",
+     "page": 10,
+     "text": "Motivating text: in a delivery app, daily orders grow at an accelerating non-linear rate while riders are hired at a steady linear rate. To find the average workload (orders per rider) you divide the total-orders function by the number-of-riders function. Polynomial division is the tool for breaking a large, rapidly growing system into smaller units to find the share of a single part.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "A delivery app's orders growing faster than riders is hired, divided to get orders per rider, sets up the whole lesson."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "It uses a delivery app's growing orders and hired riders to motivate dividing polynomials to find the workload per rider."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 0,
+     "fingerprint": "9f7e82e322be1107"
+    },
+    {
+     "key": "eb11c1-2:guiding-question-1",
+     "page": 10,
+     "text": "Guiding Question: How does dividing complex algebraic expressions help us simplify massive amounts of data and understand the share of a single unit within a constantly growing system?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question asks why dividing expressions helps, with no worked numbers."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "It is the lesson's opening guiding question about why dividing algebraic expressions is useful."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "1df5f4bd129f8375"
+    },
+    {
+     "key": "eb11c1-2:linking-text-2",
+     "page": 10,
+     "text": "Therefore, the quotient is $x-2$ and the remainder is $-x-4$",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is the concluding step of a worked solution stating a quotient and remainder."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is the concluding step of a worked solution stating the quotient and remainder."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "8552dadc2667c9b2"
+    },
+    {
+     "key": "eb11c1-2:linking-text-8",
+     "page": 12,
+     "text": "Example: When 7 is divided by 3, the quotient is 2 and remainder is 1, 7 = 3 × 2 + 1 (with brackets linking 3, 2 and 1 to the divisor, quotient and remainder).",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a numeric example of 7 = 3 × 2 + 1 that illustrates the formula, not a motivating context."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a numeric example restating the A = BQ + R formula, not a motivating context."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "8cb45ba42bc1bea6"
+    },
+    {
+     "key": "eb11c1-2:reflect-1",
+     "page": 13,
+     "text": "When we divide one polynomial by another, why must the remainder always have a degree less than the divisor? How does this condition help us verify the correctness of the division steps and understand the relationship between the quotient and the remainder?",
+     "type": "open prompt",
+     "A": {
+      "kind": "closing_reflection",
+      "objective": 1,
+      "why": "It looks back on the division steps and asks why the remainder's degree must be less than the divisor's."
+     },
+     "B": {
+      "kind": "closing_reflection",
+      "objective": 1,
+      "why": "It asks the student to look back on why the remainder's degree must be less than the divisor's, after the division work."
+     },
+     "status": "agreed",
+     "kind": "closing_reflection",
+     "objective": 1,
+     "fingerprint": "450c458cf6b35c6c"
+    },
+    {
+     "key": "eb11c1-2:linking-text-3",
+     "page": 10,
+     "text": "Side note: If a term of a certain degree is missing in the dividend, leave that space blank.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "1bc9701cd99742cd"
+    },
+    {
+     "key": "eb11c1-2:linking-text-4",
+     "page": 10,
+     "text": "Side note: Subtract $(2x^2 - x - 1)\\times x$ to eliminate $2x^3$",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "41f2bca870e34e18"
+    },
+    {
+     "key": "eb11c1-2:linking-text-5",
+     "page": 10,
+     "text": "Side note: Subtract $(2x^2 - x - 1)\\times(-2)$ to eliminate $-4x^2$",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "130a1c2995d4c3f8"
+    },
+    {
+     "key": "eb11c1-2:linking-text-6",
+     "page": 10,
+     "text": "Side note: It is the remainder when the degree becomes lower than the divisor.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "ea286911c819efe2"
+    },
+    {
+     "key": "eb11c1-2:linking-text-7",
+     "page": 11,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "595a80f7c6625e2a"
+    }
+   ],
+   "bridges": [
+    {
+     "key": "eb11c1-2:challenge-1",
+     "objective": 1
+    }
+   ],
+   "bridges_disputed": []
+  },
+  {
+   "slug": "eb11c1-3",
+   "title": "Rational Expressions",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c1-3:objective-1",
+     "label": "Reduce rational expressions",
+     "description": "Simplify a rational expression by factorising the numerator and denominator and reducing common factors."
+    },
+    {
+     "n": 2,
+     "id": "eb11c1-3:objective-2",
+     "label": "Multiply and divide rational expressions",
+     "description": "Calculate the product or quotient of rational expressions by factorising, using the reciprocal of the divisor, and cancelling common factors."
+    },
+    {
+     "n": 3,
+     "id": "eb11c1-3:objective-3",
+     "label": "Add and subtract rational expressions",
+     "description": "Add and subtract rational expressions with different denominators by factorising the denominators, finding a common denominator, and reducing the result."
+    },
+    {
+     "n": 4,
+     "id": "eb11c1-3:objective-4",
+     "label": "Simplify compound fractions",
+     "description": "Simplify compound fractions by multiplying the numerator and denominator by the same expression to give a single rational expression."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c1-3:linking-text-1",
+     "page": 14,
+     "text": "When a patient takes a prescription medication, the concentration of the drug in their bloodstream changes rapidly over time. Medical researchers track this using math. As the body absorbs the drug the amount in the blood spikes, but as kidneys and liver filter it out, the concentration drops.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "A patient's drug concentration rising and falling in the blood is a picturable situation motivating the lesson."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "It describes a drug's concentration in a patient's blood rising and falling, a situation a student can picture."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 0,
+     "fingerprint": "0a123bfd46a5c32d"
+    },
+    {
+     "key": "eb11c1-3:linking-text-2",
+     "page": 14,
+     "text": "To model this lifecycle accurately, scientists use rational expressions—fractions that have algebraic expressions in both the numerator and the denominator. When doctors need to combine treatments, alter dosages, or calculate how fast two different drugs clear out of a patient's system simultaneously, they must use the four main arithmetic operations (addition, subtraction, multiplication, and division) on these algebraic fractions.",
+     "type": "linking text",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "Explains what rational expressions are and why the four operations on them are needed, with no worked numbers."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "It defines rational expressions and says the four operations are applied to them, which sets up the whole lesson."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "43b539aa95af28cc"
+    },
+    {
+     "key": "eb11c1-3:guiding-question-1",
+     "page": 14,
+     "text": "How do the fundamental laws of arithmetic allow us to combine and simplify complex, shifting algebraic fractions to predict outcomes in medicine and life sciences?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question about combining and simplifying algebraic fractions introduces the whole lesson."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question asks why combining and simplifying algebraic fractions matters, with no worked numbers."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "af7893b402277497"
+    },
+    {
+     "key": "eb11c1-3:reflect-1",
+     "page": 20,
+     "text": "Consider the following mathematical statement: $\\dfrac{x^2-16}{x-4}=x+4$. Is this equation an absolute identity for all real numbers x? Explain why or why not. If a student graphs $y=\\dfrac{x^2-16}{x-4}=x+4$ on a graphing calculator, it appears identical to the line $y=x+4$. What specific feature of the graph is hidden by typical screen resolutions at $x=4$?",
+     "type": "open prompt",
+     "A": {
+      "kind": "closing_reflection",
+      "objective": 1,
+      "why": "Looks back on reducing (x²-16)/(x-4) and why the cancellation fails at x=4."
+     },
+     "B": {
+      "kind": "closing_reflection",
+      "objective": 1,
+      "why": "It looks back on reducing (x²-16)/(x-4) to x+4 and asks what the reduction hides at x=4."
+     },
+     "status": "agreed",
+     "kind": "closing_reflection",
+     "objective": 1,
+     "fingerprint": "221c2afb3724a5e0"
+    },
+    {
+     "key": "eb11c1-3:linking-text-3",
+     "page": 15,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "6bf97ce8d0a99970"
+    },
+    {
+     "key": "eb11c1-3:linking-text-4",
+     "page": 15,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "91c12465eee0e53b"
+    },
+    {
+     "key": "eb11c1-3:linking-text-5",
+     "page": 16,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "4e2ed77a6b5e67eb"
+    },
+    {
+     "key": "eb11c1-3:linking-text-6",
+     "page": 18,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "b3949a5a1ec926de"
+    }
+   ],
+   "bridges": [
+    {
+     "key": "eb11c1-3:challenge-2",
+     "objective": 3
+    },
+    {
+     "key": "eb11c1-3:challenge-3",
+     "objective": 4
+    }
+   ],
+   "bridges_disputed": []
+  },
+  {
+   "slug": "eb11c1-4",
+   "title": "Identities and Proofs",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c1-4:objective-1",
+     "label": "Find constants in identities",
+     "description": "Find the values of constants in an identity in x by arranging both sides in descending powers of x (clearing denominators where needed) and comparing coefficients of terms of the same degree."
+    },
+    {
+     "n": 2,
+     "id": "eb11c1-4:objective-2",
+     "label": "Prove equalities by simplifying",
+     "description": "Prove an algebraic equality by simplifying the LHS and RHS respectively until they become the same expression."
+    },
+    {
+     "n": 3,
+     "id": "eb11c1-4:objective-3",
+     "label": "Prove conditional equalities",
+     "description": "Prove an equality that holds under a given condition by expressing one variable in terms of the others from the condition and substituting to eliminate it."
+    },
+    {
+     "n": 4,
+     "id": "eb11c1-4:objective-4",
+     "label": "Prove with proportions",
+     "description": "Prove equalities and find values of expressions given a proportion, by letting the ratios equal a constant k and substituting."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c1-4:linking-text-1",
+     "page": 21,
+     "text": "Introductory prose: fitness trackers and ECG monitors process cyclic biological rhythms with complex wave equations; a pacemaker computing them in raw form would drain its battery, so engineers replace wave formulas with simplified equivalents, possible because of mathematical identities (two different-looking expressions giving the same output for every value). Proving equalities is about showing two different pathways are fundamentally the same, not solving for an unknown.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "Pacemakers and ECG monitors swapping complex wave formulas for simpler identical ones gives a picturable setting for the whole lesson on identities."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "Pacemakers and ECG monitors swapping complex wave formulas for simpler equivalents sets up identities and proofs for the whole lesson."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 0,
+     "fingerprint": "d0d47021f36839e8"
+    },
+    {
+     "key": "eb11c1-4:open-prompt-1",
+     "page": 21,
+     "text": "Guiding Question: How do we mathematically verify that two distinct expressions are identically equal for all domain values, and how does manipulating one side of an equation preserve structural equivalence without altering its output?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The Guiding Question asks why and how we verify two expressions are identically equal, introducing the lesson as a whole."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 2,
+      "why": "It is the lesson's Guiding Question, and it is about verifying equality by manipulating one side."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "placed": "the whole lesson: the readings named it and one objective",
+     "fingerprint": "128c9d314fa2f3cf"
+    },
+    {
+     "key": "eb11c1-4:reflect-1",
+     "page": 27,
+     "text": "Why is it mathematically invalid to perform cross-multiplication or add terms to both sides when proving an identity, and how does working strictly on one side ensure that the proof remains logically sound?",
+     "type": "open prompt",
+     "A": {
+      "kind": "closing_reflection",
+      "objective": 2,
+      "why": "It looks back on why a proof works on one side only, closing the simplify-each-side objective."
+     },
+     "B": {
+      "kind": "closing_reflection",
+      "objective": 2,
+      "why": "It looks back on the proof method by asking why working on one side keeps a proof valid."
+     },
+     "status": "agreed",
+     "kind": "closing_reflection",
+     "objective": 2,
+     "fingerprint": "a41d0f65464428d2"
+    },
+    {
+     "key": "eb11c1-4:linking-text-2",
+     "page": 22,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "501898eec118550f"
+    },
+    {
+     "key": "eb11c1-4:linking-text-3",
+     "page": 25,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "af1b1c70443b7403"
+    },
+    {
+     "key": "eb11c1-4:linking-text-4",
+     "page": 26,
+     "text": "Side note (pointing to step (i)): Express one variable in the conditional equation in terms of the others",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "7deafca9d6f3d196"
+    },
+    {
+     "key": "eb11c1-4:linking-text-5",
+     "page": 26,
+     "text": "Side note (pointing to 'Substituting (i) into the LHS'): Substitute (i) to eliminate $c$",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "62016f0613238686"
+    },
+    {
+     "key": "eb11c1-4:linking-text-6",
+     "page": 26,
+     "text": "Prove the following equalities.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "dbddc66edf79432a"
+    },
+    {
+     "key": "eb11c1-4:linking-text-7",
+     "page": 28,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "d056caba73cfdd0b"
+    },
+    {
+     "key": "eb11c1-4:linking-text-8",
+     "page": 29,
+     "text": "Side note beside 'Substituting (i) into the LHS': Eliminate a",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "9c95bbebdde24970"
+    },
+    {
+     "key": "eb11c1-4:linking-text-9",
+     "page": 29,
+     "text": "Side note beside LHS = b²k/(b²k²+b²): Factorise and simplify",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "db7e7fe3c0733783"
+    },
+    {
+     "key": "eb11c1-4:linking-text-10",
+     "page": 29,
+     "text": "Side note beside 'Substituting (i) into the RHS': Eliminate c",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "a72ab8a0fa571783"
+    },
+    {
+     "key": "eb11c1-4:linking-text-11",
+     "page": 29,
+     "text": "Side note beside RHS = d²k/(d²k²+d²): Factorise and simplify",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "6738f05ff57d8a16"
+    }
+   ],
+   "bridges": [
+    {
+     "key": "eb11c1-4:challenge-1",
+     "objective": 1
+    },
+    {
+     "key": "eb11c1-4:challenge-4",
+     "objective": 4
+    }
+   ],
+   "bridges_disputed": []
+  },
+  {
+   "slug": "eb11c1-5",
+   "title": "Inequalities",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c1-5:objective-1",
+     "label": "Prove conditional inequalities",
+     "description": "Prove a conditional inequality by calculating LHS − RHS, factorising it and using the given conditions (e.g. a > b rewritten as a − b > 0) to show the result is positive."
+    },
+    {
+     "n": 2,
+     "id": "eb11c1-5:objective-2",
+     "label": "Prove by completing the square",
+     "description": "Prove an inequality for all real numbers by completing the square to form X² or X² + Y², and determine when equality holds."
+    },
+    {
+     "n": 3,
+     "id": "eb11c1-5:objective-3",
+     "label": "Prove inequalities with roots",
+     "description": "Prove inequalities containing square roots by calculating (LHS)² − (RHS)², showing LHS > 0 and RHS > 0, and determine when equality holds."
+    },
+    {
+     "n": 4,
+     "id": "eb11c1-5:objective-4",
+     "label": "Apply the AM-GM inequality",
+     "description": "Apply the AM-GM inequality for positive a and b to prove inequalities, determine when equality holds (a = b), and find maximum values such as an area."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c1-5:linking-text-1",
+     "page": 31,
+     "text": "You are a bio-engineer designing a biodegradable capsule to deliver a life-saving drug to a specific tumour inside the human body. To ensure the drug releases at the perfect rate, you need the capsule to have the maximum possible volume, but you have a strict limit on the amount of expensive raw polymer available to create its outer surface area.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "A bio-engineer must maximise a drug capsule's volume with limited polymer, a picturable situation that motivates the whole lesson."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 4,
+      "why": "A bio-engineer wants the largest capsule volume from limited polymer, which is a maximum-value problem like AM-GM's."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 0,
+     "placed": "the whole lesson: the readings named it and one objective",
+     "fingerprint": "8a13fffe037af598"
+    },
+    {
+     "key": "eb11c1-5:linking-text-2",
+     "page": 31,
+     "text": "How do you find the absolute best design when you can't just use an exact equation to give you a single answer? You use inequalities. While regular equations tell us exactly when things are equal, inequalities tell us the optimal limits of what is physically possible—the absolute maximums and minimums. In life sciences, economics, and logistics, the most powerful tool for finding these bounds is a beautiful, universal mathematical law known as the AM-GM Inequality.",
+     "type": "linking text",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The book says inequalities give the best design and bounds, and names AM-GM, with no worked numbers."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "Explains why inequalities give optimal limits and introduces AM-GM, with no worked numbers."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "1b4d61a7104fcbe3"
+    },
+    {
+     "key": "eb11c1-5:guiding-question-1",
+     "page": 31,
+     "text": "Guiding question: How can algebraic techniques and the structural properties of positive real numbers be used to establish definitive upper and lower bounds for variable expressions, and how does equality emerge as a special boundary condition?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question asks how to set bounds and how equality arises, introducing the lesson as a whole."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question about bounds and equality, with no worked numbers."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "de4faba118c21da7"
+    },
+    {
+     "key": "eb11c1-5:linking-text-11",
+     "page": 35,
+     "text": "Prove the following inequalities. Also, determine when equality holds for 1.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is an instruction to prove inequalities."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "An instruction to prove inequalities."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "2362b1eb0e37bee6"
+    },
+    {
+     "key": "eb11c1-5:linking-text-14",
+     "page": 39,
+     "text": "We proved in the lesson that the AM-GM Inequality ($\\frac{a+b}{2} \\ge \\sqrt{ab}$) always holds true, provided that the numbers are non-negative ($a, b \\ge 0$).",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It restates the AM-GM condition as a side note and does not motivate anything."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "Restates the AM-GM formula and its condition as a side note."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "6b53136f7fefaa83"
+    },
+    {
+     "key": "eb11c1-5:question-for-reflection-1",
+     "page": 39,
+     "text": "What happens if we try to break this condition and apply the inequality to negative numbers? Suppose that $a = -2$ and $b = -8$.",
+     "type": "open prompt",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It sets up a calculation with a = -2 and b = -8, so it asks the student to work something out."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "Asks the student to compute with a = -2 and b = -8, so it is a task rather than a reflection."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "d245439c82b81161"
+    },
+    {
+     "key": "eb11c1-5:open-prompt-1",
+     "page": 39,
+     "text": "Explain the algebraic and logical breakdown that occurs here, and why defining “domains and restrictions” in inequalities is vital to prevent medical and engineering models from collapsing in the real world.",
+     "type": "open prompt",
+     "A": {
+      "kind": "closing_reflection",
+      "objective": 4,
+      "why": "It asks the student to look back on why AM-GM needs its domain restriction, which closes the AM-GM objective."
+     },
+     "B": {
+      "kind": "closing_reflection",
+      "objective": 4,
+      "why": "Looks back on why AM-GM needs its positivity condition, asked after the work."
+     },
+     "status": "agreed",
+     "kind": "closing_reflection",
+     "objective": 4,
+     "fingerprint": "30acbcd6a03811c0"
+    },
+    {
+     "key": "eb11c1-5:linking-text-3",
+     "page": 32,
+     "text": "Margin note (beside first line): Start with “LHS−RHS = ”",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "a57984aff688e0bd"
+    },
+    {
+     "key": "eb11c1-5:linking-text-4",
+     "page": 32,
+     "text": "Margin note (beside line ax − ay − bx + by): Factor the expression. Factor out the common factor from the first and second terms.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "93527d9b4482381c"
+    },
+    {
+     "key": "eb11c1-5:linking-text-5",
+     "page": 32,
+     "text": "Margin note (beside (a − b)(x − y) > 0): If A > 0 and B > 0, then AB > 0",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "13eb34099003aea9"
+    },
+    {
+     "key": "eb11c1-5:linking-text-6",
+     "page": 32,
+     "text": "Margin note (beside first line): Start by writing “LHS−RHS = ”",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "35d8a70b007fe01d"
+    },
+    {
+     "key": "eb11c1-5:linking-text-7",
+     "page": 32,
+     "text": "Margin note (beside xy + 5x − 3y − 15): Factor the expression; factor out the common factors from the two preceding and succeeding terms.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "36e308ce6eacf94f"
+    },
+    {
+     "key": "eb11c1-5:linking-text-8",
+     "page": 32,
+     "text": "Prove the following inequalities.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "d7c2dc6802a9d8a3"
+    },
+    {
+     "key": "eb11c1-5:linking-text-9",
+     "page": 32,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c0e90f7c8cca2cca"
+    },
+    {
+     "key": "eb11c1-5:linking-text-10",
+     "page": 32,
+     "text": "Prove the following inequalities.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "15d8bc422dfe5e01"
+    },
+    {
+     "key": "eb11c1-5:linking-text-12",
+     "page": 36,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "dccda970ac229dbb"
+    },
+    {
+     "key": "eb11c1-5:linking-text-13",
+     "page": 38,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "073964d06fca2a9d"
+    }
+   ],
+   "bridges": [
+    {
+     "key": "eb11c1-5:challenge-2",
+     "objective": 2
+    }
+   ],
+   "bridges_disputed": [
+    "eb11c1-5:challenge-4"
+   ]
+  }
+ ]
+}

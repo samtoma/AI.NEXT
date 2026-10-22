@@ -1,0 +1,193 @@
+{
+ "format": "ainext.context-generated/1",
+ "book": "egb-g11-math",
+ "chapter": 4,
+ "made": "2026-10-22",
+ "made_by": "book_record_context.py generate-accept (context-gen-v1)",
+ "run": "runs/egb-g11-math/context/context-gen-ch04.20261022T143355Z.json",
+ "lessons": [
+  {
+   "slug": "eb11c4-1",
+   "gaps": [
+    2,
+    3,
+    4
+   ],
+   "entries": [
+    {
+     "objective": 2,
+     "decision": "generate",
+     "text": "Imagine a school map drawn on a grid with the main gate at the origin, the main road along the x-axis and the school's central path along the y-axis. The library is at $A(-3, 2)$. Suppose the school wants to build a copy of the library on the opposite side of the road, then a copy on the opposite side of the central path, and then a copy directly opposite through the gate. In which quadrant is the library, and what are the coordinates of each of the three copies?",
+     "numbers": [],
+     "why": "The lesson's surgery story is about mapping landmarks to coordinates, but not about quadrants or mirror points, so a short map story is better.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "A(-3,2) is in Quadrant II. Reflection in the x-axis (across the road) gives (-3,-2). Reflection in the y-axis (across the central path) gives (3,2). Reflection through the origin (the gate) gives (3,-2). This matches the book's own worked example. It uses only sign changes and quadrants. The school map is clearly imaginary."
+     },
+     "status": "confirmed",
+     "fingerprint": "f8992186a8db6659"
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "text": "Suppose a straight highway runs along the x-axis, and two villages lie at $A(0, 3)$ and $B(4, 1)$, with each unit equal to 1 km. A bus company wants one bus stop on the highway at the point $(s, 0)$ so that passengers from both villages travel the same straight-line distance to reach it. Using the distance formula, how would you find $s$, and so the position of the stop?",
+     "numbers": [],
+     "why": "The lesson story mentions distances, but this objective also needs an unknown coordinate and an equidistant point, so a simple road-and-villages story fits better.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "Set AP = BP with P(s,0). Then s²+9 = (s-4)²+1, so 8s = 8 and s = 1. The stop is at (1,0). Check: AP² = 1+9 = 10 and BP² = 9+1 = 10. This uses the distance formula and the x-axis point (s,0), as in the book. The villages and highway are hypothetical."
+     },
+     "status": "confirmed",
+     "fingerprint": "3eed07ee64e737c7"
+    },
+    {
+     "objective": 4,
+     "decision": "generate",
+     "text": "Imagine a park drawn on a grid where a fountain is at $P(2, 6)$ and a bench is at $A(-3, 2)$. The gardener wants to put a second bench at a point $B$ so that the fountain is exactly halfway between the two benches. Using the mid-point, how would you find the coordinates of $B$?",
+     "numbers": [],
+     "why": "The lesson story only mentions boundary midpoints in passing, so a park story is clearer for the mid-point and symmetric-point idea.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "Let B = (s,t). The midpoint of AB is ((-3+s)/2, (2+t)/2) = (2,6). So s = 7 and t = 10, giving B(7,10). This is the book's symmetric-point method, and the context is a plausible imaginary park."
+     },
+     "status": "confirmed",
+     "fingerprint": "7176f6f58f769efa"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c4-2",
+   "gaps": [
+    3,
+    4,
+    5
+   ],
+   "entries": [
+    {
+     "objective": 3,
+     "decision": "generate",
+     "text": "Imagine a map where two villages sit at $A(1,1)$ and $B(5,3)$, with distances in km. The council wants to dig a well that is exactly the same distance from both villages, so every point on one straight line would be fair. What is the equation of that line?",
+     "numbers": [],
+     "why": "The lesson story is about beams meeting at a tumour (intersection), not about parallel, perpendicular or symmetric lines, so a separate example is needed.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "AB gradient = 2/4 = 1/2, so the perpendicular gradient is -2. The midpoint is (3,2). y-2 = -2(x-3) gives 2x+y-8=0. This is the book's perpendicular bisector method. The setting is plausible and clear, and it doesn't give away the answer."
+     },
+     "status": "confirmed",
+     "fingerprint": "7674f13b62e7432a"
+    },
+    {
+     "objective": 4,
+     "decision": "generate",
+     "text": "Suppose a straight road on a map (distances in km) has equation $3x+4y-12=0$, and a farmhouse stands at the point $(6,8)$. A worker wants to build the shortest possible path from the farmhouse to the road. How long will that path be?",
+     "numbers": [],
+     "why": "The lesson story is about beams intersecting at one point, not about measuring the distance from a point to a line, so a separate example is needed.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "d = |3·6+4·8-12|/sqrt(9+16) = 38/5 = 7.6 km. This uses the point-to-line distance formula directly, and the shortest path to a road is the perpendicular distance. The setting is realistic and simple."
+     },
+     "status": "confirmed",
+     "fingerprint": "cbd0025619f697f9"
+    },
+    {
+     "objective": 5,
+     "decision": "lesson_story",
+     "text": null,
+     "numbers": [],
+     "why": "The lesson story already has several beams (lines) that must all meet at one point, the tumour, and warns that if they do not meet correctly or form an accidental triangle the treatment fails. Finding a point that every line passes through and the condition under which three lines do not form a triangle (two are parallel, or all three meet at one point) are exactly that situation.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "The story has beams, modelled as lines, that must meet at a single point, and it warns about an accidental triangle forming. That matches the objective: three lines are concurrent (Case 2) so they form no triangle. Fixed-point and parallel conditions fit the same picture."
+     },
+     "status": "confirmed",
+     "fingerprint": "d170183873204d8b"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c4-3",
+   "gaps": [
+    2,
+    3,
+    4
+   ],
+   "entries": [
+    {
+     "objective": 2,
+     "decision": "generate",
+     "text": "Imagine a phone tower at the origin whose signal reaches exactly 5 km in every direction, so its coverage edge is the circle $x^2+y^2=25$. A straight road runs along the line $y=x+1$. Where along the road does a driver enter and leave the coverage area, and how many points on the road lie exactly on the edge of the signal?",
+     "numbers": [],
+     "why": "The story only mentions circular tower boundaries, not a line crossing one, so a short road-through-coverage-circle example sets up circle–line intersection.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "Substituting y=x+1 into x²+y²=25 gives x²+x−12=0, so x=3 or x=−4. The points are (3,4) and (−4,−3), and both check on the circle. That makes 2 points (D=49>0). It uses only simultaneous solving and the discriminant, and the tower/road context is plausible and clear."
+     },
+     "status": "confirmed",
+     "fingerprint": "4e3f712bd2edee22"
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "text": "Suppose a park has a circular pond with equation $x^2+y^2=25$, in metres from its centre. A straight path is to touch the pond at exactly one point, $(4, 3)$, without going into the water. What is the equation of this path?",
+     "numbers": [],
+     "why": "The story has no straight line touching a circle, so a path touching a circular pond gives a natural tangent situation.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "(4,3) is on x²+y²=25 since 16+9=25. The tangent is 4x+3y=25, using the book's formula ax+by=r². The pond context is invented but plainly hypothetical, and it is clear."
+     },
+     "status": "confirmed",
+     "fingerprint": "33bca3648f6ad0c5"
+    },
+    {
+     "objective": 4,
+     "decision": "generate",
+     "text": "Imagine two phone towers: one at $(0,0)$ with a signal range of 2 km, and one at $(4,0)$ with a range of 3 km. Their coverage edges are two circles. Using the distance between the towers and the two ranges, work out whether the circles are apart, touching, or overlapping.",
+     "numbers": [],
+     "why": "The story's several towers with circular ranges fit, but it never compares two circles, so a short two-tower example is written for this.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "d=4, r=3, r'=2. Since 3−2=1<4<5=3+2, the circles intersect at 2 points, so they overlap. This uses the book's r−r'<d<r+r' criterion, and the two-tower context matches the lesson story."
+     },
+     "status": "confirmed",
+     "fingerprint": "f1456199e1b5e384"
+    }
+   ]
+  }
+ ]
+}

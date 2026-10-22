@@ -1,0 +1,1382 @@
+{
+ "format": "ainext.context/1",
+ "book": "egb-g11-math",
+ "chapter": 3,
+ "made": "2026-10-22",
+ "made_by": "book_record_context.py accept (context-v2)",
+ "run": "runs/egb-g11-math/context/context-ch03.20261022T142253Z.json",
+ "lessons": [
+  {
+   "slug": "eb11c3-1",
+   "title": "Complex Numbers",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c3-1:objective-1",
+     "label": "Parts and equality of complex numbers",
+     "description": "Identify the real and imaginary parts of a complex number a + bi (including real numbers and numbers such as 2i) and use equality of complex numbers to find real x and y."
+    },
+    {
+     "n": 2,
+     "id": "eb11c3-1:objective-2",
+     "label": "Add, subtract, multiply complex numbers",
+     "description": "Calculate sums, differences, products and powers of complex numbers, substituting i² = −1, and give the answer in the form a + bi."
+    },
+    {
+     "n": 3,
+     "id": "eb11c3-1:objective-3",
+     "label": "Conjugates and dividing complex numbers",
+     "description": "State the complex conjugate of a complex number and divide complex numbers by multiplying numerator and denominator by the conjugate of the denominator, answering in the form a + bi."
+    },
+    {
+     "n": 4,
+     "id": "eb11c3-1:objective-4",
+     "label": "Square roots of negative numbers",
+     "description": "Express square roots of negative numbers in terms of i and calculate with them."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c3-1:linking-text-1",
+     "page": 106,
+     "text": "When a medical technician monitors a patient's heart using an electrocardiogram (ECG), the screen displays a rhythmic, wave-like pattern. Similarly, an MRI machine uses powerful magnetic fields and radio waves to construct detailed images of organs inside the human body. These biological signals are fundamentally waves, and tracking them requires tracking both their size (amplitude) and their timing (phase shift). While standard numbers fail to capture both pieces of data simultaneously, a unique mathematical framework solves this problem perfectly by treating numbers as coordinates on a plane.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "ECG and MRI signals are waves needing size and timing, motivating complex numbers as a whole."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "ECG and MRI wave signals motivate complex numbers for the whole lesson."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 0,
+     "fingerprint": "44c0c2c9b0623805"
+    },
+    {
+     "key": "eb11c3-1:open-prompt-1",
+     "page": 106,
+     "text": "Guiding Question: How can complex numbers help us expand our understanding of mathematics so that we can solve problems that seem impossible using only real numbers?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question asks why complex numbers extend what real numbers can do."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question on why complex numbers extend mathematics beyond real numbers."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "0e606060c2fb0f1e"
+    },
+    {
+     "key": "eb11c3-1:linking-text-2",
+     "page": 106,
+     "text": "i is not included in the imaginary part.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A side note about the imaginary part, not an introduction."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A side note on what the imaginary part is."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "bfecf48f22a8c3c3"
+    },
+    {
+     "key": "eb11c3-1:linking-text-3",
+     "page": 106,
+     "text": "The real and imaginary parts of both sides are equal.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A step in the worked equality solution."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A step/note on equality of complex numbers, no motivating context."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "edde4f9e8232a2a4"
+    },
+    {
+     "key": "eb11c3-1:linking-text-9",
+     "page": 111,
+     "text": "The signs of their imaginary parts are opposite.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A side note about conjugates' imaginary parts."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A side note stating a property of conjugates."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "4f67486489d437e5"
+    },
+    {
+     "key": "eb11c3-1:linking-text-13",
+     "page": 111,
+     "text": "Multiply numerator and denominator by 2 + i",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A step of a worked division example."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A step in a worked division solution."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "404db6e3a4fb4d23"
+    },
+    {
+     "key": "eb11c3-1:reflect-1",
+     "page": 114,
+     "text": "Looking back at how expanding our number system from standard real lines to two-dimensional planes allows us to calculate things like tissue impedance and audio processing, how does this change your view of what makes a mathematical concept \"real\" versus \"imaginary\"?",
+     "type": "open prompt",
+     "A": {
+      "kind": "closing_reflection",
+      "objective": 0,
+      "why": "It looks back on the whole lesson, asking how expanding to the plane changes the view of 'real' versus 'imaginary'."
+     },
+     "B": {
+      "kind": "closing_reflection",
+      "objective": 0,
+      "why": "Looks back on the whole lesson's expansion of numbers to the plane, asking how it changes the view of 'real' vs 'imaginary'."
+     },
+     "status": "agreed",
+     "kind": "closing_reflection",
+     "objective": 0,
+     "fingerprint": "8c9bd4fee2c3a22f"
+    },
+    {
+     "key": "eb11c3-1:linking-text-4",
+     "page": 106,
+     "text": "0 = 0 + 0i",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "0f88144d5185b55b"
+    },
+    {
+     "key": "eb11c3-1:linking-text-5",
+     "page": 107,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c786f5b05a21169c"
+    },
+    {
+     "key": "eb11c3-1:linking-text-6",
+     "page": 107,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "fdc98a4af9ed1df6"
+    },
+    {
+     "key": "eb11c3-1:linking-text-7",
+     "page": 108,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c91c8b422d712e6a"
+    },
+    {
+     "key": "eb11c3-1:linking-text-8",
+     "page": 109,
+     "text": "Side note (attached to the i⁷ example): When the exponent is odd, express it using $i$ and $i^2$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "6615708e3ebe92d1"
+    },
+    {
+     "key": "eb11c3-1:linking-text-10",
+     "page": 111,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e64aecc3f605d8ac"
+    },
+    {
+     "key": "eb11c3-1:linking-text-11",
+     "page": 111,
+     "text": "Conjugate of 6 + 0i is 6 − 0i",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "d716732352a83eab"
+    },
+    {
+     "key": "eb11c3-1:linking-text-12",
+     "page": 111,
+     "text": "Conjugate of 0 − 5i is 0 + 5i",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "85954adb73022b82"
+    },
+    {
+     "key": "eb11c3-1:linking-text-14",
+     "page": 111,
+     "text": "Answer in the form a + bi",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "ddfd9fc922b44451"
+    },
+    {
+     "key": "eb11c3-1:linking-text-15",
+     "page": 112,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "6c51ec8302a01f10"
+    },
+    {
+     "key": "eb11c3-1:linking-text-16",
+     "page": 113,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "9e6a7b1d40493f75"
+    },
+    {
+     "key": "eb11c3-1:linking-text-17",
+     "page": 113,
+     "text": "Side note beside (a) first line: First express in terms of $i$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "b941e34794d7bf9c"
+    },
+    {
+     "key": "eb11c3-1:linking-text-18",
+     "page": 113,
+     "text": "Side note beside (a) third line: Substitute $i^2=-1$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "71290a407cfeed64"
+    },
+    {
+     "key": "eb11c3-1:linking-text-19",
+     "page": 113,
+     "text": "Side note beside (b): Multiply numerator and denominator by $-3i$ (or simpler, just $i$).",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "26f8289b04838a68"
+    },
+    {
+     "key": "eb11c3-1:linking-text-20",
+     "page": 114,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "98d93c030daa03d9"
+    },
+    {
+     "key": "eb11c3-1:linking-text-21",
+     "page": 114,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "310050abc6d12407"
+    },
+    {
+     "key": "eb11c3-1:linking-text-22",
+     "page": 114,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "401043473a8c2e31"
+    }
+   ],
+   "bridges": [
+    {
+     "key": "eb11c3-1:challenge-1",
+     "objective": 1
+    }
+   ],
+   "bridges_disputed": []
+  },
+  {
+   "slug": "eb11c3-2",
+   "title": "Quadratic Equations",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c3-2:objective-1",
+     "label": "Solve quadratic equations",
+     "description": "Solve quadratic equations in the set of complex numbers, using square roots, factorisation or the quadratic formula, expressing negative square roots in terms of i."
+    },
+    {
+     "n": 2,
+     "id": "eb11c3-2:objective-2",
+     "label": "Use the discriminant",
+     "description": "Determine the nature of the solutions of a quadratic equation using the discriminant, and find the range of a constant for which the solutions are real, repeated or imaginary."
+    },
+    {
+     "n": 3,
+     "id": "eb11c3-2:objective-3",
+     "label": "Roots and coefficients",
+     "description": "Calculate sums, products and expressions in the roots of a quadratic equation, and find constants from a stated relationship between the two solutions."
+    },
+    {
+     "n": 4,
+     "id": "eb11c3-2:objective-4",
+     "label": "Factorise over complex numbers",
+     "description": "Factorise quadratic expressions, including quartics in x², over the set of complex numbers as a(x − α)(x − β) using the solutions of the equation."
+    },
+    {
+     "n": 5,
+     "id": "eb11c3-2:objective-5",
+     "label": "Form equations; signs of roots",
+     "description": "Form a quadratic equation from given roots or from expressions in the roots of another equation, find two numbers from their sum and product, and determine the range of a constant from the signs of the two solutions using D, α+β and αβ."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c3-2:linking-text-1",
+     "page": 115,
+     "text": "Evolutionary biologists study how genetic traits spread through populations over time; they use mathematics to represent reproductive rates and generational effects; at the balance point the equations form quadratic expressions, which help predict whether a population is stable or vulnerable to collapse.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "Evolutionary biologists use quadratic expressions at the balance point to predict whether a population is stable or collapses, which sets up the whole lesson."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "Biologists model population stability or collapse with quadratic expressions, a picturable setting for the whole lesson."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 0,
+     "fingerprint": "99282dbd0102d77c"
+    },
+    {
+     "key": "eb11c3-2:open-prompt-1",
+     "page": 115,
+     "text": "Guiding Question: \"How can quadratic equations help us determine whether a system in life science or engineering will remain stable or collapse?\"",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's Guiding Question asks why quadratic equations matter for stability or collapse, with no worked numbers."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's Guiding Question on how quadratics show stability or collapse, covering the whole lesson."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "c49b5b6f2a449001"
+    },
+    {
+     "key": "eb11c3-2:linking-text-12",
+     "page": 122,
+     "text": "First find the values of $\\alpha+\\beta$ and $\\alpha\\beta$ (margin note beside Example).",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A margin hint about the first step of a worked example."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A margin hint on a worked example step, not a motivating context."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "9eaa9d2f246ee4a7"
+    },
+    {
+     "key": "eb11c3-2:linking-text-13",
+     "page": 122,
+     "text": "Multiply both the numerator and the denominator by 2 (margin note beside part (c)).",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A margin hint about a calculation step in part (c)."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A margin hint about multiplying numerator and denominator, a step of a worked example."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "b7a0910b8f5d5d28"
+    },
+    {
+     "key": "eb11c3-2:reflect-1",
+     "page": 131,
+     "text": "How can analyzing the properties of an equation (such as knowing the number of its roots or their relation to the sum and product of the roots) without fully solving it help you understand mathematics better?",
+     "type": "open prompt",
+     "A": {
+      "kind": "closing_reflection",
+      "objective": 0,
+      "why": "It looks back on the whole lesson, asking how analysing roots, sums and products without solving helps understanding."
+     },
+     "B": {
+      "kind": "closing_reflection",
+      "objective": 5,
+      "why": "Looks back on what analysing roots via sum, product and count without solving gives, closing the final objective."
+     },
+     "status": "agreed",
+     "kind": "closing_reflection",
+     "objective": 0,
+     "placed": "the whole lesson: the readings named it and one objective",
+     "fingerprint": "6e171a56b45c4346"
+    },
+    {
+     "key": "eb11c3-2:linking-text-2",
+     "page": 115,
+     "text": "How to solve Quadratic Equations.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "f24269e4bd940612"
+    },
+    {
+     "key": "eb11c3-2:linking-text-3",
+     "page": 116,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "3df892093040d7df"
+    },
+    {
+     "key": "eb11c3-2:linking-text-4",
+     "page": 117,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "6fae8f3a34140860"
+    },
+    {
+     "key": "eb11c3-2:linking-text-5",
+     "page": 118,
+     "text": "Side note: Inside the square root of the Quadratic Formula.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "296f875f8e346e40"
+    },
+    {
+     "key": "eb11c3-2:linking-text-6",
+     "page": 119,
+     "text": "Side note: Substitute $a=1$, $b=-m$, $c=m^2-3m-9$ into the discriminant.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "fe9fe7294135c930"
+    },
+    {
+     "key": "eb11c3-2:linking-text-7",
+     "page": 119,
+     "text": "Side note: Reverse the inequality sign.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "a28f187d5f400b1d"
+    },
+    {
+     "key": "eb11c3-2:linking-text-8",
+     "page": 119,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "101a5ce8db98038d"
+    },
+    {
+     "key": "eb11c3-2:linking-text-9",
+     "page": 119,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "ed9d399dfa720589"
+    },
+    {
+     "key": "eb11c3-2:linking-text-10",
+     "page": 120,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "7662ce4957480e07"
+    },
+    {
+     "key": "eb11c3-2:linking-text-11",
+     "page": 121,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e786cba0f133dc52"
+    },
+    {
+     "key": "eb11c3-2:linking-text-14",
+     "page": 122,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e5680ffda368cb9c"
+    },
+    {
+     "key": "eb11c3-2:linking-text-15",
+     "page": 122,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "291c6ba0ab02053d"
+    },
+    {
+     "key": "eb11c3-2:linking-text-16",
+     "page": 123,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "cdd5bb32ca20f393"
+    },
+    {
+     "key": "eb11c3-2:linking-text-17",
+     "page": 125,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "96c620bf4d4c7037"
+    },
+    {
+     "key": "eb11c3-2:linking-text-18",
+     "page": 126,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "ec794a89b3b8c80b"
+    },
+    {
+     "key": "eb11c3-2:linking-text-19",
+     "page": 127,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c2e0c78d040bdfa3"
+    },
+    {
+     "key": "eb11c3-2:linking-text-20",
+     "page": 127,
+     "text": "Side notes: \"One quadratic equation with α and β as its roots is x² − (α+β)x + αβ = 0\" (beside example 1, twice, also beside example 2); \"Multiply both sides by 2 to make coefficients integers.\"",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "721e022fa10c0f8b"
+    },
+    {
+     "key": "eb11c3-2:linking-text-21",
+     "page": 128,
+     "text": "Side note beside the step $-(\\alpha+\\beta+4)$: From (i), $\\alpha+\\beta=-2$",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "8a89a8a7d229baf4"
+    },
+    {
+     "key": "eb11c3-2:linking-text-22",
+     "page": 128,
+     "text": "Side note beside the step $\\alpha\\beta+2(\\alpha+\\beta)+4$: From (i) and (ii), $\\alpha+\\beta=-2,\\ \\alpha\\beta=-4$",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "6cec100ba7976959"
+    },
+    {
+     "key": "eb11c3-2:linking-text-23",
+     "page": 128,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e1c0694fef13ee3d"
+    },
+    {
+     "key": "eb11c3-2:linking-text-24",
+     "page": 128,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "a176abc2eee98f1d"
+    },
+    {
+     "key": "eb11c3-2:linking-text-25",
+     "page": 130,
+     "text": "Side note attached to (iii): Discriminant D is not needed.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "1f1b1e32873c34f8"
+    }
+   ],
+   "bridges": [
+    {
+     "key": "eb11c3-2:challenge-1",
+     "objective": 1
+    },
+    {
+     "key": "eb11c3-2:challenge-5",
+     "objective": 4
+    },
+    {
+     "key": "eb11c3-2:challenge-7",
+     "objective": 5
+    }
+   ],
+   "bridges_disputed": []
+  },
+  {
+   "slug": "eb11c3-3",
+   "title": "Polynomial Theorems",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c3-3:objective-1",
+     "label": "Remainder Theorem, linear divisors",
+     "description": "Use the Remainder Theorem to find the remainder when a polynomial is divided by a linear expression x − a or ax − b, by evaluating P(a) or P(b/a), and find an unknown coefficient or make a divisibility condition hold."
+    },
+    {
+     "n": 2,
+     "id": "eb11c3-3:objective-2",
+     "label": "Remainder for quadratic divisors",
+     "description": "Determine the remainder ax + b when a polynomial is divided by a quadratic expression, by writing P(x) = (x − α)(x − β)Q(x) + ax + b, substituting the roots and solving simultaneous equations."
+    },
+    {
+     "n": 3,
+     "id": "eb11c3-3:objective-3",
+     "label": "Synthetic division",
+     "description": "Use synthetic division to find the quotient and remainder when a polynomial is divided by x − a, inserting a zero coefficient for missing terms."
+    },
+    {
+     "n": 4,
+     "id": "eb11c3-3:objective-4",
+     "label": "Factorise using Factor Theorem",
+     "description": "Factorise polynomials using the Factor Theorem, finding a value a with P(a) = 0 from the divisors of the constant term, then dividing out the factor x − a."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c3-3:linking-text-1",
+     "page": 132,
+     "text": "In economics and social sciences, researchers use polynomial regression models to analyse and predict trends (unemployment rates, income distribution). Remainder Theorem: quick evaluation of the model at a specific year, e.g. P(5). Factor Theorem: identifies when the model reaches zero. Synthetic Division: fast method to test values and simplify calculations.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "Economists use polynomial regression models to predict trends like unemployment and income, motivating all the theorems."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "Economists use polynomial regression models for unemployment and income trends, setting up all three theorems and synthetic division."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 0,
+     "fingerprint": "b59159c0a963fa3e"
+    },
+    {
+     "key": "eb11c3-3:open-prompt-1",
+     "page": 132,
+     "text": "Guiding Question: How can polynomial theorems help economists and social scientists test values and predict future trends efficiently?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question asks why polynomial theorems help test values and predict trends."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The Guiding Question that opens the lesson, asking why polynomial theorems help test values and predict trends."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "26430a37139ba0cf"
+    },
+    {
+     "key": "eb11c3-3:linking-text-2",
+     "page": 132,
+     "text": "Example: Remainder when P(x) is divided by x − 4 is P(4). Remainder when P(x) is divided by 4x + 3 is P(−3/4).",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A short example of the Remainder Theorem rule, not a motivating idea."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A restated formula with a short example of the Remainder Theorem."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "4b767191f58c8019"
+    },
+    {
+     "key": "eb11c3-3:linking-text-9",
+     "page": 136,
+     "text": "Let the quotient be $Q(x)$ and the remainder be $ax+b$ when $P(x)$ is divided by $x^2+x-2$. $P(x)=(x^2+x-2)Q(x)+ax+b=(x+2)(x-1)Q(x)+ax+b$ ......(i). Let the quotient be $Q_1(x)$ when $P(x)$ is divided by $x^2-x-6$. Since the remainder is $7x+6$, $P(x)=(x^2-x-6)Q_1(x)+7x+6=(x+2)(x-3)Q_1(x)+7x+6$. Here, $P(-2)=-14+6=-8$. Also from (i), $P(-2)=-2a+b$. Thus, $-2a+b=-8$ ......(ii). Similarly, let the quotient be $Q_2(x)$ when $P(x)$ is divided by $x^2+2x-3$. Since the remainder is $4x-3$, $P(x)=(x^2+2x-3)Q_2(x)+4x-3=(x-1)(x+3)Q_2(x)+4x-3$. Here, $P(1)=4-3=1$. Also from (i), $P(1)=a+b$. Thus, $a+b=1$ ......(iii). Solving the simultaneous equations (ii) and (iii) gives $a=3$, $b=-2$. Therefore, the required remainder is $3x-2$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A step-by-step worked solution."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked solution for finding a remainder, step by step."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "89f1e90b7fbd129f"
+    },
+    {
+     "key": "eb11c3-3:linking-text-12",
+     "page": 138,
+     "text": "Therefore, the required quotient and remainder are: Quotient $x^2-2x+9$, Remainder $-7$",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "The result line of a worked synthetic division."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "The end of a worked synthetic division solution."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "b6ade8ec564172f0"
+    },
+    {
+     "key": "eb11c3-3:linking-text-13",
+     "page": 140,
+     "text": "Example: Divisors of the constant term 6 in $x^3+3x^2+2x+6$ are 1, 2, 3, 6 ⇒ Substitute ±1, ±2, ±3, ±6 in order.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "An example of the method of testing divisors of the constant term."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A method example listing divisors of the constant term, not a motivating context."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "132f8adb2f900cac"
+    },
+    {
+     "key": "eb11c3-3:reflect-1",
+     "page": 141,
+     "text": "How does breaking down polynomials into factors help us understand both mathematics and real-world systems more deeply?",
+     "type": "open prompt",
+     "A": {
+      "kind": "closing_reflection",
+      "objective": 4,
+      "why": "It looks back on what breaking polynomials into factors achieves, closing the factorising objective."
+     },
+     "B": {
+      "kind": "closing_reflection",
+      "objective": 4,
+      "why": "Asks the student to look back on how factorising helps understanding, closing the Factor Theorem objective."
+     },
+     "status": "agreed",
+     "kind": "closing_reflection",
+     "objective": 4,
+     "fingerprint": "a2cbe6934da4c1f9"
+    },
+    {
+     "key": "eb11c3-3:linking-text-3",
+     "page": 132,
+     "text": "Side note: If P(x) ÷ (x − a) = Q(x) + R, P(x) = Q(x)(x − a) + R. Therefore, P(a) = Q(a)(a − a) + R, where (a − a) becomes 0, = R.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "68b76d4e7d29b5e0"
+    },
+    {
+     "key": "eb11c3-3:linking-text-4",
+     "page": 132,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "bd884f6c09fca805"
+    },
+    {
+     "key": "eb11c3-3:linking-text-5",
+     "page": 133,
+     "text": "Side note: Substitute x = −3",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "29464976ce11a111"
+    },
+    {
+     "key": "eb11c3-3:linking-text-6",
+     "page": 133,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "9ffa9faba6d06933"
+    },
+    {
+     "key": "eb11c3-3:linking-text-7",
+     "page": 133,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e09d0a850368465f"
+    },
+    {
+     "key": "eb11c3-3:linking-text-8",
+     "page": 136,
+     "text": "Refer to 1-5: $A = B \\times Q + R$",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "09687f001d6c14ac"
+    },
+    {
+     "key": "eb11c3-3:linking-text-10",
+     "page": 137,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "97029c82f7613941"
+    },
+    {
+     "key": "eb11c3-3:linking-text-11",
+     "page": 137,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "0928fa5187313208"
+    },
+    {
+     "key": "eb11c3-3:linking-text-14",
+     "page": 141,
+     "text": "Side note beside P(x): Substitute ±1, ±2, ±4... in order.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "f67584e75d54b95e"
+    },
+    {
+     "key": "eb11c3-3:linking-text-15",
+     "page": 141,
+     "text": "Side note: Factorise the cubic part using the Factor Theorem.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "5e00dc1ac6e62b1c"
+    },
+    {
+     "key": "eb11c3-3:linking-text-16",
+     "page": 141,
+     "text": "Side note beside Q(x): Substitute ±1, ±2, ±4... in order.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "5df59d843cbab51b"
+    },
+    {
+     "key": "eb11c3-3:linking-text-17",
+     "page": 141,
+     "text": "Side note: The quadratic part cannot be factorised further, so answer as is.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "ccd540fe4350cc41"
+    }
+   ],
+   "bridges": [
+    {
+     "key": "eb11c3-3:challenge-1",
+     "objective": 1
+    }
+   ],
+   "bridges_disputed": []
+  },
+  {
+   "slug": "eb11c3-4",
+   "title": "Higher-Degree Equations",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c3-4:objective-1",
+     "label": "Solve higher-degree equations",
+     "description": "Solve cubic and quartic equations by factorising (sum of cubes, the Factor Theorem, or treating x^2 as a chunk), using the Quadratic Formula for non-factorisable parts, and find all real and complex solutions."
+    },
+    {
+     "n": 2,
+     "id": "eb11c3-4:objective-2",
+     "label": "Determine cubic coefficients",
+     "description": "Determine unknown coefficients of a cubic equation from given solutions (including complex ones) by substitution, and find the other solutions."
+    },
+    {
+     "n": 3,
+     "id": "eb11c3-4:objective-3",
+     "label": "Simplify expressions with ω",
+     "description": "Simplify and evaluate expressions involving the cube root of unity ω using ω^3=1 and ω^2+ω+1=0."
+    },
+    {
+     "n": 4,
+     "id": "eb11c3-4:objective-4",
+     "label": "Find repeated-root constants",
+     "description": "Find the value of a constant that gives a cubic equation a repeated root, using the Factor Theorem and the two cases (shared root or discriminant D=0)."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c3-4:linking-text-1",
+     "page": 142,
+     "text": "In biomedical engineering, modeling physical structures requires moving beyond simple flat lines or parabolas. When researchers design synthetic heart valves or model the blood flow velocity through a constricted artery, the fluid dynamics change in complex, non-linear ways. These phenomena are modeled using cubic and higher-degree polynomial equations.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "Biomedical engineers model heart valves and blood flow through a constricted artery with cubic and higher-degree polynomials, which a student can picture."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "Heart valves and blood flow in a constricted artery motivate higher-degree polynomials for the whole lesson."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 0,
+     "fingerprint": "1d3e1e4d11f40718"
+    },
+    {
+     "key": "eb11c3-4:linking-text-2",
+     "page": 142,
+     "text": "Unlike quadratic equations, which only model a single peak or valley, a cubic equation can capture a system that starts at a baseline, experiences a sudden surge (like a heartbeat), and stabilizes back to equilibrium.",
+     "type": "linking text",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "It says why cubics matter: unlike a quadratic's single peak or valley, a cubic can model a surge and a return to equilibrium."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "It explains what a cubic can model that a quadratic cannot, with no worked numbers."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "20bc77b972f4b55a"
+    },
+    {
+     "key": "eb11c3-4:guiding-question-1",
+     "page": 142,
+     "text": "How do the algebraic properties of cubic equations—such as multiple turning points, repeated roots, and cube roots of unity—enable us to model systems more accurately than quadratic equations?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "It is the lesson's opening guiding question about why cubic properties let us model systems better than quadratics."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "It is the lesson's guiding question on why cubic properties model systems better than quadratics."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "e67f423c3c0bdc20"
+    },
+    {
+     "key": "eb11c3-4:linking-text-3",
+     "page": 144,
+     "text": "You have a household water tank. Water flows into the tank at different rates and flows out at other rates, all depending on the pressure level x: Inflow (increasing water): $x^4 + x^2 + x$. Outflow (decreasing water): $x^3 + 2$. For the water level in the tank to remain perfectly stable.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 1,
+      "why": "A household water tank with inflow and outflow gives a picturable setting that leads to a quartic equation to solve."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 1,
+      "why": "A household water tank with inflow and outflow rates set equal leads to a quartic equation to solve."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 1,
+     "fingerprint": "c88f110800520be0"
+    },
+    {
+     "key": "eb11c3-4:linking-text-4",
+     "page": 145,
+     "text": "Since $x=2+i$ is a solution, $(2+i)^3+a(2+i)^2+b(2+i)+5=0$; $(3a+2b+7)+(4a+b+11)i=0$. Therefore $3a+2b+7=0$ and $4a+b+11=0$. Solving this gives $a=-3, b=1$. In this case, the original equation is $x^3-3x^2+x+5=0$. Factorising the LHS gives $(x+1)(x^2-4x+5)=0$. Therefore, $x=-1$ or $2\\pm i$. Summarising the above: $a=-3, b=1$, and the other solutions are $x=-1$ or $2-i$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is the worked solution of the example, with calculation steps."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a step of a worked solution."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "48923c792a38ac13"
+    },
+    {
+     "key": "eb11c3-4:linking-text-9",
+     "page": 149,
+     "text": "Side box \"Work with a partner\": Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is an instruction to work with a partner."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is an instruction to work with a partner."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "057647e12196920e"
+    },
+    {
+     "key": "eb11c3-4:reflect-1",
+     "page": 149,
+     "text": "A quadratic equation (like $x^2+1=0$) might have no real solutions. Why does a cubic equation (like $x^3+x+1=0$) always have at least one real solution? What does this show about the way these two types of equations behave?",
+     "type": "open prompt",
+     "A": {
+      "kind": "closing_reflection",
+      "objective": 0,
+      "why": "It looks back on the lesson as a whole by asking why a cubic always has a real solution while a quadratic may not."
+     },
+     "B": {
+      "kind": "closing_reflection",
+      "objective": 1,
+      "why": "It looks back on solving cubics, asking why a cubic always has a real solution unlike a quadratic."
+     },
+     "status": "agreed",
+     "kind": "closing_reflection",
+     "objective": 0,
+     "placed": "the whole lesson: the readings named it and one objective",
+     "fingerprint": "0b95c6fce708da69"
+    },
+    {
+     "key": "eb11c3-4:linking-text-5",
+     "page": 145,
+     "text": "Side notes: Substitute the solution. / Convert to $a+bi$ form. / Compare real and imaginary parts of both sides (see 3-1). / Since formulas cannot be used, use the Factor Theorem. / Do not include $2+i$ in the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "fd1d30ba58dcfc13"
+    },
+    {
+     "key": "eb11c3-4:linking-text-6",
+     "page": 145,
+     "text": "Solve the following problems. (Side box: Work with a partner — Collaborate with your group to solve the try section then discuss the answer.)",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "a3eefb99fb780f8b"
+    },
+    {
+     "key": "eb11c3-4:linking-text-7",
+     "page": 146,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "dba61008348c7fb5"
+    },
+    {
+     "key": "eb11c3-4:linking-text-8",
+     "page": 147,
+     "text": "Side note (linked to ω²+ω+1=0): Since $\\omega^3=1$, $\\omega^3-1=0 \\to (\\omega-1)(\\omega^2+\\omega+1)=0$. Since $\\omega\\neq1$, $\\omega^2+\\omega+1=0$",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "433462c167ca4350"
+    },
+    {
+     "key": "eb11c3-4:linking-text-10",
+     "page": 149,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "02e50516a63151bc"
+    }
+   ],
+   "bridges": [
+    {
+     "key": "eb11c3-4:challenge-1",
+     "objective": 1
+    },
+    {
+     "key": "eb11c3-4:challenge-2",
+     "objective": 1
+    },
+    {
+     "key": "eb11c3-4:challenge-3",
+     "objective": 1
+    }
+   ],
+   "bridges_disputed": []
+  }
+ ]
+}

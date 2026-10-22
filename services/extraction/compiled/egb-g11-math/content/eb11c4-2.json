@@ -115,6 +115,18 @@
           "text": "The gradient of a line can be found using two points on the line.",
           "page": 167
         }
+      ],
+      "context": [
+        {
+          "id": "eb11c4-2:challenge-3",
+          "kind": "real_life",
+          "text": "Robotic Needle Biopsy Guidance. In robotic-assisted surgery, a computer system guides a biopsy needle to a deep-seated tumor. The target tumor is located at the precise intersection of two diagnostic imaging paths (modeled as straight lines on a coordinate grid, where 1 unit = 1 millimeter): Laser Scan Path A: $6x+5y+7=0$; Laser Scan Path B: $3x-2y+5=0$. The Clinical Challenge: The surgical robot's mechanical arm is anchored at the system's coordinate origin (0, 0) (the home calibration point). To perform the biopsy, the robotic arm must insert a rigid needle along a perfectly straight trajectory from the origin (0, 0) directly to the tumor at the intersection point. The software engineers must calculate the exact linear equation of this needle trajectory to program the robotic arm's path.",
+          "page": 168,
+          "by": "two readings"
+        }
+      ],
+      "real_life_questions": [
+        "q:eb11c4-2-2:bk-challenge-2"
       ]
     },
     {
@@ -169,6 +181,16 @@
           "text": "To find the coordinates of point B(s, t) symmetric to point A with respect to line l, express two conditions as equations and solve them simultaneously: the line segment (AB) is perpendicular to l, and the midpoint of (AB) lies on line l.",
           "page": 172
         }
+      ],
+      "context": [
+        {
+          "id": "eb11c4-2:generated-3",
+          "kind": "real_life",
+          "text": "Imagine a map where two villages sit at $A(1, 1)$ and $B(5, 3)$, with distances in km. The council wants to dig a well that is exactly the same distance from both villages, so every point on one straight line would be fair. What is the equation of that line?",
+          "page": null,
+          "by": "written and checked blind",
+          "generated": true
+        }
       ]
     },
     {
@@ -199,6 +221,20 @@
           "text": "For the height, find the distance between point C and line (AB).",
           "page": 176
         }
+      ],
+      "context": [
+        {
+          "id": "eb11c4-2:generated-4",
+          "kind": "real_life",
+          "text": "Suppose a straight road on a map (distances in km) has equation $3x+4y-12=0$, and a farmhouse stands at the point $(6, 8)$. A worker wants to build the shortest possible path from the farmhouse to the road. How long will that path be?",
+          "page": null,
+          "by": "written and checked blind",
+          "generated": true
+        }
+      ],
+      "real_life_questions": [
+        "q:eb11c4-2-4:bk-challenge-6",
+        "q:eb11c4-2-4:bk-challenge-7"
       ]
     },
     {
@@ -228,6 +264,34 @@
           "type": "rule",
           "text": "Case 2: the 3 lines intersect at 1 point. Find the point of intersection of 2 lines, and the remaining line also passes through that point.",
           "page": 178
+        }
+      ]
+    },
+    {
+      "lo": null,
+      "label": null,
+      "statements": [],
+      "context": [
+        {
+          "id": "eb11c4-2:linking-text-1",
+          "kind": "real_life",
+          "text": "In modern medicine, precisely locating a target inside the human body is vital. In Stereotactic Radiosurgery, multiple narrow beams of radiation are aimed from different angles to intersect precisely at a tumor. By modeling the beams as straight lines in a three-dimensional coordinate system, medical physicists calculate their exact equations so they intersect at a single point (the tumor) while minimizing damage to healthy tissue. If the lines do not intersect correctly, or form an accidental triangle around the tumor, the treatment fails.",
+          "page": 162,
+          "by": "two readings"
+        },
+        {
+          "id": "eb11c4-2:guiding-question-1",
+          "kind": "concept_intro",
+          "text": "How can we use the algebraic equations of straight lines to guarantee that multiple paths intersect at a single, exact target point, and how do we determine the geometric boundaries of the areas they influence?",
+          "page": 162,
+          "by": "two readings"
+        },
+        {
+          "id": "eb11c4-2:reflect-1",
+          "kind": "closing_reflection",
+          "text": "How might the intersection of lines and triangles be used to solve problems (e.g., navigation, construction, or design)?",
+          "page": 179,
+          "by": "two readings"
         }
       ]
     }

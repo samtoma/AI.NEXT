@@ -1,0 +1,238 @@
+{
+ "format": "ainext.context-generated/1",
+ "book": "egb-g11-math",
+ "chapter": 3,
+ "made": "2026-10-22",
+ "made_by": "book_record_context.py generate-accept (context-gen-v1)",
+ "run": "runs/egb-g11-math/context/context-gen-ch03.20261022T143355Z.json",
+ "lessons": [
+  {
+   "slug": "eb11c3-1",
+   "gaps": [
+    2,
+    3,
+    4
+   ],
+   "entries": [
+    {
+     "objective": 2,
+     "decision": "lesson_story",
+     "text": null,
+     "numbers": [],
+     "why": "The ECG/MRI story treats each wave as one complex number holding both size and timing. Combining two signals means adding or subtracting them, and scaling or shifting a signal means multiplying. That is the arithmetic of this objective, done on a + bi with i² = −1, so no new text is needed.",
+     "check": {
+      "verdict": "rejected",
+      "numbers_ok": null,
+      "maths_fits": false,
+      "true_to_world": null,
+      "suits_student": false,
+      "why": "The lesson story is about ECG and MRI waves, tracking amplitude and phase shift, and treating numbers as coordinates on a plane. Objective 2 is the mechanical algebra of adding, subtracting and multiplying complex numbers and finding powers of i with i² = −1. The story never has any such calculation happen. It names no quantities to add or multiply and no powers of i. It only says complex numbers capture size and timing. So the objective's maths does not occur inside the story as given."
+     },
+     "status": "held",
+     "fingerprint": "8e458c05ed817774"
+    },
+    {
+     "objective": 3,
+     "decision": "none",
+     "why": "Conjugates and dividing by a conjugate are a formal algebra technique for making a denominator real. The ECG story does not set them up, and any everyday situation would be forced.",
+     "status": "none"
+    },
+    {
+     "objective": 4,
+     "decision": "none",
+     "why": "Writing √−n as i√n is a formal extension of the number system. No honest everyday situation needs the square root of a negative number, so a story would be forced.",
+     "status": "none"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c3-2",
+   "gaps": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "entries": [
+    {
+     "objective": 2,
+     "decision": "generate",
+     "text": "Imagine a football kicked so that its height in metres after $t$ seconds is $h=-5t^2+10t$. A commentator says it will reach 8 m. Setting $h=8$ gives $5t^2-10t+8=0$. Without solving it, you are asked to use $D=b^2-4ac$ to decide whether the ball can ever reach 8 m, and what $D$ tells you about the solutions.",
+     "numbers": [
+      {
+       "working": "b^2-4ac = (-10)^2 - 4(5)(8) = 100 - 160",
+       "value": "-60"
+      }
+     ],
+     "why": "The lesson's story is only a general mention of stability; a ball-height situation sets up the discriminant directly.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "D = (-10)^2 - 4(5)(8) = 100 - 160 = -60 < 0, so two distinct imaginary solutions and the ball never reaches 8 m. This is true, since the maximum height is 5 m. It uses only the discriminant. The setting is clear and does not give away the answer."
+     },
+     "status": "confirmed",
+     "fingerprint": "d751a258eee542bc"
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "text": "Suppose a rectangular school garden has sides $\\alpha$ m and $\\beta$ m, which are the two solutions of $x^2-10x+24=0$. The gardener wants the length of fencing across the diagonal, which needs $\\alpha^2+\\beta^2$. You are asked to find $\\alpha^2+\\beta^2$ using the sum and product of the solutions, without finding $\\alpha$ and $\\beta$ themselves.",
+     "numbers": [],
+     "why": "A rectangle whose sides are the two roots gives a natural sum and product situation.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "Sum = 10 and product = 24, so α²+β² = 100 - 48 = 52. The roots are 4 and 6, and 4²+6² = 52, so this is consistent. It uses only the sum and product method and the squares identity. The diagonal context is sensible."
+     },
+     "status": "confirmed",
+     "fingerprint": "e890aced579971ff"
+    },
+    {
+     "objective": 4,
+     "decision": "none",
+     "why": "Factorising over the complex numbers is a formal algebra skill, and no honest real-life situation involves complex factors.",
+     "status": "none"
+    },
+    {
+     "objective": 5,
+     "decision": "generate",
+     "text": "Suppose a rectangular playground has a perimeter of 26 m and an area of 40 m². Half the perimeter gives the sum of the two side lengths, and the area gives their product. You are asked to form a quadratic equation whose solutions are the two side lengths, then solve it to find them.",
+     "numbers": [
+      {
+       "working": "26 ÷ 2",
+       "value": "13"
+      }
+     ],
+     "why": "Finding two lengths from their sum and product is a real situation that leads to forming a quadratic.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "Sum = 13 and product = 40, giving x² - 13x + 40 = 0. Then (x-5)(x-8) = 0, so the sides are 5 m and 8 m. Check: perimeter 26 and area 40. This matches the 'find two numbers from sum and product' method. The setting is realistic and simple."
+     },
+     "status": "confirmed",
+     "fingerprint": "d78088dec92e505f"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c3-3",
+   "gaps": [
+    2,
+    3,
+    4
+   ],
+   "entries": [
+    {
+     "objective": 2,
+     "decision": "generate",
+     "text": "Imagine a bakery's daily profit (in hundreds of EGP) is modelled by a polynomial $P(x)$, where $x$ is the month number. Suppose all we know is that $P(1)=7$ and $P(3)=15$. We want a simple straight-line summary $ax+b$ that is the remainder when $P(x)$ is divided by $(x-1)(x-3)$. Can you work out $a$ and $b$ from just these two readings?",
+     "numbers": [],
+     "why": "The lesson story only evaluates a model at one value; this objective needs two known values and a quadratic divisor, so a new situation is needed.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "P(1)=a+b=7 and P(3)=3a+b=15 give a=4, b=3, so the remainder is 4x+3. This uses exactly the objective's method: write P(x)=(x−1)(x−3)Q(x)+ax+b, substitute the roots, solve simultaneously. It is a clearly hypothetical setup with no real brands or false claims. It is short and doesn't give away the answer."
+     },
+     "status": "confirmed",
+     "fingerprint": "10092c8e24b7506b"
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "text": "Suppose a shop's yearly cost model (in thousands of EGP) is $P(x)=x^3+5x+11$, where $x$ is the number of years since opening. To test the model at $x=-2$ and simplify it, we divide $P(x)$ by $x+2$. Notice there is no $x^2$ term. How can we set up a quick table of coefficients to find the quotient and the remainder without long division?",
+     "numbers": [],
+     "why": "The lesson story mentions synthetic division only in passing; a concrete model to divide by $x-a$ makes the table method natural.",
+     "check": {
+      "verdict": "rejected",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": false,
+      "suits_student": false,
+      "why": "The maths is right. The row 1, 0, 5, 11 with −2 gives quotient x²−2x+9 and remainder −7, and the zero coefficient for the missing x² term is used. The context is the problem. x is years since opening, so x=−2 is two years before the shop opened, and the remainder P(−2)=−7 would be a negative cost. This makes the story unrealistic and confusing for a student. A pure-maths framing, or a context where x=−2 makes sense, would work better."
+     },
+     "status": "held",
+     "fingerprint": "357a7522cf7232d1"
+    },
+    {
+     "objective": 4,
+     "decision": "lesson_story",
+     "text": null,
+     "numbers": [],
+     "why": "The lesson story says the Factor Theorem identifies when the model reaches zero. Finding a value $a$ with $P(a)=0$ and dividing out $x-a$ to factorise happens naturally in that same polynomial-model situation.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": null,
+      "maths_fits": null,
+      "true_to_world": null,
+      "suits_student": null,
+      "why": "The lesson story says the Factor Theorem identifies when a polynomial regression model reaches zero. Finding a with P(a)=0 and factorising P(x)=(x−a)Q(x) is exactly that step, so the objective's maths does happen inside the story."
+     },
+     "status": "confirmed",
+     "fingerprint": "60ad856be75b4e07"
+    }
+   ]
+  },
+  {
+   "slug": "eb11c3-4",
+   "gaps": [
+    2,
+    3,
+    4
+   ],
+   "entries": [
+    {
+     "objective": 2,
+     "decision": "generate",
+     "text": "Imagine a packaging designer models the height $x$ (in dm) of a gift box with the cubic equation $x^3-6x^2+kx-6=0$, where $k$ is a number the designer has not yet fixed. She knows from a test box that $x=2$ is a solution. What must $k$ be, and once you know it, what are the other solutions of the equation?",
+     "numbers": [],
+     "why": "The lesson story is about modelling with cubics but does not set up finding unknown coefficients from a known solution, so a short substitution scenario is better.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "Substituting x=2 gives 8-24+2k-6=0, so k=11. The cubic is x^3-6x^2+11x-6=(x-1)(x-2)(x-3), so the other solutions are 1 and 3. This uses only substitution and then factoring. The scenario is hypothetical and clearly framed as such, and it is simple to picture."
+     },
+     "status": "confirmed",
+     "fingerprint": "727c8b75e9c7475a"
+    },
+    {
+     "objective": 3,
+     "decision": "none",
+     "why": "The cube root of unity ω is a purely formal complex number; no honest everyday situation naturally uses ω^3=1 and ω^2+ω+1=0, so any story would be forced.",
+     "status": "none"
+    },
+    {
+     "objective": 4,
+     "decision": "generate",
+     "text": "Suppose a bakery's break-even levels are the solutions of $x^3-4x^2+(k+3)x-k=0$, where $x$ is the number of hundreds of loaves baked in a day and $k$ is a constant set by the oven's running cost. The owner notices that $x=1$ is always a solution, whatever $k$ is. For which value(s) of $k$ do two of the break-even levels coincide, that is, the equation has a repeated root?",
+     "numbers": [],
+     "why": "The lesson story gives no setup for a parameter that forces a repeated root, so a short break-even scenario fits better.",
+     "check": {
+      "verdict": "confirmed",
+      "numbers_ok": true,
+      "maths_fits": true,
+      "true_to_world": true,
+      "suits_student": true,
+      "why": "x=1 is a root for every k, since 1-4+k+3-k=0. Factoring gives (x-1)(x^2-3x+k). Case 1: x=1 in the quadratic gives 1-3+k=0, so k=2. Case 2: D=9-4k=0 gives k=9/4. Both values are correct and are exactly the two cases the book describes. The bakery context is hypothetical and clear."
+     },
+     "status": "confirmed",
+     "fingerprint": "9f515bbcdea2ba5e"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,1630 @@
+{
+ "format": "ainext.context/1",
+ "book": "egb-g11-math",
+ "chapter": 4,
+ "made": "2026-10-22",
+ "made_by": "book_record_context.py accept (context-v2)",
+ "run": "runs/egb-g11-math/context/context-ch04.20261022T142253Z.json",
+ "lessons": [
+  {
+   "slug": "eb11c4-1",
+   "title": "Coordinate Geometry Basics",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c4-1:objective-1",
+     "label": "Divide number-line segments",
+     "description": "Calculate the distance between two points on a number line and the coordinate of the point dividing a segment internally or externally in a given ratio, including the mid-point."
+    },
+    {
+     "n": 2,
+     "id": "eb11c4-1:objective-2",
+     "label": "Quadrants and reflections",
+     "description": "Determine the quadrant of a point and find the coordinates of its symmetric points with respect to the x−axis, the y−axis and the origin."
+    },
+    {
+     "n": 3,
+     "id": "eb11c4-1:objective-3",
+     "label": "Distance and equidistant points",
+     "description": "Calculate the distance between two points on the coordinate plane, find an unknown coordinate from a given distance, and determine the coordinates of a point equidistant from two points."
+    },
+    {
+     "n": 4,
+     "id": "eb11c4-1:objective-4",
+     "label": "Division points, centroid and symmetric points",
+     "description": "Calculate the coordinates of internal and external division points, the mid-point and the centroid of a triangle on the coordinate plane, and determine the point symmetric to a given point with respect to another point using the mid-point."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c4-1:linking-text-1",
+     "page": 150,
+     "text": "Intro: a surgeon's robotic arm must navigate 3D space inside the body to target a tumor without damaging tissue; imaging software maps anatomy onto a precise grid, each landmark given numerical coordinates, so the system determines optimal paths, distances and boundary midpoints.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "A surgeon's robotic arm uses a numeric grid to find paths, distances and midpoints, which sets up the whole lesson."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "A surgeon's robotic arm uses coordinates to target a tumor, which sets up the whole lesson."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 0,
+     "fingerprint": "affbaa3a85d18260"
+    },
+    {
+     "key": "eb11c4-1:guiding-question-1",
+     "page": 150,
+     "text": "How does mapping physical space onto a grid of numbers allow us to precisely partition paths, find balances, and safely navigate complex physical environments?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The guiding question asks why mapping space onto a grid of numbers lets us partition paths and find balances, which frames the whole lesson."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "It is the lesson's guiding question about why a grid of numbers helps partition paths and find balances."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "ac9e9804f5f36fac"
+    },
+    {
+     "key": "eb11c4-1:linking-text-2",
+     "page": 150,
+     "text": "Regarding the line segment AB connecting two points A(a) and B(b) on a number line:",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It only restates the setup for a segment AB on a number line before the formulas."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a lead-in line to the number-line formulas, with no motivating idea."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "5510e16e48eeae58"
+    },
+    {
+     "key": "eb11c4-1:linking-text-3",
+     "page": 151,
+     "text": "Worked explanation of the Warm Up: (a) $AB=|8-(-4)|$; (b) $\\frac{1\\times(-4)+2\\times 8}{2+1}=4$ Therefore, C(4), then a stray line '$=12$' printed below; (c) $\\frac{-3\\times(-4)+2\\times 8}{2-3}=-28$ Therefore, D(−28); (d) $\\frac{-4+8}{2}=2$ Therefore, M(2).",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a worked solution to the Warm Up."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is the worked answer to the Warm Up."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c4cf29b00905d572"
+    },
+    {
+     "key": "eb11c4-1:linking-text-7",
+     "page": 155,
+     "text": "Square both sides. (side note beside Warm Up 2 explanation)",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a side-note step in a worked solution."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a side note step in a worked solution."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "5ddc6f08acaab9b5"
+    },
+    {
+     "key": "eb11c4-1:linking-text-10",
+     "page": 158,
+     "text": "Regarding the line segment AB connecting two points A(x₁, y₁) and B(x₂, y₂) on the coordinate plane:",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It restates the setup for segment AB on the plane before the formulas."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a lead-in line to the division formulas, not a motivating idea."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "ba42d6ac6f452c21"
+    },
+    {
+     "key": "eb11c4-1:reflect-1",
+     "page": 161,
+     "text": "If we change the ratio of dividing a line segment, how will the position of the point on that line change? And how does thinking about ratios and reference distances help us understand locations in mathematics and in everyday life?",
+     "type": "open prompt",
+     "A": {
+      "kind": "closing_reflection",
+      "objective": 0,
+      "why": "It looks back on how changing the ratio moves the point and on ratios in everyday life, which covers the whole lesson."
+     },
+     "B": {
+      "kind": "closing_reflection",
+      "objective": 4,
+      "why": "It looks back on how changing the division ratio moves the point, after the division work."
+     },
+     "status": "agreed",
+     "kind": "closing_reflection",
+     "objective": 0,
+     "placed": "the whole lesson: the readings named it and one objective",
+     "fingerprint": "49ed4d050cf3ace9"
+    },
+    {
+     "key": "eb11c4-1:linking-text-4",
+     "page": 151,
+     "text": "Work with a partner: Collaborate with your group to solve parts (c and d) then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "58f1c0ad528e8442"
+    },
+    {
+     "key": "eb11c4-1:linking-text-5",
+     "page": 151,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "73a6a74f4431204a"
+    },
+    {
+     "key": "eb11c4-1:linking-text-6",
+     "page": 153,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "8a6e6b8e1cc47a17"
+    },
+    {
+     "key": "eb11c4-1:linking-text-8",
+     "page": 156,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "4aabb95a0f367544"
+    },
+    {
+     "key": "eb11c4-1:linking-text-9",
+     "page": 157,
+     "text": "Work with a partner: Work with your colleagues",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "556a1568bd69575a"
+    },
+    {
+     "key": "eb11c4-1:linking-text-11",
+     "page": 160,
+     "text": "Side note: Express the midpoint in terms of s, t.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "a45ccba4f72f1f42"
+    }
+   ],
+   "bridges": [
+    {
+     "key": "eb11c4-1:challenge-1",
+     "objective": 1
+    },
+    {
+     "key": "eb11c4-1:challenge-2",
+     "objective": 2
+    }
+   ],
+   "bridges_disputed": []
+  },
+  {
+   "slug": "eb11c4-2",
+   "title": "Triangles and Lines",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c4-2:objective-1",
+     "label": "Classify triangles from coordinates",
+     "description": "Determine whether a triangle with given vertices is equilateral, isosceles, right-angled or isosceles right-angled by calculating (AB)^2, (BC)^2 and (CA)^2."
+    },
+    {
+     "n": 2,
+     "id": "eb11c4-2:objective-2",
+     "label": "Find equations of straight lines",
+     "description": "Find the equation of a straight line through a point with a given gradient, through two points, or parallel to an axis, and use it to find a constant making three points collinear or a line pass through an intersection point."
+    },
+    {
+     "n": 3,
+     "id": "eb11c4-2:objective-3",
+     "label": "Parallel, perpendicular, symmetric",
+     "description": "Use gradients to identify parallel and perpendicular lines, find lines through a point parallel or perpendicular to a given line, and determine perpendicular bisectors and symmetric points."
+    },
+    {
+     "n": 4,
+     "id": "eb11c4-2:objective-4",
+     "label": "Distance and triangle area",
+     "description": "Calculate the distance from a point to a line using the formula, and use it to find the length of a perpendicular and the area of a triangle from its vertices."
+    },
+    {
+     "n": 5,
+     "id": "eb11c4-2:objective-5",
+     "label": "Fixed points; no triangle",
+     "description": "Determine the fixed point of a line through all values of k, and find the constant for which three lines do not form a triangle."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c4-2:linking-text-1",
+     "page": 162,
+     "text": "In modern medicine, precisely locating a target inside the human body is vital. In Stereotactic Radiosurgery, multiple narrow beams of radiation are aimed from different angles to intersect precisely at a tumor. By modeling the beams as straight lines in a three-dimensional coordinate system, medical physicists calculate their exact equations so they intersect at a single point (the tumor) while minimizing damage to healthy tissue. If the lines do not intersect correctly, or form an accidental triangle around the tumor, the treatment fails.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "Radiosurgery beams modelled as lines meeting at a tumour, with a failure if they form a triangle, sets up the whole lesson."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "Radiation beams aimed to meet at a tumor in radiosurgery motivate lines meeting at a point or forming an accidental triangle."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 0,
+     "fingerprint": "62675b3152fd81b1"
+    },
+    {
+     "key": "eb11c4-2:guiding-question-1",
+     "page": 162,
+     "text": "How can we use the algebraic equations of straight lines to guarantee that multiple paths intersect at a single, exact target point, and how do we determine the geometric boundaries of the areas they influence?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question asks how line equations make paths meet at one point and bound areas."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question on using line equations to make paths meet at one point and to find the areas they bound."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "1cce683853e740bc"
+    },
+    {
+     "key": "eb11c4-2:linking-text-2",
+     "page": 163,
+     "text": "$(AB)^2=(0-4)^2+(6-9)^2=25$ ...... (i); $(BC)^2=(3-0)^2+(2-6)^2=25$ ...... (ii); $(CA)^2=(3-4)^2+(2-9)^2=50$ ...... (iii). From (i) and (ii), $\\triangle ABC$ is an isosceles triangle. From (i), (ii), and (iii), since $(CA)^2=(AB)^2+(BC)^2$, $\\triangle ABC$ is a right-angled triangle. Therefore, $\\triangle ABC$ is an Isosceles right-angled triangle with $\\angle B=90^\\circ$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "This is a step of the worked solution for classifying triangle ABC."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked solution classifying triangle ABC."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "2fe42a48df1536eb"
+    },
+    {
+     "key": "eb11c4-2:challenge-3",
+     "page": 168,
+     "text": "Robotic Needle Biopsy Guidance. In robotic-assisted surgery, a computer system guides a biopsy needle to a deep-seated tumor. The target tumor is located at the precise intersection of two diagnostic imaging paths (modeled as straight lines on a coordinate grid, where 1 unit = 1 millimeter): Laser Scan Path A: $6x+5y+7=0$; Laser Scan Path B: $3x-2y+5=0$. The Clinical Challenge: The surgical robot's mechanical arm is anchored at the system's coordinate origin (0,0) (the home calibration point). To perform the biopsy, the robotic arm must insert a rigid needle along a perfectly straight trajectory from the origin (0,0) directly to the tumor at the intersection point. The software engineers must calculate the exact linear equation of this needle trajectory to program the robotic arm's path.",
+     "type": "open prompt",
+     "A": {
+      "kind": "real_life",
+      "objective": 2,
+      "why": "A robotic biopsy needle runs from the origin to the tumour at the intersection of two lines, which motivates finding a line through an intersection point."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 2,
+      "why": "A robotic biopsy needle must run from the origin to the tumor where two scan paths cross, which sets up finding a line through an intersection point."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 2,
+     "fingerprint": "0bca333b7e481a44"
+    },
+    {
+     "key": "eb11c4-2:linking-text-14",
+     "page": 170,
+     "text": "Step 1: Find the gradient of each line. (a) $y = 2x + 3$, the gradient is 2. (b) $y = -3x + 2$, the gradient is $-3$. (c) $x - 3y + 1 = 0$, so $y = \\frac{1}{3}x + \\frac{1}{3}$, the gradient is $\\frac{1}{3}$. (d) $2x - y - 1 = 0$, so $y = 2x - 1$, the gradient is 2. (e) $x + 3y + 3 = 0$, so $y = -\\frac{1}{3}x - 1$, the gradient is $-\\frac{1}{3}$. Side note: Transform the equation into the form $y = mx + k$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "This is a worked step finding gradients."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked step finding the gradients."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "be9b8502fff53a25"
+    },
+    {
+     "key": "eb11c4-2:linking-text-15",
+     "page": 170,
+     "text": "Parallel lines are (a) and (d). Side note: Choose those with equal gradients.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "This is a worked step picking out the parallel lines."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked answer picking out the parallel lines."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e74e8c33be6046c9"
+    },
+    {
+     "key": "eb11c4-2:linking-text-16",
+     "page": 170,
+     "text": "Perpendicular lines are (b) and (c). Side note: Choose those whose gradients are negative reciprocals.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "This is a worked step picking out the perpendicular lines."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked answer picking out the perpendicular lines."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "1aef6266b0b6589d"
+    },
+    {
+     "key": "eb11c4-2:linking-text-17",
+     "page": 170,
+     "text": "Step 2: $3x - 2y + 1 = 0$ (side note: Transform into the form $y = mx + k$ and find the gradient.) $y = \\frac{3}{2}x + \\frac{1}{2}$, the gradient is $\\frac{3}{2}$. Therefore, the required parallel line passes through point $(2, -4)$ and has a gradient of $\\frac{3}{2}$ (side note: The gradient of a parallel line is the same.). $y - (-4) = \\frac{3}{2}(x - 2)$. Simplifying this gives $3x - 2y - 14 = 0$ (side note: Match the equation to the form in the question $(ax + by + c = 0)$.)",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "This is a worked step finding the parallel line."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked step with side notes for the parallel line."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "4772545835e99c78"
+    },
+    {
+     "key": "eb11c4-2:linking-text-18",
+     "page": 170,
+     "text": "Step 3: $3x + 5y + 1 = 0$ (side note: Transform into the form $y = mx + k$ and find the gradient.) $y = -\\frac{3}{5}x - \\frac{1}{5}$, the gradient is $-\\frac{3}{5}$. Therefore, the required perpendicular line passes through point $(-2, 5)$ and has a gradient of $\\frac{5}{3}$ (side note: The gradient of a perpendicular line is the negative reciprocal.). $y - 5 = \\frac{5}{3}\\{x - (-2)\\}$. Simplifying this gives $5x - 3y + 25 = 0$ (side note: Match the equation to the form in the question.)",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "This is a worked step finding the perpendicular line."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked step with side notes for the perpendicular line."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "360eaf412b50ee1e"
+    },
+    {
+     "key": "eb11c4-2:linking-text-28",
+     "page": 178,
+     "text": "Explanation: First, check the condition where 2 of the given 3 lines are parallel. Transforming the 3 lines gives: $y=x+1$ (i), $y=-2x-2$ (ii), $y=-\\frac{a}{3}x+\\frac{4}{3}$ (iii). Since (i) and (ii) are not parallel, check the cases where (i) and (iii) are parallel, and (ii) and (iii) are parallel.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "This is a worked explanation step checking for parallel lines."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "The explanation opening a worked solution, with no outside context."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "55ec663c8c8c3a02"
+    },
+    {
+     "key": "eb11c4-2:linking-text-29",
+     "page": 178,
+     "text": "(i) and (iii) are parallel when $1=-\\frac{a}{3}$, so $a=-3$. (ii) and (iii) are parallel when $-2=-\\frac{a}{3}$, so $a=6$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "This is a worked step solving for a from the parallel cases."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A step of a worked solution checking parallel lines."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "9757add01d317fb8"
+    },
+    {
+     "key": "eb11c4-2:linking-text-30",
+     "page": 178,
+     "text": "Next, check the condition where the 3 lines intersect at 1 point. Solving (i) and (ii) simultaneously, the point of intersection is $(-1,0)$. Since (iii) passes through point $(-1,0)$, $0=-\\frac{a}{3}\\cdot(-1)+\\frac{4}{3}$, so $a=-4$. Therefore, $a=-4,-3,6$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "This is a worked step for the case where the three lines meet at one point."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A step of a worked solution for the no-triangle problem."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "68818bf6bbd04db1"
+    },
+    {
+     "key": "eb11c4-2:reflect-1",
+     "page": 179,
+     "text": "How might the intersection of lines and triangles be used to solve problems (e.g., navigation, construction, or design)?",
+     "type": "open prompt",
+     "A": {
+      "kind": "closing_reflection",
+      "objective": 0,
+      "why": "It asks the student to look back on how line and triangle intersections apply in real problems, which closes the whole lesson."
+     },
+     "B": {
+      "kind": "closing_reflection",
+      "objective": 0,
+      "why": "Asks the student to look back on how lines and triangles are used in navigation, construction or design, covering the whole lesson."
+     },
+     "status": "agreed",
+     "kind": "closing_reflection",
+     "objective": 0,
+     "fingerprint": "d23f63ca21b3e97d"
+    },
+    {
+     "key": "eb11c4-2:linking-text-3",
+     "page": 164,
+     "text": "Side note: The y-coordinates of the 2 points are equal.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "d3752bab25b2e5b2"
+    },
+    {
+     "key": "eb11c4-2:linking-text-4",
+     "page": 164,
+     "text": "Side note: The x-coordinates of the 2 points are equal.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "6b1753affdcce1f7"
+    },
+    {
+     "key": "eb11c4-2:linking-text-5",
+     "page": 165,
+     "text": "Side note beside (e): Express the equation in the form $y = mx + k$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "0c85d04084848c31"
+    },
+    {
+     "key": "eb11c4-2:linking-text-6",
+     "page": 167,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "3440784eef6ed007"
+    },
+    {
+     "key": "eb11c4-2:linking-text-7",
+     "page": 167,
+     "text": "Margin note: Find the equation of the line from 2 points whose coordinates are known.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "58e35932d95f11c9"
+    },
+    {
+     "key": "eb11c4-2:linking-text-8",
+     "page": 167,
+     "text": "Margin note: Substitute the coordinates of point C into (i).",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e9307fecd1489d18"
+    },
+    {
+     "key": "eb11c4-2:linking-text-9",
+     "page": 167,
+     "text": "Margin note: Solve the equations of the 2 lines simultaneously to find the point of intersection.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "0f063445b77fd70b"
+    },
+    {
+     "key": "eb11c4-2:linking-text-10",
+     "page": 167,
+     "text": "Margin note: The coordinates of the intersection of (i) and (ii) are (1, 1).",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "cdbcf3fc5da2db7f"
+    },
+    {
+     "key": "eb11c4-2:linking-text-11",
+     "page": 167,
+     "text": "Margin note: Answer in the form ax + by + c = 0 as in the question.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "64678d0755bc2bd2"
+    },
+    {
+     "key": "eb11c4-2:linking-text-12",
+     "page": 168,
+     "text": "Work with a partner: Collaborate with your group to solve question (2) then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "6bae8cbff4ac6a6e"
+    },
+    {
+     "key": "eb11c4-2:linking-text-13",
+     "page": 169,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "a97fdd217db86f34"
+    },
+    {
+     "key": "eb11c4-2:linking-text-19",
+     "page": 172,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "717ff03ba2b7551d"
+    },
+    {
+     "key": "eb11c4-2:linking-text-20",
+     "page": 172,
+     "text": "Side note (beside Explanation 1): The gradient of a perpendicular line is the negative reciprocal.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "ade28df69a0388d5"
+    },
+    {
+     "key": "eb11c4-2:linking-text-21",
+     "page": 172,
+     "text": "Side note (beside Explanation 2): Transform $l$ into $y = 3x + 5$ to find the gradient.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "f16d7515df7da024"
+    },
+    {
+     "key": "eb11c4-2:linking-text-22",
+     "page": 172,
+     "text": "Side note (beside Explanation 2): The gradient of a perpendicular line is the negative reciprocal.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "7c4f12c81fcbed21"
+    },
+    {
+     "key": "eb11c4-2:linking-text-23",
+     "page": 172,
+     "text": "Side note: Substitute $x = \\frac{-4+s}{2}$, $y = \\frac{3+t}{2}$ into the equation of $l$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "32a8b452be1e312f"
+    },
+    {
+     "key": "eb11c4-2:linking-text-24",
+     "page": 174,
+     "text": "Side note: Transform into the form ax + by + c = 0 so the formula can be used.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "0f8485ae8e91afe0"
+    },
+    {
+     "key": "eb11c4-2:linking-text-25",
+     "page": 176,
+     "text": "Point! How to find the area of △ABC on the coordinate plane:",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "764302c56afd322c"
+    },
+    {
+     "key": "eb11c4-2:linking-text-26",
+     "page": 177,
+     "text": "Point! Steps to solve problems involving lines “passing through a fixed point for all values of k”:",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e9ef135a6dc82ced"
+    },
+    {
+     "key": "eb11c4-2:linking-text-27",
+     "page": 177,
+     "text": "Side note: Treat it as an identity in k.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "642d5bb8627ff4f0"
+    },
+    {
+     "key": "eb11c4-2:linking-text-31",
+     "page": 178,
+     "text": "Side notes: 'Transform into $y=mx+k$ form to see the gradients.'; 'The gradients of the 2 lines are the same.'; 'Find the point of intersection of the 2 lines that do not have the constant a.'; 'The remaining line passes through this point.'",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "9fa0a8e0169304ca"
+    }
+   ],
+   "bridges": [
+    {
+     "key": "eb11c4-2:challenge-2",
+     "objective": 2
+    },
+    {
+     "key": "eb11c4-2:challenge-3",
+     "objective": 2
+    },
+    {
+     "key": "eb11c4-2:challenge-5",
+     "objective": 3
+    },
+    {
+     "key": "eb11c4-2:challenge-6",
+     "objective": 4
+    },
+    {
+     "key": "eb11c4-2:challenge-7",
+     "objective": 4
+    }
+   ],
+   "bridges_disputed": []
+  },
+  {
+   "slug": "eb11c4-3",
+   "title": "Circles",
+   "objectives": [
+    {
+     "n": 1,
+     "id": "eb11c4-3:objective-1",
+     "label": "Equation of a circle",
+     "description": "Determine the equation of a circle from its center and radius, a point on it, the ends of a diameter, three points, tangency to the axes or a center on a line; identify a figure from its equation and find the values of k for which an equation represents a circle."
+    },
+    {
+     "n": 2,
+     "id": "eb11c4-3:objective-2",
+     "label": "Circle and line intersections",
+     "description": "Calculate the points of intersection of a circle and a line, determine their number using the discriminant D, find constants or radii for tangency, and compute the length of a chord."
+    },
+    {
+     "n": 3,
+     "id": "eb11c4-3:objective-3",
+     "label": "Tangents to a circle",
+     "description": "Derive the equation of a tangent to a circle x²+y²=r², at a given point on it or drawn from a point not on it."
+    },
+    {
+     "n": 4,
+     "id": "eb11c4-3:objective-4",
+     "label": "Two circles: positions and intersections",
+     "description": "Determine the positional relationship between two circles using r, r' and d, find the equation of a circle that touches a given circle, and find the points of intersection of two circles, the line through them, and a circle passing through those points and another point."
+    }
+   ],
+   "passages": [
+    {
+     "key": "eb11c4-3:linking-text-1",
+     "page": 180,
+     "text": "GPS and cellular networks rely on the coordinate geometry of circles to determine your location. A phone connects to multiple cell towers; each calculates a radius of distance, creating a circular boundary. A second and third tower's overlapping circular signals pinpoint the exact position (trilateration). A minor error in these circular boundaries would disrupt ride-sharing apps and emergency tracking systems.",
+     "type": "linking text",
+     "A": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "GPS and cell towers use overlapping circles of distance to pinpoint a phone, motivating the whole lesson."
+     },
+     "B": {
+      "kind": "real_life",
+      "objective": 0,
+      "why": "GPS and cell towers use circular boundaries to pinpoint a phone, setting up the whole lesson."
+     },
+     "status": "agreed",
+     "kind": "real_life",
+     "objective": 0,
+     "fingerprint": "81de52a2c358c94e"
+    },
+    {
+     "key": "eb11c4-3:guiding-question-1",
+     "page": 180,
+     "text": "How can we use the coordinate geometry of circles to model boundaries, calculate overlapping regions, and determine the exact intersection points of wireless signals in modern communication systems?",
+     "type": "open prompt",
+     "A": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question asks how circle geometry models boundaries and intersections, covering the whole lesson."
+     },
+     "B": {
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question on why circle geometry models boundaries and signal intersections."
+     },
+     "status": "agreed",
+     "kind": "concept_intro",
+     "objective": 0,
+     "fingerprint": "87e488bb43238a46"
+    },
+    {
+     "key": "eb11c4-3:linking-text-9",
+     "page": 182,
+     "text": "Find the equations of the following circles.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "An instruction to find circle equations."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "An instruction to solve problems."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "12b7a364f58793d2"
+    },
+    {
+     "key": "eb11c4-3:linking-text-10",
+     "page": 182,
+     "text": "1. Since the center of the circle is known, use $(x-a)^2+(y-b)^2=r^2$. Find the radius of this circle: $\\sqrt{(2-4)^2+(3-6)^2}=\\sqrt{13}$. Therefore, the required equation of the circle is $(x-2)^2+(y-3)^2=13$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A step of a worked solution."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked solution with numbers."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "3787439fe09510b8"
+    },
+    {
+     "key": "eb11c4-3:linking-text-12",
+     "page": 182,
+     "text": "2. Since the center of the circle with 2 points $A(1,3)$ and $B(3,-5)$ as both ends of its diameter is the midpoint of AB, $\\left(\\frac{1+3}{2},\\frac{3+(-5)}{2}\\right)=(2,-1)$. Also, since this circle passes through point A, finding the radius gives: $\\sqrt{(2-1)^2+(-1-3)^2}=\\sqrt{17}$. Therefore, the required equation of the circle is $(x-2)^2+(y+1)^2=17$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A step of a worked solution."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked solution with numbers."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "af493c38f8a26975"
+    },
+    {
+     "key": "eb11c4-3:linking-text-17",
+     "page": 183,
+     "text": "Find the equations of the following circles.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "An instruction to find circle equations."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "An instruction to solve problems."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "ae6641b4de3be757"
+    },
+    {
+     "key": "eb11c4-3:linking-text-18",
+     "page": 183,
+     "text": "Find the equations of the following circles.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "An instruction to find circle equations."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "An instruction to solve problems."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "4f30d650a94b6e1b"
+    },
+    {
+     "key": "eb11c4-3:linking-text-19",
+     "page": 184,
+     "text": "Find the equations of the following circles.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "An instruction to find circle equations."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "An instruction to solve problems."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c048818ec09a4f56"
+    },
+    {
+     "key": "eb11c4-3:linking-text-25",
+     "page": 185,
+     "text": "Find the equations of the following circles.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "An instruction to find circle equations."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "An instruction to solve problems."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "7646517f04d0cf7f"
+    },
+    {
+     "key": "eb11c4-3:linking-text-26",
+     "page": 185,
+     "text": "Find the equations of the following circles.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "An instruction to find circle equations."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "An instruction to solve problems."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "6c713623de9ef266"
+    },
+    {
+     "key": "eb11c4-3:linking-text-27",
+     "page": 186,
+     "text": "Explanation: Transforming $x^2+y^2-2kx+2ky+4k+6=0$ gives: $(x-k)^2-k^2+(y+k)^2-k^2+4k+6=0$. Simplifying this gives: $(x-k)^2+(y+k)^2=2k^2-4k-6$. This equation represents a circle when $2k^2-4k-6>0$. Solving this gives $k<-1$ or $k>3$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked explanation with numbers."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A step of a worked solution."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "cdaa96fa6eac911d"
+    },
+    {
+     "key": "eb11c4-3:linking-text-50",
+     "page": 200,
+     "text": "Explanation: The figure passing through the intersection points can be expressed as $k(x^2+y^2-2x-6y+5)+(x^2+y^2-5)=0$ ...(i). Since the circle passes through (3,0): $k(3^2+0^2-2\\cdot3-6\\cdot0+5)+3^2+0^2-5=0$; $8k+4=0$; therefore $k=-\\frac{1}{2}$. Substituting into (i) and calculating gives $\\frac{1}{2}x^2+\\frac{1}{2}y^2+x+3y-\\frac{15}{2}=0$. Therefore $x^2+y^2+2x+6y-15=0$.",
+     "type": "linking text",
+     "A": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A worked explanation with numbers."
+     },
+     "B": {
+      "kind": "none",
+      "objective": 0,
+      "why": "A step of a worked solution."
+     },
+     "status": "agreed",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "449712b86a38abc3"
+    },
+    {
+     "key": "eb11c4-3:linking-text-2",
+     "page": 180,
+     "text": "Side note on the General form: The expanded form of the standard form.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "420088f2ad8cd433"
+    },
+    {
+     "key": "eb11c4-3:linking-text-3",
+     "page": 181,
+     "text": "Side note: If $k>0$, it is a circle with center $(a, b)$ and radius $\\sqrt{k}$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "07ed500b377b93d5"
+    },
+    {
+     "key": "eb11c4-3:linking-text-4",
+     "page": 181,
+     "text": "Side note: Complete the square for $x$ and $y$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "8e03c42177ee69bd"
+    },
+    {
+     "key": "eb11c4-3:linking-text-5",
+     "page": 181,
+     "text": "Side note: When identifying a circle, always state its center and radius.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "3f7b8d990a86a55b"
+    },
+    {
+     "key": "eb11c4-3:linking-text-6",
+     "page": 181,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "2c15543407bdbe3e"
+    },
+    {
+     "key": "eb11c4-3:linking-text-7",
+     "page": 181,
+     "text": "Work with a partner: Collaborate with your group to solve question 2 then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "52b38135ad11fe81"
+    },
+    {
+     "key": "eb11c4-3:linking-text-8",
+     "page": 181,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c3d01c5eebf779d2"
+    },
+    {
+     "key": "eb11c4-3:linking-text-11",
+     "page": 182,
+     "text": "Side note: The radius of a circle is the distance between the center and a point on the circle.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "64c18c7749be94d4"
+    },
+    {
+     "key": "eb11c4-3:linking-text-13",
+     "page": 182,
+     "text": "Side note: The center is the midpoint of the diameter.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "7df9d6935aa227d0"
+    },
+    {
+     "key": "eb11c4-3:linking-text-14",
+     "page": 182,
+     "text": "Side note: The radius of a circle is the distance between the center and a point on the circle.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "6cc037e8691478f3"
+    },
+    {
+     "key": "eb11c4-3:linking-text-15",
+     "page": 183,
+     "text": "Side note: Substitute the 3 points on a circle to set up a system of equations.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "d971a6c62fe5159c"
+    },
+    {
+     "key": "eb11c4-3:linking-text-16",
+     "page": 183,
+     "text": "Side note: Unless a format is specified, you can leave it in this form.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "5a9e938bf1337e65"
+    },
+    {
+     "key": "eb11c4-3:linking-text-20",
+     "page": 184,
+     "text": "Side note: Distance between the center and the point of tangency.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "e8cd058cc43fc1d9"
+    },
+    {
+     "key": "eb11c4-3:linking-text-21",
+     "page": 184,
+     "text": "Side note: The radius is the distance between the center and a point on a circle.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "b5d3e0431b516465"
+    },
+    {
+     "key": "eb11c4-3:linking-text-22",
+     "page": 184,
+     "text": "Side note: Square both sides.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "4b4b7fee1ff42bc3"
+    },
+    {
+     "key": "eb11c4-3:linking-text-23",
+     "page": 185,
+     "text": "Side note: Create an equation regarding the radius.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "946b21e4ca00ccae"
+    },
+    {
+     "key": "eb11c4-3:linking-text-24",
+     "page": 185,
+     "text": "Side note: Since we are finding the equation of a circle, we only need to find $r^2$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "88dd97140f12675e"
+    },
+    {
+     "key": "eb11c4-3:linking-text-28",
+     "page": 186,
+     "text": "Side note: Transform into the form $(x-a)^2+(y-b)^2=\\text{(constant)}$.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "f2e387ac079b9dc9"
+    },
+    {
+     "key": "eb11c4-3:linking-text-29",
+     "page": 186,
+     "text": "Side note: If (constant) > 0, it is a circle.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "5f4af83a98db4ae3"
+    },
+    {
+     "key": "eb11c4-3:linking-text-30",
+     "page": 186,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "049d1d8327e16baf"
+    },
+    {
+     "key": "eb11c4-3:linking-text-31",
+     "page": 187,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "da0b655849af3fa3"
+    },
+    {
+     "key": "eb11c4-3:linking-text-32",
+     "page": 188,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "8f7ad972a4dedb02"
+    },
+    {
+     "key": "eb11c4-3:linking-text-33",
+     "page": 188,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "cb60a56170ed1c6c"
+    },
+    {
+     "key": "eb11c4-3:linking-text-34",
+     "page": 189,
+     "text": "Side note beside the discriminant step: When they intersect at 2 distinct points, D > 0",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "cf6dc93fd8692af0"
+    },
+    {
+     "key": "eb11c4-3:linking-text-35",
+     "page": 190,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "7036cacf2b89f59c"
+    },
+    {
+     "key": "eb11c4-3:linking-text-36",
+     "page": 190,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "f3377003dfc4cc47"
+    },
+    {
+     "key": "eb11c4-3:linking-text-37",
+     "page": 191,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "bf60b7af2da79d5c"
+    },
+    {
+     "key": "eb11c4-3:linking-text-38",
+     "page": 191,
+     "text": "Side note: The length of the perpendicular is the distance between the point and the line.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "130e808e15fd5da1"
+    },
+    {
+     "key": "eb11c4-3:linking-text-39",
+     "page": 192,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "612755944b20e0c6"
+    },
+    {
+     "key": "eb11c4-3:linking-text-40",
+     "page": 192,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "32804de433dcf73d"
+    },
+    {
+     "key": "eb11c4-3:linking-text-41",
+     "page": 193,
+     "text": "Side note: When the problem states “drawn from ~” (linked to the second Point! statement)",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "c1241860c835b8de"
+    },
+    {
+     "key": "eb11c4-3:linking-text-42",
+     "page": 193,
+     "text": "Side note: When the problem states “at a given point” (linked to Explanation 1)",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "578c9092eee02d81"
+    },
+    {
+     "key": "eb11c4-3:linking-text-43",
+     "page": 193,
+     "text": "Side note: When the problem states “at ~” (linked to Explanation 2; as printed)",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "79b4c0c22315c4cc"
+    },
+    {
+     "key": "eb11c4-3:linking-text-44",
+     "page": 195,
+     "text": "Point! Positional relationship between two circles (Review of Math A). Let the radius of circle O be r, the radius of circle O' be r' (where r > r'), and the distance between their centers be d. The positional relationship between the two circles and the relationship between r, r', and d are as follows:",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "a6038d9d94728c16"
+    },
+    {
+     "key": "eb11c4-3:linking-text-45",
+     "page": 196,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "92fd6b081718dca9"
+    },
+    {
+     "key": "eb11c4-3:linking-text-46",
+     "page": 196,
+     "text": "Work with a partner: Collaborate with your group to solve question 2 then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "4a0081ef3b17e4dd"
+    },
+    {
+     "key": "eb11c4-3:linking-text-47",
+     "page": 198,
+     "text": "Solve the following problems.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "3b093176afb30a24"
+    },
+    {
+     "key": "eb11c4-3:linking-text-48",
+     "page": 199,
+     "text": "Work with a partner: Collaborate with your group to solve question 2 then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "7c5986cc16bbbfb2"
+    },
+    {
+     "key": "eb11c4-3:linking-text-49",
+     "page": 200,
+     "text": "Side note: Multiply one equation by k and add it to the other equation.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "2a6e51c1e56dcd2e"
+    },
+    {
+     "key": "eb11c4-3:linking-text-51",
+     "page": 200,
+     "text": "Side note: Make the coefficients of x² and y² equal to 1",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "cc469efa3717f0db"
+    },
+    {
+     "key": "eb11c4-3:linking-text-52",
+     "page": 200,
+     "text": "Work with a partner: Collaborate with your group to solve the try section then discuss the answer.",
+     "type": "linking text",
+     "A": null,
+     "B": null,
+     "status": "instruction",
+     "kind": "none",
+     "objective": 0,
+     "fingerprint": "856afd573b720df1"
+    }
+   ],
+   "bridges": [
+    {
+     "key": "eb11c4-3:challenge-2",
+     "objective": 1
+    },
+    {
+     "key": "eb11c4-3:challenge-3",
+     "objective": 1
+    },
+    {
+     "key": "eb11c4-3:challenge-4",
+     "objective": 1
+    },
+    {
+     "key": "eb11c4-3:challenge-5",
+     "objective": 2
+    },
+    {
+     "key": "eb11c4-3:challenge-7",
+     "objective": 3
+    },
+    {
+     "key": "eb11c4-3:challenge-9",
+     "objective": 4
+    }
+   ],
+   "bridges_disputed": []
+  }
+ ]
+}

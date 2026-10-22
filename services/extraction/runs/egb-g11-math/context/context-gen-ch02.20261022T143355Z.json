@@ -1,0 +1,262 @@
+{
+ "stage": "context-gen",
+ "workflow": "context-gen",
+ "prompts_version": "context-gen-v1",
+ "embedded": {
+  "source": "runbook/context-gen.workflow.js",
+  "source_sha256": "35e47fcb386e418c171433acd3116e02d29e39131379cad0d728752c7e62f57f",
+  "args_sha256": "88fba591b9c8731dc196d9f539be08fe27098de7651daefd6d0b6465a83804fd",
+  "generated_sha256": "fd1bc0f5925902c2e1d3d2b0a65be9dfd909bdbc0043f4da7715ac14b2c3d985",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "book": "egb-g11-math",
+ "lessons": [
+  {
+   "slug": "eb11c2-1",
+   "written": [
+    {
+     "objective": 2,
+     "decision": "lesson_story",
+     "why": "The jogging plan (10 min, then 13, 16, 19...) has first term 10 and common difference 3, and the question about Week 24 is exactly finding a specific term with a_n = a + (n-1)d."
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "The lesson story gives the first term and difference directly. This objective needs a case where only two terms are known, so a new situation fits.",
+     "text": "Suppose you drop the same number of pounds into a savings jar every day. On day 3 the jar holds 14 pounds, and on day 7 it holds 30 pounds. Work out the rule $a_n$ for how much is in the jar on day $n$, and then find which day the jar first holds exactly 50 pounds.",
+     "numbers": []
+    },
+    {
+     "objective": 4,
+     "decision": "generate",
+     "why": "The lesson story asks about total running time but does not set up summing a known number of terms with first and last term. A new situation fits.",
+     "text": "Imagine a small school hall where the first row has 20 seats and every row behind it has 2 more seats than the row in front. The hall has 15 rows. Work out the total number of seats in the hall without adding the rows one by one.",
+     "numbers": []
+    },
+    {
+     "objective": 5,
+     "decision": "generate",
+     "why": "The lesson story does not give a total from which to find the number of terms. A savings situation with a known total fits.",
+     "text": "Suppose you start saving 5 pounds in the first week, and each week you save 2 pounds more than the week before. After some weeks your total savings are exactly 140 pounds. Work out how many weeks you have been saving.",
+     "numbers": []
+    }
+   ],
+   "checked": [
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "The story gives 10, 13, 16, 19 with d = 3. Finding week 24 uses a_n = 10 + (n-1)·3, so a_24 = 79. That is this objective's general term.",
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true,
+     "numbers_ok": true
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "a_3 = 14 and a_7 = 30 give a + 2d = 14 and a + 6d = 30. So d = 4 and a = 6, and a_n = 4n + 2. Setting 4n + 2 = 50 gives n = 12. This is the two-condition method followed by finding which term has a given value.",
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true,
+     "numbers_ok": true
+    },
+    {
+     "objective": 4,
+     "verdict": "confirmed",
+     "why": "a = 20, d = 2, n = 15. S_15 = ½·15·(40 + 28) = 510. The rows are an arithmetic sequence and the sum formula applies directly.",
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true,
+     "numbers_ok": true
+    },
+    {
+     "objective": 5,
+     "verdict": "confirmed",
+     "why": "a = 5, d = 2, so S_n = ½n(10 + 2(n-1)) = n(n + 4) = 140. That gives n² + 4n − 140 = 0, so n = 10 (the other root, −14, is rejected). Check: 5 + 7 + … + 23 = 140. This is finding the number of terms from a given sum.",
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true,
+     "numbers_ok": true
+    }
+   ]
+  },
+  {
+   "slug": "eb11c2-2",
+   "written": [
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "The lesson's bacteria story gives the ratio directly (doubling); it never gives two separated terms from which to find the first term and ratio, so a new opener is needed.",
+     "text": "Imagine a new video from a school club is shared so that the number of views each day is the same multiple of the day before. Suppose it had 6 views on day 2 and 24 views on day 4. How many views did it have on day 1, and by what number do the views multiply each day? Write a rule for the views on day $n$.",
+     "numbers": []
+    },
+    {
+     "objective": 3,
+     "decision": "generate",
+     "why": "The bacteria story is about the size of the colony at a moment, not a running total of terms, so it does not set up summing $n$ terms.",
+     "text": "Suppose you start a saving challenge: you put 5 EGP in a jar on day 1, then double the amount each day, so 10 EGP on day 2, 20 EGP on day 3, and so on for 7 days. How much money in total will be in the jar after the 7th day?",
+     "numbers": []
+    },
+    {
+     "objective": 4,
+     "decision": "generate",
+     "why": "The lesson story has no sums of terms; conditions on sums of several terms need a fresh situation.",
+     "text": "Imagine a shop selling a new juice, where each day's sales are the same multiple of the previous day's sales. Suppose it sold 21 bottles in total over the first 3 days, and 189 bottles in total over the first 6 days. How many bottles did it sell on day 1, and by what number do the daily sales multiply each day?",
+     "numbers": []
+    }
+   ],
+   "checked": [
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "a2=6 and a4=24 give r²=4, so r=±2. Negative views are impossible, so r=2, a1=3 and a_n=3·2^(n-1). Check: 3, 6, 12, 24. It uses only the objective's method and is clear.",
+     "maths_fits": true,
+     "numbers_ok": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "a=5, r=2, n=7: S=5(2^7−1)/(2−1)=5·127=635 EGP. Check: 5+10+20+40+80+160+320=635. It uses only the S_n formula.",
+     "maths_fits": true,
+     "numbers_ok": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 4,
+     "verdict": "confirmed",
+     "why": "S3=21 and S6=189 give 21+21r³=189, so r=2 and a=3. Check: 3+6+12=21 and 24+48+96=168, so S6=189. It matches Warm Up 2 and r=2 is the only real ratio.",
+     "maths_fits": true,
+     "numbers_ok": true,
+     "true_to_world": true,
+     "suits_student": true
+    }
+   ]
+  },
+  {
+   "slug": "eb11c2-3",
+   "written": [
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "Sum of k² with a numerical limit fits a stacked-fruit pyramid; the forest story needs arithmetic×geometric products (objective 4).",
+     "text": "Imagine a fruit seller stacking oranges in a square pyramid with 10 layers. The top layer is 1 orange, the next is a $2\\times2$ square of oranges, the next $3\\times3$, and so on, so layer $k$ has $k^2$ oranges. How many oranges does he need in total, that is, $\\sum_{k=1}^{10} k^2$?",
+     "numbers": [
+      {
+       "working": "(1/6)·10·11·21 = 2310/6",
+       "value": "385"
+      }
+     ]
+    },
+    {
+     "objective": 3,
+     "decision": "none",
+     "why": "Telescoping partial-fraction sums are a formal algebraic technique; no honest real-life situation fits."
+    },
+    {
+     "objective": 4,
+     "decision": "lesson_story",
+     "why": "The forest story plants 200, 300, 400... saplings (arithmetic) with 60% yearly survival (geometric, ratio 0.6). The survivors from all plantings form an arithmetic × geometric sum, which is what S − rS handles."
+    },
+    {
+     "objective": 5,
+     "decision": "generate",
+     "why": "Total savings after n months is S_n, and the amount saved in a single month is found as a_n = S_n − S_{n−1}, with the first month checked separately.",
+     "text": "Suppose a student saves in a piggy bank, and after $n$ months the total in it is $S_n = n^2+3n$ pounds. The first month's saving is just $S_1$, but for any later month you can compare the total with the total one month earlier. How much did the student save in the $n$-th month, and does your formula also give the first month's saving correctly?",
+     "numbers": []
+    }
+   ],
+   "checked": [
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "Sum of k^2 for k=1 to 10 = 10·11·21/6 = 385, using the book's k² formula with numerical limits. The orange pyramid is a plausible everyday image and doesn't give the answer away.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 4,
+     "verdict": "confirmed",
+     "why": "Each year's planting (200, 300, 400, ... i.e. an arithmetic sequence) decays by 0.6 per year (geometric). The total surviving after ten years is a sum of arithmetic × geometric terms, which is solved with S − rS. So the objective's maths does happen inside the story.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    },
+    {
+     "objective": 5,
+     "verdict": "confirmed",
+     "why": "S_1 = 4. For n≥2, a_n = (n²+3n) − ((n−1)²+3(n−1)) = 2n+2. At n=1 this gives 4 = S_1, so the formula also holds for the first month and a_n = 2n+2. This uses the objective's method, including the n=1 check. The piggy-bank context is clear and plausible.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    }
+   ]
+  },
+  {
+   "slug": "eb11c2-4",
+   "written": [
+    {
+     "objective": 2,
+     "decision": "generate",
+     "why": "The lesson has no story of its own, so a new one is written. It uses a sequence cut into groups whose sizes grow by a constant amount, the same structure as the book's worked example. It uses only the sum of the group sizes to find a position, then the rule of the original sequence.",
+     "text": "Imagine a bakery that numbers its loaves with tickets $2, 4, 6, 8, \\dots$ in the order they are baked, so the $n$th loaf has ticket $2n$. The loaves are packed into boxes: the 1st box holds 1 loaf, the 2nd holds 3 loaves, the 3rd holds 5 loaves, and each box holds 2 more loaves than the one before. What ticket number is on the first loaf in the 8th box?",
+     "numbers": []
+    }
+   ],
+   "checked": [
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "Boxes 1–7 hold 1+3+...+13 = 7² = 49 loaves (½·7·{2·1+6·2}=49). So the first loaf in box 8 is loaf 50, with ticket 2×50 = 100. This uses the same method as the book's example: sum of group sizes, then +1, then a_n=2n. It needs nothing from another lesson. The bakery is openly imagined, with no real brand or person, and the wording is short and clear without giving away the answer.",
+     "numbers_ok": true,
+     "maths_fits": true,
+     "true_to_world": true,
+     "suits_student": true
+    }
+   ]
+  },
+  {
+   "slug": "eb11c2-5",
+   "written": [
+    {
+     "objective": 2,
+     "decision": "lesson_story",
+     "why": "The antibiotic story is exactly a_{n+1}=p a_n+q: each day a fixed fraction p of the drug remains and a new dose q is added. Solving c=pc+q gives the steady level, and a_n-c shrinks geometrically, so the general term arises naturally."
+    },
+    {
+     "objective": 3,
+     "decision": "lesson_story",
+     "why": "The story ends by asking how to prove the safe pattern holds for infinitely many days, and names the domino effect of mathematical induction. Show day 1, then show that if one day holds the next does, which is the n=1 and n=k to k+1 procedure."
+    },
+    {
+     "objective": 4,
+     "decision": "lesson_story",
+     "why": "In the antibiotic situation we can compute the amount on the first few days, notice a pattern and guess a formula for day n. Then induction is needed to prove the guess holds on every later day, which is estimate-then-prove."
+    }
+   ],
+   "checked": [
+    {
+     "objective": 2,
+     "verdict": "confirmed",
+     "why": "Drug left after each dose is a_{n+1}=p·a_n+q, where p is the fraction kept and q is the new dose. This is the book's form. You solve c=pc+q and get a geometric sequence for a_n−c, so the maths happens inside the story."
+    },
+    {
+     "objective": 3,
+     "verdict": "confirmed",
+     "why": "The story says induction is used to prove a pattern holds for all days. A claim about the drug amount on day n, such as a closed formula or a bound, is proved with the n=1 step and then the n=k to n=k+1 step. This matches the objective."
+    },
+    {
+     "objective": 4,
+     "verdict": "confirmed",
+     "why": "You can compute the first few daily amounts from the recurrence and guess the general term, then prove the guess by induction. This is the estimate-and-prove method the objective asks for, and it fits the story."
+    }
+   ]
+  }
+ ]
+}

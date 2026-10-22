@@ -1,0 +1,401 @@
+{
+ "stage": "context",
+ "workflow": "context",
+ "prompts_version": "context-v2",
+ "embedded": {
+  "source": "runbook/context.workflow.js",
+  "source_sha256": "9068c55cec297b0d3edc10b60531e1c244c4988b65cd128d28be08044f62826b",
+  "args_sha256": "f36f1f167e16a28cae543a23798a2d7bd2c7764323da886c8d7c0ebd0fc2d31f",
+  "generated_sha256": "94136d393ebb696f83ff1af7faa5ddd8800cd67b91b0f2600d3eef24b42df2da",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "book": "egb-g11-math",
+ "lessons": [
+  {
+   "slug": "eb11c1-1",
+   "A": {
+    "passages": [
+     {
+      "key": "eb11c1-1:open-prompt-1",
+      "kind": "none",
+      "objective": 0,
+      "why": "It asks the student to count terms in a Pascal's triangle row, which is a pattern task and not a real situation or an introduction."
+     },
+     {
+      "key": "eb11c1-1:open-prompt-2",
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "This is the lesson's guiding question about predicting the coefficient of any term without multiplying, so it introduces the whole lesson."
+     },
+     {
+      "key": "eb11c1-1:open-prompt-3",
+      "kind": "concept_intro",
+      "objective": 3,
+      "why": "It asks why and how to find the coefficient of x^2yz in (x+y+z)^4 without expanding, which introduces the multinomial idea."
+     },
+     {
+      "key": "eb11c1-1:linking-text-5",
+      "kind": "none",
+      "objective": 0,
+      "why": "This is a step in a worked solution."
+     },
+     {
+      "key": "eb11c1-1:linking-text-6",
+      "kind": "none",
+      "objective": 0,
+      "why": "This is a step in a worked solution."
+     },
+     {
+      "key": "eb11c1-1:reflect-1",
+      "kind": "closing_reflection",
+      "objective": 3,
+      "why": "It looks back by comparing binomial and multinomial expansions, so it closes the multinomial work."
+     }
+    ],
+    "real_life_questions": []
+   },
+   "B": {
+    "passages": [
+     {
+      "key": "eb11c1-1:reflect-1",
+      "kind": "closing_reflection",
+      "objective": 3,
+      "why": "Asks the student to look back and compare binomial and multinomial expansions after the work."
+     },
+     {
+      "key": "eb11c1-1:linking-text-6",
+      "kind": "none",
+      "objective": 0,
+      "why": "A step of a worked solution."
+     },
+     {
+      "key": "eb11c1-1:linking-text-5",
+      "kind": "none",
+      "objective": 0,
+      "why": "A step of a worked solution."
+     },
+     {
+      "key": "eb11c1-1:open-prompt-3",
+      "kind": "concept_intro",
+      "objective": 3,
+      "why": "Introduces why a multinomial coefficient is needed for (x+y+z)^4 without multiplying out."
+     },
+     {
+      "key": "eb11c1-1:open-prompt-2",
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question about predicting coefficients without sequential multiplication."
+     },
+     {
+      "key": "eb11c1-1:open-prompt-1",
+      "kind": "none",
+      "objective": 0,
+      "why": "A pattern-counting task on Pascal's triangle that asks the student to work something out."
+     }
+    ],
+    "real_life_questions": []
+   }
+  },
+  {
+   "slug": "eb11c1-2",
+   "A": {
+    "passages": [
+     {
+      "key": "eb11c1-2:linking-text-1",
+      "kind": "real_life",
+      "objective": 0,
+      "why": "A delivery app's orders growing faster than riders is hired, divided to get orders per rider, sets up the whole lesson."
+     },
+     {
+      "key": "eb11c1-2:guiding-question-1",
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question asks why dividing expressions helps, with no worked numbers."
+     },
+     {
+      "key": "eb11c1-2:linking-text-2",
+      "kind": "none",
+      "objective": 0,
+      "why": "It is the concluding step of a worked solution stating a quotient and remainder."
+     },
+     {
+      "key": "eb11c1-2:linking-text-8",
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a numeric example of 7 = 3 × 2 + 1 that illustrates the formula, not a motivating context."
+     },
+     {
+      "key": "eb11c1-2:reflect-1",
+      "kind": "closing_reflection",
+      "objective": 1,
+      "why": "It looks back on the division steps and asks why the remainder's degree must be less than the divisor's."
+     }
+    ],
+    "real_life_questions": [
+     "eb11c1-2:challenge-1"
+    ]
+   },
+   "B": {
+    "passages": [
+     {
+      "key": "eb11c1-2:reflect-1",
+      "kind": "closing_reflection",
+      "objective": 1,
+      "why": "It asks the student to look back on why the remainder's degree must be less than the divisor's, after the division work."
+     },
+     {
+      "key": "eb11c1-2:linking-text-8",
+      "kind": "none",
+      "objective": 0,
+      "why": "It is a numeric example restating the A = BQ + R formula, not a motivating context."
+     },
+     {
+      "key": "eb11c1-2:linking-text-2",
+      "kind": "none",
+      "objective": 0,
+      "why": "It is the concluding step of a worked solution stating the quotient and remainder."
+     },
+     {
+      "key": "eb11c1-2:guiding-question-1",
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "It is the lesson's opening guiding question about why dividing algebraic expressions is useful."
+     },
+     {
+      "key": "eb11c1-2:linking-text-1",
+      "kind": "real_life",
+      "objective": 0,
+      "why": "It uses a delivery app's growing orders and hired riders to motivate dividing polynomials to find the workload per rider."
+     }
+    ],
+    "real_life_questions": [
+     "eb11c1-2:challenge-1"
+    ]
+   }
+  },
+  {
+   "slug": "eb11c1-3",
+   "A": {
+    "passages": [
+     {
+      "key": "eb11c1-3:linking-text-1",
+      "kind": "real_life",
+      "objective": 0,
+      "why": "A patient's drug concentration rising and falling in the blood is a picturable situation motivating the lesson."
+     },
+     {
+      "key": "eb11c1-3:linking-text-2",
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "Explains what rational expressions are and why the four operations on them are needed, with no worked numbers."
+     },
+     {
+      "key": "eb11c1-3:guiding-question-1",
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question about combining and simplifying algebraic fractions introduces the whole lesson."
+     },
+     {
+      "key": "eb11c1-3:reflect-1",
+      "kind": "closing_reflection",
+      "objective": 1,
+      "why": "Looks back on reducing (x²-16)/(x-4) and why the cancellation fails at x=4."
+     }
+    ],
+    "real_life_questions": [
+     "eb11c1-3:challenge-2",
+     "eb11c1-3:challenge-3"
+    ]
+   },
+   "B": {
+    "passages": [
+     {
+      "key": "eb11c1-3:reflect-1",
+      "kind": "closing_reflection",
+      "objective": 1,
+      "why": "It looks back on reducing (x²-16)/(x-4) to x+4 and asks what the reduction hides at x=4."
+     },
+     {
+      "key": "eb11c1-3:guiding-question-1",
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question asks why combining and simplifying algebraic fractions matters, with no worked numbers."
+     },
+     {
+      "key": "eb11c1-3:linking-text-2",
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "It defines rational expressions and says the four operations are applied to them, which sets up the whole lesson."
+     },
+     {
+      "key": "eb11c1-3:linking-text-1",
+      "kind": "real_life",
+      "objective": 0,
+      "why": "It describes a drug's concentration in a patient's blood rising and falling, a situation a student can picture."
+     }
+    ],
+    "real_life_questions": [
+     "eb11c1-3:challenge-3",
+     "eb11c1-3:challenge-2"
+    ]
+   }
+  },
+  {
+   "slug": "eb11c1-4",
+   "A": {
+    "passages": [
+     {
+      "key": "eb11c1-4:linking-text-1",
+      "kind": "real_life",
+      "objective": 0,
+      "why": "Pacemakers and ECG monitors swapping complex wave formulas for simpler identical ones gives a picturable setting for the whole lesson on identities."
+     },
+     {
+      "key": "eb11c1-4:open-prompt-1",
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The Guiding Question asks why and how we verify two expressions are identically equal, introducing the lesson as a whole."
+     },
+     {
+      "key": "eb11c1-4:reflect-1",
+      "kind": "closing_reflection",
+      "objective": 2,
+      "why": "It looks back on why a proof works on one side only, closing the simplify-each-side objective."
+     }
+    ],
+    "real_life_questions": [
+     "eb11c1-4:challenge-1",
+     "eb11c1-4:challenge-4"
+    ]
+   },
+   "B": {
+    "passages": [
+     {
+      "key": "eb11c1-4:reflect-1",
+      "kind": "closing_reflection",
+      "objective": 2,
+      "why": "It looks back on the proof method by asking why working on one side keeps a proof valid."
+     },
+     {
+      "key": "eb11c1-4:open-prompt-1",
+      "kind": "concept_intro",
+      "objective": 2,
+      "why": "It is the lesson's Guiding Question, and it is about verifying equality by manipulating one side."
+     },
+     {
+      "key": "eb11c1-4:linking-text-1",
+      "kind": "real_life",
+      "objective": 0,
+      "why": "Pacemakers and ECG monitors swapping complex wave formulas for simpler equivalents sets up identities and proofs for the whole lesson."
+     }
+    ],
+    "real_life_questions": [
+     "eb11c1-4:challenge-4",
+     "eb11c1-4:challenge-1"
+    ]
+   }
+  },
+  {
+   "slug": "eb11c1-5",
+   "A": {
+    "passages": [
+     {
+      "key": "eb11c1-5:linking-text-1",
+      "kind": "real_life",
+      "objective": 0,
+      "why": "A bio-engineer must maximise a drug capsule's volume with limited polymer, a picturable situation that motivates the whole lesson."
+     },
+     {
+      "key": "eb11c1-5:linking-text-2",
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The book says inequalities give the best design and bounds, and names AM-GM, with no worked numbers."
+     },
+     {
+      "key": "eb11c1-5:guiding-question-1",
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question asks how to set bounds and how equality arises, introducing the lesson as a whole."
+     },
+     {
+      "key": "eb11c1-5:linking-text-11",
+      "kind": "none",
+      "objective": 0,
+      "why": "It is an instruction to prove inequalities."
+     },
+     {
+      "key": "eb11c1-5:linking-text-14",
+      "kind": "none",
+      "objective": 0,
+      "why": "It restates the AM-GM condition as a side note and does not motivate anything."
+     },
+     {
+      "key": "eb11c1-5:question-for-reflection-1",
+      "kind": "none",
+      "objective": 0,
+      "why": "It sets up a calculation with a = -2 and b = -8, so it asks the student to work something out."
+     },
+     {
+      "key": "eb11c1-5:open-prompt-1",
+      "kind": "closing_reflection",
+      "objective": 4,
+      "why": "It asks the student to look back on why AM-GM needs its domain restriction, which closes the AM-GM objective."
+     }
+    ],
+    "real_life_questions": [
+     "eb11c1-5:challenge-2"
+    ]
+   },
+   "B": {
+    "passages": [
+     {
+      "key": "eb11c1-5:open-prompt-1",
+      "kind": "closing_reflection",
+      "objective": 4,
+      "why": "Looks back on why AM-GM needs its positivity condition, asked after the work."
+     },
+     {
+      "key": "eb11c1-5:question-for-reflection-1",
+      "kind": "none",
+      "objective": 0,
+      "why": "Asks the student to compute with a = -2 and b = -8, so it is a task rather than a reflection."
+     },
+     {
+      "key": "eb11c1-5:linking-text-14",
+      "kind": "none",
+      "objective": 0,
+      "why": "Restates the AM-GM formula and its condition as a side note."
+     },
+     {
+      "key": "eb11c1-5:linking-text-11",
+      "kind": "none",
+      "objective": 0,
+      "why": "An instruction to prove inequalities."
+     },
+     {
+      "key": "eb11c1-5:guiding-question-1",
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "The lesson's guiding question about bounds and equality, with no worked numbers."
+     },
+     {
+      "key": "eb11c1-5:linking-text-2",
+      "kind": "concept_intro",
+      "objective": 0,
+      "why": "Explains why inequalities give optimal limits and introduces AM-GM, with no worked numbers."
+     },
+     {
+      "key": "eb11c1-5:linking-text-1",
+      "kind": "real_life",
+      "objective": 4,
+      "why": "A bio-engineer wants the largest capsule volume from limited polymer, which is a maximum-value problem like AM-GM's."
+     }
+    ],
+    "real_life_questions": [
+     "eb11c1-5:challenge-4",
+     "eb11c1-5:challenge-2"
+    ]
+   }
+  }
+ ]
+}
