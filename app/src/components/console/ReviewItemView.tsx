@@ -310,7 +310,7 @@ function FigureView({ f }: { f: FigurePayload }) {
     );
   }
   return (
-    <VizCard kind={f.kind} spec={f.spec} caption={f.caption ?? undefined} refId={f.id} sourcePage={f.sourcePage} />
+    <VizCard kind={f.kind} spec={f.spec} caption={f.caption ?? undefined} refId={f.id} sourcePage={f.sourcePage} operator />
   );
 }
 

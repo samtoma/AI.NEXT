@@ -121,13 +121,13 @@ const MODE_COPY: Record<
 > = {
   learn: {
     label: "Teach me",
-    chip: "learn mode · AI-led lesson",
+    chip: "Guided lesson",
     finish: "Finish lesson",
     opening: "Let's go 💪 setting up today's lesson… ✏️",
   },
   review: {
     label: "Quick revision",
-    chip: "review mode · 3 minutes",
+    chip: "Quick review · 3 minutes",
     finish: "End now",
     opening: "One sec — setting up the quick revision questions… ⏱",
   },

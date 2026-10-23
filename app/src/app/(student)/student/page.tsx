@@ -105,22 +105,15 @@ export default async function StudentPage({
       cites.length > 0 && cites.every((c) => c.name === cites[0]!.name && c.edition === cites[0]!.edition)
         ? cites[0]!
         : null;
-    // The loop's header is page chrome shared across every subject, not any
-    // one lesson's, so it cannot read `isRtlSubject` the way a lesson surface
-    // does. It shows Arabic unless every course she may see is explicitly
-    // Arabic-free (`CourseTutorFacts.arabicTouches`, Samuel's answer 35,
-    // 2026-10-01) — true for the American course, which is the only curriculum
-    // with no Arabic-carrying course at all today. An empty set (nothing
-    // assigned yet) keeps the header as it has always rendered.
-    const arabicTouches =
-      visibleIds.length === 0 ||
-      visibleIds.some((id) => courseDef(id)?.tutor.arabicTouches !== false);
+    // The loop's header used to add «خطة اليوم» beside "Today's Plan" unless
+    // every course she may see was Arabic-free (Samuel's answer 35). Since the
+    // UI clean-up (2026-10-23) the English product titles it in English only;
+    // `StudentLoop`'s `arabicTouches` switch remains for a caller that wants it.
     return (
       <StudentLoop
         plan={plan.items}
         studentName={plan.studentName}
         bookCite={bookCite}
-        arabicTouches={arabicTouches}
       />
     );
   }

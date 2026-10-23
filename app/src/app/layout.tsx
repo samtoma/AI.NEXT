@@ -12,7 +12,7 @@ import { documentVariant } from "@/lib/design-variant-queries";
 import { IS_BASELINE, IS_CONSOLE } from "@/lib/env";
 import { resolveStudentContext } from "@/lib/student-context";
 import { gradeDisplayLabel } from "@/lib/catalog";
-import { CURRICULA, DEFAULT_CURRICULUM, asCurriculumId } from "@/lib/curricula";
+import { CURRICULA, asCurriculumId } from "@/lib/curricula";
 
 /* ------------------------- the type stack lives in ./fonts -----------------
    The seven families that used to be declared here are now `next/font/local`
@@ -120,23 +120,25 @@ export default async function RootLayout({
   // a hard-coded direction — constitution v2.0.0 Principle V.
   const variant = await documentVariant();
 
-  // The chrome names the product's National course set ("Prep 3 ·
-  // Mathematics", and the ministry's syllabus in the footer). For a student of
-  // ANOTHER curriculum that is untrue — FR-4205: nothing may tell her that her
-  // material comes from the Egyptian ministry's books — so she gets her own
-  // grade, in her curriculum's words, and her curriculum's name (flat, FR-4016),
-  // and no syllabus line. Everybody else — every National student, anybody
-  // signed out, and a curriculum the registry does not know — reads exactly
-  // what they read before 003. From the context already loaded: no extra query.
+  // The chrome names HER grade, in her curriculum's words, and her
+  // curriculum's name (flat, FR-4016) — "Prep 3 · National", "Grade 10 ·
+  // American". It used to be a fixed "Prep 3 · Mathematics" for every National
+  // student and every visitor, whatever their grade (UI clean-up, 2026-10-23).
+  // FR-4205 holds by construction: nothing here names the ministry. A visitor
+  // signed out gets no strapline. From the context already loaded: no query.
   const ownCurriculum = asCurriculumId(student?.curriculum);
-  const otherCurriculum =
-    student && ownCurriculum && ownCurriculum !== DEFAULT_CURRICULUM ? ownCurriculum : null;
   // A first Google sign-in whose grade and curriculum are still owed
   // (FR-4014; backlog #15): the account holds a placeholder grade and no
-  // chosen curriculum, so the chrome may name neither — no "Prep 3 ·
-  // Mathematics", no ministry syllabus line — and offers no study links,
-  // which would only bounce her back to `/welcome`.
+  // chosen curriculum, so the chrome may name neither and offers no study
+  // links, which would only bounce her back to `/welcome`.
   const onboardingPending = student?.onboardingPending === true;
+  const gradeText = student?.grade ? gradeDisplayLabel(student.grade, ownCurriculum) : null;
+  const strapline =
+    student && !onboardingPending
+      ? [gradeText, ownCurriculum ? CURRICULA[ownCurriculum].label : null]
+          .filter(Boolean)
+          .join(" · ") || null
+      : null;
 
   return (
     <html
@@ -164,13 +166,13 @@ export default async function RootLayout({
                   <span className="font-display text-lg font-bold tracking-tight text-ink">
                     Noor
                   </span>
-                  {!(!IS_BASELINE && onboardingPending) && (
+                  {/* Her own grade and curriculum, in its words — never a fixed
+                      "Prep 3 · Mathematics", which every student read before the
+                      UI clean-up (2026-10-23) whatever her grade or course, and
+                      nothing at all for a visitor who has not said who she is. */}
+                  {(IS_BASELINE || strapline) && (
                     <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-ink-faint">
-                      {IS_BASELINE
-                        ? "Tutor PoC · Data Spine"
-                        : otherCurriculum
-                          ? `${gradeDisplayLabel(student?.grade, otherCurriculum)} · ${CURRICULA[otherCurriculum].label}`
-                          : "Prep 3 · Mathematics"}
+                      {IS_BASELINE ? "Tutor PoC · Data Spine" : strapline}
                     </span>
                   )}
                 </Link>
@@ -189,16 +191,12 @@ export default async function RootLayout({
             <div className="relative z-10 flex-1">{children}</div>
             <footer className="relative z-10 border-t border-line-soft">
               <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">
+                {/* The environment's name and the ministry syllabus line were
+                    internal labels (UI clean-up, 2026-10-23). A lesson still
+                    cites its own book on the lesson card. */}
                 <span>
-                  {!IS_BASELINE
-                    ? "Noor · Student MVP 1.0 — comparison environment"
-                    : "Noor · Agent-Native Data Spine — investor preview"}
+                  {!IS_BASELINE ? "Noor" : "Noor · Agent-Native Data Spine — investor preview"}
                 </span>
-                {/* course-level, not lesson-level: any selected lesson/unit shows
-                    its own module label on the surface itself */}
-                {!otherCurriculum && !onboardingPending && (
-                  <span>Prep-3 Mathematics · MOETE 2025–2026</span>
-                )}
               </div>
             </footer>
           </>

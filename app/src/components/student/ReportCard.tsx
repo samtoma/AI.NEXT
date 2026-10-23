@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { LessonMode, UnderstandingCheck, Verdict } from "@/lib/types";
 import { MASTERY_LEGEND } from "@/lib/mastery";
+import { stripInternalIds } from "@/lib/student-text";
 import {
   BADGE,
   BUTTON_PRIMARY,
@@ -131,9 +132,13 @@ export function ReportCard({
               {studentName.split(" ")[0]}
             </span>
           )}
-          <span className="font-mono text-[0.72rem] font-medium text-ink-faint">
-            understanding_checks #{check.id} · {check.turns} AI turns
-          </span>
+          {/* The record's id and turn count are for an operator replaying it,
+              never for the student (UI clean-up, 2026-10-23). */}
+          {readOnly && (
+            <span className="font-mono text-[0.72rem] font-medium text-ink-faint">
+              understanding_checks #{check.id} · {check.turns} AI turns
+            </span>
+          )}
         </div>
 
         <div className="px-6 pb-6 pt-5 sm:px-8">
@@ -239,7 +244,7 @@ export function ReportCard({
                     style={{ animationDelay: `${350 + i * 90}ms` }}
                   >
                     <span className="mt-px shrink-0 font-bold text-[color:var(--play-on-leaf-dim)]">✓</span>
-                    {s}
+                    {stripInternalIds(s)}
                   </li>
                 ))}
               </ul>
@@ -261,7 +266,7 @@ export function ReportCard({
                     style={{ animationDelay: `${350 + i * 90}ms` }}
                   >
                     <span className="mt-px shrink-0 font-bold text-[color:var(--play-text-muted)]">✎</span>
-                    {g}
+                    {stripInternalIds(g)}
                   </li>
                 ))}
               </ul>
@@ -285,12 +290,16 @@ export function ReportCard({
               </p>
             )}
             <p className="mt-1 font-read text-[1rem] leading-relaxed text-ink">
-              {check.nextStep}
+              {stripInternalIds(check.nextStep)}
             </p>
           </div>
 
           <p className="mt-4 text-center font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-ink-faint">
-            rated by the tutor from the full session transcript · ${costUsd.toFixed(4)} · logged
+            {readOnly
+              ? `rated by the tutor from the full session transcript · $${costUsd.toFixed(4)} · logged`
+              : rtl
+                ? "نور قيّمت الدرس كله"
+                : "Rated by Noor from your whole lesson"}
           </p>
         </div>
       </div>

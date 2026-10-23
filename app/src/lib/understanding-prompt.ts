@@ -94,6 +94,7 @@ GRADING RULES:
 - verdict bands: got_it = score >= 80, nearly = 55–79, needs_work < 55.
 - strengths and gaps: 1–4 short concrete phrases each, referencing the actual content of THIS lesson (its objectives, figures, and exercises as they appeared in the transcript). gaps may be empty ([]) if there truly are none.
 - next_step: ONE actionable, encouraging sentence for tomorrow. Never punitive.
+- The student reads strengths, gaps and next_step: name an objective by its label in quotes above, never by its id (nothing like "lo:…", "q:…" or "v:…"), and talk about what ${a.they} did — never about the transcript, the session record or its length.
 
 Return STRICT JSON exactly in this shape:
 {"score": <integer 0-100>, "verdict": "got_it" | "nearly" | "needs_work", "strengths": ["...", ...], "gaps": ["...", ...], "next_step": "..."}

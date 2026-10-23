@@ -16,7 +16,7 @@ import { markerInputOf } from "@/lib/answer-marker";
 import { AttemptRetryError, submitAttempt } from "@/lib/attempts-client";
 import { ANSWER_ONLY_CARD_NOTE, isAnswerOnly } from "@/lib/question-flags";
 import { FeedbackPrompt } from "@/components/student/FeedbackPrompt";
-import { masteryColor, masteryLabel, pct } from "@/lib/mastery";
+import { masteryColor, masteryLabel, masteryPhrase, masteryStage, pct } from "@/lib/mastery";
 import { track } from "@/lib/ga";
 import {
   BADGE,
@@ -38,27 +38,20 @@ import {
  * Noor Play anatomy throughout (`components/sticker.ts`): the reason tags are
  * badges told apart by their WORDS, with the Honey band reserved for the one
  * worth attention; there is no red — "weakest" used to be the Ledger's rust.
+ *
+ * The words are the student's, not the planner's (UI clean-up, 2026-10-23):
+ * "weakest topic … prerequisites met … past the frontier" described how the
+ * plan was built, and a topic she has never started is not her weakest.
  */
-const REASON_META: Record<
-  PlanReason,
-  { label: string; className: string; why: string }
-> = {
-  weakest: {
-    label: "weakest topic",
-    className: "bg-card-warm text-ink",
-    why: "lowest mastery with prerequisites met",
-  },
-  review: {
-    label: "spaced review",
-    className: "bg-card text-ink",
-    why: "strong topic — keep it warm",
-  },
-  stretch: {
-    label: "stretch",
-    className: "bg-card text-ink",
-    why: "one step past the frontier",
-  },
+const REASON_META: Record<PlanReason, { label: string; className: string }> = {
+  weakest: { label: "Let's strengthen", className: "bg-card-warm text-ink" },
+  review: { label: "Quick revisit", className: "bg-card text-ink" },
+  stretch: { label: "Stretch", className: "bg-card text-ink" },
 };
+
+/** A topic's place on the ramp, in the skill map's words (`MASTERY_PHRASE`). */
+const stagePhrase = (score: number, started = true) =>
+  masteryPhrase(masteryStage(score, started));
 
 /**
  * One pip in the session's progress row. Correct is the leaf playmate, a
@@ -91,7 +84,7 @@ export function StudentLoop({
   plan,
   studentName,
   bookCite = null,
-  arabicTouches = true,
+  arabicTouches = false,
 }: {
   plan: PlanItem[];
   studentName: string;
@@ -99,11 +92,10 @@ export function StudentLoop({
    *  plan's courses cite different books, or none (backlog #36) */
   bookCite?: { name: string; edition: string } | null;
   /**
-   * Whether the header may show its Arabic title. `true` — the default, so
-   * every existing render is byte-identical — unless the caller (`student/
-   * page.tsx`) knows every course in this plan is Arabic-free
-   * (`CourseDef.tutor.arabicTouches`, Samuel's answer 35, 2026-10-01): the
-   * American course today.
+   * Whether the header may show its Arabic title. `false` — the default since
+   * the UI clean-up (2026-10-23): the English product titles the plan in
+   * English only. It was on unless every course was Arabic-free
+   * (`CourseDef.tutor.arabicTouches`, Samuel's answer 35, 2026-10-01).
    */
   arabicTouches?: boolean;
 }) {
@@ -210,7 +202,7 @@ export function StudentLoop({
   return (
     <main className="mx-auto max-w-3xl px-6 pb-16">
       <section className="anim-rise pb-6 pt-9">
-        <p className="rule-label mb-4">Student Loop · {studentName}</p>
+        <p className="rule-label mb-4">Practice · {studentName}</p>
         <div className="flex flex-wrap items-baseline justify-between gap-3">
           {/* English leads on the LTR shell (decisions.md Q6); the Arabic sits
               beside it at the same size and weight, not beneath it at half.
@@ -218,6 +210,9 @@ export function StudentLoop({
               span resolves to its right edge and the two scripts render flush. */}
           <h1 className={cx(HEADING, "flex flex-wrap items-baseline gap-x-3 text-[1.9rem] md:text-[2.4rem]")}>
             <span>Today&apos;s Plan</span>
+            {/* Off by default since the UI clean-up (2026-10-23): an English
+                product titled in two scripts read as unfinished. The switch
+                stays — a caller that wants the Arabic touch passes it on. */}
             {arabicTouches && (
               <>
                 <span className="text-ink-faint">/</span>
@@ -256,9 +251,8 @@ export function StudentLoop({
             className="anim-rise font-read text-[1rem] leading-relaxed text-ink-soft"
             style={{ animationDelay: "60ms" }}
           >
-            Five questions picked from the curriculum graph — weighted toward
-            the weakest objectives whose prerequisites are met, plus spaced
-            review and one stretch.
+            Five questions for today: a few to strengthen, one to revisit, and
+            one to stretch you.
           </p>
           {plan.map((p, i) => {
             const meta = REASON_META[p.reason];
@@ -282,7 +276,7 @@ export function StudentLoop({
                   </div>
                   <p className="mt-0.5 font-mono text-[0.72rem] font-medium text-ink-faint">
                     {/* band, not percentage — same reason as MasteryDelta below */}
-                    {meta.why} · {masteryLabel(p.loScore, p.loScore > 0)} · {p.tier} tier
+                    {stagePhrase(p.loScore, p.loScore > 0)}
                   </p>
                 </div>
                 {/* 0 means no evidence, not a bad result: the not-started step. */}
@@ -318,7 +312,8 @@ export function StudentLoop({
                   </span>
                 </div>
                 <span className="font-mono text-[0.72rem] font-medium text-ink-faint">
-                  {item.questionId} · p.{item.sourcePage ?? "—"} · {item.tier}
+                  {item.sourcePage != null &&
+                    `${bookCite?.name ?? "Textbook"} · p.${item.sourcePage}`}
                 </span>
               </div>
 
@@ -468,7 +463,7 @@ export function StudentLoop({
                         Not quite — let&apos;s look at it step by step.
                       </p>
                       <span className={cx(BADGE, "bg-card text-ink")}>
-                        grounded in the worked solution ✓
+                        From the worked solution ✓
                       </span>
                     </div>
                     )}
@@ -536,14 +531,14 @@ export function StudentLoop({
                                 : c.kind === "q"
                                   ? {
                                       title: "This question",
-                                      sub: `${c.id} · worked solution`,
+                                      sub: "worked solution",
                                     }
                                   : {
                                       title:
                                         c.id === item.loId
                                           ? item.loLabel
-                                          : c.id,
-                                      sub: "learning objective",
+                                          : "Another topic",
+                                      sub: "from your course",
                                     }
                             }
                           />
@@ -554,10 +549,6 @@ export function StudentLoop({
                 )}
               </div>
             </div>
-            <p className="mt-3 text-center font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-ink-faint">
-              every attempt is written to attempts + mastery (temporal) ·
-              wrong answers log a grounded explanation
-            </p>
           </section>
         )}
 
@@ -575,7 +566,7 @@ export function StudentLoop({
               </p>
             </div>
 
-            <p className="rule-label mb-3 mt-6">Mastery updated · temporal rows written</p>
+            <p className="rule-label mb-3 mt-6">Your progress is updated</p>
             <div className="space-y-3">
               {loDeltas.map((d) => {
                 const delta = d.last - d.first;
@@ -670,12 +661,12 @@ export function StudentLoop({
  * happened.
  */
 function MasteryDelta({ result }: { result: AttemptResult }) {
-  const before = masteryLabel(result.oldScore);
-  const after = masteryLabel(result.newScore);
+  const before = stagePhrase(result.oldScore);
+  const after = stagePhrase(result.newScore);
   const moved = before !== after;
   // FR-1010: the signature spring is reserved for exactly this transition,
   // and had never once been spent because nothing rendered a band change.
-  const isMastered = moved && after === "mastered";
+  const isMastered = moved && masteryLabel(result.newScore) === "mastered";
 
   return (
     <span
@@ -695,7 +686,7 @@ function MasteryDelta({ result }: { result: AttemptResult }) {
           <strong className="font-bold">{after}</strong>
         </>
       ) : (
-        <span>still {after}</span>
+        <span>{after}</span>
       )}
     </span>
   );

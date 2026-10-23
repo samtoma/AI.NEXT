@@ -95,7 +95,7 @@ export function VizRefCard({ id, task = false }: { id: string; task?: boolean })
           ))}
         </span>
         <span className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-faint">
-          fetching figure · {id}
+          Loading the figure…
         </span>
       </div>
     );
@@ -108,10 +108,7 @@ export function VizRefCard({ id, task = false }: { id: string; task?: boolean })
       </span>
       <span className="min-w-0">
         <span className="block font-mono text-[9.5px] font-semibold uppercase tracking-[0.14em] text-rust">
-          figure not found
-        </span>
-        <span className="block truncate font-mono text-[9px] text-ink-faint">
-          {id}
+          This figure couldn&apos;t load
         </span>
       </span>
     </div>
