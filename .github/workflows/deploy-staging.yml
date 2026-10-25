@@ -586,8 +586,10 @@ jobs:
           echo "misconceptions: $(Q 'select count(*) from misconceptions')"
 
       # ---------------------------------------------------------------------
-      # The two books beyond Prep 3 (Tamer, 2026-10-25): Grade 10 American and
-      # the Egyptian Baccalaureate Grade 11 maths book. AFTER the generated
+      # The books beyond Prep 3 (Tamer, 2026-10-25): Grade 10 American, the
+      # Egyptian Baccalaureate Grade 11 maths book and the Prep 3 parallel book
+      # (the same syllabus ingested again from its PDF, opened beside Prep 3
+      # maths for grade 9). AFTER the generated
       # maths step on purpose — that step skips itself once it counts 590
       # generated questions, and these books bring thousands.
       #
@@ -596,9 +598,9 @@ jobs:
       # and widget questions — without that workflow's backup, which a
       # database wiped every deploy has no use for.
       #
-      # EGB Grade 11: loaded as book_record_load.py loads a unit, BY TAMER'S
-      # EXPLICIT DECISION, although the book config says `ingest`, every
-      # chapter's coverage audit is RED and no chapter has a G5 GO. That script
+      # EGB Grade 11 and the parallel book: loaded as book_record_load.py loads
+      # a unit, BY TAMER'S EXPLICIT DECISION, although each book config says
+      # `ingest`, every unit's coverage audit is RED and none has a G5 GO. That script
       # refuses a non-local database without G5, so its loaders run here
       # directly, in its order. Staging only; production is untouched.
       # `--sample 0`: no review queue file is written into the read-only repo.
@@ -607,7 +609,7 @@ jobs:
       # curriculum, the rows Samuel set on production's Courses page for
       # Grade 10. Every deploy, unconditionally: the database is always new.
       # ---------------------------------------------------------------------
-      - name: Grade 10 American and EGB Grade 11 maths
+      - name: Grade 10 American, EGB Grade 11 and the Prep 3 parallel book
         run: |
           set -euo pipefail
           cd "$APP_DIR"
@@ -635,12 +637,26 @@ jobs:
           done
           $PY apply_review_verdicts.py --book-reviews $E/review-stamps.json
 
+          P=compiled/prep3-parallel
+          PP=course:prep3-parallel-math-en
+          $PY load_seed.py $(cd services/extraction && ls $P/pp3u*.json | sort -V) --course $PP --replace
+          $PY load_misconceptions.py $P/misconceptions.json --course $PP
+          $PY load_generated_questions.py $P/generated-questions.json --course $PP --add-only --catalogue-only --sample 0
+          # One widget names a held book question a later compile left out of
+          # pp3u1.json, so the loader would refuse the whole file; the other 80
+          # load. deploy/staging_load_widgets.py says why and when to remove it.
+          $PY /repo/deploy/staging_load_widgets.py $P/widget-questions.json \
+            --skip-parent q:pp3u1-1-1:bk-think-and-discuss-3 \
+            -- --course $PP --add-only --catalogue-only --sample 0
+          $PY apply_review_verdicts.py --book-reviews $P/review-stamps.json
+
           $C exec -T db psql -U ainext -d "$DB_NAME" -v ON_ERROR_STOP=1 -c "
             insert into course_availability (environment, course_id, grade, state, note)
             select 'staging', v.course_id, v.grade, 'live', v.note
               from (values
                 ('course:us-g10-math-en',  '10', 'staging deploy: Grade 10 American (Tamer, 2026-10-25)'),
-                ('course:egb-g11-math-en', '11', 'staging deploy: EGB Grade 11, audits RED, no G5 (Tamer, 2026-10-25)')
+                ('course:egb-g11-math-en', '11', 'staging deploy: EGB Grade 11, audits RED, no G5 (Tamer, 2026-10-25)'),
+                ('course:prep3-parallel-math-en', '9', 'staging deploy: Prep 3 parallel book, audits RED, no G5 (Tamer, 2026-10-25)')
               ) as v(course_id, grade, note)
              where not exists (select 1 from course_availability a
                                 where a.environment = 'staging'
@@ -649,7 +665,8 @@ jobs:
           $C exec -T db psql -U ainext -d "$DB_NAME" -c "
             select ns.course_id, q.source, q.status, count(*)
               from questions q join node_subject ns on ns.node_id = q.lo_id
-             where ns.course_id in ('course:us-g10-math-en', 'course:egb-g11-math-en')
+             where ns.course_id in ('course:us-g10-math-en', 'course:egb-g11-math-en',
+                                    'course:prep3-parallel-math-en')
              group by 1, 2, 3 order by 1, 2, 3"
 
       # EVERY deploy, unlike the two one-time steps above: the misconception
