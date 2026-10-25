@@ -297,6 +297,10 @@ services:
       #         caught by the `migrate` service before the app starts, which is
       #         what makes `on` a safe thing to choose here specifically.
       AINEXT_COURSE_GATING: ${AINEXT_COURSE_GATING:-off}
+      # The EGB Grade 11 book's own statements, by lesson (lib/book-statements.ts).
+      # Staging only: the deploy loads that book here (Tamer, 2026-10-25), and the
+      # folder is relative to the app's working directory, /repo/app.
+      AINEXT_BOOK_STATEMENTS_DIR: "../services/extraction/compiled/egb-g11-math/content"
       # ---- which build served this (ADR-0015 §3, FR-2304, ADR-0021) -------
       # READ by the app since v0.7.0 (`app/src/lib/env.ts` resolveReleaseTag):
       # stamped on every tutor turn (`ai_interactions.renderer_version`) and

@@ -585,6 +585,69 @@ jobs:
              group by 1, 2 order by 1, 2"
           echo "misconceptions: $(Q 'select count(*) from misconceptions')"
 
+      # ---------------------------------------------------------------------
+      # The two books beyond Prep 3 (Tamer, 2026-10-25): Grade 10 American and
+      # the Egyptian Baccalaureate Grade 11 maths book. AFTER the generated
+      # maths step on purpose — that step skips itself once it counts 590
+      # generated questions, and these books bring thousands.
+      #
+      # Grade 10: what "Load a course" ran for it on production (2026-10-12) —
+      # load_seed --all, its misconception catalogue, its exported generated
+      # and widget questions — without that workflow's backup, which a
+      # database wiped every deploy has no use for.
+      #
+      # EGB Grade 11: loaded as book_record_load.py loads a unit, BY TAMER'S
+      # EXPLICIT DECISION, although the book config says `ingest`, every
+      # chapter's coverage audit is RED and no chapter has a G5 GO. That script
+      # refuses a non-local database without G5, so its loaders run here
+      # directly, in its order. Staging only; production is untouched.
+      # `--sample 0`: no review queue file is written into the read-only repo.
+      #
+      # Both are then opened in the course gate for their own grade and
+      # curriculum, the rows Samuel set on production's Courses page for
+      # Grade 10. Every deploy, unconditionally: the database is always new.
+      # ---------------------------------------------------------------------
+      - name: Grade 10 American and EGB Grade 11 maths
+        run: |
+          set -euo pipefail
+          cd "$APP_DIR"
+          C="docker compose -p $PROJECT -f $COMPOSE_FILE_REL --env-file deploy/.env"
+          L="$C --profile tools run --rm loader"
+          PY="$C --profile tools run --rm -e AINEXT_ENVIRONMENT=staging --entrypoint python loader"
+
+          G=seed/generated/g10-math/export
+          $L --all --course course:us-g10-math-en
+          $PY load_misconceptions.py $G/misconceptions.json --add-only
+          for f in generated-questions.json widget-questions.json; do
+            $PY load_generated_questions.py $G/$f --restore --sample 0 --add-only
+          done
+
+          E=compiled/egb-g11-math
+          EGB=course:egb-g11-math-en
+          $PY load_seed.py $E/eb11c1.json $E/eb11c2.json $E/eb11c3.json $E/eb11c4.json --course $EGB --replace
+          $PY load_misconceptions.py $E/misconceptions.json --course $EGB
+          for f in generated-questions.json widget-questions.json; do
+            $PY load_generated_questions.py $E/$f --course $EGB --add-only --catalogue-only --sample 0
+          done
+          $PY apply_review_verdicts.py --book-reviews $E/review-stamps.json
+
+          $C exec -T db psql -U ainext -d "$DB_NAME" -v ON_ERROR_STOP=1 -c "
+            insert into course_availability (environment, course_id, grade, state, note)
+            select 'staging', v.course_id, v.grade, 'live', v.note
+              from (values
+                ('course:us-g10-math-en',  '10', 'staging deploy: Grade 10 American (Tamer, 2026-10-25)'),
+                ('course:egb-g11-math-en', '11', 'staging deploy: EGB Grade 11, audits RED, no G5 (Tamer, 2026-10-25)')
+              ) as v(course_id, grade, note)
+             where not exists (select 1 from course_availability a
+                                where a.environment = 'staging'
+                                  and a.course_id = v.course_id and a.grade = v.grade)"
+
+          $C exec -T db psql -U ainext -d "$DB_NAME" -c "
+            select ns.course_id, q.source, q.status, count(*)
+              from questions q join node_subject ns on ns.node_id = q.lo_id
+             where ns.course_id in ('course:us-g10-math-en', 'course:egb-g11-math-en')
+             group by 1, 2, 3 order by 1, 2, 3"
+
       # EVERY deploy, unlike the two one-time steps above: the misconception
       # catalogue in the repo is the source of truth, and the loader is
       # idempotent — it upserts entries and explanations and never touches

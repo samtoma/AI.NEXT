@@ -76,6 +76,10 @@ COPY --chown=node:node services/extraction/seed/content /repo/services/extractio
 # the S8 coverage audits (coverage/<book>.json), read at request time by the
 # console's /courses page beside each course's switch (FR-4309, lib/coverage-status.ts)
 COPY --chown=node:node services/extraction/coverage /repo/services/extraction/coverage
+# the EGB Grade 11 book's own statements per lesson (lib/book-statements.ts),
+# read ONLY where AINEXT_BOOK_STATEMENTS_DIR names this folder — staging today;
+# unset on production, where the file is present and never read.
+COPY --chown=node:node services/extraction/compiled/egb-g11-math/content /repo/services/extraction/compiled/egb-g11-math/content
 USER node
 EXPOSE 3000
 # The healthcheck hits `/` and is correct for BOTH surfaces: on the student
