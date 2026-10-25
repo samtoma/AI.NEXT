@@ -614,6 +614,10 @@ jobs:
           C="docker compose -p $PROJECT -f $COMPOSE_FILE_REL --env-file deploy/.env"
           L="$C --profile tools run --rm loader"
           PY="$C --profile tools run --rm -e AINEXT_ENVIRONMENT=staging --entrypoint python loader"
+          # Rebuild the loader image as "Load a course" does (ops_build_loader):
+          # `run` reuses the tagged image, and one built before the KaTeX check
+          # has no node, so load_seed refuses every Grade 10 bundle.
+          $C --profile tools build -q loader
 
           G=seed/generated/g10-math/export
           $L --all --course course:us-g10-math-en
