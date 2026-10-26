@@ -100,7 +100,7 @@ export function FlowChain({ spec, animOn }: VizProps) {
     <div dir="rtl" key={tl.key} className="flex flex-wrap items-center gap-y-2 py-1.5">
       {nodes.map((n, i) => {
         const d = stepAt.get(n.step) ?? 0.4;
-        const roleStyle = ROLE_STYLE[n.role] ?? { box: "border-line bg-card", tag: "text-ink-faint" };
+        const roleStyle = ROLE_STYLE[n.role] ?? { box: "border-line bg-card", tag: "text-ink-label" };
         return (
           <div key={n.id} className="flex items-center">
             {i > 0 && (
@@ -130,13 +130,13 @@ export function FlowChain({ spec, animOn }: VizProps) {
             >
               {n.role && (
                 <span
-                  className={`block font-mono text-[8.5px] font-bold tracking-wide ${roleStyle.tag}`}
+                  className={`block font-mono text-data font-bold tracking-wide ${roleStyle.tag}`}
                   style={{ color: n.role === "سبب" ? GOLD : n.role === "نتيجة" ? ACCENT : undefined }}
                 >
                   {n.role}
                 </span>
               )}
-              <span className="block text-[11.5px] font-medium leading-snug text-ink">
+              <span className="block text-label font-medium leading-snug text-ink">
                 <bdi>{arDigits(n.label)}</bdi>
               </span>
             </div>

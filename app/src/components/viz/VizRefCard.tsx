@@ -94,7 +94,7 @@ export function VizRefCard({ id, task = false }: { id: string; task?: boolean })
             />
           ))}
         </span>
-        <span className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-faint">
+        <span className="font-mono text-data uppercase tracking-[0.14em] text-ink-label">
           Loading the figure…
         </span>
       </div>
@@ -103,11 +103,11 @@ export function VizRefCard({ id, task = false }: { id: string; task?: boolean })
 
   return (
     <div className="anim-pop my-2 flex max-w-[420px] items-center gap-2 rounded-lg border border-dashed border-rust/40 bg-rust-wash/50 px-3.5 py-2.5">
-      <span aria-hidden className="text-[13px] leading-none text-rust">
+      <span aria-hidden className="text-label leading-none text-rust">
         ▧
       </span>
       <span className="min-w-0">
-        <span className="block font-mono text-[9.5px] font-semibold uppercase tracking-[0.14em] text-rust">
+        <span className="block font-mono text-data font-semibold uppercase tracking-[0.14em] text-rust">
           This figure couldn&apos;t load
         </span>
       </span>

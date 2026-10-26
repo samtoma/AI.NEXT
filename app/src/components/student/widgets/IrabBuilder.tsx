@@ -33,7 +33,7 @@ const NAHW = categoryStyle("نحو");
 
 /** One option, for the موقع and the علامة rows alike. */
 const optionCls = (isRight: boolean, isWrong: boolean, settled: boolean) =>
-  cx(WIDGET_OPTION, "ar-block px-2.5 py-1 text-[12.5px]", pickInk(isRight, isWrong, settled));
+  cx(WIDGET_OPTION, "ar-block px-2.5 py-1 text-[length:var(--ar-size-min)]", pickInk(isRight, isWrong, settled));
 
 /**
  * «أعرب ما تحته خط» — the canonical Arabic exam item, in two taps.
@@ -271,7 +271,7 @@ export function IrabBuilder({
 
         {/* stage 2 — العلامة, unlocked (and narrowed) by stage 1 */}
         <div className={`mt-2.5 ${roleDone ? "" : "pointer-events-none opacity-40"}`}>
-          <span className="ar-label ar-block font-display text-[0.72rem] font-bold text-[color:var(--play-text-muted)]">
+          <span className="ar-label ar-block font-display text-[length:var(--ar-size-min)] font-bold text-[color:var(--play-text-muted)]">
             العلامة
           </span>
           <div className="mt-1 flex flex-wrap gap-1.5">
@@ -296,18 +296,18 @@ export function IrabBuilder({
 
         {/* the COMPUTED diagnosis — a slot diff verbalised, never a red X */}
         {coach && !done && (
-          <p className={cx(WIDGET_NOTE, "ar-block ar-plain anim-fade mt-2 px-2.5 py-1.5 text-[12px]")}>
+          <p className={cx(WIDGET_NOTE, "ar-block ar-plain anim-fade mt-2 px-2.5 py-1.5 text-[length:var(--ar-size-min)]")}>
             <bdi>{coach}</bdi>
           </p>
         )}
 
         {done && (
           <div className={cx("mt-3 px-3 py-2", WIDGET_RESULT.correct)}>
-            <span className="ar-block font-display text-[13.5px] font-bold">
+            <span className="ar-block font-display text-[length:var(--ar-size-min)] font-bold">
               <bdi>{answer.surface_ar}</bdi>
             </span>
             {rule_ref?.quote && (
-              <p className={cx(WIDGET_RULE_QUOTE, "ar-block ar-plain mt-1 text-[11.5px]")}>
+              <p className={cx(WIDGET_RULE_QUOTE, "ar-block ar-plain mt-1 text-[length:var(--ar-size-min)]")}>
                 <bdi>
                   «{rule_ref.quote}»
                   {rule_ref.page ? ` — ص ${arDigits(rule_ref.page)}` : ""}

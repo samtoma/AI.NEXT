@@ -21,6 +21,7 @@ import { useDragSurface, useKeyNudge, type Pt } from "./drag";
 import { numText } from "./format";
 import { DEFAULT_GRID, snapToGrid, type Grid } from "./grid";
 import { gradeRegion, regionText, type OpenEdges, type Region } from "./region-shader-grade";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 const W = 280;
 const H = 280;
@@ -168,7 +169,7 @@ export function RegionShader({
       feedback={note}
       footer={verdict ? null : <span className="text-ink">{regionText(drawn, numText)}</span>}
     >
-      <svg
+      <FigureSvg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="application"
@@ -217,7 +218,7 @@ export function RegionShader({
             }}
           />
         ))}
-      </svg>
+      </FigureSvg>
 
       {/* each edge: included (solid, ≤) or excluded (dashed, <) */}
       <div className={WIDGET_ACTIONS}>

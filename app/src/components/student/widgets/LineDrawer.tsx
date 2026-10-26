@@ -39,6 +39,7 @@ import { lineText, numText } from "./format";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 import { gradeLineEquation, gradeLinePoints, gradeSystem, meeting, type TargetLine } from "./line-drawer-grade";
 import { DEFAULT_GRID, isDefaultGrid, snapToGrid, type Grid } from "./grid";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 const W = 280;
 const H = 280;
@@ -294,7 +295,7 @@ export function LineDrawer({
           <>
             <span className="text-ink">{eq.text}</span>
             {eq.m !== null && (
-              <span className="ml-2 text-ink-faint">
+              <span className="ml-2 text-ink-label">
                 slope {fmt(eq.m)} · through {ptText(pts[0])} and {ptText(pts[1])}
               </span>
             )}
@@ -302,7 +303,7 @@ export function LineDrawer({
         )
       }
     >
-      <svg
+      <FigureSvg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="application"
@@ -376,7 +377,7 @@ export function LineDrawer({
             }}
           />
         ))}
-      </svg>
+      </FigureSvg>
 
       {!verdict && (
         <div className={WIDGET_ACTIONS}>

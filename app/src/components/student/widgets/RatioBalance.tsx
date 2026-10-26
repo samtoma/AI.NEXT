@@ -26,6 +26,7 @@ import { BUTTON_SECONDARY } from "@/components/sticker";
 import { WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_INPUT, WIDGET_WELL } from "./WidgetShell";
 import { clamp, tidy, useDragSurface, useKeyNudge, type Pt } from "./drag";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 const W = 300;
 const H = 220;
@@ -52,11 +53,11 @@ function Pan({
         fill={ink} fillOpacity={live ? 0.22 : 0.1}
         stroke={ink} strokeWidth="1.6"
       />
-      <text x={at.x} y={at.y + 44} fontSize="13" textAnchor="middle" fontWeight="600"
+      <text x={at.x} y={at.y + 44} className="fig-read" textAnchor="middle" fontWeight="600"
             fill="var(--ink)" style={{ fontFamily: "var(--stack-mono)" }}>
         {top}
       </text>
-      <text x={at.x} y={at.y + 57} fontSize="8.5" textAnchor="middle" fill="var(--ink-faint)"
+      <text x={at.x} y={at.y + 44} dy="1.2em" className="fig-label" textAnchor="middle" fill="var(--ink-label)"
             style={{ fontFamily: "var(--stack-mono)" }}>
         {bottom}
       </text>
@@ -198,13 +199,13 @@ export function RatioBalance({
           <span className="text-ink">
             {mode === "direct" ? `${c}÷${d} = ${g.right}` : `${c}×${d} = ${g.right}`}
           </span>
-          <span className={g.level ? "text-accent-deep" : "text-ink-faint"}>
+          <span className={g.level ? "text-accent-deep" : "text-ink-label"}>
             {g.level ? "level" : "not level"}
           </span>
         </span>
       }
     >
-      <svg
+      <FigureSvg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="application"
@@ -241,11 +242,11 @@ export function RatioBalance({
           />
         </g>
         <circle cx={PIVOT.x} cy={PIVOT.y} r="5" fill="var(--ink-soft)" />
-      </svg>
+      </FigureSvg>
 
       {!verdict && (
         <div className={WIDGET_ACTIONS}>
-          <label className="font-mono text-[10.5px] font-medium text-[color:var(--play-text-muted)]">
+          <label className="font-mono text-label font-medium text-[color:var(--play-text-muted)]">
             fourth term
             <input
               type="number"

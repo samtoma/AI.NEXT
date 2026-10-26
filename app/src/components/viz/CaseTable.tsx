@@ -83,14 +83,14 @@ function Conditions({ spec, animOn, title }: VizProps & { title: string }) {
       <div className="flex gap-1 @max-[420px]:hidden">
         {columns.map((c, i) => (
           <div key={i} className="min-w-0 flex-1" style={a.pop(delayOf(c.step))}>
-            <div className="ar-block ar-plain rounded-t-md border border-accent-deep/25 bg-accent-wash px-1.5 py-1 text-center text-[10.5px] font-semibold text-accent-deep">
+            <div className="ar-block ar-plain rounded-t-md border border-accent-deep/25 bg-accent-wash px-1.5 py-1 text-center text-[length:var(--ar-size-min)] font-semibold text-accent-deep">
               <bdi>{c.condition}</bdi>
             </div>
             <div className="flex flex-col gap-0.5 rounded-b-md border border-t-0 border-line-soft bg-card px-1 py-1">
               {c.examples.map((e, j) => (
                 <span
                   key={j}
-                  className="ar-block ar-plain text-center text-[12px] text-ink"
+                  className="ar-block ar-plain text-center text-[length:var(--ar-size-min)] text-ink"
                 >
                   <bdi>{e}</bdi>
                 </span>
@@ -108,14 +108,14 @@ function Conditions({ spec, animOn, title }: VizProps & { title: string }) {
             className="rounded-md border border-line-soft bg-card"
             style={a.pop(delayOf(c.step))}
           >
-            <div className="ar-block ar-plain rounded-t-md bg-accent-wash px-2 py-1 text-[11px] font-semibold text-accent-deep">
+            <div className="ar-block ar-plain rounded-t-md bg-accent-wash px-2 py-1 text-[length:var(--ar-size-min)] font-semibold text-accent-deep">
               <bdi>{c.condition}</bdi>
             </div>
             <div className="flex flex-wrap gap-1 px-2 py-1.5">
               {c.examples.map((e, j) => (
                 <span
                   key={j}
-                  className="ar-block ar-plain rounded border border-line-soft px-1.5 py-0.5 text-[12px] text-ink"
+                  className="ar-block ar-plain rounded border border-line-soft px-1.5 py-0.5 text-[length:var(--ar-size-min)] text-ink"
                 >
                   <bdi>{e}</bdi>
                 </span>
@@ -169,13 +169,13 @@ function Matrix({ spec, animOn, title }: VizProps & { title: string }) {
         <table className="w-full border-collapse text-center">
           <thead>
             <tr>
-              <th className="ar-block ar-plain border border-line-soft bg-accent-wash px-1 py-1 text-[9.5px] font-semibold text-accent-deep">
+              <th className="ar-block ar-plain border border-line-soft bg-accent-wash px-1 py-1 text-[length:var(--ar-size-min)] font-semibold text-accent-deep">
                 <bdi>{str(rowAxis.label, "علامة الإعراب")}</bdi>
               </th>
               {cols.map((c) => (
                 <th
                   key={c}
-                  className="ar-block ar-plain border border-line-soft bg-accent-wash px-1 py-1 text-[9.5px] font-semibold text-accent-deep"
+                  className="ar-block ar-plain border border-line-soft bg-accent-wash px-1 py-1 text-[length:var(--ar-size-min)] font-semibold text-accent-deep"
                 >
                   <bdi>{c}</bdi>
                 </th>
@@ -185,7 +185,7 @@ function Matrix({ spec, animOn, title }: VizProps & { title: string }) {
           <tbody>
             {rows.map((r) => (
               <tr key={r}>
-                <th className="ar-block ar-plain border border-line-soft bg-card-warm px-1 py-1 text-[11px] font-semibold text-ink">
+                <th className="ar-block ar-plain border border-line-soft bg-card-warm px-1 py-1 text-[length:var(--ar-size-min)] font-semibold text-ink">
                   <bdi>{r}</bdi>
                 </th>
                 {cols.map((c) => {
@@ -193,7 +193,7 @@ function Matrix({ spec, animOn, title }: VizProps & { title: string }) {
                   return (
                     <td
                       key={c}
-                      className="ar-block ar-plain border border-line-soft bg-card px-1 py-1 text-[11.5px] text-ink"
+                      className="ar-block ar-plain border border-line-soft bg-card px-1 py-1 text-[length:var(--ar-size-min)] text-ink"
                     >
                       {cell && (
                         <span style={a.pop(delayOf(cell.step))}>
@@ -216,7 +216,7 @@ function Matrix({ spec, animOn, title }: VizProps & { title: string }) {
           if (mine.length === 0) return null;
           return (
             <div key={r} className="rounded-md border border-line-soft bg-card">
-              <div className="ar-block ar-plain rounded-t-md bg-accent-wash px-2 py-1 text-[11px] font-semibold text-accent-deep">
+              <div className="ar-block ar-plain rounded-t-md bg-accent-wash px-2 py-1 text-[length:var(--ar-size-min)] font-semibold text-accent-deep">
                 <bdi>{r}</bdi>
               </div>
               <div className="flex flex-col gap-0.5 px-2 py-1.5">
@@ -226,10 +226,10 @@ function Matrix({ spec, animOn, title }: VizProps & { title: string }) {
                     className="flex items-baseline justify-between gap-2"
                     style={a.pop(delayOf(c.step))}
                   >
-                    <span className="ar-block ar-plain text-[10.5px] text-ink-faint">
+                    <span className="ar-block ar-plain text-[length:var(--ar-size-min)] text-ink-label">
                       <bdi>{c.col}</bdi>
                     </span>
-                    <span className="ar-block ar-plain text-[12px] text-ink">
+                    <span className="ar-block ar-plain text-[length:var(--ar-size-min)] text-ink">
                       <bdi>{c.example}</bdi>
                     </span>
                   </div>

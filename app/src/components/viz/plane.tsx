@@ -3,7 +3,7 @@
 /** Shared Cartesian frame: grid + axes + ticks, Ledger-ruled-paper style. */
 
 import {
-  INK_FAINT,
+  INK_LABEL,
   INK_SOFT,
   LINE_SOFT,
   MONO,
@@ -60,7 +60,7 @@ export function makePlane(
 
 /** Room `makePlane` needs beside the plot for these axis titles. */
 export function titleRoom(titles?: AxisTitles): { left?: number; bottom?: number } {
-  return { left: titles?.y ? 12 : 0, bottom: titles?.x ? 12 : 0 };
+  return { left: titles?.y ? 16 : 0, bottom: titles?.x ? 16 : 0 }; // a line of --type-label
 }
 
 export interface AxisTitles {
@@ -126,26 +126,26 @@ export function PlaneFrame({
       <line x1={axY} y1={p.sy(p.y0) + 2} x2={axY} y2={p.sy(p.y1) - 4} stroke={INK_SOFT} strokeWidth="1.3" />
       <path d={`M ${p.sx(p.x1) + 4} ${axX} l -5 -2.6 v 5.2 z`} fill={INK_SOFT} />
       <path d={`M ${axY} ${p.sy(p.y1) - 4} l -2.6 5 h 5.2 z`} fill={INK_SOFT} />
-      <text x={p.sx(p.x1) + 2} y={axX - 5} fontSize="8" fontStyle="italic" fill={INK_SOFT} textAnchor="end">
+      <text x={p.sx(p.x1) + 2} y={axX - 5} className="fig-label" fontStyle="italic" fill={INK_LABEL} textAnchor="end">
         x
       </text>
-      <text x={axY + 6} y={p.sy(p.y1) + 2} fontSize="8" fontStyle="italic" fill={INK_SOFT}>
+      <text x={axY + 6} y={p.sy(p.y1) + 2} className="fig-label" fontStyle="italic" fill={INK_LABEL}>
         y
       </text>
       {titles?.x && (
-        <text x={(p.sx(p.x0) + p.sx(p.x1)) / 2} y={p.H - 3} fontSize="7" fill={INK_SOFT} textAnchor="middle"
+        <text x={(p.sx(p.x0) + p.sx(p.x1)) / 2} y={p.H - 3} className="fig-label" fill={INK_LABEL} textAnchor="middle"
           style={{ fontFamily: MONO }}>
           {titles.x}
         </text>
       )}
       {titles?.y && (
-        <text x={0} y={0} fontSize="7" fill={INK_SOFT} textAnchor="middle" style={{ fontFamily: MONO }}
-          transform={`translate(7 ${(p.sy(p.y0) + p.sy(p.y1)) / 2}) rotate(-90)`}>
+        <text x={0} y={0} className="fig-label" fill={INK_LABEL} textAnchor="middle" style={{ fontFamily: MONO }}
+          transform={`translate(9 ${(p.sy(p.y0) + p.sy(p.y1)) / 2}) rotate(-90)`}>
           {titles.y}
         </text>
       )}
       {quadrants?.slice(0, 4).map((q, i) => (
-        <text key={`q${i}`} x={qAt[i][0]} y={qAt[i][1]} fontSize="7" fill={INK_SOFT} textAnchor="middle"
+        <text key={`q${i}`} x={qAt[i][0]} y={qAt[i][1]} className="fig-label" fill={INK_LABEL} textAnchor="middle"
           style={{ fontFamily: MONO }}>
           {q.split("\n").map((line, k, all) => (
             <tspan key={k} x={qAt[i][0]} dy={k === 0 ? `${-(all.length - 1) * 0.6}em` : "1.2em"}>
@@ -159,9 +159,10 @@ export function PlaneFrame({
         <text
           key={`tx${t}`}
           x={p.sx(t)}
-          y={axX + 9}
-          fontSize="6.5"
-          fill={INK_FAINT}
+          y={axX + 2}
+          dy="0.85em"
+          className="fig-data"
+          fill={INK_LABEL}
           textAnchor="middle"
           style={{ fontFamily: MONO }}
         >
@@ -172,9 +173,10 @@ export function PlaneFrame({
         <text
           key={`ty${t}`}
           x={axY - 4}
-          y={p.sy(t) + 2.2}
-          fontSize="6.5"
-          fill={INK_FAINT}
+          y={p.sy(t)}
+          dy="0.35em"
+          className="fig-data"
+          fill={INK_LABEL}
           textAnchor="end"
           style={{ fontFamily: MONO }}
         >

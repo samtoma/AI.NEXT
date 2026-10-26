@@ -25,7 +25,10 @@ export class VizError extends Error {}
 
 export const INK = "var(--ink)";
 export const INK_SOFT = "var(--ink-soft)";
+/** Decoration only (rules, dashes): fails AA as text on the default ground. */
 export const INK_FAINT = "var(--ink-faint)";
+/** Meaning-bearing secondary text in a figure — AA in both themes (globals.css). */
+export const INK_LABEL = "var(--ink-label)";
 export const LINE = "var(--line)";
 export const LINE_SOFT = "var(--line-soft)";
 export const ACCENT = "var(--accent)";

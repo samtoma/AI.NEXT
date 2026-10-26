@@ -81,7 +81,7 @@ export function RuleTree({ spec, animOn }: VizProps) {
     <div dir="rtl" lang="ar" key={tl.key} className="flex flex-col items-center py-1.5">
       {/* root */}
       <div
-        className="ar-block ar-plain max-w-[92%] rounded-md border border-accent-deep/60 bg-accent-wash px-2.5 py-1.5 text-center text-[13px] font-semibold text-accent-deep"
+        className="ar-block ar-plain max-w-[92%] rounded-md border border-accent-deep/60 bg-accent-wash px-2.5 py-1.5 text-center text-[length:var(--ar-size-min)] font-semibold text-accent-deep"
         style={a.pop(stepTimes[0])}
       >
         <bdi>{arDigits(rootLabel)}</bdi>
@@ -121,7 +121,7 @@ export function RuleTree({ spec, animOn }: VizProps) {
 
       {note && (
         <p
-          className="ar-block ar-plain mt-2 rounded-md border border-line-soft bg-card-warm px-2.5 py-1.5 text-center text-[11.5px] text-ink-soft"
+          className="ar-block ar-plain mt-2 rounded-md border border-line-soft bg-card-warm px-2.5 py-1.5 text-center text-[length:var(--ar-size-min)] text-ink-soft"
           style={a.fade(delayOf(steps[steps.length - 1]) + 0.3)}
         >
           <bdi>{arDigits(note)}</bdi>
@@ -148,21 +148,21 @@ function Branch({
       <div className="h-3 w-px bg-accent-deep/40" style={a.grow(d - 0.1, "y", 0.3)} />
       {node.edgeLabel && (
         <span
-          className="ar-label ar-block mb-0.5 rounded-full border border-gold/45 bg-gold-wash px-1.5 py-px font-mono text-[9px] font-semibold text-gold"
+          className="ar-label ar-block mb-0.5 rounded-full border border-gold/45 bg-gold-wash px-1.5 py-px font-mono text-[length:var(--ar-size-min)] font-semibold text-gold"
           style={a.pop(d - 0.05)}
         >
           <bdi>{node.edgeLabel}</bdi>
         </span>
       )}
       <div
-        className="ar-block ar-plain w-full rounded-md border border-accent-deep/45 bg-accent-wash px-1.5 py-1 text-center text-[11.5px] font-semibold text-accent-deep"
+        className="ar-block ar-plain w-full rounded-md border border-accent-deep/45 bg-accent-wash px-1.5 py-1 text-center text-[length:var(--ar-size-min)] font-semibold text-accent-deep"
         style={a.pop(d)}
       >
         <bdi>{arDigits(node.label)}</bdi>
       </div>
       {node.example && (
         <span
-          className="ar-block ar-plain mt-1 text-center text-[11px] text-ink-soft"
+          className="ar-block ar-plain mt-1 text-center text-[length:var(--ar-size-min)] text-ink-soft"
           style={a.fade(d + 0.2)}
         >
           <bdi>{node.example}</bdi>
@@ -177,7 +177,7 @@ function Branch({
                 style={a.grow(delayOf(k.step) - 0.1, "y", 0.25)}
               />
               <div
-                className="ar-block ar-plain w-full rounded border border-line bg-card px-1.5 py-1 text-center text-[10.5px] text-ink"
+                className="ar-block ar-plain w-full rounded border border-line bg-card px-1.5 py-1 text-center text-[length:var(--ar-size-min)] text-ink"
                 style={a.pop(delayOf(k.step))}
               >
                 <bdi>{arDigits(k.label)}</bdi>

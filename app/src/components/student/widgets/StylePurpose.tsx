@@ -19,7 +19,7 @@ import {
 
 /** One option, for the أسلوب and the غرض rows alike. */
 const optionCls = (isRight: boolean, isWrong: boolean, settled: boolean) =>
-  cx(WIDGET_OPTION, "ar-block px-2.5 py-1 text-[12.5px]", pickInk(isRight, isWrong, settled));
+  cx(WIDGET_OPTION, "ar-block px-2.5 py-1 text-[length:var(--ar-size-min)]", pickInk(isRight, isWrong, settled));
 
 /**
  * {{widget:style_purpose:{"prompt":"…","text":"…","span":"كيفَ تَغدُو","styles":["نداء","استفهام","أمر"],"purposes":["التنبيه","الاستنكار"],"answer":{"style":"استفهام","purpose":"الاستنكار"}}}}
@@ -169,7 +169,7 @@ export function StylePurpose({
           })}
         </div>
         {styleWrong.length > 0 && !styleOk && (
-          <p className="ar-block ar-plain anim-fade mt-1.5 text-[12px] text-[color:var(--play-text-muted)]">
+          <p className="ar-block ar-plain anim-fade mt-1.5 text-[length:var(--ar-size-min)] text-[color:var(--play-text-muted)]">
             {/* coach the CLUE, never the answer — teaching the clue is teaching
                 the skill (arabic-student-experience.md §3.2) */}
             مش كده. بص على أول الجملة — في أداة بتقولك النوع.
@@ -178,7 +178,7 @@ export function StylePurpose({
 
         {/* stage 2 — الغرض, unlocked only after the أسلوب */}
         <div className={`mt-2.5 ${styleOk ? "" : "pointer-events-none opacity-40"}`}>
-          <span className="ar-label ar-block font-display text-[0.72rem] font-bold text-[color:var(--play-text-muted)]">
+          <span className="ar-label ar-block font-display text-[length:var(--ar-size-min)] font-bold text-[color:var(--play-text-muted)]">
             غرضه
           </span>
           <div className="mt-1 flex flex-wrap gap-1.5">
@@ -203,7 +203,7 @@ export function StylePurpose({
 
         {purposeOk && (
           <div className={cx("mt-3 px-3 py-2", WIDGET_RESULT.correct)}>
-            <span className="ar-block font-display text-[13.5px] font-bold">
+            <span className="ar-block font-display text-[length:var(--ar-size-min)] font-bold">
               {revealed
                 ? `الإجابة: أسلوب ${answer.style} وغرضه ${answer.purpose}. دي بالظبط «أسلوب … وغرضه …» اللي بتيجي في الامتحان`
                 : "برافو. دي بالظبط «أسلوب … وغرضه …» اللي بتيجي في الامتحان ✓"}

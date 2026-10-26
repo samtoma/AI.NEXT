@@ -24,6 +24,7 @@ import {
   gradeAreaScale, gradeVolumeScale, isReachableK, solidGeometry,
   K_MAX, K_MIN, K_STEP, type SolidKind,
 } from "./solid-scaler-grade";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 const W = 300;
 const H = 220;
@@ -241,18 +242,18 @@ export function SolidScaler({
       footer={
         verdict ? null : (
           <span className="inline-flex flex-wrap justify-center gap-x-3 gap-y-1">
-            <span className={ask === "volume" ? "font-bold text-ink" : "text-ink-faint"}>
+            <span className={ask === "volume" ? "font-bold text-ink" : "text-ink-label"}>
               V(k) = {solid === "box" || solid === "pyramid" ? fmt(volumeAt) : fmtPi(volumeAt)}
             </span>
-            <span className={ask === "area" ? "font-bold text-ink" : "text-ink-faint"}>
+            <span className={ask === "area" ? "font-bold text-ink" : "text-ink-label"}>
               A(k) = {solid === "box" || solid === "pyramid" ? fmt(areaAt) : fmtPi(areaAt)}
             </span>
-            <span className="text-ink-faint">k = {k}{!kOk ? " (off the grid)" : ""}</span>
+            <span className="text-ink-label">k = {k}{!kOk ? " (off the grid)" : ""}</span>
           </span>
         )
       }
     >
-      <svg
+      <FigureSvg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="application"
@@ -277,11 +278,11 @@ export function SolidScaler({
           live={`${k}`} dragging={dragging} locked={!!verdict}
           onKeyDown={nudge}
         />
-        <text x={kX} y={TRACK_Y + 18} fontSize="10" textAnchor="middle" fill="var(--ink)"
+        <text x={kX} y={TRACK_Y + 18} className="fig-label" textAnchor="middle" fill="var(--ink)"
               style={{ fontFamily: "var(--stack-mono)" }}>
           k = {k}
         </text>
-      </svg>
+      </FigureSvg>
 
       {!verdict && (
         <div className={WIDGET_ACTIONS}>

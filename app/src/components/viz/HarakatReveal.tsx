@@ -97,10 +97,10 @@ export function HarakatReveal({ spec, animOn }: VizProps) {
               className="flex items-baseline gap-1.5"
               style={a.pop(stepTimes[i + 1] + 0.15)}
             >
-              <span className="ar-label shrink-0 rounded-full border border-accent-deep/40 px-1.5 py-px font-mono text-[9px] font-semibold text-accent-deep">
+              <span className="ar-label shrink-0 rounded-full border border-accent-deep/40 px-1.5 py-px font-mono text-[length:var(--ar-size-min)] font-semibold text-accent-deep">
                 {text.slice(r.target.start, r.target.end)}
               </span>
-              <span className="ar-block ar-plain text-[11.5px] text-ink-soft">
+              <span className="ar-block ar-plain text-[length:var(--ar-size-min)] text-ink-soft">
                 <bdi>{r.note}</bdi>
               </span>
             </div>

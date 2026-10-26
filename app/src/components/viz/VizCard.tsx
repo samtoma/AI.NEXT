@@ -40,7 +40,7 @@ export function VizCard({
   return (
     <div className={FRAME}>
       <div className={HEAD}>
-        <span className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.12em] text-[color:var(--play-text-amber-warm)]">
+        <span className="font-mono text-data font-medium uppercase tracking-[0.12em] text-[color:var(--play-text-amber-warm)]">
           {operator
             ? `✦ figure · ${kind === "book_image" ? "the book\u2019s picture" : kind.replace(/_/g, " ")}`
             : kind === "book_image"
@@ -49,13 +49,13 @@ export function VizCard({
         </span>
         <span className="flex items-center gap-2">
           {(shownId || sourcePage != null) && (
-            <span className="font-mono text-[0.72rem] font-medium tracking-wide">
+            <span className="font-mono text-data font-medium tracking-wide">
               {shownId}
               {shownId && sourcePage != null && " · "}
               {sourcePage != null && (operator ? `book p.${sourcePage}` : `Textbook p.${sourcePage}`)}
             </span>
           )}
-          <span aria-hidden className="font-mono text-[10px] text-[color:var(--play-text-amber-warm)]">
+          <span aria-hidden className="font-mono text-label text-[color:var(--play-text-amber-warm)]">
             {kindMeta(kind).glyph}
           </span>
         </span>

@@ -57,6 +57,7 @@ import {
   tolFor,
   type CurveFn,
 } from "./curve-sketcher-grade";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 export type { CurveFn };
 
@@ -248,7 +249,7 @@ export function CurveSketcher({
               : "sketch captured — check it, or clear and redraw"}
           </span>
         ) : (
-          <span className="text-ink-faint">
+          <span className="text-ink-label">
             {multiSegment
               ? "press and drag each branch left to right; lift between branches"
               : "press and drag across the grid, left to right"}
@@ -256,7 +257,7 @@ export function CurveSketcher({
         )
       }
     >
-      <svg
+      <FigureSvg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="application"
@@ -296,7 +297,7 @@ export function CurveSketcher({
             />
           ) : null
         )}
-      </svg>
+      </FigureSvg>
 
       {!verdict && (
         <div className={WIDGET_ACTIONS}>

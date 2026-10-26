@@ -34,6 +34,7 @@ import {
 } from "./core";
 import { arDigits } from "./arabic";
 import { BASE_MAPS, resolvePlace, useBaseMap, type BaseMap } from "./maps";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 interface Mark {
   kind: string;
@@ -84,7 +85,7 @@ export function MapScene({ spec, animOn }: VizProps) {
   if (!map) {
     return (
       <div
-        className="ar-label flex h-40 items-center justify-center rounded-[var(--play-radius-sm)] bg-card-warm font-display text-[0.72rem] font-bold text-ink-faint"
+        className="ar-label flex h-40 items-center justify-center rounded-[var(--play-radius-sm)] bg-card-warm font-display text-[length:var(--ar-size-min)] font-bold text-ink-label"
         dir="rtl"
       >
         الخريطة بتتحمّل…
@@ -95,7 +96,7 @@ export function MapScene({ spec, animOn }: VizProps) {
   const [, , W, H] = map.viewBox;
 
   return (
-    <svg
+    <FigureSvg
       viewBox={`0 0 ${W} ${H}`}
       role="img"
       aria-label={`خريطة ${base}`}
@@ -106,7 +107,7 @@ export function MapScene({ spec, animOn }: VizProps) {
       <g dangerouslySetInnerHTML={{ __html: map.inner }} />
       {/* marks (the animated data layer) */}
       <g key={tl.key}>{marks.map((m, i) => renderMark(map, m, i, stepAt, a))}</g>
-    </svg>
+    </FigureSvg>
   );
 }
 
@@ -165,7 +166,7 @@ function renderMark(
           <text
             x={(x1 + x2) / 2}
             y={(y1 + y2) / 2 - 8}
-            fontSize="9.5"
+            className="fig-label-ar"
             fontWeight="600"
             textAnchor="middle"
             fill={color}
@@ -221,7 +222,7 @@ function renderMark(
         <text
           x={x}
           y={y + 3}
-          fontSize="10"
+          className="fig-label-ar"
           fontWeight="700"
           textAnchor="middle"
           fill={INK}
@@ -253,7 +254,7 @@ function renderMark(
           <text
             x={x}
             y={y + 3.2}
-            fontSize="8.5"
+            className="fig-label-ar"
             fontWeight="700"
             textAnchor="middle"
             fill={color}
@@ -271,7 +272,7 @@ function renderMark(
         key={key}
         x={x}
         y={y + 3}
-        fontSize="9.5"
+        className="fig-label-ar"
         fontWeight="600"
         textAnchor="middle"
         fill={INK}
@@ -293,7 +294,7 @@ function renderMark(
       <text
         x={x}
         y={y - 8}
-        fontSize="10"
+        className="fig-label-ar"
         fontWeight="700"
         textAnchor="middle"
         fill={INK}

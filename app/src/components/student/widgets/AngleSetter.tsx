@@ -31,6 +31,7 @@ import { Handle, WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_WELL } from "
 import { tidy, useDragSurface, useKeyNudge, type Pt } from "./drag";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 import { angleReadings, angleSetterStart } from "./angle-setter-start";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 const RAD = 5;
 const LIM = 6.4;
@@ -219,17 +220,17 @@ export function AngleSetter({
       feedback={note}
       footer={
         <span className="inline-flex flex-wrap justify-center gap-x-3 gap-y-1">
-          <span className={ask === "central" ? "text-ink" : "text-ink-faint"}>
+          <span className={ask === "central" ? "text-ink" : "text-ink-label"}>
             arc AB facing C: {geom.facing}°
           </span>
-          <span className={ask === "inscribed" ? "text-ink" : "text-ink-faint"}>
+          <span className={ask === "inscribed" ? "text-ink" : "text-ink-label"}>
             ∠ACB: {geom.inscribed}°
           </span>
           <span className="text-accent-deep">always ×2</span>
         </span>
       }
     >
-      <svg
+      <FigureSvg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="application"
@@ -273,7 +274,7 @@ export function AngleSetter({
               stroke={ink} strokeWidth="2" strokeLinecap="round" />
 
         <circle cx={p.sx(0)} cy={p.sy(0)} r="2.6" fill="var(--ink-soft)" />
-        <text x={p.sx(0) + 6} y={p.sy(0) + 12} fontSize="9.5" fill="var(--ink-soft)"
+        <text x={p.sx(0) + 6} y={p.sy(0) + 12} className="fig-label" fill="var(--ink-label)"
               fontStyle="italic">M</text>
 
         {(["A", "B", "C"] as const).map((k) => {
@@ -294,15 +295,15 @@ export function AngleSetter({
               />
               <text
                 x={p.sx(pt.x * 1.19)} y={p.sy(pt.y * 1.19) + 3.5}
-                fontSize="11" fontWeight="600" textAnchor="middle"
-                fill={k === "C" ? "var(--accent-deep)" : "var(--ink-soft)"}
+                className="fig-label" fontWeight="600" textAnchor="middle"
+                fill={k === "C" ? "var(--accent-deep)" : "var(--ink-label)"}
               >
                 {k}
               </text>
             </g>
           );
         })}
-      </svg>
+      </FigureSvg>
 
       {!verdict && (
         <div className={WIDGET_ACTIONS}>

@@ -17,8 +17,7 @@ import {
   ACCENT,
   ACCENT_DEEP,
   GOLD,
-  INK_FAINT,
-  INK_SOFT,
+  INK_LABEL,
   MONO,
   VizError,
   arr,
@@ -33,6 +32,7 @@ import {
   type VizProps,
 } from "./core";
 import { PlaneFrame, makePlane, titleRoom, type AxisTitles } from "./plane";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 interface Seg {
   i: number;
@@ -126,7 +126,7 @@ export function CoordinatePlot({ spec, animOn }: VizProps) {
 
   return (
     <div className="relative">
-      <svg
+      <FigureSvg
         ref={svgRef}
         viewBox={`0 0 ${p.W} ${p.H}`}
         role="img"
@@ -159,7 +159,7 @@ export function CoordinatePlot({ spec, animOn }: VizProps) {
                 <text
                   x={p.sx(pt.x) + 6}
                   y={p.sy(pt.y) - 5}
-                  fontSize="7.5"
+                  className="fig-label"
                   fontWeight="600"
                   fill={pt.color === ACCENT ? ACCENT_DEEP : pt.color}
                   style={{ fontFamily: MONO, ...a.fade(d + 0.15) }}
@@ -193,7 +193,7 @@ export function CoordinatePlot({ spec, animOn }: VizProps) {
                 {label && (
                   <text
                     x={(X1 + X2) / 2 + nx} y={(Y1 + Y2) / 2 + ny + 3}
-                    fontSize="7.5" fontWeight="600" textAnchor="middle"
+                    className="fig-label" fontWeight="600" textAnchor="middle"
                     fill={points[i].color === ACCENT ? ACCENT_DEEP : points[i].color}
                     style={{ fontFamily: MONO, ...a.fade(d + 0.4) }}
                   >
@@ -207,7 +207,7 @@ export function CoordinatePlot({ spec, animOn }: VizProps) {
             <text
               key={`n${k}`}
               x={p.sx(n.x)} y={p.sy(n.y)}
-              fontSize="7.5" textAnchor="middle" fill={INK_SOFT}
+              className="fig-label" textAnchor="middle" fill={INK_LABEL}
               style={{ fontFamily: MONO, ...a.fade(segStart + segments.length * 0.55 + 0.3) }}
             >
               {n.text}
@@ -223,7 +223,7 @@ export function CoordinatePlot({ spec, animOn }: VizProps) {
             <text
               x={p.sx(pt.x) + 6}
               y={p.sy(pt.y) + 8}
-              fontSize="7"
+              className="fig-label"
               fontWeight="600"
               fill={GOLD}
               style={{ fontFamily: MONO }}
@@ -232,20 +232,20 @@ export function CoordinatePlot({ spec, animOn }: VizProps) {
             </text>
           </g>
         ))}
-      </svg>
+      </FigureSvg>
 
       {interactive && (
         <div className="pointer-events-none absolute inset-x-0 bottom-1 flex items-center justify-between px-2">
           <span
-            className="text-[8px] uppercase tracking-[0.14em]"
-            style={{ fontFamily: MONO, color: INK_FAINT }}
+            className="text-label uppercase tracking-[0.14em]"
+            style={{ fontFamily: MONO, color: INK_LABEL }}
           >
             ✳ tap the grid to plot
           </span>
           {mine.length > 0 && (
             <button
               onClick={() => setMine([])}
-              className="pointer-events-auto rounded-full border border-line bg-card px-1.5 py-px text-[8px] uppercase tracking-[0.12em] text-ink-soft transition-colors hover:text-ink"
+              className="pointer-events-auto rounded-full border border-line bg-card px-1.5 py-px text-label uppercase tracking-[0.12em] text-ink-label transition-colors hover:text-ink"
               style={{ fontFamily: MONO }}
             >
               ↺ clear

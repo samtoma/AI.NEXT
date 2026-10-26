@@ -27,6 +27,7 @@ import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 import {
   gradeArea, gradeConstruct, gradeMidsegment, QUAD_SHAPES, type PolygonShape,
 } from "./polygon-grade";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 const LIM = 6;
 const W = 300;
@@ -56,7 +57,7 @@ const SHAPE_LABEL: Record<PolygonShape, string> = {
 /** One live property readout — dot + word, never colour alone (Noor Play). */
 function Prop({ on, children }: { on: boolean; children: ReactNode }) {
   return (
-    <span className={on ? "text-accent-deep" : "text-ink-faint"}>
+    <span className={on ? "text-accent-deep" : "text-ink-label"}>
       {on ? "●" : "○"} {children}
     </span>
   );
@@ -230,7 +231,7 @@ function VertexDrag(
         )
       }
     >
-      <svg
+      <FigureSvg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="application"
@@ -252,7 +253,7 @@ function VertexDrag(
             onKeyDown={(e) => { setActive(i); nudge(e); }}
           />
         ))}
-      </svg>
+      </FigureSvg>
 
       {!verdict && (
         <div className={WIDGET_ACTIONS}>
@@ -393,7 +394,7 @@ function Midsegment({
         )
       }
     >
-      <svg
+      <FigureSvg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="application"
@@ -408,7 +409,7 @@ function Midsegment({
         />
         {tri.map((p, i) => (
           <text key={i} x={plane.sx(p.x) + (i === apex ? -10 : 6)} y={plane.sy(p.y) - 6}
-                fontSize="10" fontStyle="italic" fill="var(--ink-soft)">
+                className="fig-label" fontStyle="italic" fill="var(--ink-label)">
             {i === apex ? "A" : i === others[0] ? "B" : "C"}
           </text>
         ))}
@@ -433,7 +434,7 @@ function Midsegment({
           live={`${fmt(tE * 100)}% along`} dragging={dragging && active === "e"} locked={!!verdict}
           onKeyDown={(e) => { setActive("e"); nudge(e); }}
         />
-      </svg>
+      </FigureSvg>
 
       {!verdict && (
         <div className={WIDGET_ACTIONS}>

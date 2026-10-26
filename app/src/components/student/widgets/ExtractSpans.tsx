@@ -156,14 +156,14 @@ export function ExtractSpans({
         </p>
 
         {misses >= 2 && distractorHint && !done && (
-          <p className={cx(WIDGET_NOTE, "ar-block ar-plain anim-fade mt-2 px-2.5 py-1.5 text-[12px]")}>
+          <p className={cx(WIDGET_NOTE, "ar-block ar-plain anim-fade mt-2 px-2.5 py-1.5 text-[length:var(--ar-size-min)]")}>
             <bdi>{distractorHint}</bdi>
           </p>
         )}
 
         {done && (
           <div className={cx("mt-3 px-3 py-2", WIDGET_RESULT.correct)}>
-            <span className="ar-block font-display text-[13.5px] font-bold">
+            <span className="ar-block font-display text-[length:var(--ar-size-min)] font-bold">
               {misses === 0
                 ? "برافو — لقيتهم كلهم من أول مرة ✓"
                 : "تمام، لقيتهم كلهم. دي بالظبط «استخرج من النص» بتاعة الامتحان"}

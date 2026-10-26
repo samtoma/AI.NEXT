@@ -1406,7 +1406,7 @@ body[data-focus="lesson"] > footer {
 /* no mono uppercase strip in the panel: a nested card's header reads as a label */
 :is([data-ds="play"], [data-ds="noor"]) .lesson-bubble [data-chat-interactive] > * > :first-child .font-mono {
   font-family: var(--font-display);
-  font-size: 0.82rem;
+  font-size: var(--type-label);
   font-weight: 700;
   letter-spacing: normal;
   text-transform: none;
@@ -1419,4 +1419,69 @@ body[data-focus="lesson"] > footer {
    KaTeX face the app already loads for equations — no new font is fetched */
 .math-glyph {
   font-family: "Cambria Math", "STIX Two Math", KaTeX_Main, Georgia, serif;
+}
+
+/* ===========================================================================
+   TEXT IN WIDGETS, FIGURES AND QUESTION CARDS — readable at the size the
+   student sees it
+   ---------------------------------------------------------------------------
+   The published Noor Play type scale (handoff tokens.css `--play-text-*`):
+   read 1rem · label 0.85rem · data 0.72rem. The system names no separate
+   floor for a diagram, so a figure's text takes the same steps as the rest of
+   the UI — "workspace body stays 1rem from 360 to 1920pt", and scaling type
+   with the viewport is on the system's FORBIDDEN list:
+
+     --type-read   a value or a given the question depends on (X = {1, 2}),
+                   a widget's prompt — the workspace body size;
+     --type-label  every word in a figure: axis names, set names, vertex and
+                   side labels, a bar's value, a readout — the label step;
+     --type-data   Latin-only numerals in mono (axis ticks, a grid's row and
+                   column numbers) — the data step, the SMALLEST size the
+                   system has. Nothing in a figure goes below it.
+
+   Arabic text never drops below --ar-size-min (14px, ADR-0006).
+
+   A figure is an SVG drawn in viewBox units and scaled to its column, so a
+   `fontSize="8"` attribute renders at 8 × (column ÷ viewBox) px — under 9px
+   on an iPad in places. `<FigureSvg>` (components/viz/figure-svg.tsx) writes
+   `--fig-u` = viewBox units per rendered px on the svg, and the classes below
+   multiply by it, so the size is what the student SEES at any width.
+   `fig-type-guard.test.mts` keeps raw sizes and faint ink out of figures.
+   ======================================================================== */
+:root {
+  --type-read: 1rem; /* tokens.css --play-text-read */
+  --type-label: 0.85rem; /* tokens.css --play-text-label (the size step) */
+  --type-data: 0.72rem; /* tokens.css --play-text-data */
+
+  /* Meaning-bearing secondary text: a label, a value, a tick number. On the
+     default ground it is --ink-soft (#4d5669, 7.1:1 on --card, 6.4:1 on --paper). --ink-faint
+     (#8a91a1, 3.2:1 here) fails AA for text: decoration only. */
+  --ink-label: var(--ink-soft);
+}
+:is([data-ds="play"], [data-ds="noor"]) {
+  /* tokens.css --play-text-muted, 6.9:1 on white — "labels, option letters".
+     Not --ink-soft: the handoff bars #6b6489 below 0.9rem. 6.6:1 on Cream. */
+  --ink-label: var(--play-text-muted);
+}
+@theme inline {
+  --color-ink-label: var(--ink-label);
+  --text-read: var(--type-read);
+  --text-label: var(--type-label);
+  --text-data: var(--type-data);
+}
+
+/* SVG text in rendered px. `--fig-u` falls back to 1 (one viewBox unit = one
+   px) until the svg is measured, which every widget is already close to. */
+.fig-read {
+  font-size: calc(var(--type-read) * var(--fig-u, 1));
+}
+.fig-label {
+  font-size: calc(var(--type-label) * var(--fig-u, 1));
+}
+.fig-data {
+  font-size: calc(var(--type-data) * var(--fig-u, 1));
+}
+/* Arabic in a figure: the label step, never under the Arabic floor */
+.fig-label-ar {
+  font-size: calc(max(var(--type-label), var(--ar-size-min)) * var(--fig-u, 1));
 }

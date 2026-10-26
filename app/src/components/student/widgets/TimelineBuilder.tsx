@@ -111,7 +111,7 @@ export function TimelineBuilder({
                   <div
                     className={cx(
                       WIDGET_SLOT,
-                      "flex min-h-[44px] items-center justify-center px-1 py-1 text-center text-[10.5px] leading-snug transition-all duration-200",
+                      "flex min-h-[44px] items-center justify-center px-1 py-1 text-center text-[length:var(--ar-size-min)] leading-snug transition-all duration-200",
                       filled ? SLOT_INK.filled : SLOT_INK.empty
                     )}
                   >
@@ -137,7 +137,7 @@ export function TimelineBuilder({
                   onClick={() => tap(evIdx)}
                   className={cx(
                     WIDGET_OPTION,
-                    "px-2.5 py-1.5 text-[11.5px] leading-snug",
+                    "px-2.5 py-1.5 text-[length:var(--ar-size-min)] leading-snug",
                     // a wrong pick greys and nudges, then comes back live
                     flash === evIdx ? cx(OPTION_INK.wrong, "anim-nudge") : OPTION_INK.idle
                   )}
@@ -151,7 +151,7 @@ export function TimelineBuilder({
 
         {done && (
           <div className={cx("mt-3 px-3 py-2", WIDGET_RESULT.correct)}>
-            <span className="font-display text-[13.5px] font-bold">
+            <span className="font-display text-[length:var(--ar-size-min)] font-bold">
               {missteps === 0
                 ? "برافو! رتبت الأحداث كلها صح من أول مرة ✓"
                 : "تمام — وصلنا للترتيب الصح. دي نفس فكرة سؤال «رتب» في الامتحان"}

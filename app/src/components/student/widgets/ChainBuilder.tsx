@@ -39,7 +39,7 @@ const ROLE_COLOR: Record<string, string> = {
 };
 
 /** The role tag over a card: Arabic, so the UI face, never tracked mono. */
-const ROLE_TAG = "ar-label block font-display text-[0.72rem] font-bold";
+const ROLE_TAG = "ar-label block font-display text-[length:var(--ar-size-min)] font-bold";
 
 export function ChainBuilder({
   prompt,
@@ -119,7 +119,7 @@ export function ChainBuilder({
             return (
               <div key={slot} className="flex min-w-0 flex-1 basis-0 items-center">
                 {slot > 0 && (
-                  <span aria-hidden className="mx-1 shrink-0 text-[13px] text-ink-faint">
+                  <span aria-hidden className="mx-1 shrink-0 text-[length:var(--ar-size-min)] text-ink-label">
                     ←
                   </span>
                 )}
@@ -135,7 +135,7 @@ export function ChainBuilder({
                       {role}
                     </span>
                   )}
-                  <span className="block text-[10.5px] leading-snug">
+                  <span className="block text-[length:var(--ar-size-min)] leading-snug">
                     {filled ? <bdi>{arDigits(cards[cardIdx].label)}</bdi> : "؟"}
                   </span>
                 </div>
@@ -170,7 +170,7 @@ export function ChainBuilder({
                       {cards[cardIdx].role}
                     </span>
                   )}
-                  <span className="block text-[11.5px] leading-snug">
+                  <span className="block text-[length:var(--ar-size-min)] leading-snug">
                     <bdi>{arDigits(cards[cardIdx].label)}</bdi>
                   </span>
                 </button>
@@ -181,7 +181,7 @@ export function ChainBuilder({
 
         {done && (
           <div className={cx("mt-3 px-3 py-2", WIDGET_RESULT.correct)}>
-            <span className="font-display text-[13.5px] font-bold">
+            <span className="font-display text-[length:var(--ar-size-min)] font-bold">
               {missteps === 0
                 ? "برافو! السلسلة كاملة صح — سبب، حدث، نتيجة ✓"
                 : "تمام — كده فهمت إيه اللي أدى لإيه. دي إجابة «بم تفسر» جاهزة"}

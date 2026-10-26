@@ -25,6 +25,7 @@ import {
   type VizProps,
 } from "./core";
 import { PlaneFrame, makePlane, titleRoom, type AxisTitles } from "./plane";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 export function FunctionGraph({ spec, animOn }: VizProps) {
   const coefs = arr(spec.coefs).map((c) => num(c));
@@ -111,12 +112,12 @@ export function FunctionGraph({ spec, animOn }: VizProps) {
         : `f(x) = ${fmtTerm(coefs[0], "x", true)}${fmtTerm(coefs[1], "")}`;
 
   return (
-    <svg viewBox={`0 0 ${p.W} ${p.H}`} role="img" aria-label={eq} className="block w-full">
+    <FigureSvg viewBox={`0 0 ${p.W} ${p.H}`} role="img" aria-label={eq} className="block w-full">
       <PlaneFrame p={p} titles={titles} />
       <text
         x={p.W - 10}
         y={16}
-        fontSize="8.5"
+        className="fig-label"
         fontWeight="600"
         fill={ACCENT_DEEP}
         textAnchor="end"
@@ -154,7 +155,7 @@ export function FunctionGraph({ spec, animOn }: VizProps) {
             <text
               x={p.sx(vx) + 4}
               y={p.sy(p.y1) + 10}
-              fontSize="7"
+              className="fig-label"
               fill={GOLD}
               style={{ fontFamily: MONO, ...a.fade(at("axis") + 0.3) }}
             >
@@ -173,7 +174,7 @@ export function FunctionGraph({ spec, animOn }: VizProps) {
             <text
               x={p.sx(vx) + 7}
               y={p.sy(vy) + (a2 > 0 ? 11 : -7)}
-              fontSize="7.5"
+              className="fig-label"
               fontWeight="600"
               fill={GOLD}
               style={{ fontFamily: MONO, ...a.fade(at("vertex") + 0.2) }}
@@ -194,7 +195,7 @@ export function FunctionGraph({ spec, animOn }: VizProps) {
               <text
                 x={p.sx(r)}
                 y={p.sy(0) - 8}
-                fontSize="7"
+                className="fig-label"
                 fontWeight="600"
                 fill={RUST}
                 textAnchor="middle"
@@ -224,7 +225,7 @@ export function FunctionGraph({ spec, animOn }: VizProps) {
               <text
                 x={p.sx(m.x) + 7}
                 y={p.sy(my) - 6}
-                fontSize="7.5"
+                className="fig-label"
                 fontWeight="600"
                 fill={ACCENT_DEEP}
                 style={{ fontFamily: MONO, ...a.fade(d + 0.45) }}
@@ -235,7 +236,7 @@ export function FunctionGraph({ spec, animOn }: VizProps) {
           );
         })}
       </g>
-    </svg>
+    </FigureSvg>
   );
 }
 

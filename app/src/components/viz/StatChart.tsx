@@ -12,7 +12,7 @@ import {
   ACCENT_DEEP,
   GOLD,
   INK,
-  INK_FAINT,
+  INK_LABEL,
   LINE_SOFT,
   MONO,
   SERIES,
@@ -26,6 +26,7 @@ import {
   useVizTimeline,
   type VizProps,
 } from "./core";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 interface Datum {
   label: string;
@@ -68,14 +69,14 @@ function Bars({ data, on, meanLine }: { data: Datum[]; on: boolean; meanLine: nu
   const [hover, setHover] = useState<number | null>(null);
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="bar chart" className="block w-full">
+    <FigureSvg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="bar chart" className="block w-full">
       {/* baseline + faint rules */}
       {[0.25, 0.5, 0.75, 1].map((f) => (
         <line key={f} x1={PAD_L} y1={H - PAD_B - plotH * f} x2={W - 12} y2={H - PAD_B - plotH * f}
           stroke={LINE_SOFT} strokeWidth="1" />
       ))}
       <line x1={PAD_L} y1={H - PAD_B} x2={W - 12} y2={H - PAD_B} stroke={INK} strokeOpacity="0.5" strokeWidth="1.2" />
-      <text x={PAD_L - 4} y={PAD_T + 3} fontSize="6.5" textAnchor="end" fill={INK_FAINT} style={{ fontFamily: MONO }}>
+      <text x={PAD_L - 4} y={PAD_T + 3} className="fig-data" textAnchor="end" fill={INK_LABEL} style={{ fontFamily: MONO }}>
         {fmtNum(maxV)}
       </text>
 
@@ -97,8 +98,8 @@ function Bars({ data, on, meanLine }: { data: Datum[]; on: boolean; meanLine: nu
               />
               <text
                 x={cx(i)} y={H - PAD_B - hOf(d.value) - 5}
-                fontSize="8" fontWeight="700" textAnchor="middle"
-                fill={hot ? ACCENT_DEEP : INK_FAINT}
+                className="fig-label" fontWeight="700" textAnchor="middle"
+                fill={hot ? ACCENT_DEEP : INK_LABEL}
                 style={{ fontFamily: MONO, ...a.fade(del + 0.45, 0.4) }}
               >
                 {fmtNum(d.value)}
@@ -117,7 +118,7 @@ function Bars({ data, on, meanLine }: { data: Datum[]; on: boolean; meanLine: nu
             />
             <text
               x={W - 12} y={H - PAD_B - hOf(meanLine) - 5}
-              fontSize="7.5" fontWeight="700" textAnchor="end" fill={GOLD}
+              className="fig-label" fontWeight="700" textAnchor="end" fill={GOLD}
               style={{ fontFamily: MONO, ...a.fade(meanAt + 0.5) }}
             >
               mean = {fmtNum(meanLine)}
@@ -130,7 +131,7 @@ function Bars({ data, on, meanLine }: { data: Datum[]; on: boolean; meanLine: nu
       {data.map((d, i) => (
         <g key={`l${i}`}>
           <text
-            x={cx(i)} y={H - PAD_B + 12} fontSize="7.5" textAnchor="middle"
+            x={cx(i)} y={H - PAD_B + 12} className="fig-label" textAnchor="middle"
             fill={hover === i ? ACCENT_DEEP : INK} fontWeight={hover === i ? 700 : 500}
             style={{ fontFamily: MONO }}
           >
@@ -143,7 +144,7 @@ function Bars({ data, on, meanLine }: { data: Datum[]; on: boolean; meanLine: nu
           />
         </g>
       ))}
-    </svg>
+    </FigureSvg>
   );
 }
 
@@ -185,7 +186,7 @@ function Sector({ data, on }: { data: Datum[]; on: boolean }) {
   });
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="sector chart" className="block w-full">
+    <FigureSvg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="sector chart" className="block w-full">
       {/* faint full ring */}
       <circle cx={CX} cy={CY} r={R} fill="none" stroke="var(--ink)" strokeOpacity="0.06" strokeWidth={26} />
 
@@ -203,7 +204,7 @@ function Sector({ data, on }: { data: Datum[]; on: boolean }) {
           />
         ))}
         {/* center count */}
-        <text x={CX} y={CY + 4} fontSize="11" fontWeight="700" textAnchor="middle" fill={INK}
+        <text x={CX} y={CY + 4} className="fig-label" fontWeight="700" textAnchor="middle" fill={INK}
           style={{ fontFamily: MONO, ...a.fade(0.3) }}>
           {fmtNum(total)}
         </text>
@@ -214,11 +215,11 @@ function Sector({ data, on }: { data: Datum[]; on: boolean }) {
           return (
             <g key={`lg${s.i}`} style={a.fade(0.6 + s.i * 0.55, 0.4)}>
               <rect x={178} y={y - 5} width={9} height={9} rx={2.5} fill={SERIES[s.i % SERIES.length]} />
-              <text x={192} y={y + 3} fontSize="8" fill={hover === s.i ? ACCENT_DEEP : INK}
+              <text x={192} y={y + 3} className="fig-label" fill={hover === s.i ? ACCENT_DEEP : INK}
                 fontWeight={hover === s.i ? 700 : 500} style={{ fontFamily: MONO }}>
                 {s.d.label.length > 15 ? `${s.d.label.slice(0, 14)}…` : s.d.label}
               </text>
-              <text x={W - 10} y={y + 3} fontSize="8" fontWeight="700" textAnchor="end" fill={INK_FAINT}
+              <text x={W - 10} y={y + 3} className="fig-label" fontWeight="700" textAnchor="end" fill={INK_LABEL}
                 style={{ fontFamily: MONO }}>
                 {Math.round(s.frac * 100)}%
               </text>
@@ -235,7 +236,7 @@ function Sector({ data, on }: { data: Datum[]; on: boolean }) {
             onMouseEnter={() => setHover(s.i)} onMouseLeave={() => setHover(null)} />
         );
       })}
-    </svg>
+    </FigureSvg>
   );
 }
 
@@ -272,7 +273,7 @@ function Dots({ data, on, meanLine }: { data: Datum[]; on: boolean; meanLine: nu
   const [hover, setHover] = useState<number | null>(null);
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="dot plot" className="block w-full">
+    <FigureSvg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="dot plot" className="block w-full">
       <line x1={16} y1={H - PAD_B} x2={W - 16} y2={H - PAD_B} stroke={INK} strokeOpacity="0.5" strokeWidth="1.2" />
 
       <g key={tl.key}>
@@ -302,7 +303,7 @@ function Dots({ data, on, meanLine }: { data: Datum[]; on: boolean; meanLine: nu
               pathLength={100}
               style={{ ...a.draw(0.4 + totalDots * D + 0.3, 0.6), strokeDasharray: on ? undefined : "5 4" }}
             />
-            <text x={meanX + 4} y={14} fontSize="7.5" fontWeight="700" fill={GOLD} style={{ fontFamily: MONO }}>
+            <text x={meanX + 4} y={14} className="fig-label" fontWeight="700" fill={GOLD} style={{ fontFamily: MONO }}>
               mean = {fmtNum(meanLine!)}
             </text>
           </g>
@@ -311,7 +312,7 @@ function Dots({ data, on, meanLine }: { data: Datum[]; on: boolean; meanLine: nu
 
       {data.map((d, i) => (
         <g key={`l${i}`}>
-          <text x={cx(i)} y={H - PAD_B + 13} fontSize="8" textAnchor="middle"
+          <text x={cx(i)} y={H - PAD_B + 13} className="fig-label" textAnchor="middle"
             fill={hover === i ? ACCENT_DEEP : INK} fontWeight={hover === i ? 700 : 500}
             style={{ fontFamily: MONO }}>
             {d.label}
@@ -320,6 +321,6 @@ function Dots({ data, on, meanLine }: { data: Datum[]; on: boolean; meanLine: nu
             onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)} />
         </g>
       ))}
-    </svg>
+    </FigureSvg>
   );
 }

@@ -12,7 +12,7 @@ import {
   ACCENT_DEEP,
   GOLD,
   INK,
-  INK_FAINT,
+  INK_LABEL,
   LINE_SOFT,
   MONO,
   VizError,
@@ -26,6 +26,7 @@ import {
   useVizTimeline,
   type VizProps,
 } from "./core";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 interface Bar {
   label: string;
@@ -54,10 +55,14 @@ export function RatioBars({ spec, animOn }: VizProps) {
   const maxVal = Math.max(...groups.flat().map((b) => b.value), 1);
 
   /* layout */
+  // Each bar's name sits on its own line ABOVE the bar, full width: at the
+  // label step a name beside the bar ran out of the figure (globals.css,
+  // "TEXT IN WIDGETS, FIGURES AND QUESTION CARDS").
   const W = 320;
-  const LABEL_W = 118;
+  const LABEL_W = 10; // the bars' left edge
+  const NAME_H = 17; // one line of --type-label above each bar
   const BAR_H = 15;
-  const ROW = 27;
+  const ROW = NAME_H + BAR_H + 10;
   const GAP = 16; // between groups
   const rows = parts.length + compare.length;
   const H = 12 + rows * ROW + (compare.length ? GAP : 0) + 6;
@@ -66,7 +71,8 @@ export function RatioBars({ spec, animOn }: VizProps) {
   const widestValue = Math.max(
     ...groups.flat().map((b) => (fmtNum(b.value) + unitStr).length)
   );
-  const barMax = W - LABEL_W - 14 - Math.min(96, widestValue * 5.2 + 8);
+  // a mono numeral at the label step is ~8.2 units wide when a unit is a px
+  const barMax = W - LABEL_W - 10 - Math.min(120, widestValue * 8.4 + 8);
 
   const on = animOn && spec.animate !== "none";
   const delayOf = (gi: number, i: number) =>
@@ -100,22 +106,21 @@ export function RatioBars({ spec, animOn }: VizProps) {
       rowsOut.push(
         <g key={key}>
           <text
-            x={LABEL_W - 8}
-            y={yy + BAR_H / 2 + 3}
-            fontSize="8"
-            textAnchor="end"
+            x={LABEL_W}
+            y={yy + NAME_H - 5}
+            className="fig-label"
             fill={hot ? ACCENT_DEEP : INK}
             fontWeight={hot ? 700 : 500}
             style={{ fontFamily: MONO }}
           >
-            {b.label.length > 22 ? `${b.label.slice(0, 21)}…` : b.label}
+            {b.label.length > 34 ? `${b.label.slice(0, 33)}…` : b.label}
           </text>
           {/* faint track */}
-          <rect x={LABEL_W} y={yy} width={barMax} height={BAR_H} rx={BAR_H / 2}
+          <rect x={LABEL_W} y={yy + NAME_H} width={barMax} height={BAR_H} rx={BAR_H / 2}
             fill="var(--ink)" opacity="0.05" />
           <rect
             x={LABEL_W}
-            y={yy}
+            y={yy + NAME_H}
             width={w}
             height={BAR_H}
             rx={BAR_H / 2}
@@ -125,10 +130,11 @@ export function RatioBars({ spec, animOn }: VizProps) {
           />
           <text
             x={LABEL_W + w + 6}
-            y={yy + BAR_H / 2 + 3}
-            fontSize="8.5"
+            y={yy + NAME_H + BAR_H / 2}
+            dy="0.35em"
+            className="fig-label"
             fontWeight="700"
-            fill={hot ? ACCENT_DEEP : INK_FAINT}
+            fill={hot ? ACCENT_DEEP : INK_LABEL}
             style={{ fontFamily: MONO, ...a.fade(d + 0.5, 0.4) }}
           >
             {fmtNum(b.value)}
@@ -150,9 +156,9 @@ export function RatioBars({ spec, animOn }: VizProps) {
   });
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="ratio bars" className="block w-full">
+    <FigureSvg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="ratio bars" className="block w-full">
       <g key={tl.key}>{rowsOut}</g>
       {hitboxes}
-    </svg>
+    </FigureSvg>
   );
 }

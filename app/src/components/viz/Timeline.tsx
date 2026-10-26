@@ -66,7 +66,7 @@ export function Timeline({ spec, animOn }: VizProps) {
     <div dir={dir} className="overflow-x-auto py-1.5">
       <div key={tl.key} style={{ minWidth: `${Math.max(events.length * 86, 200)}px` }}>
         {era && (
-          <div className="mb-1 flex items-center justify-between px-2 font-mono text-[9px] tracking-wide text-ink-faint">
+          <div className="mb-1 flex items-center justify-between px-2 font-mono text-data tracking-wide text-ink-label">
             <bdi>{arDigits(era[0])}</bdi>
             {era[1] && <bdi>{arDigits(era[1])}</bdi>}
           </div>
@@ -92,7 +92,7 @@ export function Timeline({ spec, animOn }: VizProps) {
                     style={{ height: `${CARD_ZONE}px` }}
                   >
                     <div
-                      className="max-w-full rounded-md border border-line bg-card px-1.5 py-1 text-center text-[11px] font-medium leading-snug text-ink shadow-[0_2px_6px_-3px_rgba(32,41,58,0.35)]"
+                      className="max-w-full rounded-md border border-line bg-card px-1.5 py-1 text-center text-label font-medium leading-snug text-ink shadow-[0_2px_6px_-3px_rgba(32,41,58,0.35)]"
                       style={a.pop(d)}
                     >
                       <bdi>{arDigits(e.label)}</bdi>
@@ -107,7 +107,7 @@ export function Timeline({ spec, animOn }: VizProps) {
                   {/* date under the rail */}
                   {e.when && (
                     <div
-                      className="mt-1 font-mono text-[9.5px] font-semibold text-accent-deep"
+                      className="mt-1 font-mono text-label font-semibold text-accent-deep"
                       style={a.fade(d + 0.35)}
                     >
                       <bdi>{arDigits(e.when)}</bdi>

@@ -25,6 +25,7 @@ import { Handle, WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_WELL } from "
 import { clamp, tidy, useDragSurface, useKeyNudge, type Pt } from "./drag";
 import { ratioText } from "./format";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 const MAX = 12;
 const W = 300;
@@ -172,20 +173,20 @@ export function TriangleRatio({
       feedback={note}
       footer={
         <span className="inline-flex flex-wrap justify-center gap-x-3 gap-y-1">
-          <span className={ask === "sin" ? "text-ink" : "text-ink-faint"}>
+          <span className={ask === "sin" ? "text-ink" : "text-ink-label"}>
             sin {g.exactHyp ? ratioText(g.opp, Math.round(g.hyp)) : tidy(g.sin, 3)}
           </span>
-          <span className={ask === "cos" ? "text-ink" : "text-ink-faint"}>
+          <span className={ask === "cos" ? "text-ink" : "text-ink-label"}>
             cos {g.exactHyp ? ratioText(g.adj, Math.round(g.hyp)) : tidy(g.cos, 3)}
           </span>
-          <span className={ask === "tan" ? "text-ink" : "text-ink-faint"}>
+          <span className={ask === "tan" ? "text-ink" : "text-ink-label"}>
             tan {ratioText(g.opp, g.adj)}
           </span>
           <span className="text-accent-deep">θ ≈ {g.theta}°</span>
         </span>
       }
     >
-      <svg
+      <FigureSvg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="application"
@@ -220,19 +221,21 @@ export function TriangleRatio({
           } ${B.y - arcR * Math.sin(Math.atan2(g.opp, g.adj))}`}
           fill="none" stroke="var(--accent-deep)" strokeWidth="1.6"
         />
-        <text x={B.x - arcR - 10} y={B.y - 6} fontSize="11" fill="var(--accent-deep)" fontStyle="italic">θ</text>
+        <text x={B.x - arcR - 10} y={B.y - 6} className="fig-label" fill="var(--accent-deep)" fontStyle="italic">θ</text>
 
         {/* side labels, each naming its ROLE — the vocabulary is the lesson */}
-        <text x={(A.x + B.x) / 2} y={A.y + 15} fontSize="9" textAnchor="middle"
-              fill="var(--ink-soft)" style={{ fontFamily: "var(--stack-mono)" }}>
+        <text x={(A.x + B.x) / 2} y={A.y + 15} className="fig-label" textAnchor="middle"
+              fill="var(--ink-label)" style={{ fontFamily: "var(--stack-mono)" }}>
           adj {g.adj}
         </text>
-        <text x={A.x - 8} y={(A.y + C.y) / 2} fontSize="9" textAnchor="end"
-              fill="var(--ink-soft)" style={{ fontFamily: "var(--stack-mono)" }}>
+        {/* set along the leg: at the label step it no longer fits the gutter */}
+        <text x={A.x - 8} y={(A.y + C.y) / 2} className="fig-label" textAnchor="middle"
+              transform={`rotate(-90 ${A.x - 8} ${(A.y + C.y) / 2})`}
+              fill="var(--ink-label)" style={{ fontFamily: "var(--stack-mono)" }}>
           opp {g.opp}
         </text>
-        <text x={(B.x + C.x) / 2 + 8} y={(B.y + C.y) / 2 - 6} fontSize="9"
-              fill="var(--ink-soft)" style={{ fontFamily: "var(--stack-mono)" }}>
+        <text x={(B.x + C.x) / 2 + 8} y={(B.y + C.y) / 2 - 6} className="fig-label"
+              fill="var(--ink-label)" style={{ fontFamily: "var(--stack-mono)" }}>
           hyp {g.exactHyp ? Math.round(g.hyp) : g.hyp}
         </text>
 
@@ -246,7 +249,7 @@ export function TriangleRatio({
           label="Opposite leg" live={`${g.opp} units`}
           dragging={dragging} locked={!!verdict} onKeyDown={nudge}
         />
-      </svg>
+      </FigureSvg>
 
       {!verdict && (
         <div className={WIDGET_ACTIONS}>

@@ -26,6 +26,7 @@ import { BUTTON_SECONDARY, BUTTON_TERTIARY } from "@/components/sticker";
 import { WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_WELL } from "./WidgetShell";
 import { clamp, useDragSurface, type Pt } from "./drag";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 const W = 300;
 const PAD = 26;
@@ -204,14 +205,14 @@ export function SampleSpace({
       feedback={note}
       footer={
         <span className="inline-flex flex-wrap justify-center gap-x-3">
-          <span className="text-ink-faint">event: {ruleText(rule)}</span>
+          <span className="text-ink-label">event: {ruleText(rule)}</span>
           <span className="text-ink">
             n(E)/n(S) = {frac}
           </span>
         </span>
       }
     >
-      <svg
+      <FigureSvg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="application"
@@ -222,15 +223,15 @@ export function SampleSpace({
         {...(verdict ? {} : surface)}
       >
         {Array.from({ length: C }, (_, i) => i + 1).map((a) => (
-          <text key={`ch${a}`} x={PAD + (a - 0.5) * cell} y={PAD - 8} fontSize="9"
-                textAnchor="middle" fill="var(--ink-faint)"
+          <text key={`ch${a}`} x={PAD + (a - 0.5) * cell} y={PAD - 8} className="fig-data"
+                textAnchor="middle" fill="var(--ink-label)"
                 style={{ fontFamily: "var(--stack-mono)" }}>
             {a}
           </text>
         ))}
         {Array.from({ length: R }, (_, i) => i + 1).map((b) => (
-          <text key={`rh${b}`} x={PAD - 7} y={PAD + (b - 0.5) * cell + 3.5} fontSize="9"
-                textAnchor="end" fill="var(--ink-faint)"
+          <text key={`rh${b}`} x={PAD - 7} y={PAD + (b - 0.5) * cell + 3.5} className="fig-data"
+                textAnchor="end" fill="var(--ink-label)"
                 style={{ fontFamily: "var(--stack-mono)" }}>
             {b}
           </text>
@@ -263,7 +264,7 @@ export function SampleSpace({
                 <text
                   x={PAD + (a - 0.5) * cell}
                   y={PAD + (b - 0.5) * cell + 3.5}
-                  fontSize="8.5" textAnchor="middle"
+                  className="fig-label" textAnchor="middle"
                   // ink on the amber-family working fill (Cream on it was
                   // white-on-amber, ~3:1); Cream only on the ink fill of a
                   // correct grid
@@ -272,7 +273,7 @@ export function SampleSpace({
                       ? verdict === "correct"
                         ? "var(--paper)"
                         : "var(--ink)"
-                      : "var(--ink-faint)"
+                      : "var(--ink-label)"
                   }
                   style={{ fontFamily: "var(--stack-mono)" }}
                 >
@@ -291,7 +292,7 @@ export function SampleSpace({
             );
           })
         )}
-      </svg>
+      </FigureSvg>
 
       {!verdict && (
         <div className={WIDGET_ACTIONS}>

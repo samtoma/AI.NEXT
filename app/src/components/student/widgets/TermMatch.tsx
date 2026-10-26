@@ -61,7 +61,7 @@ const RELATION_CHIP: Record<string, { glyph: string; cls: string }> = {
 /** The relation tag inside a term: a small sticker pill. Arabic, so the UI
  *  face, never tracked mono. */
 const RELATION_TAG =
-  "ar-label ar-block mb-0.5 block rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-ink px-1 py-px font-display text-[0.72rem] font-bold";
+  "ar-label ar-block mb-0.5 block rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-ink px-1 py-px font-display text-[length:var(--ar-size-min)] font-bold";
 
 export function TermMatch({
   prompt,
@@ -171,7 +171,7 @@ export function TermMatch({
                   data-verdict={isMatched ? "correct" : undefined}
                   className={cx(
                     WIDGET_OPTION,
-                    "px-2 py-1.5 text-[12px] leading-snug",
+                    "px-2 py-1.5 text-[length:var(--ar-size-min)] leading-snug",
                     isMatched
                       ? cx(OPTION_INK.correct, "anim-pop")
                       : isSel
@@ -208,7 +208,7 @@ export function TermMatch({
                   data-verdict={isMatched ? "correct" : flashDef === pos ? "wrong" : undefined}
                   className={cx(
                     WIDGET_OPTION,
-                    "px-2 py-1.5 text-start text-[11px] leading-snug",
+                    "px-2 py-1.5 text-start text-[length:var(--ar-size-min)] leading-snug",
                     isMatched
                       ? cx(OPTION_INK.correct, "anim-pop")
                       : flashDef === pos
@@ -220,7 +220,7 @@ export function TermMatch({
                 >
                   <bdi>{arDigits(d.text)}</bdi>
                   {isMatched && d.pairIdx >= 0 && (
-                    <span className="ms-1 font-display text-[0.72rem] font-bold">
+                    <span className="ms-1 font-display text-[length:var(--ar-size-min)] font-bold">
                       ✓ {clean[d.pairIdx].term}
                     </span>
                   )}
@@ -232,7 +232,7 @@ export function TermMatch({
 
         {done && (
           <div className={cx("mt-3 px-3 py-2", WIDGET_RESULT.correct)}>
-            <span className="font-display text-[13.5px] font-bold">
+            <span className="font-display text-[length:var(--ar-size-min)] font-bold">
               {mistakes === 0
                 ? `برافو! ${arDigits(n)} مصطلحات كلها صح من أول مرة ✓`
                 : "تمام — المصطلحات دي ثبتت. دي نفسها سؤال «ضع المصطلح» في الامتحان"}

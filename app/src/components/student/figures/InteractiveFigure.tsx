@@ -378,7 +378,7 @@ function DragStep({ figure, step, page, of, report, onNext }: StepProps<"drag">)
       </div>
       {enough ? (
         <div className="mt-2.5">
-          <p className="text-center text-[13px] font-semibold text-ink">{step.question}</p>
+          <p className="text-center text-read font-semibold text-ink">{step.question}</p>
           <div className={WIDGET_ACTIONS}>
             {step.options.map((o, i) => (
               <button key={o} type="button" aria-pressed={picked === i} onClick={() => choose(i)}
@@ -389,7 +389,7 @@ function DragStep({ figure, step, page, of, report, onNext }: StepProps<"drag">)
           </div>
         </div>
       ) : (
-        <p className="mt-2 text-center font-mono text-[10.5px] text-[color:var(--play-text-muted)]">
+        <p className="mt-2 text-center font-mono text-label text-[color:var(--play-text-muted)]">
           drag {step.point} to move it
         </p>
       )}
@@ -442,7 +442,7 @@ function ArrowsStep({ figure, step, page, of, report, onNext }: StepProps<"arrow
       <ArrowBoard X={X} Y={Y} drawn={drawn} onToggle={graded ? undefined : toggle}
         graded={graded} reveal={reveal} yName={X.join() === Y.join() ? "X" : "Y"} />
       {graded ? (
-        <p className="mt-1 text-center font-mono text-[10.5px] font-medium text-[color:var(--play-text-muted)]">
+        <p className="mt-1 text-center font-mono text-label font-medium text-[color:var(--play-text-muted)]">
           solid = right · dashed grey = not in the relation{reveal ? " · drawing in = the ones missed" : ""}
         </p>
       ) : (

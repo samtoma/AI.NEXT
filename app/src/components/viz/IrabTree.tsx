@@ -143,7 +143,7 @@ export function IrabTree({ spec, animOn }: VizProps) {
                 style={a.grow(delayOf(t.step), "y", 0.3)}
               />
               <span
-                className="ar-label -mt-px rounded-full border border-accent-deep/45 bg-card px-1 font-mono text-[8.5px] font-bold text-accent-deep"
+                className="ar-label -mt-px rounded-full border border-accent-deep/45 bg-card px-1 font-mono text-[length:var(--ar-size-min)] font-bold text-accent-deep"
                 style={a.pop(delayOf(t.step))}
               >
                 {arDigits(ti + 1)}
@@ -162,13 +162,13 @@ export function IrabTree({ spec, animOn }: VizProps) {
             style={a.pop(delayOf(t.step))}
           >
             <div className="flex flex-wrap items-baseline gap-x-2">
-              <span className="ar-label shrink-0 rounded-full border border-accent-deep/45 px-1 font-mono text-[8.5px] font-bold text-accent-deep">
+              <span className="ar-label shrink-0 rounded-full border border-accent-deep/45 px-1 font-mono text-[length:var(--ar-size-min)] font-bold text-accent-deep">
                 {arDigits(i + 1)}
               </span>
               <span className="ar-block ar-plain text-[14px] font-semibold text-ink">
                 <bdi>{t.word}</bdi>
               </span>
-              <span className="ar-block ar-plain text-[12.5px] text-accent-deep">
+              <span className="ar-block ar-plain text-[length:var(--ar-size-min)] text-accent-deep">
                 <bdi>
                   {t.role}
                   {t.state ? ` · ${t.state}` : ""}
@@ -178,7 +178,7 @@ export function IrabTree({ spec, animOn }: VizProps) {
             </div>
             {/* the citation is part of the figure, not a footnote: this is what
                 licenses the analysis above it */}
-            <p className="ar-block ar-plain mt-0.5 border-r-2 border-gold/45 pr-1.5 text-[11px] text-ink-soft">
+            <p className="ar-block ar-plain mt-0.5 border-r-2 border-gold/45 pr-1.5 text-[length:var(--ar-size-min)] text-ink-soft">
               <bdi>«{t.quote}» — ص {arDigits(t.page)}</bdi>
             </p>
           </div>

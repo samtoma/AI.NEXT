@@ -13,7 +13,7 @@ import {
   CARD,
   GOLD,
   INK,
-  INK_FAINT,
+  INK_LABEL,
   LINE,
   LINE_SOFT,
   MONO,
@@ -24,6 +24,7 @@ import {
   useVizTimeline,
   type VizProps,
 } from "./core";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 export function ProductGrid({ spec, animOn }: VizProps) {
   const X = arr(spec.X).map((v) => str(v, "?"));
@@ -52,14 +53,14 @@ export function ProductGrid({ spec, animOn }: VizProps) {
   const [hover, setHover] = useState<[number, number] | null>(null);
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Cartesian product grid" className="block w-full">
+    <FigureSvg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Cartesian product grid" className="block w-full">
       {/* headers */}
       {X.map((x, i) => (
         <text
           key={`hx${i}`}
           x={SIDE + i * CELL + CELL / 2}
           y={TOP + HEAD - 7}
-          fontSize="9"
+          className="fig-label"
           fontWeight={hover?.[0] === i ? 700 : 600}
           textAnchor="middle"
           fill={hover?.[0] === i ? ACCENT_DEEP : INK}
@@ -73,7 +74,7 @@ export function ProductGrid({ spec, animOn }: VizProps) {
           key={`hy${j}`}
           x={SIDE - 8}
           y={TOP + HEAD + j * CELL_H + CELL_H / 2 + 3}
-          fontSize="9"
+          className="fig-label"
           fontWeight={hover?.[1] === j ? 700 : 600}
           textAnchor="end"
           fill={hover?.[1] === j ? ACCENT_DEEP : INK}
@@ -82,7 +83,7 @@ export function ProductGrid({ spec, animOn }: VizProps) {
           {y}
         </text>
       ))}
-      <text x={SIDE - 8} y={TOP + HEAD - 7} fontSize="7.5" textAnchor="end" fill={INK_FAINT}
+      <text x={SIDE - 8} y={TOP + HEAD - 7} className="fig-label" textAnchor="end" fill={INK_LABEL}
         style={{ fontFamily: MONO }}>
         Y \ X
       </text>
@@ -115,7 +116,7 @@ export function ProductGrid({ spec, animOn }: VizProps) {
                 <text
                   x={SIDE + i * CELL + CELL / 2}
                   y={TOP + HEAD + j * CELL_H + CELL_H / 2 + 3}
-                  fontSize="8"
+                  className="fig-label"
                   fontWeight="600"
                   textAnchor="middle"
                   fill={hot ? ACCENT_DEEP : INK}
@@ -131,7 +132,7 @@ export function ProductGrid({ spec, animOn }: VizProps) {
         {/* count ticker */}
         {showCount && (
           <g>
-            <text x={W - 72} y={14} fontSize="8" textAnchor="end" fill={INK_FAINT}
+            <text x={W - 72} y={14} className="fig-label" textAnchor="end" fill={INK_LABEL}
               style={{ fontFamily: MONO }}>
               n(X×Y) =
             </text>
@@ -140,7 +141,7 @@ export function ProductGrid({ spec, animOn }: VizProps) {
                 {Array.from({ length: n - 1 }, (_, k) => (
                   <text
                     key={`t${k}`}
-                    x={W - 66} y={14} fontSize="9.5" fontWeight="700" textAnchor="start"
+                    x={W - 66} y={14} className="fig-label" fontWeight="700" textAnchor="start"
                     fill={GOLD}
                     style={{
                       fontFamily: MONO,
@@ -151,7 +152,7 @@ export function ProductGrid({ spec, animOn }: VizProps) {
                   </text>
                 ))}
                 <text
-                  x={W - 66} y={14} fontSize="9.5" fontWeight="700" textAnchor="start"
+                  x={W - 66} y={14} className="fig-label" fontWeight="700" textAnchor="start"
                   fill={ACCENT}
                   style={{
                     fontFamily: MONO,
@@ -164,7 +165,7 @@ export function ProductGrid({ spec, animOn }: VizProps) {
                 </text>
               </>
             ) : (
-              <text x={W - 66} y={14} fontSize="9.5" fontWeight="700" textAnchor="start"
+              <text x={W - 66} y={14} className="fig-label" fontWeight="700" textAnchor="start"
                 fill={ACCENT} style={{ fontFamily: MONO }}>
                 {n} = {X.length}×{Y.length}
               </text>
@@ -188,6 +189,6 @@ export function ProductGrid({ spec, animOn }: VizProps) {
           />
         ))
       )}
-    </svg>
+    </FigureSvg>
   );
 }

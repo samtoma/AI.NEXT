@@ -14,6 +14,7 @@ import {
   WIDGET_RESULT,
   WIDGET_WELL,
 } from "./WidgetShell";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 /**
  * {{widget:locate_on_map:{"base":"egypt","prompt":"فين قناة السويس؟ دوس على مكانها","target":"قناة السويس"}}}
@@ -112,7 +113,7 @@ export function LocateOnMap({
         <text
           x={x}
           y={t.place.kind === "point" ? y - 8 : y + 3}
-          fontSize="10.5"
+          className="fig-label-ar"
           fontWeight="700"
           textAnchor="middle"
           fill="var(--ink)"
@@ -136,20 +137,20 @@ export function LocateOnMap({
         <p className={WIDGET_PROMPT}>{prompt}</p>
 
         {status === "error" ? (
-          <p className="ar-label mt-2 font-display text-[0.72rem] font-bold text-[color:var(--play-text-muted)]">
+          <p className="ar-label mt-2 font-display text-[length:var(--ar-size-min)] font-bold text-[color:var(--play-text-muted)]">
             الخريطة مش متاحة دلوقتي
           </p>
         ) : !map ? (
           <div
             className={cx(
               WIDGET_WELL,
-              "ar-label mt-2.5 flex h-40 items-center justify-center font-display text-[0.72rem] font-bold text-[color:var(--play-text-muted)]"
+              "ar-label mt-2.5 flex h-40 items-center justify-center font-display text-[length:var(--ar-size-min)] font-bold text-[color:var(--play-text-muted)]"
             )}
           >
             الخريطة بتتحمّل…
           </div>
         ) : (
-          <svg
+          <FigureSvg
             ref={svgRef}
             viewBox={`0 0 ${map.viewBox[2]} ${map.viewBox[3]}`}
             onClick={handleClick}
@@ -205,12 +206,12 @@ export function LocateOnMap({
 
             {/* reveal the target (both outcomes — it's the take-away) */}
             {done && renderTargetReveal(map)}
-          </svg>
+          </FigureSvg>
         )}
 
         {done && t && (
           <div className={cx("mt-2.5 px-3 py-2", WIDGET_RESULT[correct ? "correct" : "wrong"])}>
-            <span className="font-display text-[13.5px] font-bold">
+            <span className="font-display text-[length:var(--ar-size-min)] font-bold">
               {correct
                 ? `تمام! دي ${t.name} ✓`
                 : picked.hit

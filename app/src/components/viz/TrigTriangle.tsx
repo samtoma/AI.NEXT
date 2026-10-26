@@ -15,7 +15,7 @@ import {
   ACCENT_DEEP,
   GOLD,
   INK,
-  INK_FAINT,
+  INK_LABEL,
   INK_SOFT,
   MONO,
   VizError,
@@ -26,6 +26,7 @@ import {
   useVizTimeline,
   type VizProps,
 } from "./core";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 export function TrigTriangle({ spec, animOn }: VizProps) {
   const sides = obj(spec.sides);
@@ -122,7 +123,7 @@ export function TrigTriangle({ spec, animOn }: VizProps) {
     throw new VizError("trig_triangle: degenerate sides");
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="right triangle" className="block w-full">
+    <FigureSvg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="right triangle" className="block w-full">
       <g key={tl.key}>
         {/* sides draw in: adj → opp → hyp */}
         <line x1={C.x} y1={C.y} x2={B.x} y2={B.y}
@@ -151,7 +152,7 @@ export function TrigTriangle({ spec, animOn }: VizProps) {
         <text
           x={B.x - arcR - 13}
           y={B.y - arcR * 0.32}
-          fontSize="10.5" fontWeight="700" fill={GOLD}
+          className="fig-label" fontWeight="700" fill={GOLD}
           style={{ fontFamily: MONO, ...a.pop(2.1) }}
         >
           {angleLabel}
@@ -167,11 +168,11 @@ export function TrigTriangle({ spec, animOn }: VizProps) {
 
         {/* the ratio, assembled */}
         <g style={a.pop(T_RATIO)}>
-          <text x={W / 2} y={26} fontSize="12" fontWeight="700" textAnchor="middle" fill={ACCENT_DEEP}
+          <text x={W / 2} y={26} className="fig-read" fontWeight="700" textAnchor="middle" fill={ACCENT_DEEP}
             style={{ fontFamily: MONO }}>
             {emphasize} {angleLabel} = {label(numer)}/{label(denom)}
           </text>
-          <text x={W / 2} y={38} fontSize="7.5" textAnchor="middle" fill={INK_FAINT}
+          <text x={W / 2} y={38} className="fig-label" textAnchor="middle" fill={INK_LABEL}
             style={{ fontFamily: MONO, letterSpacing: "0.1em" }}>
             {numer === "opp" ? "opposite" : "adjacent"} ÷ {denom === "hyp" ? "hypotenuse" : "adjacent"}
           </text>
@@ -179,10 +180,10 @@ export function TrigTriangle({ spec, animOn }: VizProps) {
       </g>
 
       {/* vertex names (static) */}
-      <text x={A.x - 5} y={A.y - 6} fontSize="8.5" fontWeight="600" fill={INK} style={{ fontFamily: MONO }}>A</text>
-      <text x={B.x + 5} y={B.y + 4} fontSize="8.5" fontWeight="600" fill={INK} style={{ fontFamily: MONO }}>B</text>
-      <text x={C.x - 11} y={C.y + 4} fontSize="8.5" fontWeight="600" fill={INK} style={{ fontFamily: MONO }}>C</text>
-    </svg>
+      <text x={A.x - 5} y={A.y - 6} className="fig-label" fontWeight="600" fill={INK} style={{ fontFamily: MONO }}>A</text>
+      <text x={B.x + 5} y={B.y + 4} className="fig-label" fontWeight="600" fill={INK} style={{ fontFamily: MONO }}>B</text>
+      <text x={C.x - 11} y={C.y + 4} className="fig-label" fontWeight="600" fill={INK} style={{ fontFamily: MONO }}>C</text>
+    </FigureSvg>
   );
 }
 
@@ -201,7 +202,7 @@ function SideLabel({
   return (
     <g style={a.fade(at, 0.4)}>
       <text
-        x={x} y={y} fontSize="9.5" fontWeight="700" textAnchor="middle"
+        x={x} y={y} className="fig-label" fontWeight="700" textAnchor="middle"
         fill={hot ? ACCENT_DEEP : INK}
         style={{ fontFamily: MONO }}
         transform={vertical ? `rotate(-90 ${x} ${y})` : undefined}
@@ -209,10 +210,12 @@ function SideLabel({
         {v}
       </text>
       <text
-        x={vertical ? x - 9 : x} y={vertical ? y : y + 9} fontSize="6" textAnchor="middle"
-        fill={hot ? ACCENT : INK_FAINT}
+        // a line of the label step away from the value: outward (screen-left)
+        // on a rotated leg, under it on a level one
+        x={x} y={y} dy={vertical ? "-1.15em" : "1.15em"} className="fig-label" textAnchor="middle"
+        fill={hot ? ACCENT : INK_LABEL}
         style={{ fontFamily: MONO, letterSpacing: "0.08em" }}
-        transform={vertical ? `rotate(-90 ${x - 9} ${y})` : undefined}
+        transform={vertical ? `rotate(-90 ${x} ${y})` : undefined}
       >
         {role}
       </text>

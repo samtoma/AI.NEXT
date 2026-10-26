@@ -11,7 +11,7 @@ import {
   ACCENT,
   ACCENT_DEEP,
   INK,
-  INK_FAINT,
+  INK_LABEL,
   MONO,
   RUST,
   VizError,
@@ -26,6 +26,7 @@ import {
   useVizTimeline,
   type VizProps,
 } from "./core";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 export function NumberLine({ spec, animOn }: VizProps) {
   const points = arr(spec.points)
@@ -71,7 +72,7 @@ export function NumberLine({ spec, animOn }: VizProps) {
     label.includes("✗") ? RUST : label.includes("✓") ? ACCENT_DEEP : INK;
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="number line" className="block w-full">
+    <FigureSvg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="number line" className="block w-full">
       {/* the line with arrowheads */}
       <line x1={8} y1={LINE_Y} x2={W - 8} y2={LINE_Y} stroke={INK} strokeOpacity="0.65" strokeWidth="1.3" />
       <path d={`M ${W - 8} ${LINE_Y} l -6 -3 v 6 z`} fill={INK} fillOpacity="0.65" />
@@ -79,7 +80,7 @@ export function NumberLine({ spec, animOn }: VizProps) {
       {ticks.map((t) => (
         <g key={t}>
           <line x1={sx(t)} y1={LINE_Y - 3.5} x2={sx(t)} y2={LINE_Y + 3.5} stroke={INK} strokeOpacity="0.5" strokeWidth="1" />
-          <text x={sx(t)} y={LINE_Y + 15} fontSize="7" textAnchor="middle" fill={INK_FAINT}
+          <text x={sx(t)} y={LINE_Y + 15} className="fig-data" textAnchor="middle" fill={INK_LABEL}
             style={{ fontFamily: MONO }}>
             {fmtNum(t)}
           </text>
@@ -129,7 +130,7 @@ export function NumberLine({ spec, animOn }: VizProps) {
                   />
                   <text
                     x={sx(p.x)} y={above ? LINE_Y - 24 - lift : LINE_Y + 30}
-                    fontSize="7.5" fontWeight="600" textAnchor="middle" fill={c}
+                    className="fig-label" fontWeight="600" textAnchor="middle" fill={c}
                     style={{ fontFamily: MONO }}
                   >
                     {p.label}
@@ -140,6 +141,6 @@ export function NumberLine({ spec, animOn }: VizProps) {
           );
         })}
       </g>
-    </svg>
+    </FigureSvg>
   );
 }

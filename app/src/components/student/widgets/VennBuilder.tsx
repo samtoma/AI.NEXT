@@ -42,6 +42,7 @@ import {
   type VennSets,
   type VennTarget,
 } from "./venn-builder-grade";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 const W = 300;
 const H = 220;
@@ -174,7 +175,7 @@ function Diagram({
 }) {
   const c = circlesFor(sets);
   return (
-    <svg
+    <FigureSvg
       viewBox={`0 0 ${W} ${H}`}
       role="application"
       aria-label="Venn diagram"
@@ -192,19 +193,19 @@ function Diagram({
       {sets === 3 && (
         <circle cx={c.c.cx} cy={c.c.cy} r={c.c.r} fill="none" stroke="var(--ink-soft)" strokeWidth="1.6" />
       )}
-      <text x={c.a.cx - (sets === 2 ? 42 : 46)} y={c.a.cy - (sets === 2 ? 46 : 38)} fontSize="10.5" fontWeight="700" fill="var(--ink)">
+      <text x={c.a.cx - (sets === 2 ? 42 : 46)} y={c.a.cy - (sets === 2 ? 46 : 38)} className="fig-label" fontWeight="700" fill="var(--ink)">
         {labels[0]}
       </text>
-      <text x={c.b.cx + (sets === 2 ? 12 : 10)} y={c.b.cy - (sets === 2 ? 46 : 38)} fontSize="10.5" fontWeight="700" fill="var(--ink)">
+      <text x={c.b.cx + (sets === 2 ? 12 : 10)} y={c.b.cy - (sets === 2 ? 46 : 38)} className="fig-label" fontWeight="700" fill="var(--ink)">
         {labels[1]}
       </text>
       {sets === 3 && (
-        <text x={c.c.cx - 12} y={c.c.cy + 66} fontSize="10.5" fontWeight="700" fill="var(--ink)">
+        <text x={c.c.cx - 12} y={c.c.cy + 66} className="fig-label" fontWeight="700" fill="var(--ink)">
           {labels[2]}
         </text>
       )}
       <rect x={2} y={2} width={W - 4} height={H - 4} fill="none" stroke="var(--line-soft)" strokeWidth="1" rx="6" />
-    </svg>
+    </FigureSvg>
   );
 }
 
@@ -381,7 +382,7 @@ function VennCounts_({
       footer={
         <span className="text-ink">
           total so far: {runningTotal}
-          {total !== undefined && <span className="text-ink-faint"> / {total}</span>}
+          {total !== undefined && <span className="text-ink-label"> / {total}</span>}
         </span>
       }
     >
@@ -390,7 +391,7 @@ function VennCounts_({
       <div className="mt-2.5 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
         {keys.map((k) => (
           <label key={k} className="flex flex-col items-center gap-1">
-            <span className="text-center text-[10.5px] font-medium text-ink-faint">
+            <span className="text-center text-label font-medium text-ink-label">
               {regionLabel(k, labels)}
             </span>
             <input
@@ -404,7 +405,7 @@ function VennCounts_({
                 const v = Math.max(0, Math.round(Number(e.target.value) || 0));
                 setCounts((cur) => ({ ...cur, [k]: v }));
               }}
-              className="h-[var(--noor-touch-min)] w-16 rounded-[var(--play-radius-sm)] border-[length:var(--play-stroke-sm)] border-ink bg-card text-center font-mono text-[13px] font-medium text-ink"
+              className="h-[var(--noor-touch-min)] w-16 rounded-[var(--play-radius-sm)] border-[length:var(--play-stroke-sm)] border-ink bg-card text-center font-mono text-read font-medium text-ink"
             />
           </label>
         ))}

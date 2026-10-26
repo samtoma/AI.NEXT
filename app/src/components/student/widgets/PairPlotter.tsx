@@ -16,6 +16,7 @@ import {
   WIDGET_RESULT,
   WIDGET_WELL,
 } from "./WidgetShell";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 /**
  * {{widget:pair_plotter:{"prompt":"Plot the point (3,2)","target":[3,2]}}}
@@ -34,7 +35,7 @@ import {
  */
 
 const PLOT = 240;
-const PAD = 14;
+const PAD = 24; // room for two-digit tick numerals at the data step
 const SIZE = PLOT + PAD * 2;
 
 /** Where a point sits, in the lesson's language (English, constitution V —
@@ -127,13 +128,13 @@ function GridLayer({ g, dots }: { g: Grid; dots: boolean }) {
       <line x1={px(g.x[0])} y1={py(ay)} x2={px(g.x[1])} y2={py(ay)} stroke="var(--ink-soft)" strokeWidth="1.4" />
       <line x1={px(ax)} y1={py(g.y[0])} x2={px(ax)} y2={py(g.y[1])} stroke="var(--ink-soft)" strokeWidth="1.4" />
       {labelValues(g.x[0], g.x[1], g.sx).map((t) => (
-        <text key={`lx${t}`} x={px(t)} y={py(ay) + 8.5} textAnchor="middle" fontSize="6.5" fill="var(--ink-faint)" fontFamily="var(--stack-mono)">{numText(t)}</text>
+        <text key={`lx${t}`} x={px(t)} y={py(ay) + 2} dy="0.85em" textAnchor="middle" className="fig-data" fill="var(--ink-label)" fontFamily="var(--stack-mono)">{numText(t)}</text>
       ))}
       {labelValues(g.y[0], g.y[1], g.sy).map((t) => (
-        <text key={`ly${t}`} x={px(ax) - 4} y={py(t) + 2} textAnchor="end" fontSize="6.5" fill="var(--ink-faint)" fontFamily="var(--stack-mono)">{numText(t)}</text>
+        <text key={`ly${t}`} x={px(ax) - 4} y={py(t)} dy="0.35em" textAnchor="end" className="fig-data" fill="var(--ink-label)" fontFamily="var(--stack-mono)">{numText(t)}</text>
       ))}
-      <text x={px(g.x[1]) - 2} y={py(ay) - 4} fontSize="7.5" fill="var(--ink-soft)" textAnchor="end" fontStyle="italic">x</text>
-      <text x={px(ax) + 5} y={py(g.y[1]) + 6} fontSize="7.5" fill="var(--ink-soft)" fontStyle="italic">y</text>
+      <text x={px(g.x[1]) - 2} y={py(ay) - 4} className="fig-label" fill="var(--ink-label)" textAnchor="end" fontStyle="italic">x</text>
+      <text x={px(ax) + 5} y={py(g.y[1]) + 6} className="fig-label" fill="var(--ink-label)" fontStyle="italic">y</text>
       {dots && xs.map((x) => ys.map((y) => (
         <circle key={`${x},${y}`} cx={px(x)} cy={py(y)} r="1.1" fill="var(--ink)" opacity="0.12" />
       )))}
@@ -201,7 +202,7 @@ function OnePoint({
       <div className="px-3.5 py-3">
         <p className={WIDGET_PROMPT}>{prompt}</p>
 
-        <svg
+        <FigureSvg
           ref={svgRef}
           viewBox={`0 0 ${SIZE} ${SIZE}`}
           onClick={handleClick}
@@ -245,7 +246,7 @@ function OnePoint({
               />
               <text
                 x={px(picked![0]) + 7} y={py(picked![1]) - 5}
-                fontSize="8" fontWeight="600"
+                className="fig-label" fontWeight="600"
                 fill={correct ? "var(--ink)" : FIGURE_MARK.wrongText}
                 fontFamily="var(--stack-mono)"
               >
@@ -253,16 +254,16 @@ function OnePoint({
               </text>
             </g>
           )}
-        </svg>
+        </FigureSvg>
 
         {done && (
           <div className={cx("mt-2.5 px-3 py-2", WIDGET_RESULT[correct ? "correct" : "wrong"])}>
-            <span className="font-display text-[13.5px] font-bold">
+            <span className="font-display text-label font-bold">
               {correct
                 ? `Correct — ${pt(target)} ✓`
                 : `Not quite — that's ${pt(picked!)}. The target is shown in green.`}
             </span>
-            <span className="ms-2 font-mono text-[10px] font-medium">
+            <span className="ms-2 font-mono text-label font-medium">
               {q.en}
             </span>
           </div>
@@ -332,7 +333,7 @@ function PointsPlotter({
       </div>
       <div className="px-3.5 py-3">
         <p className={WIDGET_PROMPT}>{prompt}</p>
-        <svg
+        <FigureSvg
           ref={svgRef}
           viewBox={`0 0 ${SIZE} ${SIZE}`}
           onClick={handleClick}
@@ -356,12 +357,12 @@ function PointsPlotter({
               <g key={`p${q}`} className="anim-pop">
                 <circle cx={px(q[0])} cy={py(q[1])} r="5.5" fill={ink} opacity="0.25" />
                 <circle cx={px(q[0])} cy={py(q[1])} r="3" fill={ink} />
-                <text x={px(q[0]) + 7} y={py(q[1]) - 5} fontSize="8" fontWeight="600" fontFamily="var(--stack-mono)"
+                <text x={px(q[0]) + 7} y={py(q[1]) - 5} className="fig-label" fontWeight="600" fontFamily="var(--stack-mono)"
                   fill={graded && !isHit(q) ? FIGURE_MARK.wrongText : "var(--ink)"}>{pt(q)}</text>
               </g>
             );
           })}
-        </svg>
+        </FigureSvg>
         {!graded ? (
           <div className="mt-2.5 flex flex-wrap items-center justify-center gap-2">
             <button type="button" onClick={check} disabled={picks.length === 0} className={BUTTON_SECONDARY}>
@@ -373,7 +374,7 @@ function PointsPlotter({
           </div>
         ) : (
           <div className={cx("mt-2.5 px-3 py-2", WIDGET_RESULT[graded.ok ? "correct" : "wrong"])}>
-            <span className="font-display text-[13.5px] font-bold">
+            <span className="font-display text-label font-bold">
               {graded.ok
                 ? `Correct — all ${targets.length} points ✓`
                 : `${graded.hit.length} of ${targets.length} right. The ones missed are circled in green${graded.extra.length ? "; grey ones were not asked for" : ""}.`}

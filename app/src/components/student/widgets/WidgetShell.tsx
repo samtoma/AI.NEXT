@@ -52,20 +52,31 @@ export const WIDGET_HEAD = join(
 
 /** The header's kind eyebrow, Latin copy: Plex Mono, amber-family on Honey. */
 export const WIDGET_KIND =
-  "font-mono text-[0.72rem] font-medium uppercase tracking-[0.12em] text-[color:var(--play-text-amber-warm)]";
+  "font-mono text-data font-medium uppercase tracking-[0.12em] text-[color:var(--play-text-amber-warm)]";
 
 /** The same eyebrow carrying Arabic. Plex Mono has no Arabic glyphs and
  *  letter-spacing breaks the cursive join, so it moves to the UI face and
  *  `.ar-label` resets tracking and case (handoff TYPE). */
 export const WIDGET_KIND_AR =
-  "ar-label font-display text-[0.72rem] font-bold text-[color:var(--play-text-amber-warm)]";
+  "ar-label font-display text-[length:var(--ar-size-min)] font-bold text-[color:var(--play-text-amber-warm)]";
 
 /** The header's gesture hint (ink, from the Honey band). */
-export const WIDGET_HINT = "font-mono text-[0.72rem] font-medium";
-export const WIDGET_HINT_AR = "ar-label font-display text-[0.72rem] font-bold";
+export const WIDGET_HINT = "font-mono text-data font-medium";
+export const WIDGET_HINT_AR = "ar-label font-display text-[length:var(--ar-size-min)] font-bold";
 
-/** The prompt line under the header. */
-export const WIDGET_PROMPT = "text-[13px] font-bold leading-relaxed text-ink";
+/** The prompt line under the header — the workspace body size (Noor Play
+ *  `--play-text-read`), like the question stem it continues. */
+export const WIDGET_PROMPT = "text-read font-bold leading-relaxed text-ink";
+
+/**
+ * The data a question depends on — the sets of a Cartesian product, the
+ * values a construction must use. Part of the question's reading flow, so it
+ * is body size in full ink, in the body under the prompt; never a header
+ * hint at the data step (owner review, 2026-10-26: students missed X and Y
+ * there). Put each expression in its own `dir="ltr"` run.
+ */
+export const WIDGET_GIVENS =
+  "flex flex-wrap gap-x-5 gap-y-1 font-mono text-read font-semibold leading-relaxed text-ink";
 
 /** A sunken well inside the frame — the figure, the passage, the strip being
  *  built. Cream on the white panel, the thin outline, no shadow: it holds
@@ -223,19 +234,19 @@ export function WidgetShell({
         <div className="mt-2.5">{children}</div>
 
         {footer && (
-          <div className="mt-2 text-center font-mono text-[10.5px] font-medium text-[color:var(--play-text-muted)]">
+          <div className="mt-2 text-center font-mono text-label font-medium text-[color:var(--play-text-muted)]">
             {footer}
           </div>
         )}
 
         {verdict && (
           <div className={join("mt-2.5 px-3 py-2", WIDGET_RESULT[verdict])}>
-            <span className="font-display text-[13.5px] font-bold">
+            <span className="font-display text-label font-bold">
               {VERDICT_TEXT[verdict]}
             </span>
             {/* inherits the verdict's paired foreground — never a grey picked
                 by eye on a coloured fill */}
-            {feedback && <span className="ms-2 text-[12.5px]">{feedback}</span>}
+            {feedback && <span className="ms-2 text-label">{feedback}</span>}
           </div>
         )}
 

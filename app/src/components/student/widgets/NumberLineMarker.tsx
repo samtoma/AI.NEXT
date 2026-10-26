@@ -27,6 +27,7 @@ import { Handle, WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_WELL } from "
 import { clamp, useDragSurface, useKeyNudge, type Pt } from "./drag";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 import { gradePoints } from "./number-line-grade";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 const W = 300;
 const H = 96;
@@ -219,7 +220,7 @@ export function NumberLineMarker({
         )
       }
     >
-      <svg
+      <FigureSvg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="application"
@@ -246,8 +247,8 @@ export function NumberLineMarker({
           <g key={t}>
             <line x1={sx(t)} y1={AXIS - 4} x2={sx(t)} y2={AXIS + 4}
                   stroke="var(--ink-faint)" strokeWidth="1" />
-            <text x={sx(t)} y={AXIS + 16} fontSize="8" textAnchor="middle"
-                  fill="var(--ink-faint)" style={{ fontFamily: "var(--stack-mono)" }}>
+            <text x={sx(t)} y={AXIS + 16} className="fig-data" textAnchor="middle"
+                  fill="var(--ink-label)" style={{ fontFamily: "var(--stack-mono)" }}>
               {t}
             </text>
           </g>
@@ -297,7 +298,7 @@ export function NumberLineMarker({
               </g>
             );
           })}
-      </svg>
+      </FigureSvg>
 
       {!verdict && (
         <div className={WIDGET_ACTIONS}>

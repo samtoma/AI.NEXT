@@ -96,12 +96,12 @@ export function GlossTable({ spec, animOn }: VizProps) {
             >
               <bdi>{e.word}</bdi>
             </span>
-            <span className="ar-block ar-plain min-w-0 text-[13px] text-ink">
+            <span className="ar-block ar-plain min-w-0 text-[length:var(--ar-size-min)] text-ink">
               <bdi>{arDigits(e.gloss)}</bdi>
               {e.relations.map((r) => (
                 <span
                   key={r.label}
-                  className="ar-label mr-1.5 inline-block rounded-full border border-gold/40 bg-gold-wash px-1.5 py-px align-middle font-mono text-[9px] text-gold"
+                  className="ar-label mr-1.5 inline-block rounded-full border border-gold/40 bg-gold-wash px-1.5 py-px align-middle font-mono text-[length:var(--ar-size-min)] text-gold"
                 >
                   <bdi>
                     {r.label} {r.value}

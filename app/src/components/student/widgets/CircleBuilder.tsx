@@ -32,6 +32,7 @@ import { BUTTON_SECONDARY } from "@/components/sticker";
 import { Handle, WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_WELL } from "./WidgetShell";
 import { clamp, tidy, useDragSurface, useKeyNudge, type Pt } from "./drag";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 const RAD = 5;
 const LIM = 7;
@@ -93,7 +94,7 @@ function clipToPlane(a: Pt, b: Pt): [Pt, Pt] | null {
  *  as the colour, so it survives a greyscale render. */
 function Prop({ on, children }: { on: boolean; children: ReactNode }) {
   return (
-    <span className={on ? "text-accent-deep" : "text-ink-faint"}>
+    <span className={on ? "text-accent-deep" : "text-ink-label"}>
       {on ? "●" : "○"} {children}
     </span>
   );
@@ -306,7 +307,7 @@ export function CircleBuilder({
         )
       }
     >
-      <svg
+      <FigureSvg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="application"
@@ -333,7 +334,7 @@ export function CircleBuilder({
         ))}
         {/* centre M */}
         <circle cx={p.sx(0)} cy={p.sy(0)} r="2.8" fill="var(--ink-soft)" />
-        <text x={p.sx(0) + 6} y={p.sy(0) - 5} fontSize="10" fill="var(--ink-soft)"
+        <text x={p.sx(0) + 6} y={p.sy(0) - 5} className="fig-label" fill="var(--ink-label)"
               fontStyle="italic">M</text>
 
         {/* a tangent is a LINE, so it is drawn to the edges; the others are
@@ -367,7 +368,7 @@ export function CircleBuilder({
             }}
           />
         ))}
-      </svg>
+      </FigureSvg>
 
       {!verdict && (
         <div className={WIDGET_ACTIONS}>

@@ -239,12 +239,12 @@ export function SpanChips({
                 the words it names read as one colour; ink outline and ink
                 text like every sticker, AA on every tint */}
             <span
-              className="ar-label shrink-0 rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-ink px-1.5 py-px font-display text-[0.72rem] font-bold text-ink"
+              className="ar-label shrink-0 rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-ink px-1.5 py-px font-display text-[length:var(--ar-size-min)] font-bold text-ink"
               style={{ background: st.tint }}
             >
               {s.label || s.category}
             </span>
-            <span className="ar-block ar-plain text-[11.5px] text-[color:var(--play-text-muted)]">
+            <span className="ar-block ar-plain text-[length:var(--ar-size-min)] text-[color:var(--play-text-muted)]">
               <bdi>
                 «{s.find}»
                 {s.pairWith ? ` ↔ «${s.pairWith}»` : ""}
@@ -268,11 +268,11 @@ export function SpanChips({
 export function ArHeader({ label, note }: { label: string; note?: string }) {
   return (
     <div className="mb-1.5 flex flex-wrap items-baseline justify-between gap-x-2">
-      <span className="ar-label font-display text-[0.72rem] font-bold text-ink-faint">
+      <span className="ar-label font-display text-[length:var(--ar-size-min)] font-bold text-ink-label">
         {label}
       </span>
       {note ? (
-        <span className="ar-label ar-block font-display text-[0.72rem] font-bold text-ink-faint">
+        <span className="ar-label ar-block font-display text-[length:var(--ar-size-min)] font-bold text-ink-label">
           <bdi>{arDigits(note)}</bdi>
         </span>
       ) : null}

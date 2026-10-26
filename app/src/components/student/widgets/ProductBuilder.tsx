@@ -6,6 +6,7 @@ import { BADGE, BUTTON_SECONDARY, VERDICT_INK, cx } from "@/components/sticker";
 import {
   OPTION_INK,
   WIDGET_FRAME,
+  WIDGET_GIVENS,
   WIDGET_HEAD,
   WIDGET_HINT,
   WIDGET_KIND,
@@ -193,13 +194,21 @@ export function ProductBuilder({
     <div className={WIDGET_FRAME}>
       <div className={WIDGET_HEAD}>
         <span className={WIDGET_KIND}>✳ interactive · product builder</span>
-        <span className={WIDGET_HINT}>
-          X = {`{${setX.join(", ")}}`} · Y = {`{${setY.join(", ")}}`}
-        </span>
+        <span className={WIDGET_HINT}>tap the pairs</span>
       </div>
 
       <div className="px-3.5 py-3">
-        <p className={WIDGET_PROMPT}>{prompt}</p>
+        {prompt && <p className={WIDGET_PROMPT}>{prompt}</p>}
+
+        {/* THE GIVENS. The sets the question depends on are part of reading
+            it, so they sit in the body at the workspace body size in full
+            ink — not in the header strip at the data step, where students
+            missed them. Each set is its own LTR run (maths reads left to
+            right in either direction) and wraps as a whole. */}
+        <p className={WIDGET_GIVENS}>
+          <span dir="ltr" className="inline-block">X = {`{${setX.join(", ")}}`}</span>
+          <span dir="ltr" className="inline-block">Y = {`{${setY.join(", ")}}`}</span>
+        </p>
 
         <div className="mt-2 flex flex-wrap items-center gap-2">
           {relation ? (
@@ -229,12 +238,12 @@ export function ProductBuilder({
                 data-verdict={checked && st !== "idle" ? st : undefined}
                 className={cx(
                   WIDGET_OPTION,
-                  "px-3 font-mono text-[12px]",
+                  "px-3 font-mono text-label",
                   chipCls[st]
                 )}
               >
                 {k}
-                {st === "missed" && <span className="ms-1 text-[9px]">missed</span>}
+                {st === "missed" && <span className="ms-1 text-label">missed</span>}
               </button>
             );
           })}
@@ -250,7 +259,7 @@ export function ProductBuilder({
           </button>
         ) : (
           <div className={cx("mt-3 px-3 py-2", WIDGET_RESULT[allGood ? "correct" : "wrong"])}>
-            <span className="font-display text-[13.5px] font-bold">
+            <span className="font-display text-label font-bold">
               {allGood
                 ? relation ? `Well done — exactly the ${n} pairs of the relation ✓` : `Well done — X×Y complete, all ${n} pairs ✓`
                 : relation

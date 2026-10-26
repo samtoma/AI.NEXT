@@ -85,7 +85,7 @@ export function ArrowBuilder({
       <ArrowBoard X={xs} Y={ys} drawn={drawn} onToggle={graded ? undefined : toggle}
         graded={graded} reveal={!!graded} yName={onSet ? "X" : "Y"} />
       {graded ? (
-        <p className="mt-1 text-center font-mono text-[10.5px] font-medium text-[color:var(--play-text-muted)]">
+        <p className="mt-1 text-center font-mono text-label font-medium text-[color:var(--play-text-muted)]">
           solid = right · dashed grey = not in the relation · drawing in = the ones missed
         </p>
       ) : (

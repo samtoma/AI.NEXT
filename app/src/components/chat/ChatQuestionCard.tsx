@@ -204,7 +204,7 @@ export function ChatQuestionCard({
             {q.tier}
           </span>
           {debug && (
-            <span className="font-mono text-[0.72rem] text-ink-faint">
+            <span className="font-mono text-[0.72rem] text-ink-label">
               {q.id} · p.{q.provenance.sourcePage ?? "—"}
             </span>
           )}
@@ -312,7 +312,7 @@ export function ChatQuestionCard({
                   placeholder="Type the answer…"
                   className={cx(
                     STROKE,
-                    "min-h-[var(--noor-touch-min)] w-full rounded-[var(--play-radius-sm)] bg-card px-4 font-mono text-[1rem] text-ink outline-none placeholder:text-ink-faint sticker-shadow-sm",
+                    "min-h-[var(--noor-touch-min)] w-full rounded-[var(--play-radius-sm)] bg-card px-4 font-mono text-[1rem] text-ink outline-none placeholder:text-ink-label sticker-shadow-sm",
                     // typed text never runs under the pill
                     symbols && "pe-32"
                   )}
@@ -485,7 +485,7 @@ export function ChatQuestionCard({
                   Let&apos;s talk it through — keep chatting below ↓
                 </p>
                 {debug && (
-                  <p className="mt-1.5 font-mono text-[0.72rem] text-ink-faint">
+                  <p className="mt-1.5 font-mono text-[0.72rem] text-ink-label">
                     probing → {result.diagnosis?.misconceptionId ?? "no diagnosis"}
                     {result.refutation
                       ? ` · matched ${result.refutation.entryId}`
@@ -513,7 +513,7 @@ export function ChatQuestionCard({
                       ))}
                     </ol>
                     {debug && (
-                      <p className="mt-2 font-mono text-[0.72rem] text-ink-faint">
+                      <p className="mt-2 font-mono text-[0.72rem] text-ink-label">
                         {result.diagnosis?.misconceptionId} · via {result.diagnosis?.via}
                       </p>
                     )}
@@ -542,7 +542,7 @@ export function ChatQuestionCard({
                       <TeX text={result.hint.text} />
                     </p>
                     {debug && (
-                      <p className="mt-2 font-mono text-[0.72rem] text-ink-faint">
+                      <p className="mt-2 font-mono text-[0.72rem] text-ink-label">
                         hint · via {result.hint.predicate} · solution step {result.hint.step}
                       </p>
                     )}
@@ -563,7 +563,7 @@ export function ChatQuestionCard({
                       ))}
                     </ol>
                     {debug && (
-                      <p className="mt-2 font-mono text-[0.72rem] text-ink-faint">
+                      <p className="mt-2 font-mono text-[0.72rem] text-ink-label">
                         no misconception diagnosed · canonical solution
                       </p>
                     )}

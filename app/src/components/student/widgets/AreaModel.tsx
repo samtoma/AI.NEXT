@@ -155,7 +155,7 @@ export function AreaModel({
       resetLabel="Clear the grid"
       footer={
         verdict ? null : (
-          <span className="text-ink-faint">
+          <span className="text-ink-label">
             start with the x² tile near the top-left corner, then build its edges outward
           </span>
         )
@@ -185,7 +185,7 @@ export function AreaModel({
                 }
                 style={meta?.negative ? HATCH_STYLE : undefined}
                 className={cx(
-                  "aspect-square min-h-0 rounded-[3px] text-[11px] leading-none",
+                  "aspect-square min-h-0 rounded-[3px] text-label leading-none",
                   cellClass(cell?.kind, !!verdict)
                 )}
               >

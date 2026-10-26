@@ -126,7 +126,7 @@ export function VerseLayout({ spec, animOn }: VizProps) {
             </div>
             {breaks.has(i + 1) && (
               <div
-                className="py-1 text-center text-[11px] tracking-[0.5em] text-gold/70"
+                className="py-1 text-center text-[length:var(--ar-size-min)] tracking-[0.5em] text-gold/70"
                 style={a.fade(delayOf(l.step) + 0.3)}
                 aria-hidden
               >
@@ -138,7 +138,7 @@ export function VerseLayout({ spec, animOn }: VizProps) {
       </div>
       {rhymeOn && (
         <p
-          className="ar-block ar-plain mt-1.5 text-[11px] text-ink-faint"
+          className="ar-block ar-plain mt-1.5 text-[length:var(--ar-size-min)] text-ink-label"
           style={a.fade(delayOf(rhymeStep) + 0.2)}
         >
           {/* names no rule — الروي is visually undeniable, the بحر is not */}

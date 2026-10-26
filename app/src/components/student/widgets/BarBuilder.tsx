@@ -28,11 +28,14 @@ import { BUTTON_SECONDARY } from "@/components/sticker";
 import { WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_INPUT, WIDGET_WELL } from "./WidgetShell";
 import { clamp, tidy, useDragSurface, type Pt } from "./drag";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 const MAXV = 10;
 const W = 300;
 const H = 210;
 const PAD_L = 26;
+/** the mean's label sits in this margin, clear of every bar's value */
+const PAD_R = 44;
 const PAD_B = 26;
 const PAD_T = 12;
 
@@ -70,7 +73,7 @@ const fmtMode = (m: number | number[] | null) =>
 function Stat({
   k, ask, children,
 }: { k: BarStat | "sd"; ask: BarStat; children: ReactNode }) {
-  return <span className={k === ask ? "text-ink" : "text-ink-faint"}>{children}</span>;
+  return <span className={k === ask ? "text-ink" : "text-ink-label"}>{children}</span>;
 }
 
 export function BarBuilder({
@@ -105,7 +108,7 @@ export function BarBuilder({
   const [note, setNote] = useState<string | null>(null);
   const fired = useRef(false);
 
-  const bw = (W - PAD_L - 14) / count;
+  const bw = (W - PAD_L - PAD_R) / count;
   const barX = (i: number) => PAD_L + i * bw + bw * 0.16;
   const barW = bw * 0.68;
   const yOf = (v: number) => PAD_T + (1 - v / MAXV) * (H - PAD_T - PAD_B);
@@ -196,12 +199,12 @@ export function BarBuilder({
           <Stat k="range" ask={ask}>range {s.range}</Stat>
           <Stat k="sd" ask={ask}>
             SD {s.sd}{" "}
-            <span className="text-ink-faint">(population, ÷{vals.length})</span>
+            <span className="text-ink-label">(population, ÷{vals.length})</span>
           </Stat>
         </span>
       }
     >
-      <svg
+      <FigureSvg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="application"
@@ -216,8 +219,8 @@ export function BarBuilder({
           <g key={v}>
             <line x1={PAD_L} y1={yOf(v)} x2={W - 8} y2={yOf(v)}
                   stroke="var(--line-soft)" strokeWidth="0.8" />
-            <text x={PAD_L - 5} y={yOf(v) + 3} fontSize="7.5" textAnchor="end"
-                  fill="var(--ink-faint)" style={{ fontFamily: "var(--stack-mono)" }}>
+            <text x={PAD_L - 5} y={yOf(v) + 3} className="fig-data" textAnchor="end"
+                  fill="var(--ink-label)" style={{ fontFamily: "var(--stack-mono)" }}>
               {v}
             </text>
           </g>
@@ -229,9 +232,12 @@ export function BarBuilder({
           <>
             <line x1={PAD_L} y1={yOf(s.mean)} x2={W - 8} y2={yOf(s.mean)}
                   stroke="var(--accent-deep)" strokeWidth="1.5" strokeDasharray="5 3" />
-            <text x={W - 10} y={yOf(s.mean) - 4} fontSize="8" textAnchor="end"
+            {/* in the right margin, the word above the line and the value
+                under it, so no bar's own value can sit on top of it */}
+            <text x={W - 4} y={Math.max(yOf(s.mean) - 4, PAD_T + 8)} className="fig-label" textAnchor="end"
                   fill="var(--accent-deep)" style={{ fontFamily: "var(--stack-mono)" }}>
-              mean {s.mean}
+              mean
+              <tspan x={W - 4} dy="1.15em">{s.mean}</tspan>
             </text>
           </>
         )}
@@ -250,18 +256,18 @@ export function BarBuilder({
             {/* the grab rail: full-height, invisible, so a finger can start
                 anywhere in the column rather than on a thin bar top */}
             <rect x={barX(i)} y={PAD_T} width={barW} height={yOf(0) - PAD_T} fill="transparent" />
-            <text x={barX(i) + barW / 2} y={yOf(v) - 4} fontSize="8.5" textAnchor="middle"
+            <text x={barX(i) + barW / 2} y={yOf(v) - 4} className="fig-label" textAnchor="middle"
                   fill="var(--ink)" style={{ fontFamily: "var(--stack-mono)" }}>
               {v}
             </text>
-            <text x={barX(i) + barW / 2} y={H - PAD_B + 12} fontSize="8" textAnchor="middle"
-                  fill="var(--ink-faint)" style={{ fontFamily: "var(--stack-mono)" }}>
+            <text x={barX(i) + barW / 2} y={H - PAD_B + 12} className="fig-label" textAnchor="middle"
+                  fill="var(--ink-label)" style={{ fontFamily: "var(--stack-mono)" }}>
               {labels?.[i] ?? i + 1}
             </text>
           </g>
         ))}
         <line x1={PAD_L} y1={yOf(0)} x2={W - 8} y2={yOf(0)} stroke="var(--ink-soft)" strokeWidth="1.2" />
-      </svg>
+      </FigureSvg>
 
       {!verdict && (
         <div className={WIDGET_ACTIONS}>

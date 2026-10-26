@@ -19,6 +19,7 @@ import { useId } from "react";
 import {
   ACCENT,
   INK,
+  INK_LABEL,
   INK_SOFT,
   MONO,
   VizError,
@@ -29,6 +30,7 @@ import {
   useVizTimeline,
   type VizProps,
 } from "./core";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 interface Oval {
   label: string;
@@ -229,7 +231,7 @@ export function VennDiagram({ spec, animOn }: VizProps) {
   const id = (kind: "inc" | "exc", l: string) => `venn-${uid}-${kind}-${all.findIndex((o) => o.label === l)}`;
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Venn diagram" className="block w-full">
+    <FigureSvg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Venn diagram" className="block w-full">
       <defs>
         {all.map((o) => (
           <g key={o.label}>
@@ -250,7 +252,7 @@ export function VennDiagram({ spec, animOn }: VizProps) {
             <rect x={U.x} y={U.y} width={U.w} height={U.h} rx="3" fill="none" stroke={INK_SOFT} strokeWidth="1.3"
               pathLength={100} style={a.draw(0.05, 0.6)} />
             {universe && (
-              <text x={U.x + 6} y={U.y + 12} fontSize="9" fontWeight="700" fill={INK}
+              <text x={U.x + 6} y={U.y + 12} className="fig-label" fontWeight="700" fill={INK}
                 style={{ fontFamily: MONO, ...a.fade(0.3) }}>
                 {universe}
               </text>
@@ -270,26 +272,26 @@ export function VennDiagram({ spec, animOn }: VizProps) {
             strokeWidth="1.6" pathLength={100} style={a.draw(tSet(i), 0.7)} />
         ))}
         {setLabels.map(({ o, x, y }, i) => (
-          <text key={`l${o.label}`} x={x} y={y} fontSize="10" fontWeight="700" textAnchor="middle" fill={INK}
+          <text key={`l${o.label}`} x={x} y={y} className="fig-label" fontWeight="700" textAnchor="middle" fill={INK}
             style={{ fontFamily: MONO, ...a.fade(tSet(i) + 0.4) }}>
             {o.label}
           </text>
         ))}
         {items.map((it, i) => (
-          <text key={`i${i}`} x={itemAt[i].x} y={itemAt[i].y + 3} fontSize="9" textAnchor="middle" fill={INK}
+          <text key={`i${i}`} x={itemAt[i].x} y={itemAt[i].y + 3} className="fig-label" textAnchor="middle" fill={INK}
             style={{ fontFamily: MONO, ...a.pop(tItem(i)) }}>
             {it.text}
           </text>
         ))}
         {notes.map((n, i) =>
           noteAt[i] ? (
-            <text key={`n${i}`} x={noteAt[i]!.x} y={noteAt[i]!.y + 3} fontSize="8" fontStyle="italic"
-              textAnchor="middle" fill={INK_SOFT} style={{ fontFamily: MONO, ...a.fade(tNote) }}>
+            <text key={`n${i}`} x={noteAt[i]!.x} y={noteAt[i]!.y + 3} className="fig-label" fontStyle="italic"
+              textAnchor="middle" fill={INK_LABEL} style={{ fontFamily: MONO, ...a.fade(tNote) }}>
               {n.text}
             </text>
           ) : null
         )}
       </g>
-    </svg>
+    </FigureSvg>
   );
 }

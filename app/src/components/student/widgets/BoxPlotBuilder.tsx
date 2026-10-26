@@ -23,6 +23,7 @@ import { Handle, WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_WELL } from "
 import { clamp, tidy, useDragSurface, useKeyNudge } from "./drag";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 import { fiveNumberSummary, gradeBoxPlot, type FiveMarks } from "./box-plot-grade";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 const W = 320;
 const H = 140;
@@ -143,7 +144,7 @@ export function BoxPlotBuilder({
         verdict ? null : (
           <span className="inline-flex flex-wrap justify-center gap-x-3 gap-y-1">
             {KEYS.map((k) => (
-              <span key={k} className={k === active ? "font-bold text-ink" : "text-ink-faint"}>
+              <span key={k} className={k === active ? "font-bold text-ink" : "text-ink-label"}>
                 {LABEL[k]}: {marks[k]}
               </span>
             ))}
@@ -151,7 +152,7 @@ export function BoxPlotBuilder({
         )
       }
     >
-      <svg
+      <FigureSvg
         ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         role="application"
@@ -193,12 +194,14 @@ export function BoxPlotBuilder({
           />
         ))}
         {KEYS.map((k) => (
-          <text key={`t${k}`} x={sx(marks[k])} y={AXIS + 26} fontSize="8" textAnchor="middle"
-                fill="var(--ink-faint)" style={{ fontFamily: "var(--stack-mono)" }}>
+          // Q1 and Q3 drop a line, so neighbouring names never run together at the label size
+          <text key={`t${k}`} x={sx(marks[k])} y={AXIS + 26} dy={k === "q1" || k === "q3" ? "1.2em" : undefined}
+                className="fig-label" textAnchor="middle"
+                fill="var(--ink-label)" style={{ fontFamily: "var(--stack-mono)" }}>
             {LABEL[k]}
           </text>
         ))}
-      </svg>
+      </FigureSvg>
 
       {!verdict && (
         <div className={WIDGET_ACTIONS}>

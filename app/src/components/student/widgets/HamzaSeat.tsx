@@ -163,7 +163,7 @@ export function HamzaSeat({
                 <p
                   className={cx(
                     WIDGET_RULE_QUOTE,
-                    "ar-block ar-plain anim-pop mt-1.5 text-[11.5px] text-[color:var(--play-text-muted)]"
+                    "ar-block ar-plain anim-pop mt-1.5 text-[length:var(--ar-size-min)] text-[color:var(--play-text-muted)]"
                   )}
                 >
                   <bdi>
@@ -178,7 +178,7 @@ export function HamzaSeat({
 
         {done && (
           <div className={cx("px-3 py-2", WIDGET_RESULT.correct)}>
-            <span className="ar-block font-display text-[13.5px] font-bold">
+            <span className="ar-block font-display text-[length:var(--ar-size-min)] font-bold">
               {firstTry === clean.length
                 ? "الهمزة دي بقت في إيدك ✓"
                 : "تمام — القاعدة هي اللي بتقولك مكان الهمزة، مش الشكل"}

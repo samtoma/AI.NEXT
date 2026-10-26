@@ -160,11 +160,11 @@ export function TextPassage({ spec, animOn }: VizProps) {
     <div dir="rtl" lang="ar" key={tl.key} className="py-1">
       <div className={FRAME[variant]} style={a.fade(0.05, 0.45)}>
         <div className="mb-1.5 flex flex-wrap items-baseline justify-between gap-x-2">
-          <span className="ar-label ar-block font-mono text-[9.5px] font-semibold text-ink-faint">
+          <span className="ar-label ar-block font-mono text-[length:var(--ar-size-min)] font-semibold text-ink-label">
             {title || KIND_LABEL[variant]}
           </span>
           {attribution ? (
-            <span className="ar-label ar-block font-mono text-[9.5px] text-gold">
+            <span className="ar-label ar-block font-mono text-[length:var(--ar-size-min)] text-gold">
               <bdi>{arDigits(attribution)}</bdi>
             </span>
           ) : null}

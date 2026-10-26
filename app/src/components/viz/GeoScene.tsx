@@ -23,7 +23,7 @@ import {
   ACCENT_DEEP,
   GOLD,
   INK,
-  INK_SOFT,
+  INK_LABEL,
   MONO,
   VizError,
   arr,
@@ -35,6 +35,7 @@ import {
   useVizTimeline,
   type VizProps,
 } from "./core";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 type El = Record<string, unknown> & { type: string; step: number };
 type P2 = [number, number];
@@ -116,7 +117,7 @@ export function GeoScene({ spec, animOn }: VizProps) {
         {panels.map((p, i) => (
           <figure key={i} className="m-0">
             {str(p.label) && (
-              <figcaption className="text-center text-[10px] text-ink-soft" style={{ fontFamily: MONO }}>
+              <figcaption className="text-center text-label text-ink-soft" style={{ fontFamily: MONO }}>
                 {str(p.label)}
               </figcaption>
             )}
@@ -344,7 +345,7 @@ function GeoDrawing({
             pathLength={dashed ? undefined : 100} style={strokeIn(0.9)}
           />
           {label && (
-            <text x={sx(cx)} y={sy(cy + r) - 6} fontSize="8" textAnchor="middle" fill={INK_SOFT}
+            <text x={sx(cx)} y={sy(cy + r) - 6} className="fig-label" textAnchor="middle" fill={INK_LABEL}
               style={{ fontFamily: MONO, ...a.fade(d + 0.6) }}>
               {label}
             </text>
@@ -415,8 +416,8 @@ function GeoDrawing({
           {arrow && <path d={arrowHead(x2, y2, ux, uy)} fill={special} style={markStyle} />}
           {arrow === "both" && <path d={arrowHead(x1, y1, -ux, -uy)} fill={special} style={markStyle} />}
           {label && (
-            <text x={mx + nx} y={my + ny + 3} fontSize="8" fontWeight="600" textAnchor="middle"
-              fill={special === INK ? INK_SOFT : special}
+            <text x={mx + nx} y={my + ny + 3} className="fig-label" fontWeight="600" textAnchor="middle"
+              fill={special === INK ? INK_LABEL : special}
               style={{ fontFamily: MONO, ...a.fade(d + 0.45) }}>
               {label}
             </text>
@@ -436,7 +437,7 @@ function GeoDrawing({
             <circle cx={sx(x)} cy={sy(y)} r="2.3" fill={ACCENT_DEEP} />
           </g>
           {label && (
-            <text x={sx(x) + 6} y={sy(y) - 5} fontSize="8.5" fontWeight="700" fill={INK}
+            <text x={sx(x) + 6} y={sy(y) - 5} className="fig-label" fontWeight="700" fill={INK}
               style={{ fontFamily: MONO, ...a.fade(d + 0.2) }}>
               {label}
             </text>
@@ -477,7 +478,7 @@ function GeoDrawing({
               fill="none" stroke={highlight ? GOLD : INK} strokeWidth="1.4" strokeLinecap="round" style={a.fade(d + 0.5)} />
           )}
           {label && (
-            <text x={sx(lx)} y={sy(ly) + 3} fontSize="8" fontWeight="600" textAnchor="middle" fill={GOLD}
+            <text x={sx(lx)} y={sy(ly) + 3} className="fig-label" fontWeight="600" textAnchor="middle" fill={GOLD}
               style={{ fontFamily: MONO, ...a.fade(d + 0.5) }}>
               {label}
             </text>
@@ -505,7 +506,7 @@ function GeoDrawing({
               fill="none" stroke={GOLD} strokeWidth="1.4" pathLength={100} style={a.draw(d, 0.4)}
             />
             {label && (
-              <text x={sx(lx)} y={sy(ly) + 3} fontSize="8.5" fontWeight="700" textAnchor="middle" fill={GOLD}
+              <text x={sx(lx)} y={sy(ly) + 3} className="fig-label" fontWeight="700" textAnchor="middle" fill={GOLD}
                 style={{ fontFamily: MONO, ...a.fade(d + 0.35) }}>
                 {label}
               </text>
@@ -532,7 +533,7 @@ function GeoDrawing({
             );
           })}
           {label && (
-            <text x={sx(lx)} y={sy(ly) + 3} fontSize="8.5" fontWeight="700" textAnchor="middle" fill={GOLD}
+            <text x={sx(lx)} y={sy(ly) + 3} className="fig-label" fontWeight="700" textAnchor="middle" fill={GOLD}
               style={{ fontFamily: MONO, ...a.fade(d + 0.35) }}>
               {label}
             </text>
@@ -546,7 +547,7 @@ function GeoDrawing({
       const y = num(e.y, NaN);
       if (!Number.isFinite(x) || !Number.isFinite(y) || !label) return null;
       return (
-        <text key={key} x={sx(x)} y={sy(y)} fontSize="8.5" fontWeight="600" textAnchor="middle"
+        <text key={key} x={sx(x)} y={sy(y)} className="fig-label" fontWeight="600" textAnchor="middle"
           fill={INK} style={{ fontFamily: MONO, ...a.fade(d) }}>
           {label}
         </text>
@@ -674,10 +675,10 @@ function GeoDrawing({
   );
 
   return (
-    <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} role="img" aria-label="geometry scene" className="block w-full"
+    <FigureSvg ref={svgRef} viewBox={`0 0 ${W} ${H}`} role="img" aria-label="geometry scene" className="block w-full"
       style={interact?.drag ? { touchAction: "none" } : undefined}>
       <g key={tl.key}>{els.map(render)}</g>
       {layer}
-    </svg>
+    </FigureSvg>
   );
 }

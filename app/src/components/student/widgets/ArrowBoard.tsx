@@ -17,6 +17,7 @@ import { useState } from "react";
 import { cx } from "@/components/sticker";
 import { FIGURE_MARK } from "./WidgetShell";
 import { useReducedMotion } from "./drag";
+import { FigureSvg } from "@/components/viz/figure-svg";
 
 const AW = 300;
 const AROW = 44; // a 52px finger target at the board's width
@@ -127,7 +128,7 @@ export function ArrowBoard({
           strokeWidth={picked ? 2 : 1} />
         <rect x={x - 3} y={y - PILL_H / 2 - 3} width={COL_W + 6} height={PILL_H + 6} rx={PILL_H / 2 + 3}
           fill="none" stroke="var(--gold)" strokeWidth={2} className="opacity-0 group-focus-visible:opacity-100" />
-        <text x={x + COL_W / 2} y={y + 4} fontSize="11" fontWeight="600" textAnchor="middle" fill="var(--ink)"
+        <text x={x + COL_W / 2} y={y + 4} className="fig-label" fontWeight="600" textAnchor="middle" fill="var(--ink)"
           style={{ fontFamily: "var(--stack-mono)" }}>
           {set[i]}
         </text>
@@ -136,15 +137,15 @@ export function ArrowBoard({
   };
 
   return (
-    <svg viewBox={`0 0 ${AW} ${H}`} className="block w-full" role="group" aria-label="Arrow diagram you draw">
-      <text x={X_COL + COL_W / 2} y={HEAD - 8} fontSize="9" fontWeight="600" textAnchor="middle"
+    <FigureSvg viewBox={`0 0 ${AW} ${H}`} className="block w-full" role="group" aria-label="Arrow diagram you draw">
+      <text x={X_COL + COL_W / 2} y={HEAD - 8} className="fig-label" fontWeight="600" textAnchor="middle"
         fill="var(--accent-deep)" style={{ fontFamily: "var(--stack-mono)" }}>X</text>
-      <text x={Y_COL + COL_W / 2} y={HEAD - 8} fontSize="9" fontWeight="600" textAnchor="middle"
+      <text x={Y_COL + COL_W / 2} y={HEAD - 8} className="fig-label" fontWeight="600" textAnchor="middle"
         fill="var(--accent-deep)" style={{ fontFamily: "var(--stack-mono)" }}>{yName}</text>
       {drawn.map((a, k) => arrow(a, graded ? (graded.extra.some((b) => same(a, b)) ? "extra" : "hit") : "draft", k))}
       {reveal && graded && graded.missed.map((a, k) => arrow(a, "missed", k))}
       {X.map((_, i) => pill(X, i, "X"))}
       {Y.map((_, j) => pill(Y, j, "Y"))}
-    </svg>
+    </FigureSvg>
   );
 }
