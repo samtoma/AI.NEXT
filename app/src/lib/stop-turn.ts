@@ -98,9 +98,13 @@ export function stoppedReply(
   return { text, localOnly: text.length === 0 };
 }
 
-/** The visible label on a stopped reply — words, never colour alone. */
+/** The visible line on a stopped reply — words, never colour alone. Said in
+ *  the tutor's voice and open to anything: she may have stopped it to change
+ *  her answer, not only to ask something else. */
 export function stoppedLabel(arabicUi: boolean): string {
-  return arabicUi ? "اتوقف" : "Stopped";
+  return arabicUi
+    ? "تمام، هقف هنا. عايز تقول إيه؟"
+    : "Okay, I’ll pause here. What would you like to say?";
 }
 
 /** The Stop control's accessible name. */

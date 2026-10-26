@@ -111,8 +111,8 @@ test("a cursor past the end is clamped, not an error", () => {
 });
 
 test("the Stopped label and the control's name are words, in both registers", () => {
-  assert.equal(stoppedLabel(false), "Stopped");
-  assert.ok(stoppedLabel(true).length > 0 && stoppedLabel(true) !== "Stopped");
+  assert.equal(stoppedLabel(false), "Okay, I’ll pause here. What would you like to say?");
+  assert.ok(stoppedLabel(true).length > 0 && stoppedLabel(true) !== stoppedLabel(false));
   assert.equal(stopControlLabel(false), "Stop the reply");
   assert.ok(stopControlLabel(true).length > 0);
 });

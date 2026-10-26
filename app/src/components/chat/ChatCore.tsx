@@ -1958,7 +1958,7 @@ const MessageRow = memo(function MessageRow({
           <p
             data-chat-stopped=""
             className={cx(
-              "flex items-center gap-1.5 font-display text-[0.8rem] font-bold leading-none text-[color:var(--play-text-muted)]",
+              "flex items-baseline gap-1.5 font-display text-label font-bold leading-snug text-[color:var(--play-text-muted)]",
               visibleText.length > 0 && "mt-2"
             )}
           >
