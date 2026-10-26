@@ -244,6 +244,32 @@ test("**`redacted` and `refused` are NOT failures** — the product working as d
   assert.equal(v.failed, 0);
 });
 
+test("**`stopped` is neither a failure nor a success** — the student's Stop is not evidence (migration 041)", () => {
+  // Three Stops in a row are not an outage…
+  const stops = [
+    turnRow({ outcome: "stopped", at: ago(1 * MIN) }),
+    turnRow({ outcome: "stopped", at: ago(2 * MIN) }),
+    turnRow({ outcome: "stopped", at: ago(3 * MIN) }),
+  ];
+  const quiet = turnVerdict(stops, NOW);
+  assert.notEqual(quiet.state, "failing");
+  assert.equal(quiet.failed, 0);
+  assert.equal(quiet.sampled, 0, "a stopped turn is left out of the sample");
+
+  // …and a Stop pressed on a hanging tutor must not hide the failure run
+  // behind it, or become its "last good turn".
+  const hanging = [
+    turnRow({ outcome: "stopped", at: ago(1 * MIN) }),
+    turnRow({ outcome: "error", at: ago(2 * MIN) }),
+    turnRow({ outcome: "timeout", at: ago(3 * MIN) }),
+    turnRow({ outcome: "error", at: ago(4 * MIN) }),
+  ];
+  const v = turnVerdict(hanging, NOW);
+  assert.equal(v.state, "failing");
+  assert.equal(v.consecutiveFailures, 3);
+  assert.equal(v.lastOkAt, null);
+});
+
 test("only the CLI-spawning surfaces are counted", () => {
   // A surface that does not start the CLI leaking in here would make the tile
   // lie about which program is broken.

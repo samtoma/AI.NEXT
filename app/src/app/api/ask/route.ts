@@ -30,6 +30,7 @@ import { currentSessionSnapshot } from "@/lib/sessions";
 // aliased: the stream below has its own `emit` for reply text
 import { emit as emitEvent } from "@/lib/analytics";
 import { chunkingViolations } from "@/lib/chunking";
+import { endedTurnOutcome, stoppedAssistantMessage } from "@/lib/stop-turn";
 import {
   ZERO_TOKENS,
   costFor,
@@ -438,8 +439,14 @@ ${focusNote ? `\n${focusNote}\n` : ""}
 Reply as the Tutor to the last user message. Output only the reply text (with citation markers and, if fitting, one action directive).`;
 
   const started = Date.now();
+  // The student's Stop, however it reaches us: the request's abort signal, or
+  // the response stream being cancelled under it. Set once the child exists.
+  let stopTurn: () => void = () => {};
 
   const stream = new ReadableStream<Uint8Array>({
+    cancel() {
+      stopTurn();
+    },
     start(controller) {
       const enc = new TextEncoder();
       let closed = false;
@@ -543,7 +550,6 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
         timedOut = true;
         child.kill("SIGKILL");
       }, TIMEOUT_MS);
-      req.signal.addEventListener("abort", () => child.kill("SIGKILL"));
 
       let fullText = "";
       let emittedLen = 0; // holdback frontier (sacred guard active only)
@@ -559,6 +565,18 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
         if (out) send({ type: "delta", t: out });
       };
       let redacted = false;
+      // THE STOP BUTTON. The client aborts its fetch; the child is killed at
+      // once so no more tokens are spent, and the close handler below records
+      // the turn as `stopped` — a cost line, never a failure (migration 041,
+      // `lib/stop-turn.ts`). Remembered like `timedOut`, for the same reason:
+      // a killed child and a crashed one close the same way.
+      let stopped = false;
+      stopTurn = () => {
+        if (!timedOut && !redacted) stopped = true;
+        child.kill("SIGKILL");
+      };
+      if (req.signal.aborted) stopTurn();
+      else req.signal.addEventListener("abort", () => stopTurn());
       /**
        * The best usage the stream has reported SO FAR.
        *
@@ -800,7 +818,30 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
           finish();
           return;
         }
-        if (result == null || result.is_error || !fullText) {
+        const completed = result != null && !result.is_error && !!fullText;
+        if (endedTurnOutcome({ completed, timedOut, stopped }) === "stopped") {
+          // The student stopped it. Not a failure: no classification, no
+          // error line in the log, no error frame (nobody is listening). The
+          // assistant message is what she was shown — the emitted prefix, with
+          // any closed-subject handoff removed exactly as the stream removed
+          // it — and the counters the stream reported before the kill are the
+          // cost: a stopped turn spent real tokens.
+          const shown = stripClosedHandoffs(
+            sacredGuard ? fullText.slice(0, emittedLen) : fullText,
+            handoffOpen
+          );
+          await logTurn({
+            outcome: "stopped",
+            assistantMessage: stoppedAssistantMessage(shown),
+            tokens: result?.usage ? tokensFromUsage(result.usage) : partial,
+            cliCostUsd: result?.total_cost_usd ?? null,
+            latencyMs: Date.now() - started,
+            citations: extractCitations(shown),
+          });
+          finish();
+          return;
+        }
+        if (!completed || result == null) {
           // The CLI's own words, classified into one short stable code and
           // then NOT carried any further: `cliCode` is a word from a closed
           // vocabulary, and the raw text below goes only to this process's

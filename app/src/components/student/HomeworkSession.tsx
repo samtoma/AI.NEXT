@@ -16,7 +16,15 @@ import { ChatCore, type ChatCoreHandle, type ChatSuggestion } from "@/components
 import { TutorBubble } from "@/components/chat/message-blocks";
 import { NoorMark } from "@/components/NoorMark";
 import { TeX } from "@/components/TeX";
-import { HEADING, HONEY_BAND, STROKE, STROKE_SM, STROKE_WIDTH, cx } from "@/components/sticker";
+import {
+  BUTTON_SECONDARY,
+  HEADING,
+  HONEY_BAND,
+  STROKE,
+  STROKE_SM,
+  STROKE_WIDTH,
+  cx,
+} from "@/components/sticker";
 
 /**
  * "Your question" — one homework ask (spec 004; design handoff `home_ask`
@@ -76,6 +84,29 @@ export function HomeworkSession({ initial }: { initial: HomeworkAsk }) {
     []
   );
 
+  // The Stop while Noor is reading the ask: the server kills the model work
+  // (recorded `stopped`, never a failure) and answers with the stopped ask.
+  // Shown as stopped at once — waiting on the round trip would make Stop feel
+  // like it did nothing — and the poll above ends with the status change.
+  const [stopping, setStopping] = useState(false);
+  const stopReading = useCallback(async () => {
+    setStopping(true);
+    setAsk((a) => (a.status === "reading" ? { ...a, status: "stopped" } : a));
+    try {
+      const r = await authFetch(`/api/homework/${ask.id}`, { method: "DELETE" });
+      // a Stop that lost the race to a finished reading: show what was read
+      if (r.ok) {
+        const next = (await r.json()) as HomeworkAsk;
+        setAsk(next);
+        if (next.status === "ready") setSelectedId((s) => s ?? pickInitial(next));
+      }
+    } catch {
+      /* offline: the reading stops being polled for either way */
+    } finally {
+      setStopping(false);
+    }
+  }, [ask.id]);
+
   const selected = ask.items.find((i) => i.id === selectedId) ?? null;
   const several = ask.items.length > 1;
 
@@ -91,7 +122,12 @@ export function HomeworkSession({ initial }: { initial: HomeworkAsk }) {
         </Link>
         <h1 className={cx(HEADING, "text-[2rem]")}>{several ? "Your questions" : "Your question"}</h1>
 
-        {ask.status === "reading" && <Reading upload={ask.source === "upload"} />}
+        {ask.status === "reading" && (
+          <Reading upload={ask.source === "upload"} onStop={stopReading} stopping={stopping} />
+        )}
+        {ask.status === "stopped" && (
+          <Notice>Stopped. Whenever you&apos;re ready, ask again from Home.</Notice>
+        )}
         {ask.status === "unreadable" && (
           <Notice>
             I couldn&apos;t find a question I can read in that. Could you type it out, or take the
@@ -155,15 +191,39 @@ function pickInitial(ask: HomeworkAsk): number | null {
 
 /* ------------------------------------------------------------------ */
 
-function Reading({ upload }: { upload: boolean }) {
+function Reading({
+  upload,
+  onStop,
+  stopping,
+}: {
+  upload: boolean;
+  /** The Stop: Noor is working in the background, so she can be stopped. */
+  onStop: () => void;
+  stopping: boolean;
+}) {
   return (
-    <div className={cx(STROKE, "flex items-center gap-3.5 rounded-[var(--play-radius-lg)] bg-card p-[22px]")} role="status">
+    <div className={cx(STROKE, "flex flex-wrap items-center gap-3.5 rounded-[var(--play-radius-lg)] bg-card p-[22px]")}>
       <span className={cx(STROKE, "anim-bob flex size-11 shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] bg-card-warm")}>
         <NoorMark className="size-7" />
       </span>
-      <p className="font-display text-[1.05rem] font-bold text-ink">
+      <p role="status" className="min-w-0 flex-1 font-display text-[1.05rem] font-bold text-ink">
         {upload ? "Reading your file…" : "Reading your question…"}
       </p>
+      {/* logical margins only: the button sits at the trailing edge in
+          either direction, and its square needs no mirroring */}
+      <button
+        type="button"
+        onClick={onStop}
+        disabled={stopping}
+        aria-label={upload ? "Stop reading your file" : "Stop reading your question"}
+        data-homework-stop=""
+        className={cx(BUTTON_SECONDARY, "ms-auto gap-2 px-5")}
+      >
+        <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden>
+          <rect width="10" height="10" fill="currentColor" />
+        </svg>
+        Stop
+      </button>
     </div>
   );
 }

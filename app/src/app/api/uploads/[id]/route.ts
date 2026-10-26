@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { AuthError, requireStudent } from "@/lib/auth/principal";
 import { getParsedUpload } from "@/lib/uploads";
+import { cancelRun, uploadRunKey } from "@/lib/running-work";
 
 /**
  * Upload status (FR-205).
@@ -62,4 +63,44 @@ export async function GET(
     // treat it as the answer.
     hasText: Boolean(row.text),
   });
+}
+
+/**
+ * DELETE /api/uploads/{id} — the strip's Stop while a photo is being read.
+ *
+ * Kills the reading model if it is still running (`lib/running-work.ts`); the
+ * parse then records itself as `stopped` — a cost line, never a failure
+ * (migration 041). The upload row and its file stay: the student let go of the
+ * attachment, nothing more, and the ledger row points at it.
+ *
+ * Ownership is the same scoped read GET uses, with the same 404 for "not yours"
+ * and "no such id" (FR-2103), so a Stop can never reach somebody else's parse.
+ * A Stop that arrives after the reading finished is a 200 with
+ * `stopped: false`, not an error — that race is the normal case on a fast photo.
+ */
+export async function DELETE(
+  _req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  let me;
+  try {
+    me = await requireStudent();
+  } catch (err) {
+    if (err instanceof AuthError) {
+      return NextResponse.json({ error: err.code }, { status: err.status });
+    }
+    throw err;
+  }
+
+  const { id } = await params;
+  const uploadId = Number(id);
+  if (!Number.isInteger(uploadId) || uploadId <= 0) {
+    return NextResponse.json({ error: "bad upload id" }, { status: 400 });
+  }
+
+  const row = await getParsedUpload(uploadId, me.studentId);
+  if (!row) return NextResponse.json({ error: "not_found" }, { status: 404 });
+
+  const stopped = row.status === "pending" && cancelRun(uploadRunKey(uploadId));
+  return NextResponse.json({ uploadId, stopped });
 }

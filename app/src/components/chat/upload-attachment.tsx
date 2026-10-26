@@ -383,6 +383,22 @@ export function useUploadAttachment({
   }, [stop]);
 
   /**
+   * The strip's Stop while the file is being sent or read. Letting go of it
+   * locally (`clear`) stops the send and the poll; the reading itself runs on
+   * the server after the upload's 202, so once there is an id the server is
+   * asked to kill it too — it is then a `stopped` cost line, never a failed
+   * parse. Fire-and-forget: the attachment is already gone from her screen,
+   * and a Stop that loses the race to a finished reading changes nothing.
+   */
+  const stopReading = useCallback(() => {
+    const uploadId = attachment?.uploadId;
+    clear();
+    if (uploadId) {
+      void authFetch(`/api/uploads/${uploadId}`, { method: "DELETE" }).catch(() => {});
+    }
+  }, [attachment?.uploadId, clear]);
+
+  /**
    * One attachment at a time — but the pickers close only while one is
    * actually IN FLIGHT.
    *
@@ -431,7 +447,10 @@ export function useUploadAttachment({
       lang={lang}
       removeLabel={labels.remove}
       regionLabel={labels.region}
+      stopLabel={labels.stop}
+      stopName={labels.stopName}
       onRemove={clear}
+      onStop={stopReading}
     />
   ) : null;
 
@@ -533,13 +552,19 @@ function UploadStrip({
   lang,
   removeLabel,
   regionLabel,
+  stopLabel,
+  stopName,
   onRemove,
+  onStop,
 }: {
   attachment: Attachment;
   lang: UploadLang;
   removeLabel: string;
   regionLabel: string;
+  stopLabel: string;
+  stopName: string;
   onRemove: () => void;
+  onStop: () => void;
 }) {
   const bad = ERROR_PHASES.has(attachment.phase);
   const working =
@@ -582,17 +607,37 @@ function UploadStrip({
             {attachment.message}
           </span>
         </span>
-        <button
-          type="button"
-          onClick={onRemove}
-          aria-label={removeLabel}
-          title={removeLabel}
-          // a borderless icon control that still holds the 52px floor; the
-          // negative margins keep it from inflating the strip
-          className="-my-2.5 -me-2.5 flex size-[var(--noor-touch-min)] shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] text-ink-soft play-pressable"
-        >
-          <CloseIcon />
-        </button>
+        {working ? (
+          // While the file is being sent or read, the way out is a Stop that
+          // SAYS so — the model is working, and an × alone reads as "remove"
+          // rather than "stop it". Same trailing slot, same 52px floor; a
+          // symmetric square, so nothing to mirror in RTL.
+          <button
+            type="button"
+            onClick={onStop}
+            aria-label={stopName}
+            title={stopName}
+            data-upload-stop=""
+            className="-my-2.5 -me-2.5 flex min-h-[var(--noor-touch-min)] shrink-0 items-center gap-1.5 rounded-[var(--play-radius-pill)] px-3 font-display text-[0.85rem] font-bold text-ink play-pressable"
+          >
+            <svg width="9" height="9" viewBox="0 0 9 9" aria-hidden>
+              <rect width="9" height="9" fill="currentColor" />
+            </svg>
+            {stopLabel}
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={onRemove}
+            aria-label={removeLabel}
+            title={removeLabel}
+            // a borderless icon control that still holds the 52px floor; the
+            // negative margins keep it from inflating the strip
+            className="-my-2.5 -me-2.5 flex size-[var(--noor-touch-min)] shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] text-ink-soft play-pressable"
+          >
+            <CloseIcon />
+          </button>
+        )}
       </div>
     </div>
   );

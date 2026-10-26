@@ -517,7 +517,8 @@ export const ENTRIES: Readonly<Record<string, Entry>> = {
   },
   "src/app/(student)/student/ask/[id]/page.tsx": { reads: ["getAsk"] },
   "src/app/api/homework/route.ts": { reads: ["createAsk", "readAsk"] },
-  "src/app/api/homework/[id]/route.ts": { reads: ["getAsk"] },
+  // stopAsk: the reading's Stop — called only after getAsk proved the ask hers
+  "src/app/api/homework/[id]/route.ts": { reads: ["getAsk", "stopAsk"] },
   "src/app/api/homework/items/[id]/route.ts": { reads: ["getAsk"] },
   "src/app/api/homework/items/[id]/flag/route.ts": {
     none: "checks the item is hers (homework_items, under RLS) and writes her own homework_flags row",
@@ -707,6 +708,11 @@ export const READERS: Readonly<Record<string, Gate>> = {
   recordFeedback: {
     noContent: "writes her own feedback row",
     file: "src/lib/feedback-queries.ts",
+  },
+  stopAsk: {
+    noContent:
+      "stops her own ask's reading (the route read it under RLS first) and sets its status; no curriculum",
+    file: "src/lib/homework.ts",
   },
   createAsk: {
     noContent:

@@ -332,6 +332,13 @@ export function LessonSession({
   const msgsRef = useRef<ChatMsg[]>([]);
   const turnsRef = useRef(0);
   const finishing = useRef(false);
+  // The understanding check's Stop: the rating request in flight, and the
+  // transcript to put back when she stops it (the rating screen unmounts the
+  // chat, so returning to the lesson remounts it from these messages rather
+  // than from the boot seed — in memory only; the saved-lesson logic is
+  // untouched).
+  const ratingAbort = useRef<AbortController | null>(null);
+  const [returnMessages, setReturnMessages] = useState<ChatMsg[] | null>(null);
   const finishTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const refocusTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -594,12 +601,15 @@ export function LessonSession({
     finishing.current = true;
     stopSpeaking();
     setPhase("rating");
+    const controller = new AbortController();
+    ratingAbort.current = controller;
     try {
       const transcript = msgsRef.current
         .filter((m) => !m.hidden && m.text && !m.streaming)
         .map((m) => ({ role: m.role, text: m.text }));
       const res = await authFetch("/api/understanding", {
         method: "POST",
+        signal: controller.signal,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           mode,
@@ -628,9 +638,20 @@ export function LessonSession({
       setPhase("report");
     } catch {
       finishing.current = false;
-      setPhase("error");
+      if (controller.signal.aborted) {
+        // Stopped, not failed: the server killed the grader and recorded the
+        // call as `stopped`. Back to the lesson exactly where she left it.
+        setReturnMessages(msgsRef.current);
+        setPhase("session");
+      } else {
+        setPhase("error");
+      }
+    } finally {
+      if (ratingAbort.current === controller) ratingAbort.current = null;
     }
   }, [mode, lesson.slug, lesson.studentId, lesson.los.length, writeSave]);
+
+  const stopRating = useCallback(() => ratingAbort.current?.abort(), []);
 
   // student-initiated only (the header Finish button) — the timer is just a
   // double-tap guard now that nothing calls this automatically.
@@ -1157,6 +1178,23 @@ export function LessonSession({
                   />
                 ))}
               </span>
+              {/* The Stop: the grader is working in the background, so she
+                  can call it off and go back to the lesson. A square, so
+                  nothing to mirror; the card already follows `rtl`. */}
+              <div className="mt-6">
+                <button
+                  type="button"
+                  onClick={stopRating}
+                  data-rating-stop=""
+                  aria-label={rtl ? "وقّف التقييم وارجع للدرس" : "Stop grading and go back to the lesson"}
+                  className={cx(BUTTON_SECONDARY, "gap-2 px-5")}
+                >
+                  <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden>
+                    <rect width="10" height="10" fill="currentColor" />
+                  </svg>
+                  {rtl ? "وقّف" : "Stop"}
+                </button>
+              </div>
             </>
           ) : (
             <>
@@ -1408,7 +1446,7 @@ export function LessonSession({
               surface={mode === "learn" ? "lesson_learn" : "lesson_review"}
               lessonSlug={lesson.slug}
               sessionId={sessionId}
-              initialMessages={boot.seed?.messages}
+              initialMessages={returnMessages ?? boot.seed?.messages}
               autoStart={autoStart}
               autoStartHidden
               autoContinue

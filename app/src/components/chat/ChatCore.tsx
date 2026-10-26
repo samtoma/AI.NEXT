@@ -58,6 +58,7 @@ import {
   scrollTopFor,
 } from "@/lib/chat-scroll";
 import { SIGNED_OUT_MESSAGE, authFetch } from "@/lib/auth/client-session";
+import { stopControlLabel, stoppedLabel, stoppedReply } from "@/lib/stop-turn";
 import type { MapFocus } from "@/lib/map-focus";
 import { NoorMark } from "@/components/NoorMark";
 import { useUploadAttachment } from "./upload-attachment";
@@ -526,6 +527,9 @@ export function ChatCore({
   const gateResumeRef = useRef<() => void>(() => {});
   // FR-3501: ends a paused reply where it stands — "Say it another way"
   const gateStopRef = useRef<() => void>(() => {});
+  // The Stop button: ends the open turn — aborts the request (the server kills
+  // the model and records `stopped`) and keeps only what was revealed
+  const stopTurnRef = useRef<() => void>(() => {});
   // a turn the student asked for while the reply was still open; sent the
   // moment it closes (send() refuses while a stream is open)
   const queuedSendRef = useRef<string | null>(null);
@@ -843,6 +847,38 @@ export function ChatCore({
         cancelReveal();
       };
 
+      /** The Stop button. Works at any point of the turn: before a word has
+       *  arrived, mid-stream, at a beat gate, or while a reply that has fully
+       *  arrived is still being revealed (FR-3501) — in every case the reveal
+       *  stops where it stands and only what she has seen is kept
+       *  (`stoppedReply`). Aborting the request is what tells the server to
+       *  kill the model; it records the turn as `stopped`, never an error. */
+      const controller = new AbortController();
+      let stopped = false;
+      const stopTurn = () => {
+        if (stopped) return;
+        stopped = true;
+        // Stop means the AI stops: no auto-continue queued behind this turn
+        pendingContinue.current = false;
+        cancelReveal();
+        controller.abort();
+      };
+      stopTurnRef.current = stopTurn;
+      /** Settle the row as a normal, non-streaming message flagged `stopped`. */
+      const settleStopped = () => {
+        const kept = stoppedReply(acc, cursor);
+        patchLast({
+          streaming: false,
+          reveal: undefined,
+          gated: undefined,
+          stopped: true,
+          text: kept.text,
+          ...(kept.localOnly ? { localOnly: true } : {}),
+          ...(metaBuf ? { meta: metaBuf } : {}),
+        });
+        emitNewCites(kept.text);
+      };
+
       /** FR-3501: the student tapped Continue — step past the boundary. */
       const resumeFromGate = () => {
         if (revealFinished) return;
@@ -902,6 +938,7 @@ export function ChatCore({
         // once (FR-2016), instead of surfacing as "AI backend unavailable".
         const res = await authFetch("/api/ask", {
           method: "POST",
+          signal: controller.signal,
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             surface,
@@ -994,8 +1031,23 @@ export function ChatCore({
 
         streamEnded = true;
 
+        // Stopped while reading the stream (a read that raced the abort can
+        // still end the loop cleanly) — settle what was shown and stop here.
+        if (stopped) {
+          settleStopped();
+          return;
+        }
+
         if (metaBuf) {
           await revealDone; // also waits out any Continue not yet tapped
+          // Stopped after the whole reply arrived, while it was still being
+          // revealed: truncate to what she saw, and none of the completion
+          // effects below (TTS, finish, a chat-typed answer) run for words
+          // she never read.
+          if (stopped) {
+            settleStopped();
+            return;
+          }
           if (stoppedAt != null) acc = acc.slice(0, stoppedAt).trimEnd();
           patchLast({
             streaming: false,
@@ -1083,13 +1135,19 @@ export function ChatCore({
         });
       } catch {
         cancelReveal();
-        patchLast({
-          streaming: false,
-          error: true,
-          text: "AI backend unavailable — please try again.",
-        });
+        if (stopped) {
+          // the abort rejected the fetch or the read: a Stop, not a failure
+          settleStopped();
+        } else {
+          patchLast({
+            streaming: false,
+            error: true,
+            text: "AI backend unavailable — please try again.",
+          });
+        }
       } finally {
         cancelReveal();
+        if (stopTurnRef.current === stopTurn) stopTurnRef.current = () => {};
         streamingRef.current = false;
         setStreaming(false);
         // the student asked for something while the reply was paused
@@ -1350,6 +1408,7 @@ export function ChatCore({
     gateStopRef.current();
   }, [arabicUi]);
   const gatedNow = messages.some((m) => m.streaming && m.gated);
+  const handleStop = useCallback(() => stopTurnRef.current(), []);
 
   const paced = !prefersReducedMotion();
 
@@ -1567,6 +1626,29 @@ export function ChatCore({
           )}
         </div>
         {inputAccessory?.({ setInput })}
+        {streaming ? (
+          /* The Stop button takes Send's place while a reply is open — the
+             same slot and the same 52px pill, so her thumb finds it where it
+             just was. White with ink (not the amber: Send keeps the one
+             amber), a filled square, and its name in words for a screen
+             reader. Symmetric, so it needs no mirroring in RTL. */
+          <button
+            type="button"
+            onClick={handleStop}
+            aria-label={stopControlLabel(arabicUi)}
+            title={stopControlLabel(arabicUi)}
+            data-chat-stop=""
+            className={cx(
+              STROKE,
+              "flex size-[var(--noor-touch-min)] shrink-0 items-center justify-center rounded-[var(--play-radius-pill)]",
+              "bg-card text-ink sticker-shadow-sm play-pressable"
+            )}
+          >
+            <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden>
+              <rect x="1" y="1" width="10" height="10" fill="currentColor" />
+            </svg>
+          </button>
+        ) : (
         <button
           onClick={() => send(input)}
           disabled={streaming || !input.trim()}
@@ -1589,6 +1671,7 @@ export function ChatCore({
             />
           </svg>
         </button>
+        )}
       </div>
     </div>
   );
@@ -1867,6 +1950,23 @@ const MessageRow = memo(function MessageRow({
 
         {m.streaming && !m.gated && visibleText.length > 0 && (
           <span className="ms-0.5 inline-block h-3.5 w-[7px] translate-y-[2px] animate-pulse rounded-full bg-accent" />
+        )}
+
+        {/* the student stopped this reply — said in words, not by colour; the
+            row follows the conversation's direction like the bubble does */}
+        {m.stopped && (
+          <p
+            data-chat-stopped=""
+            className={cx(
+              "flex items-center gap-1.5 font-display text-[0.8rem] font-bold leading-none text-[color:var(--play-text-muted)]",
+              visibleText.length > 0 && "mt-2"
+            )}
+          >
+            <svg width="8" height="8" viewBox="0 0 8 8" aria-hidden>
+              <rect width="8" height="8" fill="currentColor" />
+            </svg>
+            {stoppedLabel(arabicUi)}
+          </p>
         )}
 
         {debug && m.meta && (

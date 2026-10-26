@@ -890,7 +890,11 @@ function BySurface({ view, periodText }: { view: CostView; periodText: string })
 /* ------------------------------------------------------------ by outcome */
 
 function ByOutcome({ view, periodText }: { view: CostView; periodText: string }) {
-  const failed = view.byOutcome.filter((o) => o.outcome !== "ok");
+  // A stopped turn (migration 041) is spent but is not "no answer": the
+  // student was shown part of one and chose to stop it. It is counted on its
+  // own line below rather than folded into the calls that produced nothing.
+  const failed = view.byOutcome.filter((o) => o.outcome !== "ok" && o.outcome !== "stopped");
+  const stopped = view.byOutcome.find((o) => o.outcome === "stopped");
   return (
     <Panel
       title="How the calls ended"
@@ -936,10 +940,17 @@ function ByOutcome({ view, periodText }: { view: CostView; periodText: string })
       </div>
       <p className="mt-2 text-[11.5px] text-ink-faint">
         {failed.length === 0
-          ? `Every call in the ${periodText} was answered.`
+          ? stopped && stopped.turns > 0
+            ? `No call in the ${periodText} failed.`
+            : `Every call in the ${periodText} was answered.`
           : `${int(failed.reduce((n, o) => n + o.turns, 0))} call(s) in the ${periodText} produced no answer and still cost ${usd(
               failed.reduce((n, o) => n + o.costUsd, 0)
             )}, ${IMPUTED.toLowerCase()}.`}
+        {stopped && stopped.turns > 0
+          ? ` ${int(stopped.turns)} call(s) were stopped by the student part-way and cost ${usd(
+              stopped.costUsd
+            )} — spent, but not failures.`
+          : ""}
       </p>
     </Panel>
   );

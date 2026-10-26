@@ -28,6 +28,8 @@ import {
   type Outcome,
   type TokenCounts,
 } from "@/lib/pricing";
+import { endedTurnOutcome } from "@/lib/stop-turn";
+import { registerRun, uploadRunKey } from "@/lib/running-work";
 
 /**
  * The limits, the accepted types and the type guard now live in
@@ -115,7 +117,7 @@ type ParseOutcome = {
   outcome: Outcome;
 };
 
-function runParse(filePath: string): Promise<ParseOutcome> {
+function runParse(filePath: string, signal?: AbortSignal): Promise<ParseOutcome> {
   return new Promise((resolve) => {
     // The Read tool must be ALLOWED here, and only Read.
     //
@@ -160,10 +162,20 @@ function runParse(filePath: string): Promise<ParseOutcome> {
     let out = "";
     let err = "";
     let timedOut = false;
+    let stopped = false;
     const timeout = setTimeout(() => {
       timedOut = true;
       child.kill("SIGKILL");
     }, PARSE_TIMEOUT_MS);
+    // The student's Stop on the upload strip (DELETE /api/uploads/{id}): the
+    // reading is killed and recorded as `stopped`, a cost line and not a
+    // failure (migration 041).
+    const stop = () => {
+      if (!timedOut) stopped = true;
+      child.kill("SIGKILL");
+    };
+    if (signal?.aborted) stop();
+    else signal?.addEventListener("abort", stop, { once: true });
 
     child.stdout.on("data", (d) => (out += d.toString()));
     child.stderr.on("data", (d) => (err += d.toString()));
@@ -174,7 +186,7 @@ function runParse(filePath: string): Promise<ParseOutcome> {
       text: null,
       tokens,
       cliCostUsd,
-      outcome: timedOut ? "timeout" : "error",
+      outcome: endedTurnOutcome({ completed: false, timedOut, stopped }),
     });
 
     child.on("error", () => {
@@ -203,7 +215,7 @@ function runParse(filePath: string): Promise<ParseOutcome> {
       const cliCostUsd = typeof j?.total_cost_usd === "number" ? j.total_cost_usd : null;
 
       if (code !== 0 || !j || j.is_error || typeof j.result !== "string") {
-        console.error(`[uploads] parse failed (code ${code}): ${err.slice(-300)}`);
+        if (!stopped) console.error(`[uploads] parse failed (code ${code}): ${err.slice(-300)}`);
         return resolve(failed(tokens, cliCostUsd));
       }
       const text = j.result.trim();
@@ -263,8 +275,12 @@ export async function parseUpload(
   // borrowed client is nearly five per cent of the pool, for one photograph.
   const started = Date.now();
   let outcome: ParseOutcome;
+  // Stoppable from the strip's Stop (DELETE /api/uploads/{id}), which runs in
+  // another request — this parse outlives the one that started it.
+  const stopper = new AbortController();
+  const unregister = registerRun(uploadRunKey(uploadId), () => stopper.abort());
   try {
-    outcome = await runParse(filePath);
+    outcome = await runParse(filePath, stopper.signal);
   } catch (e) {
     console.error("[uploads] parse threw:", e);
     outcome = {
@@ -274,9 +290,14 @@ export async function parseUpload(
       cliCostUsd: null,
       outcome: "error",
     };
+  } finally {
+    unregister();
   }
 
-  // Unit two: the outcome the student is waiting on.
+  // Unit two: the outcome the student is waiting on. A stopped reading is
+  // `failed` here — `parse_status` has no word for it, and nothing reads a
+  // stopped upload again: the strip let go of it and the ledger row below
+  // carries `stopped`.
   await scoped(studentId, undefined, (db) =>
     db.query(
       `UPDATE uploads SET parse_status = $2, parsed_text = $3 WHERE id = $1`,

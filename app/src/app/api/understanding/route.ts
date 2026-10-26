@@ -35,6 +35,7 @@ import {
   type CliCode,
 } from "@/lib/claude-cli";
 import type { LessonMode, UnderstandingCheck, Verdict } from "@/lib/types";
+import { endedTurnOutcome } from "@/lib/stop-turn";
 
 /**
  * POST /api/understanding — the honest comprehension rating.
@@ -79,7 +80,8 @@ type CliResult =
     }
   | {
       ok: false;
-      outcome: Extract<Outcome, "error" | "timeout">;
+      /** `stopped`: the student pressed Stop on the rating (migration 041). */
+      outcome: Extract<Outcome, "error" | "timeout" | "stopped">;
       tokens: TokenCounts;
       latencyMs: number;
       /**
@@ -99,11 +101,14 @@ type CliResult =
 
 function runClaudeJson(
   systemPrompt: string,
-  userPrompt: string
+  userPrompt: string,
+  /** The request's abort signal — the student's Stop. */
+  signal?: AbortSignal
 ): Promise<CliResult> {
   return new Promise((resolve) => {
     const started = Date.now();
     let timedOut = false;
+    let stopped = false;
     // The system prompt in a FILE, never on the command line: one exec argument
     // over 131,072 bytes is refused with E2BIG (lib/claude-prompt-file.ts).
     const promptFile = systemPromptFile(systemPrompt);
@@ -153,6 +158,15 @@ function runClaudeJson(
       timedOut = true;
       child.kill("SIGKILL");
     }, TIMEOUT_MS);
+    // THE STOP BUTTON: the client aborts, the child dies, and the ledger says
+    // `stopped` rather than classifying the kill as a backend failure.
+    const stop = () => {
+      if (!timedOut) stopped = true;
+      child.kill("SIGKILL");
+    };
+    if (signal?.aborted) stop();
+    else signal?.addEventListener("abort", stop, { once: true });
+    child.on("close", () => signal?.removeEventListener("abort", stop));
     let out = "";
     let errTail = "";
     child.stdout.on("data", (c: Buffer) => (out += c.toString("utf8")));
@@ -165,7 +179,10 @@ function runClaudeJson(
     child.stdin.end();
     const failed = (tokens: TokenCounts, code: CliCode): CliResult => ({
       ok: false,
-      outcome: timedOut ? "timeout" : "error",
+      outcome: endedTurnOutcome({ completed: false, timedOut, stopped }) as
+        | "error"
+        | "timeout"
+        | "stopped",
       tokens,
       latencyMs: Date.now() - started,
       code,
@@ -397,15 +414,19 @@ export async function POST(req: Request) {
     let rawOut = "";
     /** Set when an attempt failed outright, for the ledger row's outcome and
      *  for the short code the console's replay shows beside it. */
-    let failure: { outcome: Extract<Outcome, "error" | "timeout">; code: CliCode } | null =
-      null;
+    let failure: {
+      outcome: Extract<Outcome, "error" | "timeout" | "stopped">;
+      code: CliCode;
+    } | null = null;
 
     for (let attempt = 0; attempt < 2 && !rating; attempt++) {
       const prompt =
         attempt === 0
           ? basePrompt
           : understandingRetryPrompt(basePrompt, rawOut);
-      const r = await runClaudeJson(systemPrompt, prompt);
+      // `req.signal`: the student's Stop kills the grading model mid-call, and
+      // a Stop between the two attempts means the retry never starts.
+      const r = await runClaudeJson(systemPrompt, prompt, req.signal);
       // Both branches spent tokens, so both branches accumulate them.
       tokens = addTokens(tokens, r.tokens);
       totalMs += r.latencyMs;
@@ -450,9 +471,11 @@ export async function POST(req: Request) {
               [
                 studentId,
                 `[rate ${mode} session — ${transcript.length} transcript lines]`,
-                failure
-                  ? `[no rating — the grading model ${failure.outcome === "timeout" ? "timed out" : "failed"}: ${failure.code}]`
-                  : "[no rating — the grading model returned invalid JSON twice]",
+                failure?.outcome === "stopped"
+                  ? "[no rating — stopped by the student]"
+                  : failure
+                    ? `[no rating — the grading model ${failure.outcome === "timeout" ? "timed out" : "failed"}: ${failure.code}]`
+                    : "[no rating — the grading model returned invalid JSON twice]",
                 JSON.stringify({
                   chat_session: chatSession,
                   mode,
@@ -477,6 +500,11 @@ export async function POST(req: Request) {
         } catch (e) {
           console.error("understanding: failed to log a failed rating:", e);
         }
+      }
+      if (failure?.outcome === "stopped") {
+        // Nobody is waiting for this body — the client aborted — but a
+        // status that is not a 5xx keeps a proxy's error rate honest.
+        return NextResponse.json({ stopped: true }, { status: 499 });
       }
       return NextResponse.json(
         { error: "rating model returned invalid JSON twice" },

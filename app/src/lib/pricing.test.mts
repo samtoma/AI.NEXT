@@ -164,8 +164,8 @@ test("the threshold research A4 named is a tenth, and it is exclusive", () => {
 
 /* ------------------------------------------------------------- outcomes */
 
-test("the outcome vocabulary matches migration 021's CHECK constraint", () => {
-  assert.deepEqual([...OUTCOMES], ["ok", "error", "timeout", "redacted", "refused"]);
+test("the outcome vocabulary matches the CHECK constraint (migration 021, widened by 041)", () => {
+  assert.deepEqual([...OUTCOMES], ["ok", "error", "timeout", "redacted", "refused", "stopped"]);
   for (const o of OUTCOMES) {
     assert.ok(isOutcome(o));
     assert.ok(OUTCOME_LABEL[o].length > 0, `${o} needs a label a founder can read`);

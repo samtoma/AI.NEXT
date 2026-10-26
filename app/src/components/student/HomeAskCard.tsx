@@ -54,17 +54,29 @@ export function HomeAskCard() {
     setFile(typed);
   };
 
+  // The send in flight, so Stop can abort it. Sending a file starts Noor
+  // reading it on the server (the upload's 202), so a Stop after the upload
+  // has an id also asks the server to kill that reading.
+  const inFlight = useRef<AbortController | null>(null);
+  const stop = () => inFlight.current?.abort();
+
   const send = async () => {
     if (!ready || busy) return;
+    const controller = new AbortController();
+    inFlight.current = controller;
     setBusy(true);
     setError(null);
     track("question_asked", { surface: "homework" });
+    let uploadId: number | undefined;
     try {
-      let uploadId: number | undefined;
       if (file) {
         const form = new FormData();
         form.append("file", file);
-        const up = await authFetch("/api/uploads", { method: "POST", body: form });
+        const up = await authFetch("/api/uploads", {
+          method: "POST",
+          body: form,
+          signal: controller.signal,
+        });
         if (!up.ok) {
           setError(uploadFailureMessage(uploadFailureOf(up.status), file.size, "en"));
           setBusy(false);
@@ -76,6 +88,7 @@ export function HomeAskCard() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: text.trim(), uploadId }),
+        signal: controller.signal,
       });
       if (!res.ok) throw new Error(String(res.status));
       const { askId } = await res.json();
@@ -83,8 +96,18 @@ export function HomeAskCard() {
       // the check-in, which renders without an app router in its render test.
       window.location.assign(`/student/ask/${askId}`);
     } catch {
-      setError("Something went wrong sending that. Want to try again?");
+      if (controller.signal.aborted) {
+        // Stopped, not failed: no error line, and what she typed stays put so
+        // she can change it and send again straight away.
+        if (uploadId) {
+          void authFetch(`/api/uploads/${uploadId}`, { method: "DELETE" }).catch(() => {});
+        }
+      } else {
+        setError("Something went wrong sending that. Want to try again?");
+      }
       setBusy(false);
+    } finally {
+      if (inFlight.current === controller) inFlight.current = null;
     }
   };
 
@@ -144,20 +167,41 @@ export function HomeAskCard() {
             "sticker-shadow-sm h-[54px] min-w-0 flex-1 rounded-[var(--play-radius-sm)] bg-card px-4 font-read text-[1rem] text-ink placeholder:text-[color:var(--play-text-muted)]"
           )}
         />
-        <button
-          type="submit"
-          aria-label="Send"
-          disabled={!ready || busy}
-          className={cx(
-            STROKE_WIDTH,
-            "inline-flex size-[54px] shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] font-display text-[1.3rem] font-extrabold",
-            ready
-              ? "play-pressable sticker-shadow-sm border-ink bg-[var(--noor-action)] text-[color:var(--noor-on-action)]"
-              : "border-[color:var(--play-disabled-border)] bg-card text-[color:var(--play-disabled-text)]"
-          )}
-        >
-          {busy ? "…" : "↑"}
-        </button>
+        {busy ? (
+          // Stop takes Send's place while the question is on its way — same
+          // slot, same size. White with ink (Send keeps the one amber); a
+          // symmetric square, so nothing to mirror in RTL.
+          <button
+            type="button"
+            onClick={stop}
+            aria-label="Stop sending"
+            title="Stop sending"
+            data-ask-stop=""
+            className={cx(
+              STROKE_WIDTH,
+              "play-pressable sticker-shadow-sm inline-flex size-[54px] shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] border-ink bg-card text-ink"
+            )}
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden>
+              <rect x="1" y="1" width="12" height="12" fill="currentColor" />
+            </svg>
+          </button>
+        ) : (
+          <button
+            type="submit"
+            aria-label="Send"
+            disabled={!ready}
+            className={cx(
+              STROKE_WIDTH,
+              "inline-flex size-[54px] shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] font-display text-[1.3rem] font-extrabold",
+              ready
+                ? "play-pressable sticker-shadow-sm border-ink bg-[var(--noor-action)] text-[color:var(--noor-on-action)]"
+                : "border-[color:var(--play-disabled-border)] bg-card text-[color:var(--play-disabled-text)]"
+            )}
+          >
+            ↑
+          </button>
+        )}
       </form>
 
       {file && (

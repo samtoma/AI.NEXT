@@ -224,8 +224,23 @@ export const CLI_SURFACE_KINDS = ["chat", "understanding", "upload_parse"] as co
  * product working exactly as designed, and counting them would put a permanent
  * baseline of "failures" under the tile — which is the fastest way to make a
  * health signal meaningless.
+ *
+ * **`stopped` is not here either** (migration 041) — the student pressed Stop,
+ * and the kill that follows is ours, not the CLI failing.
  */
 export const FAILING_OUTCOMES = ["error", "timeout"] as const;
+
+/**
+ * Outcomes that say NOTHING about the runtime, either way, and are left out of
+ * the turn sample entirely.
+ *
+ * `stopped`: the student stopped the turn, usually before the model finished.
+ * Counting it as a failure would page an operator over a working tutor;
+ * counting it as a success would let a hanging CLI that students keep
+ * stopping read as healthy — it would break the failure run and become the
+ * "last good turn". It is neither, so it is not evidence.
+ */
+export const NEUTRAL_OUTCOMES = ["stopped"] as const;
 
 /**
  * What keeps working when the tutor cannot teach, in the words an operator
@@ -423,8 +438,11 @@ export type TurnVerdict = {
 export function turnVerdict(rows: readonly TurnRow[], nowMs: number): TurnVerdict {
   const cli = new Set<string>(CLI_SURFACE_KINDS);
   const bad = new Set<string>(FAILING_OUTCOMES);
+  const neutral = new Set<string>(NEUTRAL_OUTCOMES);
   const sorted = newestFirst(
-    rows.filter((r) => r.surfaceKind !== null && cli.has(r.surfaceKind)),
+    rows.filter(
+      (r) => r.surfaceKind !== null && cli.has(r.surfaceKind) && !neutral.has(r.outcome)
+    ),
     (r) => r.at
   );
 

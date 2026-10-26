@@ -323,6 +323,9 @@ export interface ChatMsg {
   reveal?: number;
   /** FR-3501: the reveal is stopped at a beat, waiting for the student's Next */
   gated?: boolean;
+  /** The student pressed Stop: `text` is what had been revealed, the message
+   *  is settled (never `streaming`), and it renders with a "Stopped" label. */
+  stopped?: boolean;
 }
 
 /* ---- Adaptive lesson modes (learn / review) ---- */

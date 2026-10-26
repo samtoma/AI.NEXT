@@ -243,8 +243,9 @@ export function driftExceedsThreshold(storedUsd: number, recomputedUsd: number):
  * Outcomes
  * ======================================================================== */
 
-/** `ai_interactions.outcome` — the CHECK constraint in migration 021, in TypeScript. */
-export const OUTCOMES = ["ok", "error", "timeout", "redacted", "refused"] as const;
+/** `ai_interactions.outcome` — the CHECK constraint (migration 021, widened by
+ *  041 for `stopped`), in TypeScript. */
+export const OUTCOMES = ["ok", "error", "timeout", "redacted", "refused", "stopped"] as const;
 export type Outcome = (typeof OUTCOMES)[number];
 
 /** What a console reader is shown instead of the stored word (FR-2211). */
@@ -254,6 +255,8 @@ export const OUTCOME_LABEL: Readonly<Record<Outcome, string>> = {
   timeout: "Timed out",
   redacted: "Suppressed by the sacred guard",
   refused: "Refused by the model",
+  // The student pressed Stop (migration 041): spent, and not a failure.
+  stopped: "Stopped by the student",
 } as const;
 
 export function isOutcome(v: unknown): v is Outcome {

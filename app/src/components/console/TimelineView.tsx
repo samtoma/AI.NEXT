@@ -66,7 +66,10 @@ function Item({ item, currentRelease }: { item: TimelineItem; currentRelease: st
           <>
             <span className="font-mono text-[11px] text-ink-faint">{item.model}</span>
             <RendererMark version={item.rendererVersion} currentRelease={currentRelease} />
-            {item.outcome !== "ok" && <Chip tone="attention">{item.outcome}</Chip>}
+            {/* a stopped turn is the student's choice, not a fault (migration 041) */}
+            {item.outcome !== "ok" && (
+              <Chip tone={item.outcome === "stopped" ? "neutral" : "attention"}>{item.outcome}</Chip>
+            )}
           </>
         )}
       </header>

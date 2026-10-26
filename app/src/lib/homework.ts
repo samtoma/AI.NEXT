@@ -24,6 +24,8 @@ import {
 } from "@/lib/homework-rules";
 import type { AskContext } from "@/lib/ask";
 import { getParsedUpload } from "@/lib/uploads";
+import { endedTurnOutcome } from "@/lib/stop-turn";
+import { cancelRun, homeworkRunKey, registerRun, uploadRunKey } from "@/lib/running-work";
 
 /**
  * Homework ask — the I/O half (spec 004, ADR-0025 — PROPOSED, prototype only).
@@ -44,7 +46,8 @@ const SPLIT_TIMEOUT_MS = 90_000;
 const PARSE_WAIT_MS = 150_000;
 const PARSE_POLL_MS = 2_000;
 
-export type AskStatus = "reading" | "ready" | "unreadable" | "failed";
+/** `stopped`: the student pressed Stop while it was being read (migration 041). */
+export type AskStatus = "reading" | "ready" | "unreadable" | "failed" | "stopped";
 
 export type HomeworkItem = {
   id: number;
@@ -165,6 +168,22 @@ export async function getAsk(
  * as a status the page shows (FR-3606 — never a guess).
  */
 export async function readAsk(askId: number, studentId: number): Promise<AskStatus> {
+  // Stoppable from the page's Stop (DELETE /api/homework/{id}), which arrives
+  // in another request: this reading outlives the one that started it.
+  const stopper = new AbortController();
+  const unregister = registerRun(homeworkRunKey(askId), () => stopper.abort());
+  try {
+    return await readAskUntil(askId, studentId, stopper.signal);
+  } finally {
+    unregister();
+  }
+}
+
+async function readAskUntil(
+  askId: number,
+  studentId: number,
+  signal: AbortSignal
+): Promise<AskStatus> {
   try {
     const src = await scoped(studentId, undefined, (db) =>
       db.query(`SELECT source, upload_id, typed_text FROM homework_asks WHERE id = $1`, [askId])
@@ -173,7 +192,8 @@ export async function readAsk(askId: number, studentId: number): Promise<AskStat
     let text: string | null = src.rows[0].typed_text;
 
     if (src.rows[0].source === "upload") {
-      const parsed = await waitForParse(Number(src.rows[0].upload_id), studentId);
+      const parsed = await waitForParse(Number(src.rows[0].upload_id), studentId, signal);
+      if (signal.aborted) return setAskStatus(askId, studentId, "stopped");
       if (parsed.status !== "parsed" || !parsed.text) {
         return setAskStatus(askId, studentId, parsed.status === "unreadable" ? "unreadable" : "failed");
       }
@@ -183,9 +203,15 @@ export async function readAsk(askId: number, studentId: number): Promise<AskStat
     if (!text?.trim()) return setAskStatus(askId, studentId, "unreadable");
 
     const objectives = await visibleMathsObjectives(studentId);
+    if (signal.aborted) return setAskStatus(askId, studentId, "stopped");
     const started = Date.now();
-    const run = await runSplit(buildSplitPrompt(text, objectives));
+    const run = await runSplit(buildSplitPrompt(text, objectives), signal);
     await logSplit(studentId, askId, run, Date.now() - started);
+    // Stopped mid-split, or after it answered but before its questions were
+    // written: either way she asked for it to stop, and it stops.
+    if (run.outcome === "stopped" || signal.aborted) {
+      return setAskStatus(askId, studentId, "stopped");
+    }
     if (run.reply == null) return setAskStatus(askId, studentId, "failed");
 
     const result = parseSplitReply(run.reply, new Set(objectives.map((o) => o.id)));
@@ -211,6 +237,27 @@ export async function readAsk(askId: number, studentId: number): Promise<AskStat
   }
 }
 
+/**
+ * The page's Stop while an ask is being read. The caller has already read
+ * the ask under the student's principal (the ownership check).
+ *
+ * The running reader is told to stop and writes `stopped` itself once its
+ * model process is dead, so the ledger row and the status agree. When no
+ * reader is running in this process (it finished in the same instant, or the
+ * server restarted under it) the row is moved to `stopped` directly — but
+ * only from `reading`, so a Stop that lost the race never hides questions
+ * that are already there.
+ */
+export async function stopAsk(studentId: number, askId: number): Promise<void> {
+  if (cancelRun(homeworkRunKey(askId))) return;
+  await scoped(studentId, undefined, (db) =>
+    db.query(
+      `UPDATE homework_asks SET status = 'stopped' WHERE id = $1 AND status = 'reading'`,
+      [askId]
+    )
+  );
+}
+
 async function setAskStatus(askId: number, studentId: number, status: AskStatus): Promise<AskStatus> {
   await scoped(studentId, undefined, (db) =>
     db.query(`UPDATE homework_asks SET status = $2 WHERE id = $1`, [askId, status])
@@ -220,10 +267,29 @@ async function setAskStatus(askId: number, studentId: number, status: AskStatus)
 
 async function waitForParse(
   uploadId: number,
-  studentId: number
+  studentId: number,
+  signal: AbortSignal
 ): Promise<{ status: string; text: string | null }> {
   const deadline = Date.now() + PARSE_WAIT_MS;
+  // A Stop while the photo is still being read stops the reading too — it is
+  // the same model work the student is waiting on, and nothing else wants it.
+  const stopParse = () => void cancelRun(uploadRunKey(uploadId));
+  signal.addEventListener("abort", stopParse, { once: true });
+  try {
+    return await pollParse(uploadId, studentId, deadline, signal);
+  } finally {
+    signal.removeEventListener("abort", stopParse);
+  }
+}
+
+async function pollParse(
+  uploadId: number,
+  studentId: number,
+  deadline: number,
+  signal: AbortSignal
+): Promise<{ status: string; text: string | null }> {
   for (;;) {
+    if (signal.aborted) return { status: "failed", text: null };
     const r = await scoped(studentId, undefined, (db) =>
       db.query(`SELECT parse_status, parsed_text FROM uploads WHERE id = $1`, [uploadId])
     );
@@ -257,7 +323,7 @@ async function visibleMathsObjectives(studentId: number): Promise<SplitObjective
 
 type SplitRun = { reply: string | null; tokens: TokenCounts; cliCostUsd: number | null; outcome: Outcome };
 
-function runSplit(prompt: string): Promise<SplitRun> {
+function runSplit(prompt: string, signal?: AbortSignal): Promise<SplitRun> {
   return new Promise((resolve) => {
     const child = spawn(
       CLAUDE_BIN,
@@ -267,10 +333,18 @@ function runSplit(prompt: string): Promise<SplitRun> {
     let out = "";
     let err = "";
     let timedOut = false;
+    let stopped = false;
     const timeout = setTimeout(() => {
       timedOut = true;
       child.kill("SIGKILL");
     }, SPLIT_TIMEOUT_MS);
+    // The student's Stop: killed, and recorded as `stopped` (migration 041).
+    const stop = () => {
+      if (!timedOut) stopped = true;
+      child.kill("SIGKILL");
+    };
+    if (signal?.aborted) stop();
+    else signal?.addEventListener("abort", stop, { once: true });
     child.stdout.on("data", (d) => (out += d.toString()));
     child.stderr.on("data", (d) => (err += d.toString()));
     child.on("error", () => {
@@ -288,8 +362,13 @@ function runSplit(prompt: string): Promise<SplitRun> {
       const tokens = tokensFromUsage(j?.usage);
       const cliCostUsd = typeof j?.total_cost_usd === "number" ? j.total_cost_usd : null;
       if (code !== 0 || !j || j.is_error || typeof j.result !== "string") {
-        console.error(`[homework] split failed (code ${code}): ${err.slice(-300)}`);
-        return resolve({ reply: null, tokens, cliCostUsd, outcome: timedOut ? "timeout" : "error" });
+        if (!stopped) console.error(`[homework] split failed (code ${code}): ${err.slice(-300)}`);
+        return resolve({
+          reply: null,
+          tokens,
+          cliCostUsd,
+          outcome: endedTurnOutcome({ completed: false, timedOut, stopped }),
+        });
       }
       resolve({ reply: j.result, tokens, cliCostUsd, outcome: "ok" });
     });

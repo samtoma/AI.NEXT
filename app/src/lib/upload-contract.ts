@@ -325,12 +325,17 @@ export function uploadPhaseMessage(phase: UploadPhase, lang: UploadLang): string
   }
 }
 
-/** The labels on the two affordances and the remove button. */
+/** The labels on the two affordances, the remove button, and the Stop that
+ *  replaces it while the file is being sent or read. */
 export function uploadControlLabels(lang: UploadLang): {
   attach: string;
   camera: string;
   remove: string;
   region: string;
+  /** the visible word on the Stop button */
+  stop: string;
+  /** its accessible name — says WHAT stops */
+  stopName: string;
 } {
   return lang === "ar"
     ? {
@@ -338,12 +343,16 @@ export function uploadControlLabels(lang: UploadLang): {
         camera: "صوّر الورقة",
         remove: "شيل الملف",
         region: "الملف اللي بعتّه",
+        stop: "وقّف",
+        stopName: "وقّف قراية الملف",
       }
     : {
         attach: "Send a photo or a file",
         camera: "Photograph the page",
         remove: "Remove this file",
         region: "Your upload",
+        stop: "Stop",
+        stopName: "Stop reading this file",
       };
 }
 
