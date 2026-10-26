@@ -53,6 +53,7 @@ UNION ALL SELECT 'sessions',             count(*) FROM sessions
 UNION ALL SELECT 'analytics_events',     count(*) FROM analytics_events
 UNION ALL SELECT 'explanation_log',      count(*) FROM explanation_log
 UNION ALL SELECT 'student_progress',     count(*) FROM student_progress
+UNION ALL SELECT 'lesson_saves',         count(*) FROM lesson_saves
 UNION ALL SELECT 'student_testers',      count(*) FROM student_testers
 ORDER BY 1;
 
@@ -74,6 +75,7 @@ BEGIN
     UNION ALL SELECT 1 FROM understanding_checks
     UNION ALL SELECT 1 FROM mastery
     UNION ALL SELECT 1 FROM student_progress
+    UNION ALL SELECT 1 FROM lesson_saves
     UNION ALL SELECT 1 FROM student_testers
   ) s;
   IF n <> 0 THEN

@@ -74,10 +74,13 @@ import {
 import { authFetch } from "@/lib/auth/client-session";
 import {
   SAVE_VERSION,
+  clearLegacyLessonSaves,
+  createSaveChannel,
   isEarlyFinish,
+  lessonSaveUrl,
   parseSaved,
   resumeStep,
-  storeKey,
+  type SavePayload,
   type SavedSession as SavedLesson,
 } from "@/lib/lesson-resume";
 
@@ -92,8 +95,9 @@ import {
  *          offered after 5 replies — a nudge, never a block (ADR-0023).
  * Both run in FOCUS MODE (body[data-focus] hides the global nav) and end in
  * the honest report card. An in-progress session survives reloads, closing
- * the tab and an early Finish via localStorage ("استكمل الدرس؟"; FR-204,
- * lib/lesson-resume.ts).
+ * the tab, an early Finish, sign-out and a change of device: the place is
+ * saved on the server as the lesson goes ("استكمل الدرس؟"; FR-204, #25,
+ * lib/lesson-resume.ts, /api/lesson-save).
  */
 
 /**
@@ -250,7 +254,7 @@ function PassageExcerptInline({
   return <PassageExcerptCard passage={passage} excerpt={excerpt} />;
 }
 
-/* ---------------- session persistence (localStorage, FR-204) ---------------- */
+/* ---------------- session persistence (server-side, FR-204 / #25) ---------------- */
 
 type SavedSession = SavedLesson<ChatMsg, BoardItem>;
 
@@ -364,19 +368,59 @@ export function LessonSession({
   const [boot, setBoot] = useState<Boot>({ state: "checking" });
   const freshSid = useRef<string>(makeSid());
 
+  // The place lives only on the server (#25). Pre-#25 browser saves are not
+  // migrated; they are cleared here so they do not linger on a shared device.
   useEffect(() => {
-    let saved: SavedSession | null = null;
+    let cancelled = false;
     try {
-      const key = storeKey(mode, lesson.slug, lesson.studentId);
-      const raw = localStorage.getItem(key);
-      saved = parseSaved(raw, Date.now()) as SavedSession | null;
-      // expired or corrupt — don't leave it lying on a shared device
-      if (raw && !saved) localStorage.removeItem(key);
+      clearLegacyLessonSaves(localStorage);
     } catch {
-      /* storage unavailable — start fresh */
+      /* storage unavailable — nothing to clear */
     }
-    setBoot(saved ? { state: "prompt", saved } : { state: "ready", seed: null });
+    (async () => {
+      let saved: SavedSession | null = null;
+      // one retry on a network error or a 5xx; anything else is "no save"
+      for (let attempt = 0; attempt < 2 && !cancelled; attempt++) {
+        try {
+          const res = await authFetch(lessonSaveUrl(mode, lesson.slug), {
+            cache: "no-store",
+          });
+          if (res.ok) {
+            const j = (await res.json()) as { save?: unknown };
+            saved = parseSaved(j.save) as SavedSession | null;
+            break;
+          }
+          if (res.status < 500) break;
+        } catch {
+          /* offline or the server is down — retry once, then start fresh */
+        }
+      }
+      if (!cancelled) {
+        setBoot(saved ? { state: "prompt", saved } : { state: "ready", seed: null });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [mode, lesson.slug, lesson.studentId]);
+
+  /** Ordered writes to this lesson's server save — one in flight, latest queued. */
+  const saveChannel = useMemo(
+    () =>
+      createSaveChannel(async (op) => {
+        const url = lessonSaveUrl(mode, lesson.slug);
+        const res =
+          op.kind === "put"
+            ? await authFetch(url, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: op.body,
+              })
+            : await authFetch(url, { method: "DELETE" });
+        return res.ok;
+      }),
+    [mode, lesson.slug]
+  );
 
   const resumeSaved = useCallback((saved: SavedSession) => {
     const restoredBoard = Array.isArray(saved.board) ? saved.board : [];
@@ -391,13 +435,9 @@ export function LessonSession({
   }, []);
 
   const startFresh = useCallback(() => {
-    try {
-      localStorage.removeItem(storeKey(mode, lesson.slug, lesson.studentId));
-    } catch {
-      /* noop */
-    }
+    saveChannel.remove();
     setBoot({ state: "ready", seed: null });
-  }, [mode, lesson.slug, lesson.studentId]);
+  }, [saveChannel]);
 
   /* ---------------- sealed passages on the board ---------------- */
 
@@ -483,25 +523,21 @@ export function LessonSession({
         return rest as ChatMsg;
       });
     if (!messages.some((m) => m.role === "assistant" && m.text)) return;
-    try {
-      const saved: SavedSession = {
-        v: SAVE_VERSION,
-        sid: sessionIdRef.current,
-        messages,
-        board: boardRef.current,
-        focusKey: focusKeyRef.current,
-        covered: coveredRef.current,
-        at: Date.now(),
-        ...(endedEarly ? { endedEarly: true } : {}),
-      };
-      localStorage.setItem(
-        storeKey(mode, lesson.slug, lesson.studentId),
-        JSON.stringify(saved)
-      );
-    } catch {
-      /* storage full/unavailable — resume is best-effort */
-    }
-  }, [mode, lesson.slug, lesson.studentId]);
+    const saved: SavePayload<ChatMsg, BoardItem> = {
+      v: SAVE_VERSION,
+      sid: sessionIdRef.current,
+      messages,
+      board: boardRef.current,
+      focusKey: focusKeyRef.current,
+      covered: coveredRef.current,
+      ...(endedEarly ? { endedEarly: true } : {}),
+    };
+    // The channel skips a body identical to the last one sent, so the
+    // throttled calls made while a reply streams write nothing until a turn
+    // settles (the streaming message is filtered out above) — a settled
+    // reply, a Stopped one (`stopped: true`), or a board/focus/covered change.
+    saveChannel.put(JSON.stringify(saved));
+  }, [saveChannel]);
 
   const doSave = useCallback(() => {
     if (finishing.current) return;
@@ -519,6 +555,34 @@ export function LessonSession({
   useEffect(() => {
     if (boot.state === "ready") scheduleSave();
   }, [board, focusKey, covered, boot.state, scheduleSave]);
+
+  // A bonus, not the mechanism: saves already go out as the lesson settles.
+  // On pagehide, flush the pending throttled save and any save the server has
+  // not confirmed, with `keepalive` so it outlives the page. Browsers cap
+  // keepalive bodies (~64 KB); a larger one relies on the last confirmed save.
+  useEffect(() => {
+    const onHide = () => {
+      if (saveTimer.current) {
+        clearTimeout(saveTimer.current);
+        saveTimer.current = null;
+        doSave();
+      }
+      const body = saveChannel.unsent();
+      if (!body || new TextEncoder().encode(body).length > 60_000) return;
+      try {
+        void fetch(lessonSaveUrl(mode, lesson.slug), {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body,
+          keepalive: true,
+        }).catch(() => {});
+      } catch {
+        /* the page is going; nothing more to do */
+      }
+    };
+    window.addEventListener("pagehide", onHide);
+    return () => window.removeEventListener("pagehide", onHide);
+  }, [doSave, saveChannel, mode, lesson.slug]);
 
   useEffect(() => {
     setTtsOK(ttsSupported());
@@ -626,13 +690,7 @@ export function LessonSession({
       };
       // a lesson that is over never offers a resume; an early stop keeps the
       // save written above, so the next visit offers Continue / Start over
-      if (!early) {
-        try {
-          localStorage.removeItem(storeKey(mode, lesson.slug, lesson.studentId));
-        } catch {
-          /* noop */
-        }
-      }
+      if (!early) saveChannel.remove();
       setCheck(j.check);
       setRatingCost(j.costUsd);
       setPhase("report");
@@ -649,7 +707,7 @@ export function LessonSession({
     } finally {
       if (ratingAbort.current === controller) ratingAbort.current = null;
     }
-  }, [mode, lesson.slug, lesson.studentId, lesson.los.length, writeSave]);
+  }, [mode, lesson.slug, lesson.los.length, writeSave, saveChannel]);
 
   const stopRating = useCallback(() => ratingAbort.current?.abort(), []);
 

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { STUDENT_NAV_LINKS } from "@/lib/student-nav";
-import { clearLessonSaves } from "@/lib/lesson-resume";
+import { clearLegacyLessonSaves } from "@/lib/lesson-resume";
 
 /**
  * The investor-preview nav. "Gallery" and "Pipeline" are no longer here
@@ -186,9 +186,10 @@ function AccountMenu({ name, settings = true }: { name: string; settings?: boole
     } catch {
       /* 204 either way — the cookies are cleared or the session is unreachable */
     }
-    // lesson saves outlive the tab (FR-204); a shared device must not keep them
+    // A lesson place lives on the server and belongs to the student account,
+    // so sign-out leaves it alone (#25). Only pre-#25 browser saves are cleared.
     try {
-      clearLessonSaves(localStorage);
+      clearLegacyLessonSaves(localStorage);
     } catch {
       /* storage unavailable — nothing was saved */
     }

@@ -537,6 +537,9 @@ export const ENTRIES: Readonly<Record<string, Entry>> = {
   "src/app/api/analytics/route.ts": { none: "first-party events" },
   "src/app/api/tts/route.ts": { none: "speech for text the client already holds" },
   "src/app/api/settings/appearance/route.ts": { none: "her own design variant" },
+  "src/app/api/lesson-save/[mode]/[slug]/route.ts": {
+    none: "her own lesson place (lesson_saves, under RLS) — the transcript she already saw, no curriculum read",
+  },
 };
 
 /** Files under `api/auth/`, all identity: declared by path rather than one by one. */

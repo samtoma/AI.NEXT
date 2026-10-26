@@ -297,7 +297,7 @@ SQL
 # throwaway copy (nobody is studying in it); on the live database students keep
 # working during a load, so there it is reported, not compared.
 STUDENT_TABLES="students accounts guardians attempts mastery understanding_checks explanation_log
-  sessions student_progress ai_interactions analytics_events uploads safety_flags feedback
+  sessions student_progress lesson_saves ai_interactions analytics_events uploads safety_flags feedback
   student_course_access student_curriculum_changes student_testers course_availability"
 student_digest() {  # <database>
   local have t sql=""

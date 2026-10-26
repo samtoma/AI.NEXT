@@ -26,6 +26,11 @@ export function slugOfLo(loId: string): string {
   return loId.replace(/^lo:/, "").replace(/-[0-9]+$/, "");
 }
 
+/** Is this exactly a lesson slug? For callers that must refuse rather than fall back. */
+export function isLessonSlug(raw: unknown): raw is string {
+  return typeof raw === "string" && SLUG_RE.test(raw);
+}
+
 export function sanitizeLessonSlug(raw: unknown): string {
   const s = String(raw ?? "").trim();
   return SLUG_RE.test(s) ? s : DEFAULT_LESSON_SLUG;
