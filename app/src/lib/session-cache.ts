@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+
 import type { AskContext } from "./ask";
 import { addressForms, type Gender } from "./address";
 
@@ -73,6 +75,13 @@ export function snapshotKey(k: {
   /** read this turn, from the one profile query (lib/student-context.ts) */
   gender: Gender;
   /**
+   * Her display name, read this turn from the same query. The tutor greets her
+   * by it inside the replayed prompt, so a rename in settings (FR-2013) must
+   * miss once, exactly as a changed register does. Keyed as a short digest,
+   * never the name itself — the key carries no stored value.
+   */
+  name?: string | null;
+  /**
    * The learning session's stored Socratic-probing snapshot (ADR-0021). Part
    * of the key because it changes the system prompt: a chat whose session
    * rotated (30 minutes idle, ADR-0015) re-resolves, and the cached prompt of
@@ -106,6 +115,7 @@ export function snapshotKey(k: {
     k.wrongAnswer ?? "",
     k.uploadId ?? "",
     addressForms(k.gender).key,
+    ...(k.name ? [createHash("sha256").update(k.name).digest("hex").slice(0, 12)] : []),
     ...(k.probing === true ? ["probe"] : []),
     k.scope,
   ].join("|");

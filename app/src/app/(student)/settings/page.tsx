@@ -1,8 +1,19 @@
 import { redirect } from "next/navigation";
 
 import { DesignVariantPicker } from "@/components/DesignVariantPicker";
-import { gradeDisplayLabel } from "@/lib/catalog";
+import {
+  CurriculumSection,
+  DeleteAccountSection,
+  ProfileSection,
+} from "@/components/student/SettingsForms";
+import { currentPrincipal } from "@/lib/auth/principal";
+import { GRADES, canonicalGrade, gradeDisplayLabel } from "@/lib/catalog";
+import { coursesByCurriculum } from "@/lib/catalog-queries";
+import { courseDef } from "@/lib/courses";
+import { CURRICULUM_IDS, curriculumLabel } from "@/lib/curricula";
+import { offeredCurriculaEveryGrade } from "@/lib/curriculum-queries";
 import { MASTER_VARIANT_ENABLED, variantForGrade } from "@/lib/design-variant";
+import { DELETE_PHRASE, accountHasPassword } from "@/lib/student-settings";
 import { resolveStudentContext } from "@/lib/student-context";
 
 export const dynamic = "force-dynamic";
@@ -21,14 +32,13 @@ export const metadata = { title: "Your settings — Noor" };
  * (`docs/PROJECT_STATE.md`, FR-2013: "No student can edit her own profile" —
  * endpoints and a data model with no surface on top).
  *
- * So this is the smallest honest surface that satisfies the ADR, and it is
- * deliberately not a profile editor. It carries ONE control. It is not the
- * home FR-2013 asks for, it does not let her change her name, her year, her
- * interests or how the tutor addresses her, and it must not be read as having
- * closed that requirement — when FR-2013 is built, this page is where it goes,
- * and the variant control becomes one section of several. Building the whole
- * profile editor here in order to hang one selector off it would have been the
- * larger change and the one nobody asked for.
+ * It started as the smallest honest surface that satisfied the ADR: one
+ * control. Since 2026-10-27 (Tamer's call) it is also where she changes her
+ * name and grade (FR-2013 — gender and interests are still owed), her
+ * curriculum (FR-4010 as amended), and deletes her account (FR-2310), each in
+ * its own section with its own Save, so the one-decision rule below holds per
+ * section. Progress stays with the course it was earned in whatever she
+ * changes (FR-4011).
  *
  * ---------------------------------------------------------------------------
  * THE ANXIOUS-TEENAGER CASE
@@ -58,6 +68,22 @@ export default async function SettingsPage() {
   // American-curriculum student, "Secondary 1" for a National one.
   const gradeLabel = gradeDisplayLabel(me.grade, me.curriculum);
   const knowsGrade = me.grade != null && me.grade !== "";
+  const principal = await currentPrincipal();
+  if (principal.kind !== "student") redirect("/signin?next=/settings");
+
+  const grade = canonicalGrade(me.grade) ?? "";
+  const [offeredByGrade, byCurriculum, hasPassword] = await Promise.all([
+    offeredCurriculaEveryGrade(),
+    coursesByCurriculum(principal.studentId),
+    accountHasPassword(principal.accountId),
+  ]);
+  const courseLabels = Object.fromEntries(
+    Object.entries(byCurriculum).map(([c, ids]) => [
+      c,
+      ids.map((id) => courseDef(id)?.label ?? id),
+    ])
+  );
+  const curriculumOptions = CURRICULUM_IDS.map((id) => ({ id, label: curriculumLabel(id) }));
 
   return (
     <main className="mx-auto w-full max-w-3xl px-6 py-8">
@@ -72,7 +98,31 @@ export default async function SettingsPage() {
         </p>
       </header>
 
-      <section className="ledger-card p-5">
+      <section className="ledger-card mb-6 p-5">
+        <h2 className="mb-4 font-display text-[18px] font-bold text-ink">About you</h2>
+        <ProfileSection
+          name={me.studentName}
+          grade={grade}
+          grades={GRADES.map((g) => ({
+            value: g.value,
+            label: gradeDisplayLabel(g.value, me.curriculum),
+          }))}
+        />
+      </section>
+
+      <section className="ledger-card mb-6 p-5">
+        <h2 className="mb-4 font-display text-[18px] font-bold text-ink">Your curriculum</h2>
+        <CurriculumSection
+          current={me.curriculumKnown ? (me.curriculum as (typeof CURRICULUM_IDS)[number]) : null}
+          currentLabel={curriculumLabel(me.curriculum)}
+          options={curriculumOptions}
+          grade={grade}
+          offered={offeredByGrade[grade] ?? []}
+          courses={courseLabels}
+        />
+      </section>
+
+      <section className="ledger-card mb-6 p-5">
         <h2 className="font-display text-[18px] font-bold text-ink">
           How the app looks
         </h2>
@@ -99,6 +149,14 @@ export default async function SettingsPage() {
               : "we do not have your year on file, so you get the easier of the two to read"
           }
         />
+      </section>
+
+      <section className="ledger-card p-5">
+        <h2 className="font-display text-[18px] font-bold text-ink">Delete your account</h2>
+        <p className="mb-4 mt-1 max-w-[62ch] text-[14px] leading-relaxed text-ink-soft">
+          Removes your account and everything in it, for good.
+        </p>
+        <DeleteAccountSection hasPassword={hasPassword} phrase={DELETE_PHRASE} />
       </section>
     </main>
   );

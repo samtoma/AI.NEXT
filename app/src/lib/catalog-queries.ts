@@ -14,6 +14,7 @@ import {
 import { COURSES, COURSE_IDS, type CourseId } from "./courses";
 import {
   CURRICULA,
+  CURRICULUM_IDS,
   asCurriculumId,
   curriculumLabel,
   type CurriculumId,
@@ -184,6 +185,31 @@ export async function resolveStudentScope(
 ): Promise<StudentScope> {
   if (studentId == null) return UNGATED;
   return scoped(studentId, asClient(c), (db) => scopeOn(db, studentId));
+}
+
+/**
+ * The courses she WOULD see in each curriculum, at her own grade and with her
+ * own exceptions — for the settings page's curriculum confirmation, which must
+ * name what she stops and starts seeing (FR-4010). The same rule as her scope,
+ * asked once per curriculum, so the page cannot promise a course the gate then
+ * refuses.
+ */
+export async function coursesByCurriculum(
+  studentId: number
+): Promise<Record<CurriculumId, string[]>> {
+  return scoped(studentId, undefined, async (db) => {
+    const { grade, rules, overrides, switchedOff } = await availabilityFor(
+      db,
+      studentId,
+      COURSE_GATING
+    );
+    return Object.fromEntries(
+      CURRICULUM_IDS.map((c) => [
+        c,
+        visibleCourseIds({ grade, curriculum: c }, rules, overrides, switchedOff),
+      ])
+    ) as Record<CurriculumId, string[]>;
+  });
 }
 
 async function scopeOn(db: Db, studentId: number): Promise<StudentScope> {

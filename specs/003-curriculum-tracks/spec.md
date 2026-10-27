@@ -26,6 +26,10 @@ approves the constitution amendment (applied, v3.3.0 → v3.4.0), and changes or
 - FR-4407's third-reading rule for disagreeing maths transcriptions;
 - FR-4205's per-course "Arabic touches" setting (the G10 course's prompts are English-only).
 
+**2026-10-27 (Tamer, product owner; decision 4 amended)**: FR-4010 lets a student change her own
+curriculum on `/settings`; FR-4012 names her as a recorded author. Progress rules (FR-4011) are
+unchanged. Built in migration 043 with FR-2013 (name and grade) and FR-2310 (account deletion).
+
 **2026-09-26 (S7 widget verification; decision 47)**: FR-4306 now states the blind verifier's rule, and
 that a mapping it does not confirm is held for human review instead of refusing the widget.
 
@@ -691,11 +695,13 @@ through the attempts route and confirm identical outcomes.
   curriculum's course, for example a test account previewing it. Any list that then holds two courses
   of one subject MUST keep them apart, course by course, never interleaved (extending FR-3217's
   split by subject).
-- **FR-4010** *(changed rev. 2, decision 4)*: At launch, only an operator holding `student-data`
-  (FR-2707) MUST be able to change a student's curriculum, from the student's console record, among
-  the curricula the product knows. The change MUST be confirmed in the page, not by a browser dialog
-  (FR-2710), and the confirmation MUST name which courses the student will stop and start seeing and
-  say that progress is kept. No student surface MUST offer a curriculum control at launch.
+- **FR-4010** *(changed rev. 2, decision 4; **CHANGED 2026-10-27 — Tamer, decision 4 amended**)*: An
+  operator holding `student-data` (FR-2707) MUST be able to change a student's curriculum, from the
+  student's console record, among the curricula the product knows. ~~No student surface MUST offer a
+  curriculum control at launch.~~ The student MUST also be able to change her own, on her settings
+  page, among the same curricula. Either way the change MUST be confirmed in the page, not by a
+  browser dialog (FR-2710), and the confirmation MUST name which courses the student will stop and
+  start seeing and say that progress is kept.
 - **FR-4011** *(changed rev. 2, decision 4)*: Changing a student's curriculum MUST NOT delete, reset,
   copy, merge or transfer any progress. Mastery, attempts, saved places and history stay with the
   course they were earned in, and changing back MUST restore them exactly as left. No mastery moves
@@ -703,7 +709,8 @@ through the attempts route and confirm identical outcomes.
   decision 37:)* A conversation already open MUST read the new scope on its next turn.
 - **FR-4012** *(changed rev. 2, decision 4)*: Every change to a student's curriculum after sign-up
   MUST be recorded as history, not as a value overwritten: when, from which curriculum, to which,
-  whether chosen or implied, and which operator (or "re-resolved by the product", FR-4008). The
+  whether chosen or implied, and which operator (or "re-resolved by the product", FR-4008, or — since
+  2026-10-27 — "the student herself", FR-4010). The
   curriculum set at sign-up or in the first-Google-sign-in step MUST be recorded with the account's
   creation.
 - **FR-4013**: A student's grade MUST remain one stored school year, shared by all curricula.

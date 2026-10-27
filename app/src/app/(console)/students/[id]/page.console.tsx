@@ -105,7 +105,30 @@ export default async function ConsoleStudentPage({
   // A student who is not in this environment is not here. No audit row is
   // written for a record that was not read — the callback runs only after a row
   // comes back.
-  if (!data) notFound();
+  //
+  // Said in words rather than as a bare 404 (FR-2310): a student can now
+  // delete her own account (migration 043), and an operator following an old
+  // link must be told the record is gone, not shown an error that looks like a
+  // broken console. Nothing distinguishes "deleted" from "never here" — that is
+  // what a complete deletion means — so the page says both.
+  if (!data) {
+    return (
+      <main className="mx-auto w-full max-w-[1100px] px-5 py-7">
+        <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-faint">
+          <Link href="/" className="underline-offset-2 hover:underline">
+            Students
+          </Link>{" "}
+          / #{studentId}
+        </p>
+        <h1 className="mt-1 font-display text-[24px] font-bold text-ink">No record for #{studentId}</h1>
+        <p className="mt-2 max-w-[70ch] text-[13px] text-ink-soft">
+          There is no student #{studentId} in the {ENVIRONMENT} environment. If the student deleted
+          their account, the record is gone for good: the account, progress and transcripts are
+          removed together, and nothing of them is kept to show (FR-2310).
+        </p>
+      </main>
+    );
+  }
 
   // Course availability (migration 023). No `onRead` here and none is missing:
   // `studentAccess`'s own docblock is explicit that a caller sharing this
@@ -329,7 +352,7 @@ export default async function ConsoleStudentPage({
         {notOffered && curriculum !== null && (
           <p className="mt-3 max-w-[78ch] text-[12.5px] leading-relaxed text-ink">
             {curriculum.source === "chosen"
-              ? `${gradeInWords} no longer offers the ${curriculumLabel(s.curriculumSystem)} curriculum. A chosen curriculum is kept when that happens and only an operator changes it (FR-4008).`
+              ? `${gradeInWords} no longer offers the ${curriculumLabel(s.curriculumSystem)} curriculum. A chosen curriculum is kept when that happens; the student can change it in settings, or an operator here (FR-4008, FR-4010).`
               : `${gradeInWords} does not offer the ${curriculumLabel(s.curriculumSystem)} curriculum today. If she is a real student, check which curriculum her school follows and set it below.`}
           </p>
         )}
@@ -371,7 +394,9 @@ export default async function ConsoleStudentPage({
                     <Td>
                       {c.reason === "grade_change_reresolved"
                         ? "re-resolved by the product on a grade change"
-                        : (c.changedBy ?? "an operator no longer on record")}
+                        : c.reason === "student"
+                          ? "the student, in settings"
+                          : (c.changedBy ?? "an operator no longer on record")}
                     </Td>
                     <Td>{c.note ?? <span className="text-ink-faint">no note</span>}</Td>
                   </tr>

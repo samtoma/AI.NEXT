@@ -128,9 +128,10 @@ export type CurriculumChange = {
   fromCurriculum: string;
   toCurriculum: string;
   toSource: CurriculumSource;
-  /** the operator's display name; `null` when the product re-resolved it */
+  /** the operator's display name; `null` when the product re-resolved it or she changed it herself */
   changedBy: string | null;
-  reason: "operator" | "grade_change_reresolved";
+  /** `student`: she changed it on her own settings page (migration 043) */
+  reason: "operator" | "grade_change_reresolved" | "student";
   note: string | null;
   changedAt: string;
 };
@@ -198,7 +199,10 @@ export async function studentCurriculum(
       toCurriculum: String(r.to_curriculum),
       toSource: r.to_source === "chosen" ? "chosen" : "implied",
       changedBy: (r.changed_by as string | null) ?? null,
-      reason: r.reason === "grade_change_reresolved" ? "grade_change_reresolved" : "operator",
+      reason:
+        r.reason === "grade_change_reresolved" || r.reason === "student"
+          ? r.reason
+          : "operator",
       note: (r.note as string | null) ?? null,
       changedAt: new Date(r.changed_at as string).toISOString(),
     })),

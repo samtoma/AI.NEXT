@@ -11,6 +11,31 @@
 > `spawn E2BIG`, "AI backend unavailable" on 8 Grade 10 lessons and every map/general chat), `v0.12.5` the map and general chats retrieve
 > for the focus objectives only (Grade 10: 903 KB → 168 KB a turn).
 
+## ⚙️ Student settings — name, grade, curriculum, delete account (2026-10-27, `ui-clean-up`, not released)
+
+Tamer's calls, 2026-10-27, **for Samuel to see**: a student may change her own **curriculum** on
+`/settings` (decision 4 / FR-4010 amended — it was console-only), and account deletion is built as
+**FR-2310's working default** (immediate; FR-2307's retention decision is still owed).
+
+- **What changed.** `/settings` gains "About you" (name, grade — FR-2013; gender and interests still
+  owed), "Your curriculum" (in-page confirmation naming the courses she stops and starts seeing), and
+  "Delete your account" (type DELETE, plus the password where the account has one; the password goes
+  through the sign-in check, so the lockout applies). Migration **043** adds three definer functions
+  (`update_own_profile`, `change_own_curriculum`, `delete_own_account`); `ainext_app` still holds no
+  new column grant on `students`.
+- **Progress** is kept per course (FR-4011): changing curriculum or grade hides nothing permanently,
+  a course never opened starts fresh, and changing back restores everything. A grade change keeps a
+  chosen curriculum and re-resolves (and records) an implied one (FR-4008).
+- **Deletion keeps** `analytics_events` and `cost_daily` with the student removed, and
+  `operator_reads` + `auth_events` (FR-2306). Everything else that names the student goes, then the
+  account; uploaded files are removed from disk after the commit. The console's student page now says
+  a missing record may have been deleted instead of a bare 404.
+- **Verified** on the local database with throwaway students (rename, implied re-resolve recorded,
+  chosen refused, student-made change recorded with `reason = 'student'`, direct UPDATE refused,
+  operator refused, deletion leaving no row). **Not done:** a `proof_043` in `scripts/ci-migrations.sh`,
+  no `account_deleted` event (the auth vocabulary is closed — deletion shows as `session_revoked`
+  with reason `account_deleted`), traceability rows for the amended FRs.
+
 ## ⚠️ Known issues
 
 - **Tutor prompts are far above the target of 20k tokens** ([#75](https://github.com/samtoma/AI.NEXT/issues/75); Samuel, answer 50 /

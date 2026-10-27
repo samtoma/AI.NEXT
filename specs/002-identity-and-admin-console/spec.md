@@ -421,6 +421,7 @@ password sign-in.
   waiting for a credential to expire.
 - **FR-2013**: A student MUST be able to change display name, grade, gender and interests after
   signup, and a change MUST take effect in the tutor's next turn (FR-2606).
+  *(2026-10-27: name and grade built on `/settings`, migration 043; gender and interests still owed.)*
 - **FR-2014**: The picker-era student records — the demo cast — MUST NOT remain reachable from any
   student surface once accounts exist. Each MUST be either claimed by a real account or retired from
   every student surface. Their learning and interaction history MUST be retained and stay visible in
@@ -626,6 +627,11 @@ password sign-in.
   together and leave no transcript reachable without an owner. An operator viewing a deleted student
   MUST be told the record is gone rather than shown a partial one. *(Working default pending
   FR-2307's retention decision — see Open Decisions.)*
+  *(2026-10-27, Tamer: built as this working default — the student deletes her own account on
+  `/settings`, immediately, after typing DELETE and her password. `delete_own_account`, migration 043,
+  removes the account, the student and the interaction record; analytics events and cost rows are
+  kept with the student removed; `operator_reads` and `auth_events` are kept, FR-2306. FR-2307's
+  retention decision is still owed and may change this.)*
 
 ### Cost & per-student status (FR-2401…)
 

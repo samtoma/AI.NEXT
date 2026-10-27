@@ -177,3 +177,11 @@ test("the ungated scope is its own value, never 'no courses'", () => {
   const empty = scopeFingerprint({ grade: null, curriculum: null, courses: new Set() });
   assert.notEqual(ungated, empty);
 });
+
+test("a renamed student is a changed key, and the key never carries the name (FR-2013)", () => {
+  const before = snapshotKey({ ...BASE, gender: null, name: "Mariam" });
+  const after = snapshotKey({ ...BASE, gender: null, name: "Mira" });
+  assert.notEqual(before, after, "a rename in settings would replay the old greeting");
+  assert.equal(before, snapshotKey({ ...BASE, gender: null, name: "Mariam" }));
+  assert.equal(/Mariam|Mira/.test(before + after), false);
+});

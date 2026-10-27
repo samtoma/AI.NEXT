@@ -197,15 +197,18 @@ export const MODULES: Readonly<Record<string, ModuleKind>> = {
     why:
       "reads which courses are loaded or live to answer which CURRICULA a grade offers (FR-4004) — curriculum " +
       "ids, never course content — for sign-up and the first-Google-sign-in step (WP-D), which also writes " +
-      "the student's own grade and curriculum once; the rest is the console's (WP-G).",
+      "the student's own grade and curriculum once, and for her settings page (migration 043), which shows " +
+      "the same offer; the rest is the console's (WP-G).",
     importers: [
       "src/app/(auth)/signup/page.student.tsx",
       "src/app/(auth)/welcome/page.student.tsx",
       "src/app/(console)/courses/page.console.tsx",
       "src/app/(console)/students/[id]/page.console.tsx",
+      "src/app/(student)/settings/page.tsx",
       "src/app/api/auth/onboarding/route.ts",
       "src/app/api/auth/signup/route.ts",
       "src/app/api/console/students/[id]/curriculum/route.console.ts",
+      "src/app/api/settings/profile/route.ts",
     ],
   },
 
@@ -383,6 +386,9 @@ export const SCOPED_EXEMPT: Readonly<Record<string, Readonly<Record<string, stri
       "visibility — ids, never content, and it IS the gate's read",
     courseCatalog: "the console's catalogue grid, through withOperator — never a student surface",
     studentAccess: "the console's per-student access view, through withOperator — never a student surface",
+    coursesByCurriculum:
+      "course ids per curriculum for her settings page's confirmation (FR-4010), computed by visibleCourseIds " +
+      "from her own grade and exceptions — the gate's rule, asked once per curriculum, no content",
   },
   "src/lib/ask.ts": {
     mapFocusNote:
@@ -476,7 +482,9 @@ export const ENTRIES: Readonly<Record<string, Entry>> = {
   "src/app/(auth)/verify/page.tsx": { none: IDENTITY },
   "src/app/(auth)/forgot-password/page.tsx": { none: IDENTITY },
   "src/app/(auth)/reset-password/page.tsx": { none: IDENTITY },
-  "src/app/(student)/settings/page.tsx": { none: "her own appearance setting and grade label" },
+  "src/app/(student)/settings/page.tsx": {
+    reads: ["offeredCurriculaEveryGrade", "coursesByCurriculum"],
+  },
 
   "src/app/(student)/page.student.tsx": { reads: ["getHomeStats"] },
   "src/app/(student)/dashboard/page.tsx": { reads: ["getTopicBreakdown"] },
@@ -537,6 +545,10 @@ export const ENTRIES: Readonly<Record<string, Entry>> = {
   "src/app/api/analytics/route.ts": { none: "first-party events" },
   "src/app/api/tts/route.ts": { none: "speech for text the client already holds" },
   "src/app/api/settings/appearance/route.ts": { none: "her own design variant" },
+  // Reads the grade's curriculum offer to apply FR-4008 to a grade change.
+  "src/app/api/settings/profile/route.ts": { reads: ["offeredCurriculaFor"] },
+  "src/app/api/settings/curriculum/route.ts": { none: "her own curriculum id (migration 043)" },
+  "src/app/api/settings/account/route.ts": { none: IDENTITY },
   "src/app/api/lesson-save/[mode]/[slug]/route.ts": {
     none: "her own lesson place (lesson_saves, under RLS) — the transcript she already saw, no curriculum read",
   },
@@ -735,6 +747,12 @@ export const READERS: Readonly<Record<string, Gate>> = {
   offeredCurriculaEveryGrade: {
     noContent: "the same answer for every grade from one read, for sign-up and the Google step; ids only",
     file: "src/lib/curriculum-queries.ts",
+  },
+  coursesByCurriculum: {
+    noContent:
+      "which course ids she would see in each curriculum at her own grade, through the gate's own rule " +
+      "(visibleCourseIds) — for the in-page confirmation FR-4010 requires to name them; ids, no content",
+    file: "src/lib/catalog-queries.ts",
   },
   completeOnboarding: {
     noContent:

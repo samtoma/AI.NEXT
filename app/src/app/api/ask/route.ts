@@ -317,6 +317,8 @@ export async function POST(req: Request) {
         wrongAnswer: body.wrongAnswer,
         uploadId,
         gender: me?.gender ?? null,
+        // A rename in settings reaches an open chat on its next turn (FR-2013).
+        name: me?.displayName ?? null,
         // This request's answer changes the system prompt, so it keys the
         // cache: switching Off mid-sitting misses once and rebuilds the Off
         // prompt, never replaying the probing one.
