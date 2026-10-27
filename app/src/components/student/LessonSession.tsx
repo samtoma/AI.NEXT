@@ -3,6 +3,7 @@
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -579,6 +580,24 @@ export function LessonSession({
     return () => window.removeEventListener("pagehide", onHide);
   }, [doSave, saveChannel, mode, lesson.slug]);
 
+  // Leaving through an in-app link ("← Back") unmounts the lesson without a
+  // pagehide, so the throttled save still waiting is written here rather than
+  // dropped. The page lives on, so the channel's request completes normally.
+  const doSaveRef = useRef(doSave);
+  useLayoutEffect(() => {
+    doSaveRef.current = doSave;
+  }, [doSave]);
+  useEffect(
+    () => () => {
+      if (saveTimer.current) {
+        clearTimeout(saveTimer.current);
+        saveTimer.current = null;
+        doSaveRef.current();
+      }
+    },
+    []
+  );
+
   useEffect(() => {
     setTtsOK(ttsSupported());
     setSttOK(sttSupported());
@@ -586,7 +605,6 @@ export function LessonSession({
       stopSpeaking();
       if (finishTimer.current) clearTimeout(finishTimer.current);
       if (tapTimer.current) clearTimeout(tapTimer.current);
-      if (saveTimer.current) clearTimeout(saveTimer.current);
       if (refocusTimer.current) clearTimeout(refocusTimer.current);
     };
   }, []);
@@ -1275,7 +1293,7 @@ export function LessonSession({
               href="/student"
               className="text-[color:var(--play-text-link)] underline decoration-[color:var(--play-disabled-border)] underline-offset-[5px]"
             >
-              {rtl ? "رجوع للتسجيل" : "Check-in"}
+              {rtl ? "→ رجوع" : "← Back"}
             </Link>
             <span aria-hidden className="text-[color:var(--play-disabled-border)]">
               ·
