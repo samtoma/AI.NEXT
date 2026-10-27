@@ -568,7 +568,7 @@ function QuestionWork({
               debug={false}
               lessonChrome
               questionCards={false}
-              mathKeys={{}}
+              mathKeys={{ context: [item.text] }}
               suggestions={links}
               handleRef={core}
               onAssistantDone={(text) => {

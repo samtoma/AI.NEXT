@@ -166,6 +166,15 @@ test("FR-3611: {{question_done}} is asked for after the check, and is never rend
   assert.doesNotMatch(shown, /question_done/);
 });
 
+test("the homework tutor asks for the symbol picker the way the lesson does, in both modes", () => {
+  for (const mode of ["walk", "check"] as const) {
+    assert.match(prompt(mode), /\{\{expects_math\}\} — a SIGNAL/);
+  }
+  // the chat hands the question's own text to the picker, so its symbols lead
+  const page = readFileSync(new URL("../components/student/HomeworkSession.tsx", import.meta.url), "utf8");
+  assert.match(page, /mathKeys=\{\{ context: \[item\.text\] \}\}/);
+});
+
 test("FR-3604: the split prompt forbids guessing and lists only the objectives given", () => {
   const p = buildSplitPrompt("Q1. x + ▒ = 4", [{ id: "u1-4-3", label: "Linear", unit: "Unit 4" }]);
   assert.match(p, /NEVER guess a value/);

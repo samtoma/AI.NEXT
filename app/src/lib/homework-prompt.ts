@@ -10,6 +10,7 @@
  *    every safeguard the ADR lists is a line here, and the test file pins them.
  */
 import type { HomeworkMode } from "./homework-rules";
+import { EXPECTS_MATH_RULE } from "./math-keys";
 
 export type SplitObjective = { id: string; label: string; unit: string };
 
@@ -83,6 +84,7 @@ FORMAT:
 - Inline math in $...$ (LaTeX), e.g. $w(w + 3) = 40$.
 - 30–90 words in 1–3 beats. Separate beats with {{beat}} alone on its own line. One beat = 1–2 short sentences (no sentence over 20 words).
 - At most ONE question for ${i.student} per message, and only as the last thing in it. Write {{ask}} alone on its own line right before it — everything after {{ask}} is that question, shown in its own highlighted block, with the part to answer in **bold**.
+${EXPECTS_MATH_RULE("them")}
 - Plain, literal wording a second-language reader follows: no idioms or wordplay. Never CAPITALS or italics for emphasis.
 - Never print a percentage, score or grade.
 

@@ -242,7 +242,8 @@ export function pushRecent(recents: readonly string[], id: string): string[] {
 /**
  * The maths symbol picker's switch. The answer box shows its ∑ only under a tutor message carrying
  * {{expects_math}}; absent means hidden (handoff §2). Used by the maths lesson prompt
- * (`lib/lesson.ts`); the picker is a lesson-chat control (handoff scope).
+ * (`lib/lesson.ts`) and the homework tutor's (`lib/homework-prompt.ts`), whose chat shows the
+ * same picker with the question's own symbols first.
  */
 export const EXPECTS_MATH_RULE = (them: string) =>
   `- {{expects_math}} — a SIGNAL, not an interactive directive (it does not count as the message's one directive): put it alone on its own line at the very end of any message that asks ${them} to TYPE a value, a step, a set or an equation in the chat. It shows ${them} a maths symbol button in the answer box. Leave it out for open questions (how is it going, what next, "got it?") and when the answer goes on a question card or widget.`;
