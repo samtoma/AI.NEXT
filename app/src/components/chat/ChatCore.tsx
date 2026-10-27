@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  isValidElement,
   memo,
   useCallback,
   useEffect,
@@ -43,7 +44,7 @@ import {
 } from "@/lib/socratic-probing";
 import type { CiteInfo } from "./CitationChip";
 import { FigureNoteContext } from "@/components/viz/figure-note-context";
-import { figureBase, figuresOnCards } from "@/lib/question-figures";
+import { displayStem, figureBase, figuresOnCards } from "@/lib/question-figures";
 import { ChatQuestionCard } from "./ChatQuestionCard";
 import {
   StudentBubble,
@@ -61,6 +62,7 @@ import { SIGNED_OUT_MESSAGE, authFetch } from "@/lib/auth/client-session";
 import { stopControlLabel, stoppedLabel, stoppedReply } from "@/lib/stop-turn";
 import type { MapFocus } from "@/lib/map-focus";
 import { NoorMark } from "@/components/NoorMark";
+import { TeX } from "@/components/TeX";
 import { useUploadAttachment } from "./upload-attachment";
 import {
   BUTTON_SECONDARY,
@@ -210,6 +212,9 @@ export interface ChatCoreProps {
    *  surfaces pin the sealed passage(s) here so the exchange opens on the
    *  text itself (Samuel: everything drawn inside the same exchange) */
   leading?: React.ReactNode;
+  /** rendered INSIDE the scroll flow, after the last message — the homework page's done card and
+   *  teacher note, which belong to the conversation rather than under it (guided pages §2) */
+  trailing?: React.ReactNode;
   /** auto-send a hidden "Continue." turn after each widget/question result */
   autoContinue?: boolean;
   /** false: a {{show_question}} directive renders nothing. The Your Progress
@@ -266,6 +271,12 @@ export interface ChatCoreProps {
    * above the composer. Visual only — what is sent and when is unchanged.
    */
   lessonChrome?: boolean;
+  /**
+   * Fired when Noor starts or stops thinking — a reply is open and not one word of it is showing
+   * yet. The guided pages' header avatar wiggles instead of bobbing while it is true (guided pages
+   * handoff §7).
+   */
+  onThinkingChange?: (thinking: boolean) => void;
 }
 
 /* ---------------- paced reveal tuning ---------------- */
@@ -322,6 +333,7 @@ export function ChatCore({
   renderWidget,
   renderPassage,
   leading,
+  trailing,
   autoContinue,
   questionCards = true,
   suggestionsUntil,
@@ -338,6 +350,7 @@ export function ChatCore({
   inputAccessory,
   mathKeys,
   lessonChrome = false,
+  onThinkingChange,
 }: ChatCoreProps) {
   const lessonSurface = surface === "lesson_learn" || surface === "lesson_review";
   /**
@@ -511,6 +524,9 @@ export function ChatCore({
   useEffect(() => {
     onExternalAttemptChange?.(externalAttempt);
   }, [externalAttempt, onExternalAttemptChange]);
+  // Every question card answered in this sitting, and whether rightly — what the pinned question
+  // reads to know when a card is settled (guided pages handoff §3).
+  const [attempted, setAttempted] = useState<ReadonlyMap<string, boolean>>(() => new Map());
   // send() is declared above handleAttempt; a ref breaks the ordering and
   // staleness problem (same pattern as sendRef/scheduleContinueRef below).
   const handleAttemptRef = useRef<(r: AttemptResult, q: SpineQuestion) => void>(
@@ -570,6 +586,13 @@ export function ChatCore({
   useEffect(() => {
     onTotalChange?.(totalUsd, turns);
   }, [totalUsd, turns, onTotalChange]);
+  // a reply is open and nothing of it shows yet (the thinking bubble is up)
+  const thinkingNow = messages.some(
+    (m) => m.role === "assistant" && m.streaming && (m.reveal ?? m.text.length) === 0
+  );
+  useEffect(() => {
+    onThinkingChange?.(thinkingNow);
+  }, [thinkingNow, onThinkingChange]);
 
   // Where our own last programmatic scroll left `scrollTop`, so `onScroll` can
   // tell it from the student's. Without it, aligning to a message's top (which
@@ -1217,6 +1240,7 @@ export function ChatCore({
 
   const handleAttempt = useCallback(
     (r: AttemptResult, q: SpineQuestion) => {
+      setAttempted((seen) => new Map(seen).set(q.id, r.isCorrect));
       // The band, not the number. This note goes into the model's context on
       // every single answer, and "mastery 30% → 69%" is where a student ends
       // up being TOLD their P(L) swung 39 points in one question (#17) — which
@@ -1312,6 +1336,7 @@ export function ChatCore({
                 role: "note",
                 kind: "say",
                 localOnly: true,
+                instant: true,
                 text: r.isCorrect
                   ? arabicUi
                     ? "برافو ✓ — شايف إجابتك…"
@@ -1346,6 +1371,7 @@ export function ChatCore({
                 role: "note",
                 kind: "say",
                 localOnly: true,
+                instant: true,
                 text: arabicUi
                   ? "✓ شايف إجابتك… ثانية واحدة"
                   : nextCheckingLine(),
@@ -1394,7 +1420,7 @@ export function ChatCore({
     (last, m, k) => (m.role === "assistant" && !m.hidden ? k : last),
     -1
   );
-  const lessonLinks =
+  const lessonLinks: RowLink[] | undefined =
     lessonChrome && !streaming
       ? suggestions.map((s) => ({
           label: typeof s === "string" ? s : s.label,
@@ -1409,11 +1435,80 @@ export function ChatCore({
   }, [arabicUi]);
   const gatedNow = messages.some((m) => m.streaming && m.gated);
   const handleStop = useCallback(() => stopTurnRef.current(), []);
+  // Lesson chat: a reply paused at a beat carries its two moves as the links under it, in place
+  // of the lesson's own (guided pages handoff §2) — the chip row is for the other chats.
+  const gateLinks = useMemo<RowLink[] | undefined>(
+    () =>
+      lessonChrome && gatedNow
+        ? [
+            { label: arabicUi ? "كمّل ↓" : "Continue ↓", onSelect: handleContinue, kind: "next" },
+            {
+              label: arabicUi ? "اشرحها بطريقة تانية" : SAY_ANOTHER_WAY_EN,
+              onSelect: handleSayAnotherWay,
+              kind: "another",
+            },
+          ]
+        : undefined,
+    [lessonChrome, gatedNow, arabicUi, handleContinue, handleSayAnotherWay]
+  );
 
   const paced = !prefersReducedMotion();
 
+  // The pinned question (guided pages handoff §3): the latest question card in the chat, while it
+  // is still open — not answered yet, or answered wrong and its objective still waiting on a
+  // confirmation. Answered right, or settled, it unpins.
+  const openQuestion = useMemo(() => {
+    if (!lessonChrome || !questionCards || !lookupQuestion) return null;
+    for (let k = messages.length - 1; k >= 0; k--) {
+      const m = messages[k];
+      if (m.role !== "assistant" || m.hidden) continue;
+      const ids = [...m.text.matchAll(SHOW_QUESTION_RE)].map((x) => x[1].trim());
+      if (ids.length === 0) continue;
+      const q = lookupQuestion(ids[ids.length - 1]);
+      if (!q) return null;
+      const verdict = attempted.get(q.id);
+      if (verdict === true) return null;
+      if (verdict === false && pendingConfirmation?.loId !== q.loId) return null;
+      return q;
+    }
+    return null;
+  }, [lessonChrome, questionCards, lookupQuestion, messages, attempted, pendingConfirmation]);
+  // …shown only while its card is out of the scroll view
+  const [pinOut, setPinOut] = useState(false);
+  const checkPin = useCallback(() => {
+    const box = scrollRef.current;
+    const card = openQuestion
+      ? box?.querySelector(`[${QUESTION_ANCHOR_ATTR}="${CSS.escape(openQuestion.id)}"]`)
+      : null;
+    if (!box || !card) {
+      setPinOut(false);
+      return;
+    }
+    const b = box.getBoundingClientRect();
+    const c = card.getBoundingClientRect();
+    setPinOut(c.bottom <= b.top + 8 || c.top >= b.bottom - 8);
+  }, [openQuestion]);
+  useEffect(() => {
+    checkPin();
+    window.addEventListener("resize", checkPin);
+    return () => window.removeEventListener("resize", checkPin);
+  }, [checkPin, messages]);
+  const jumpToQuestion = () => {
+    if (!openQuestion) return;
+    scrollRef.current
+      ?.querySelector(`[${QUESTION_ANCHOR_ATTR}="${CSS.escape(openQuestion.id)}"]`)
+      ?.scrollIntoView({ behavior: paced ? "smooth" : "auto", block: "start" });
+  };
+
   return (
     <div className="flex min-h-0 flex-1 flex-col">
+      {openQuestion && pinOut && (
+        <PinnedQuestion
+          stem={displayStem(openQuestion.stem)}
+          arabicUi={arabicUi}
+          onJump={jumpToQuestion}
+        />
+      )}
       {/* messages */}
       <div
         ref={scrollRef}
@@ -1421,6 +1516,7 @@ export function ChatCore({
           // user scrolled away from the bottom → stop auto-scrolling;
           // back within 40px of the bottom → resume
           const el = e.currentTarget;
+          if (openQuestion) checkPin();
           // our own alignment to a block's top is not the student leaving
           if (
             programmaticTop.current !== null &&
@@ -1441,8 +1537,11 @@ export function ChatCore({
         // `relative` so `offsetTop` chains end here (lib/chat-scroll.ts)
         className={cx(
           "thin-scroll relative min-h-0 flex-1 overflow-y-auto",
-          // lesson chat: 22px between turns, and extra room on the right so no shadow is clipped
-          lessonChrome ? "space-y-[22px] pb-3.5 pe-[26px] ps-[22px] pt-[22px]" : "space-y-3 px-4 py-4"
+          // guided pages: 20px between turns, 24px 32px 12px 28px (phone 16px 14px 8px) — the end
+          // side wider, so no shadow is clipped
+          lessonChrome
+            ? "space-y-5 pb-2 pe-3.5 ps-3.5 pt-4 sm:pb-3 sm:pe-8 sm:ps-7 sm:pt-6"
+            : "space-y-3 px-4 py-4"
         )}
       >
         {leading}
@@ -1456,12 +1555,15 @@ export function ChatCore({
             questionCards={questionCards}
             symbols={!!mathKeys}
             lesson={lessonChrome}
-            lessonLinks={i === lastTutorIndex ? lessonLinks : undefined}
+            lessonLinks={
+              i === lastTutorIndex ? (m.streaming && m.gated ? gateLinks : lessonLinks) : undefined
+            }
             tutorAvatar={tutorAvatar}
             debug={debug}
             arabicUi={arabicUi}
             writing={lessonSurface}
-            dim={paced && streaming && m.role === "assistant" && !m.streaming}
+            // never on the guided pages: old messages keep full contrast (handoff §6)
+            dim={!lessonChrome && paced && streaming && m.role === "assistant" && !m.streaming}
             lookupQuestion={lookupQuestion}
             resolveCite={resolveCite}
             onCiteClick={onCiteClick}
@@ -1482,11 +1584,12 @@ export function ChatCore({
           />
         ))}
         </FigureNoteContext.Provider>
+        {trailing}
       </div>
 
       {/* FR-3501: a reply paused at a beat puts its two moves where the
           student's thumb already is — the bubble itself gains nothing */}
-      {gatedNow && (
+      {gatedNow && !lessonChrome && (
         <GateChips
           onContinue={handleContinue}
           onSayAnotherWay={handleSayAnotherWay}
@@ -1583,8 +1686,8 @@ export function ChatCore({
       <div
         className={
           lessonChrome
-            ? // lesson chat handoff: 10px 24px 20px 20px, 12px between attach, input and send
-              "flex items-center gap-3 pb-5 pe-6 ps-5 pt-2.5"
+            ? // guided pages: 10px 24px 20px 20px (phone 8px 14px 14px 12px), 12px apart
+              "flex items-center gap-3 pb-3.5 pe-3.5 ps-3 pt-2 sm:pb-5 sm:pe-6 sm:ps-5 sm:pt-2.5"
             : `flex items-center gap-2 px-4 pb-3.5 ${
                 suggestions.length > 0 ? "pt-1.5" : "border-t border-line-soft pt-3"
               }`
@@ -1609,6 +1712,8 @@ export function ChatCore({
               // 1rem, not 13px: the read scale, and the size below which iPad
               // Safari zooms the page on focus
               "min-h-[var(--noor-touch-min)] w-full min-w-0 rounded-[var(--play-radius-sm)] bg-card px-4 text-[1rem] text-ink outline-none placeholder:text-ink-faint sticker-shadow-sm",
+              // guided pages: the placeholder in Baloo 700, at the read size
+              lessonChrome && "placeholder:font-display placeholder:font-bold placeholder:text-[color:var(--play-text-dim)]",
               // typed text never runs under the pill
               showPicker && "pe-32"
             )}
@@ -1654,11 +1759,14 @@ export function ChatCore({
           disabled={streaming || !input.trim()}
           aria-label="Send"
           // The composer's send is amber with ink on it (handoff, Nour panel).
-          // Empty, it is disabled: white and dashed — "not ready yet".
+          // Empty, it is disabled: white and dashed — "not ready yet". On the
+          // guided pages it is the flat inactive circle instead: no shadow, no
+          // dash (guided pages handoff §6).
           className={cx(
             STROKE,
             "flex size-[var(--noor-touch-min)] shrink-0 items-center justify-center rounded-[var(--play-radius-pill)]",
-            "bg-[var(--noor-action)] text-[color:var(--noor-on-action)] disabled:bg-card sticker-shadow-sm play-pressable"
+            "bg-[var(--noor-action)] text-[color:var(--noor-on-action)] disabled:bg-card sticker-shadow-sm play-pressable",
+            lessonChrome && "chat-send-guided"
           )}
         >
           <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
@@ -1720,7 +1828,7 @@ const MessageRow = memo(function MessageRow({
   /** the lesson chat handoff's chrome (see ChatCoreProps.lessonChrome) */
   lesson: boolean;
   /** the latest tutor message only: the lesson's links, as plain text beside its source */
-  lessonLinks?: { label: string; onSelect: () => void }[];
+  lessonLinks?: RowLink[];
   /** see ChatCoreProps.tutorAvatar */
   tutorAvatar: boolean;
   debug: boolean;
@@ -1763,6 +1871,17 @@ const MessageRow = memo(function MessageRow({
 
   if (m.role === "note") {
     // student-facing tutor line (latency theater / scripted opener)
+    if (m.kind === "say" && lesson && m.instant) {
+      // guided pages §2: an instant reaction is Nour beside one plain line, no bubble
+      return (
+        <div className="flex items-center gap-2.5 ps-0.5">
+          <NoorMark aria-hidden className="size-[34px] shrink-0" />
+          <span dir="auto" className="font-display text-[1rem] font-bold leading-[1.5] text-[color:var(--play-text-dim)]">
+            {m.text}
+          </span>
+        </div>
+      );
+    }
     if (m.kind === "say" && lesson) {
       // the lesson chat's opener wears the same bubble and avatar as Nour's turns
       return (
@@ -1808,19 +1927,13 @@ const MessageRow = memo(function MessageRow({
     ? figuresOnCards(blocks.flatMap((b) => (b.t === "question" ? [b.qid] : [])), lookupQuestion)
     : new Set<string>();
 
-  const bubble = (
-    <TutorBubble error={!!m.error} style={dimStyle} lesson={lesson}>
-        {m.streaming && visibleText.length === 0 && (
-          <Thinking writing={writing} arabicUi={arabicUi} />
-        )}
-
-        {/* The blocks are rendered by components/chat/message-blocks.tsx —
-            the SAME function the console's replay calls, so a reconstruction
-            cannot drift from what the student saw (ADR-0015 §3). The five
-            interactive block types stay here as slots, because they are the
-            student surface's to own and a read-only replay must not be able to
-            import them. */}
-        {renderChatBlocks(blocks, {
+  // The blocks are rendered by components/chat/message-blocks.tsx —
+  // the SAME function the console's replay calls, so a reconstruction
+  // cannot drift from what the student saw (ADR-0015 §3). The five
+  // interactive block types stay here as slots, because they are the
+  // student surface's to own and a read-only replay must not be able to
+  // import them.
+  const nodes = renderChatBlocks(blocks, {
           debug,
           lesson,
           arabicUi,
@@ -1882,9 +1995,10 @@ const MessageRow = memo(function MessageRow({
               }
               const q = lookupQuestion?.(b.qid);
               return q ? (
-                <div key={i} {...{ [CHAT_INTERACTIVE_ATTR]: "" }}>
+                <div key={i} {...{ [CHAT_INTERACTIVE_ATTR]: "" }} {...{ [QUESTION_ANCHOR_ATTR]: q.id }}>
                 <ChatQuestionCard
                   question={q}
+                  guided={lesson}
                   symbols={symbols}
                   debug={debug}
                   lang={arabicUi ? "ar" : "en"}
@@ -1946,8 +2060,11 @@ const MessageRow = memo(function MessageRow({
               ) : null;
             },
           },
-        })}
+        });
 
+  // what closes a bubble: the typing cursor, the Stop line and the receipts
+  const closing = (
+    <>
         {m.streaming && !m.gated && visibleText.length > 0 && (
           <span className="ms-0.5 inline-block h-3.5 w-[7px] translate-y-[2px] animate-pulse rounded-full bg-accent" />
         )}
@@ -1958,13 +2075,18 @@ const MessageRow = memo(function MessageRow({
           <p
             data-chat-stopped=""
             className={cx(
-              "flex items-baseline gap-1.5 font-display text-label font-bold leading-snug text-[color:var(--play-text-muted)]",
-              visibleText.length > 0 && "mt-2"
+              lesson
+                ? // guided pages: the bubble's own last line, in grey — a pause, not an error
+                  "font-read text-[1.02rem] font-semibold leading-[1.6] text-[color:var(--play-text-dim)]"
+                : "flex items-baseline gap-1.5 font-display text-label font-bold leading-snug text-[color:var(--play-text-muted)]",
+              visibleText.length > 0 && (lesson ? "mt-[11px]" : "mt-2")
             )}
           >
-            <svg width="8" height="8" viewBox="0 0 8 8" aria-hidden>
-              <rect width="8" height="8" fill="currentColor" />
-            </svg>
+            {!lesson && (
+              <svg width="8" height="8" viewBox="0 0 8 8" aria-hidden>
+                <rect width="8" height="8" fill="currentColor" />
+              </svg>
+            )}
             {stoppedLabel(arabicUi)}
           </p>
         )}
@@ -1982,48 +2104,88 @@ const MessageRow = memo(function MessageRow({
               ` · logged #${m.meta.interactionId}`}
           </p>
         )}
+    </>
+  );
+  const thinkingDots = (
+    <>
+        {m.streaming && visibleText.length === 0 && (
+          <Thinking writing={writing && !lesson} arabicUi={arabicUi} dotsOnly={lesson} />
+        )}
+    </>
+  );
+
+  const bubble = (
+    <TutorBubble error={!!m.error} style={dimStyle} lesson={lesson}>
+        {thinkingDots}
+        {nodes}
+        {closing}
     </TutorBubble>
   );
 
   if (lesson) {
-    // Nour beside her words, then the source and (latest message only) the lesson's links as one
-    // plain line under the bubble — never a chip, never mid-sentence (lesson chat handoff §3).
+    // Guided pages (handoff §2): Nour beside each run of her words; a question card or widget is a
+    // top-level object of its own between them — never nested in a bubble — inset to where the
+    // bubbles start. Then the source and (latest message only) the links, as one plain line —
+    // never a chip, never mid-sentence.
+    const segments: { card: boolean; nodes: React.ReactNode[] }[] = [];
+    for (const n of nodes) {
+      const card =
+        isValidElement(n) &&
+        (n.props as Record<string, unknown>)[CHAT_INTERACTIVE_ATTR] !== undefined;
+      const last = segments[segments.length - 1];
+      if (!card && last && !last.card) last.nodes.push(n);
+      else segments.push({ card, nodes: [n] });
+    }
+    // the thinking dots, the cursor and the Stop line belong to the last run of words
+    if (segments.length === 0 || segments[segments.length - 1].card) {
+      const needsBubble = (m.streaming && visibleText.length === 0) || m.stopped || (debug && m.meta);
+      if (needsBubble) segments.push({ card: false, nodes: [] });
+    }
+    const lastText = segments.map((g) => !g.card).lastIndexOf(true);
     const sources = m.streaming ? [] : lessonSources(m.text, resolveCite);
     const links = lessonLinks ?? [];
     return (
-      <div className="flex items-start gap-2.5">
-        <NoorMark aria-hidden className="mt-0.5 size-[34px] shrink-0" />
-        <div className="flex min-w-0 flex-col gap-2">
-          {bubble}
-          {(sources.length > 0 || links.length > 0) && (
-            <div className="flex flex-wrap items-center gap-x-2.5 ps-1" dir={arabicUi ? "rtl" : undefined}>
-              {sources.map(({ cite, label }, k) => (
-                <span key={`s${k}`} className="flex items-center gap-2.5">
-                  {k > 0 && <LinkDot />}
-                  <button
-                    type="button"
-                    onClick={() => onCiteClick?.(cite)}
-                    className="min-h-11 bg-transparent text-start font-display text-[0.82rem] font-bold leading-none text-[color:var(--play-text-dim)]"
-                  >
-                    {label}
-                  </button>
-                </span>
-              ))}
-              {links.map((l, k) => (
-                <span key={`l${k}`} className="flex items-center gap-2.5">
-                  {(sources.length > 0 || k > 0) && <LinkDot />}
-                  <button
-                    type="button"
-                    onClick={l.onSelect}
-                    className="min-h-11 bg-transparent font-display text-[0.9rem] font-bold leading-none text-[color:var(--play-text-link)] underline decoration-[color:var(--play-disabled-border)] underline-offset-[5px]"
-                  >
-                    {l.label}
-                  </button>
-                </span>
-              ))}
-            </div>
+      <div className="flex min-w-0 flex-col gap-2">
+        <div className="flex min-w-0 flex-col gap-4">
+          {segments.map((g, k) =>
+            g.card ? (
+              <div key={k} className="chat-card">
+                {g.nodes}
+              </div>
+            ) : (
+              <div key={k} className="flex items-start gap-2.5">
+                <NoorMark aria-hidden className="mt-0.5 size-[34px] shrink-0" />
+                <div className="flex min-w-0 flex-col">
+                  <TutorBubble error={!!m.error} style={dimStyle} lesson>
+                    {k === lastText && thinkingDots}
+                    {g.nodes}
+                    {k === lastText && closing}
+                  </TutorBubble>
+                </div>
+              </div>
+            )
           )}
         </div>
+        {(sources.length > 0 || links.length > 0) && (
+          <div
+            className="flex flex-wrap items-center gap-x-4 ps-[calc(var(--chat-card-inset)+4px)]"
+            dir={arabicUi ? "rtl" : undefined}
+          >
+            {sources.map(({ cite, label }, k) => (
+              <button
+                key={`s${k}`}
+                type="button"
+                onClick={() => onCiteClick?.(cite)}
+                className="min-h-11 bg-transparent text-start font-display text-[0.82rem] font-bold leading-none text-[color:var(--play-text-dim)]"
+              >
+                {label}
+              </button>
+            ))}
+            {links.map((l, k) => (
+              <RowLinkButton key={`l${k}`} link={l} />
+            ))}
+          </div>
+        )}
       </div>
     );
   }
@@ -2187,9 +2349,54 @@ function recordChunkAction(name: "chunk_next" | "chunk_another", surface: string
 
 const SAY_ANOTHER_WAY_EN = "Say it another way";
 
+/** A question card's directive, for the pinned question's "which card is the latest". */
+const SHOW_QUESTION_RE = /\{\{show_question:([^}\n]{1,160})\}\}/g;
+/** On the wrapper of each question card in the chat, holding its question id: where the pinned
+ *  question jumps back to. */
+const QUESTION_ANCHOR_ATTR = "data-question-anchor";
+
+/**
+ * The pinned question (guided pages handoff §3): directly under the chat's header while the open
+ * question card has scrolled out of view — a white band over a flat Honey block, the question on
+ * one line, and a link back to the card. Honey, never a playmate colour.
+ */
+function PinnedQuestion({
+  stem,
+  arabicUi,
+  onJump,
+}: {
+  stem: string;
+  arabicUi: boolean;
+  onJump: () => void;
+}) {
+  return (
+    <div
+      data-pinned-question=""
+      dir={arabicUi ? "rtl" : undefined}
+      className="shrink-0 border-b-[length:var(--chat-rule)] border-[color:var(--play-disabled-border)] bg-card px-5 py-2.5"
+    >
+      <div className="flex items-center gap-3 rounded-[var(--play-radius-sm)] bg-card-warm py-1 ps-4 pe-1.5">
+        <span className="shrink-0 font-display text-[0.82rem] font-extrabold text-[color:var(--play-text-dim)]">
+          {arabicUi ? "سؤالك" : "Your question"}
+        </span>
+        <span className="min-w-0 flex-1 truncate whitespace-nowrap font-display text-[1rem] font-bold text-ink">
+          <TeX text={stem} />
+        </span>
+        <button
+          type="button"
+          onClick={onJump}
+          className="inline-flex min-h-11 shrink-0 items-center px-2.5 font-display text-[0.88rem] font-bold text-[color:var(--play-text-link)] underline decoration-[color:var(--play-disabled-border)] underline-offset-[5px]"
+        >
+          {arabicUi ? "روح له ↑" : "Jump to it ↑"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 /** The line shown while an answer is being checked — two phrasings, taken in
  *  turn so the same words don't repeat on every answer (Tamer, 2026-10-09). */
-const CHECKING_LINES = ["Checking your answer. One second…", "Let me check your answer ⏳"];
+const CHECKING_LINES = ["Checking your answer. One second…", "Let me check your answer."];
 let checkingTurn = 0;
 function nextCheckingLine(): string {
   return CHECKING_LINES[checkingTurn++ % CHECKING_LINES.length];
@@ -2275,7 +2482,7 @@ function CheckInCard({
           disabled={disabled || picked != null}
           className={cx(BUTTON_SECONDARY, picked === "no" && CHECK_IN_PICKED)}
         >
-          {arabicUi ? "لسه مش فاهم 🤔" : "Not yet 🤔"}
+          {arabicUi ? "لسه مش فاهم" : "Not yet"}
         </button>
         <button
           dir={dir}
@@ -2293,13 +2500,16 @@ function CheckInCard({
 function Thinking({
   writing,
   arabicUi,
+  dotsOnly = false,
 }: {
   writing: boolean;
   arabicUi: boolean;
+  /** the guided pages: the three dots alone, no words beside them */
+  dotsOnly?: boolean;
 }) {
   return (
     <span className="inline-flex items-center gap-1.5 py-0.5">
-      {writing ? (
+      {dotsOnly ? null : writing ? (
         arabicUi ? (
           <span dir="rtl" className="text-[0.85rem] text-ink-faint">
             بيكتب…
@@ -2331,12 +2541,30 @@ function Thinking({
   );
 }
 
-/** The "·" between the source and the lesson links. */
-function LinkDot() {
+/** A plain link under Nour's latest bubble: the lesson's suggestions, or a paused reply's moves. */
+type RowLink = {
+  label: string;
+  onSelect: () => void;
+  /** a paused reply's moves (FR-3501): Continue takes focus when it appears */
+  kind?: "next" | "another";
+};
+
+function RowLinkButton({ link }: { link: RowLink }) {
+  const ref = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (link.kind === "next") ref.current?.focus({ preventScroll: true });
+  }, [link.kind]);
   return (
-    <span aria-hidden className="text-[color:var(--play-disabled-border)]">
-      ·
-    </span>
+    <button
+      ref={ref}
+      type="button"
+      onClick={link.onSelect}
+      data-chunk-next={link.kind === "next" ? "" : undefined}
+      data-chunk-another={link.kind === "another" ? "" : undefined}
+      className="min-h-11 bg-transparent font-display text-[0.92rem] font-bold leading-none text-[color:var(--play-text-link)] underline decoration-[color:var(--play-disabled-border)] underline-offset-[5px]"
+    >
+      {link.label}
+    </button>
   );
 }
 

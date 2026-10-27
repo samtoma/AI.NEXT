@@ -319,6 +319,9 @@ export interface ChatMsg {
   /** note flavor: "event" = instrumentation ([live event] rows, hidden from
    *  students when debug is off), "say" = student-facing tutor line */
   kind?: "event" | "say";
+  /** a "say" note that is Nour's instant reaction to an answer ("Checking your answer…"):
+   *  the guided pages draw it as a plain line beside her avatar, not a bubble */
+  instant?: boolean;
   /** paced reveal: number of chars of `text` currently revealed (streaming) */
   reveal?: number;
   /** FR-3501: the reveal is stopped at a beat, waiting for the student's Next */

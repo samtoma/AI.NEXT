@@ -1,86 +1,30 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import type { LessonMode, UnderstandingCheck, Verdict } from "@/lib/types";
-import { MASTERY_LEGEND } from "@/lib/mastery";
+import type { LessonMode, UnderstandingCheck } from "@/lib/types";
+import { MASTERY_PHRASE, masteryStage } from "@/lib/mastery";
 import { stripInternalIds } from "@/lib/student-text";
-import {
-  BADGE,
-  BUTTON_PRIMARY,
-  BUTTON_SECONDARY,
-  HONEY_BAND,
-  STICKER_CARD,
-  STROKE,
-  cx,
-} from "@/components/sticker";
+import { BUTTON_PRIMARY, BUTTON_SECONDARY, HEADING, STROKE, STROKE_WIDTH_SM, cx } from "@/components/sticker";
 
 /**
- * The honest comprehension report card — Noor Play anatomy.
- * Big score dial (SVG arc on the mastery ramp), a verdict BADGE (leaf /
- * Honey / inactive grey — never red), strengths & gaps columns, next step,
- * and a warm non-punitive close.
+ * The understanding report — "What you showed today" (design_handoff_guided_pages §4).
  *
- * It was the Ledger's: a dashed gold "passport" for the next step and a
- * rubber stamp rotated -8° for the verdict, beside sticker buttons (review
- * 2026-09-23, F14), and a button row in three border weights (F15). Every
- * surface below is now a sticker from `components/sticker.ts`, and the dial
- * paints with the same `--mastery-*` ramp as every other screen (F21) instead
- * of `--m-*`, which is red at the bottom under the Ledger palette.
+ * No score, no verdict, nothing numeric reaches the student: the grader's 0–100 session score is
+ * read through `masteryStage()` — the same bands the skill map uses — and shown as that stage's
+ * phrase on a level pill and the 4-segment mastery ramp, in the skill map's own words
+ * (`MASTERY_PHRASE`), so the two screens never name one level two ways. Then three short lists —
+ * what you showed, what to work on, what's next — and the three doors.
+ *
+ * It was a 0–100 dial with a Got it / Nearly / Needs work stamp. The number and the stamp are
+ * still what the grader wrote and what the console reads: the operator's replay (`readOnly`)
+ * prints them in its receipts line, and nothing else changed about what is stored.
+ *
+ * Each list shows its first three items; the rest sit behind "Show N more". A display limit
+ * only — the grader's output is not cut.
  */
 
-const VERDICT_META: Record<
-  Verdict,
-  {
-    stamp: string;
-    /** badge fill + its paired foreground — the border is the badge's ink */
-    badgeInk: string;
-    color: string;
-    headline: string;
-    arabic: string;
-  }
-> = {
-  got_it: {
-    stamp: "Got it ✓",
-    // handoff: "Correct = leaf green"
-    badgeInk: "bg-[var(--play-leaf)] text-[color:var(--play-on-leaf)]",
-    color: MASTERY_LEGEND[4].color,
-    headline: "Confirmed. Go enjoy your evening 🎉",
-    arabic: "فاهم الدرس — برافو عليك",
-  },
-  nearly: {
-    stamp: "Nearly there",
-    badgeInk: "bg-card-warm text-[color:var(--play-text-amber-warm)]",
-    color: MASTERY_LEGEND[2].color,
-    headline: "So close — we'll work on this together.",
-    arabic: "النهاردة أحسن من امبارح",
-  },
-  needs_work: {
-    stamp: "Needs work",
-    // the inactive grey, never a warning colour
-    badgeInk: "bg-[var(--play-inactive-fill)] text-[color:var(--play-text-muted)]",
-    color: MASTERY_LEGEND[1].color,
-    headline: "We'll work on this together — no stress.",
-    arabic: "النهاردة أحسن من امبارح",
-  },
-};
-
-/* 240° gauge geometry, normalized with pathLength=100 */
-const CX = 100;
-const CY = 96;
-const RAD = 76;
-const pt = (deg: number) => {
-  const r = (deg * Math.PI) / 180;
-  return `${(CX + RAD * Math.cos(r)).toFixed(1)} ${(CY - RAD * Math.sin(r)).toFixed(1)}`;
-};
-const ARC = `M ${pt(210)} A ${RAD} ${RAD} 0 1 1 ${pt(-30)}`;
-
-/** Arabic verdict stamps for the RTL report (the caller passes `rtl` from
- *  the lesson subject's registered direction — see LessonSession). */
-const AR_STAMP: Record<Verdict, string> = {
-  got_it: "فاهمها ✓",
-  nearly: "قرّبت خالص",
-  needs_work: "محتاجة شغل",
-};
+const LIST_LIMIT = 3;
 
 export function ReportCard({
   check,
@@ -89,6 +33,8 @@ export function ReportCard({
   studentName,
   rtl = false,
   readOnly = false,
+  lessonRef,
+  skill,
 }: {
   check: UnderstandingCheck;
   mode: LessonMode;
@@ -104,235 +50,191 @@ export function ReportCard({
    * over: those routes do not exist in the console build at all (ADR-0014), so
    * they lead nowhere, and an operator clicking one would be taking a student's
    * action inside a surface whose contract is that it cannot. `readOnly` drops
-   * the row and says why in its place. Everything above it — the score dial,
-   * the verdict stamp, the strengths, the gaps, the next step — is what the
-   * student was shown and is rendered unchanged.
+   * the row and says why in its place, and adds the receipts an operator needs:
+   * the record's id, its turn count, the grader's score and verdict, its cost.
    *
    * Default false: the student path is untouched.
    */
   readOnly?: boolean;
+  /** "Lesson 1-1", for the eyebrow — absent in the replay, which shows the mode instead */
+  lessonRef?: string;
+  /** what the level is a level OF — the lesson's title */
+  skill?: string;
 }) {
-  const v = VERDICT_META[check.verdict];
+  const stage = Math.max(1, masteryStage(check.score / 100)) as 1 | 2 | 3 | 4;
+  const level = MASTERY_PHRASE[stage];
+
+  const eyebrow = rtl
+    ? ["الجلسة مشيت إزاي", lessonRef ?? (mode === "learn" ? "درس متشرح" : "مراجعة")].join(" · ")
+    : ["How this session went", lessonRef ?? (mode === "learn" ? "Taught lesson" : "Quick revision")].join(" · ");
 
   return (
-    <section
-      dir={rtl ? "rtl" : undefined}
-      className="anim-pop mx-auto w-full max-w-2xl"
-    >
-      <div className={cx(STICKER_CARD, "overflow-hidden")}>
-        <div className={cx(HONEY_BAND, "flex flex-wrap items-center justify-between gap-2 px-6 py-3")}>
-          {rtl ? (
-            <span className="text-[0.85rem] font-bold text-ink">
-              تقرير الفهم · {mode === "learn" ? "درس متشرح" : "مراجعة"} ·{" "}
-              {studentName.split(" ")[0]}
-            </span>
-          ) : (
-            <span className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-ink-faint">
-              Comprehension report · {mode === "learn" ? "taught lesson" : "revision"} ·{" "}
-              {studentName.split(" ")[0]}
-            </span>
-          )}
-          {/* The record's id and turn count are for an operator replaying it,
-              never for the student (UI clean-up, 2026-10-23). */}
-          {readOnly && (
-            <span className="font-mono text-[0.72rem] font-medium text-ink-faint">
-              understanding_checks #{check.id} · {check.turns} AI turns
-            </span>
-          )}
-        </div>
+    <section dir={rtl ? "rtl" : undefined} className="mx-auto flex w-full max-w-[1040px] flex-col gap-3 sm:gap-[18px]">
+      <p className="font-display text-[0.95rem] font-bold leading-none text-[color:var(--play-text-dim)]">
+        {eyebrow}
+        {readOnly && <> · {studentName.split(" ")[0]}</>}
+      </p>
+      <h1 className={cx(HEADING, "text-[1.4rem] leading-[1.12] sm:text-[2.2rem]")}>
+        {rtl ? "اللي وريته النهاردة" : "What you showed today"}
+      </h1>
 
-        <div className="px-6 pb-6 pt-5 sm:px-8">
-          {/* dial + verdict badge */}
-          <div className="relative mx-auto max-w-[300px]">
-            <svg viewBox="0 0 200 150" className="block w-full" role="img" aria-label={`Score ${check.score} out of 100`}>
-              {/* The quest-bar anatomy bent into an arc: an ink outline, a
-                  white track inside it, and the ramp colour on top. Widths
-                  are figure geometry in viewBox units, not sticker strokes. */}
-              <path
-                d={ARC}
-                fill="none"
-                stroke="var(--ink)"
-                strokeWidth="13"
-                strokeLinecap="round"
-              />
-              <path
-                d={ARC}
-                fill="none"
-                stroke="var(--card)"
-                strokeWidth="8"
-                strokeLinecap="round"
-              />
-              <path
-                d={ARC}
-                fill="none"
-                style={{ stroke: v.color }}
-                strokeWidth="8"
-                strokeLinecap="round"
-                pathLength={100}
-                strokeDasharray="100"
-                strokeDashoffset={100 - check.score}
-                className="anim-dial"
-              />
-              <text
-                x="100"
-                y="94"
-                textAnchor="middle"
-                fontFamily="var(--stack-display)"
-                fontSize="46"
-                fontWeight="800"
-                fill="var(--ink)"
-              >
-                {check.score}
-              </text>
-              <text
-                x="100"
-                y="112"
-                textAnchor="middle"
-                fontFamily="var(--stack-mono)"
-                fontSize="8.5"
-                letterSpacing="2"
-                fill="var(--ink-faint)"
-              >
-                / 100 COMPREHENSION
-              </text>
-            </svg>
-            {/* The badge lands with `pop` (the handoff's "badge landing").
-                "Got it" also sends one ring out from behind it, after the pop
-                rather than with it — one animation at a time. The ring sits
-                on its own element: on the badge itself, `play-ring` ends at
-                opacity 0 and took the verdict with it. */}
-            <span className="anim-pop absolute -end-2 top-2 sm:-end-8">
-              {check.verdict === "got_it" && (
+      {/* the level card: where she is today, on the ramp */}
+      <div className={cx(STROKE, "flex flex-col gap-3.5 rounded-[var(--chat-panel-radius)] bg-card p-3.5 sm:p-[22px]")}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <span className="font-display text-[0.9rem] font-bold leading-[1.2] text-[color:var(--play-text-dim)]">
+            {skill
+              ? rtl
+                ? `${skill} · مكانك النهاردة`
+                : `${skill} · where you are today`
+              : rtl
+                ? "مكانك النهاردة"
+                : "Where you are today"}
+          </span>
+          <span
+            className={cx(
+              STROKE_WIDTH_SM,
+              "anim-pop rounded-[var(--play-radius-pill)] border-ink bg-card-warm px-4 py-1.5 font-display text-[1.1rem] font-extrabold leading-none text-ink"
+            )}
+          >
+            {level}
+          </span>
+        </div>
+        {/* 4 segments, 5 stages: stage N lights N segments, segment k in --mastery-(k+1) */}
+        <div className="flex gap-1.5" role="img" aria-label={level}>
+          {[0, 1, 2, 3].map((k) => (
+            <span
+              key={k}
+              className={cx(
+                STROKE_WIDTH_SM,
+                "relative h-4 flex-1 overflow-hidden rounded-[var(--play-radius-pill)] border-ink bg-[var(--mastery-0)]"
+              )}
+            >
+              {k < stage && (
                 <span
-                  aria-hidden
-                  className="anim-ring-pulse pointer-events-none absolute inset-0 rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-solid border-[color:var(--noor-progress)]"
-                  style={{ animationDelay: "380ms" }}
+                  className="anim-fill-bar absolute inset-y-0 start-0"
+                  style={
+                    {
+                      background: `var(--mastery-${k + 1})`,
+                      "--play-fill-to": "100%",
+                      animationDelay: `${k * 120}ms`,
+                    } as React.CSSProperties
+                  }
                 />
               )}
-              <span className={cx(BADGE, "relative", v.badgeInk)}>
-                {rtl ? AR_STAMP[check.verdict] : v.stamp}
-              </span>
             </span>
-          </div>
-
-          {rtl ? (
-            <p dir="rtl" className="mt-1 text-center font-display text-[1.5rem] font-extrabold leading-[1.3] text-ink">
-              {v.arabic}
-            </p>
-          ) : (
-            <p className="mt-1 text-center font-display text-[1.5rem] font-extrabold leading-[1.3] text-ink">
-              {v.headline}
-            </p>
-          )}
-
-          {/* strengths / gaps */}
-          <div className="mt-6 grid gap-5 sm:grid-cols-2">
-            <div>
-              <p className="rule-label mb-2.5">{rtl ? "اللي ثبت معاك" : "What clicked"}</p>
-              <ul className="space-y-1.5">
-                {check.strengths.length === 0 && (
-                  <li className="text-[0.9rem] text-ink-faint">
-                    {rtl
-                      ? "— لسه مفيش حاجة ثابتة، وولا يهمك"
-                      : "— nothing solid yet, and that's okay"}
-                  </li>
-                )}
-                {check.strengths.map((s, i) => (
-                  <li
-                    key={i}
-                    className="anim-rise flex gap-2 font-read text-[1rem] leading-relaxed text-ink"
-                    style={{ animationDelay: `${350 + i * 90}ms` }}
-                  >
-                    <span className="mt-px shrink-0 font-bold text-[color:var(--play-on-leaf-dim)]">✓</span>
-                    {stripInternalIds(s)}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className="rule-label mb-2.5">{rtl ? "اللي هنظبطه مع بعض" : "What we'll polish"}</p>
-              <ul className="space-y-1.5">
-                {check.gaps.length === 0 && (
-                  <li className="text-[0.9rem] text-ink-faint">
-                    {rtl
-                      ? "— مفيش ثغرات ظهرت في الجلسة دي"
-                      : "— no gaps found in this session"}
-                  </li>
-                )}
-                {check.gaps.map((g, i) => (
-                  <li
-                    key={i}
-                    className="anim-rise flex gap-2 font-read text-[1rem] leading-relaxed text-ink"
-                    style={{ animationDelay: `${350 + i * 90}ms` }}
-                  >
-                    <span className="mt-px shrink-0 font-bold text-[color:var(--play-text-muted)]">✎</span>
-                    {stripInternalIds(g)}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* next step */}
-          <div
-            className={cx(STROKE, "anim-rise mt-6 rounded-[var(--play-radius)] bg-card-warm px-4 py-3 sticker-shadow-sm")}
-            style={{ animationDelay: "550ms" }}
-          >
-            {/* Arabic is never set in mono and never letter-spaced (handoff,
-                TYPE) — the eyebrow changes face with the language. */}
-            {rtl ? (
-              <p className="font-display text-[0.85rem] font-bold text-[color:var(--play-text-amber-warm)]">
-                الخطوة الجاية · بكرة
-              </p>
-            ) : (
-              <p className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-[color:var(--play-text-amber-warm)]">
-                Next step · tomorrow
-              </p>
-            )}
-            <p className="mt-1 font-read text-[1rem] leading-relaxed text-ink">
-              {stripInternalIds(check.nextStep)}
-            </p>
-          </div>
-
-          <p className="mt-4 text-center font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-ink-faint">
-            {readOnly
-              ? `rated by the tutor from the full session transcript · $${costUsd.toFixed(4)} · logged`
-              : rtl
-                ? "نور قيّمت الدرس كله"
-                : "Rated by Noor from your whole lesson"}
-          </p>
+          ))}
         </div>
+      </div>
+
+      <div className="grid gap-3 sm:gap-8 md:grid-cols-3">
+        <ReportList
+          title={rtl ? "اللي وريته" : "What you showed"}
+          items={check.strengths.map(stripInternalIds)}
+          empty={rtl ? "لسه مفيش حاجة ثابتة، وولا يهمك" : "Nothing solid yet, and that's okay"}
+          dot="bg-[var(--noor-progress)]"
+          rtl={rtl}
+        />
+        <ReportList
+          title={rtl ? "نشتغل على إيه" : "What to work on"}
+          items={check.gaps.map(stripInternalIds)}
+          empty={rtl ? "مفيش ثغرات ظهرت في الجلسة دي" : "No gaps showed up this time"}
+          dot="bg-[var(--play-text-dim)]"
+          rtl={rtl}
+        />
+        <ReportList
+          title={rtl ? "الخطوة الجاية" : "What's next"}
+          items={[stripInternalIds(check.nextStep)].filter(Boolean)}
+          empty=""
+          dot="bg-ink"
+          honey
+          rtl={rtl}
+        />
       </div>
 
       {readOnly ? (
-        <p className="mt-4 rounded-[var(--play-radius)] border-[length:var(--play-stroke)] border-dashed border-[color:var(--play-disabled-border)] px-4 py-2.5 text-center font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-ink-faint">
-          the student was offered three next steps here
-        </p>
+        <>
+          <p className="font-mono text-[0.72rem] font-medium text-ink-faint">
+            understanding_checks #{check.id} · {check.turns} AI turns · score {check.score}/100 · verdict{" "}
+            {check.verdict} · ${costUsd.toFixed(4)} · shown to the student as “{level}”, no number
+          </p>
+          <p className="rounded-[var(--play-radius)] border-[length:var(--play-stroke)] border-dashed border-[color:var(--play-disabled-border)] px-4 py-2.5 text-center font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-ink-faint">
+            the student was offered three next steps here
+          </p>
+        </>
       ) : (
-      <div className="anim-rise mt-4 flex flex-wrap gap-3" style={{ animationDelay: "650ms" }}>
-        {/* One row, one anatomy (F15): the same stroke, radius, shadow and
-            52px floor on all three doors; only the fill says which one is
-            the primary. Amber on the graph — the ONE amber on this screen. */}
-        <Link href="/spine" className={cx(BUTTON_PRIMARY, "flex-1 py-3")}>
-          {rtl ? "شوف تقدمك ←" : "See your progress →"}
-        </Link>
-        {/* The third door (#29). Two options after a lesson meant a student
-            who had just been shown her gaps could look at the graph or leave
-            — nothing led to doing something about them.
-
-            No new selection logic was needed: `mode=practice` is the plan
-            loop, and the plan is already built weakest-first (three of its
-            five items are the weakest objectives whose prerequisites are
-            met). What was missing was a door into it from the one screen
-            where a student has just been told what her weak spots are. */}
-        <Link href="/student?mode=practice" className={cx(BUTTON_SECONDARY, "py-3")}>
-          {rtl ? "ذاكر نقطة ضعفي" : "Practise my weak spots"}
-        </Link>
-        <Link href="/student" className={cx(BUTTON_SECONDARY, "py-3")}>
-          {rtl ? "خلصنا النهاردة" : "Done for today"}
-        </Link>
-      </div>
+        <div className="flex flex-wrap items-center gap-4">
+          {/* the ONE amber on this screen (the ramp's first segment aside) */}
+          <Link href="/spine" className={BUTTON_PRIMARY}>
+            {rtl ? "شوف تقدمك ←" : "See your progress →"}
+          </Link>
+          {/* The third door (#29): `mode=practice` is the plan loop, built weakest-first, so this
+              is a door into working on what she was just told to work on. */}
+          <Link href="/student?mode=practice" className={BUTTON_SECONDARY}>
+            {rtl ? "ذاكر نقطة ضعفي" : "Practise my weak spots"}
+          </Link>
+          <Link
+            href="/student"
+            className="inline-flex min-h-11 items-center font-display text-[0.95rem] font-bold text-[color:var(--play-text-link)] underline decoration-[color:var(--play-disabled-border)] underline-offset-[5px]"
+          >
+            {rtl ? "خلصنا النهاردة" : "Done for today"}
+          </Link>
+        </div>
       )}
     </section>
+  );
+}
+
+/** One of the report's three lists: three items at most, the rest behind "Show N more". */
+function ReportList({
+  title,
+  items,
+  empty,
+  dot,
+  honey = false,
+  rtl,
+}: {
+  title: string;
+  items: string[];
+  empty: string;
+  /** the bullet's fill class */
+  dot: string;
+  /** "What's next": a flat Honey block */
+  honey?: boolean;
+  rtl: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  const shown = open ? items : items.slice(0, LIST_LIMIT);
+  const more = items.length - shown.length;
+  return (
+    <div
+      className={cx(
+        "flex flex-col gap-2.5 text-ink",
+        honey ? "rounded-[var(--play-radius-sm)] bg-card-warm px-4 py-3.5" : "px-1"
+      )}
+    >
+      <p className="font-display text-[1.1rem] font-extrabold leading-none">{title}</p>
+      {items.length === 0 && empty && (
+        <p className="font-read text-[1rem] leading-[1.5] text-[color:var(--play-text-dim)]">{empty}</p>
+      )}
+      {shown.length > 0 && (
+        <ul className="flex flex-col gap-2.5">
+          {shown.map((it, i) => (
+            <li key={i} className="flex items-baseline gap-2.5">
+              <span aria-hidden className={cx("size-2 shrink-0 -translate-y-px rounded-full", dot)} />
+              <span className="font-read text-[1rem] leading-[1.5]">{it}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+      {more > 0 && (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="inline-flex min-h-11 items-center self-start font-display text-[0.92rem] font-bold text-[color:var(--play-text-link)] underline decoration-[color:var(--play-disabled-border)] underline-offset-[5px]"
+        >
+          {rtl ? `اعرض ${more} كمان` : `Show ${more} more`}
+        </button>
+      )}
+    </div>
   );
 }

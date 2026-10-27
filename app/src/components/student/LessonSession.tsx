@@ -28,6 +28,7 @@ import { deriveMasteryStage, learnAutoStartLine } from "@/lib/checkin";
 import type { Cite } from "@/lib/chat-parse";
 import { ChatCore, type ChatCoreHandle, type ChatSuggestion } from "@/components/chat/ChatCore";
 import { NoorMark } from "@/components/NoorMark";
+import { GUIDED_CHAT_PANEL, GuidedChatHeader } from "@/components/chat/GuidedChatHeader";
 import { renderMathWidget } from "@/components/student/widgets/render-math-widget";
 import { inlineWidgetLo } from "@/lib/widget-payloads";
 import { hashOf } from "@/components/student/widgets/util";
@@ -66,9 +67,8 @@ import {
   BUTTON_PRIMARY,
   BUTTON_SECONDARY,
   HEADING,
-  HONEY_BAND,
-  STICKER_CARD,
   STROKE,
+  STROKE_WIDTH_SM,
   cx,
 } from "@/components/sticker";
 import { authFetch } from "@/lib/auth/client-session";
@@ -127,13 +127,13 @@ const MODE_COPY: Record<
     label: "Teach me",
     chip: "Guided lesson",
     finish: "Finish lesson",
-    opening: "Let's go 💪 setting up today's lesson… ✏️",
+    opening: "Let's go — setting up today's lesson…",
   },
   review: {
     label: "Quick revision",
     chip: "Quick review · 3 minutes",
     finish: "End now",
-    opening: "One sec — setting up the quick revision questions… ⏱",
+    opening: "One sec — setting up the quick revision questions…",
   },
 };
 
@@ -301,6 +301,8 @@ export function LessonSession({
   // but that is not the student's decision to leave the transcript — it only
   // arms the header's Finish button; requestFinish still only fires on tap.
   const [readyToFinish, setReadyToFinish] = useState(false);
+  // Noor is thinking (a reply is open, nothing of it showing): the header avatar wiggles
+  const [thinking, setThinking] = useState(false);
   const [check, setCheck] = useState<UnderstandingCheck | null>(null);
   const [ratingCost, setRatingCost] = useState(0);
   const [totalUsd, setTotalUsd] = useState(0);
@@ -1149,7 +1151,7 @@ export function LessonSession({
     return (
       <main
         dir={rtl ? "rtl" : undefined}
-        className="mx-auto max-w-3xl px-6 pb-16 pt-10"
+        className="guided-page mx-auto w-full max-w-[1096px] px-3 pb-16 pt-6 sm:px-7 sm:pt-8"
       >
         <ReportCard
           check={check}
@@ -1157,6 +1159,8 @@ export function LessonSession({
           costUsd={ratingCost}
           studentName={lesson.studentName}
           rtl={rtl}
+          lessonRef={lesson.lessonRef}
+          skill={lesson.title}
         />
         {/* "When we finish a lesson", the second of the three moments Samuel
             named (FR-2801). Here and not inside `ReportCard`, for two
@@ -1177,120 +1181,139 @@ export function LessonSession({
   }
 
   if (phase === "rating" || phase === "error") {
+    // Grading cannot be stopped; Nour wiggles while it is pending (guided pages handoff §4, §7).
+    const grading = phase === "rating";
     return (
       <main
         dir={rtl ? "rtl" : undefined}
-        className="mx-auto max-w-3xl px-6 pb-16 pt-10"
+        className="guided-page flex min-h-dvh items-center justify-center px-6 py-6"
       >
-        <section className={cx(STICKER_CARD, "anim-pop mx-auto max-w-xl px-8 py-10 text-center")}>
-          {phase === "rating" ? (
-            <>
-              {/* Arabic is never set in mono or letter-spaced */}
-              <p
-                className={cx(
-                  "text-ink-faint",
-                  rtl
-                    ? "text-[0.85rem] font-bold"
-                    : "font-mono text-[0.72rem] uppercase tracking-[0.2em]"
-                )}
-              >
-                {rtl ? "بنقيّم الجلسة كلها · بأمانة" : "grading the whole session · honestly"}
-              </p>
-              <p className={cx(HEADING, "mt-3 text-2xl")}>
-                {rtl ? "قد إيه فعلاً رسّخ معاك؟" : "How much of it really landed?"}
-              </p>
-              <p className="mt-2 text-[1rem] text-ink-soft">
-                {rtl
-                  ? "المدرّس بيرجع يقرأ كل اللي عملته النهاردة — كل إجابة وكل لمسة — وبيكتب تقرير فهمك."
-                  : "The tutor is re-reading everything you did — every answer, every tap on a widget — and writing your comprehension report."}
-              </p>
-              <span className="mt-5 inline-flex gap-[5px]">
-                {[0, 1, 2].map((i) => (
-                  <span
-                    key={i}
-                    className="size-[9px] rounded-full bg-[var(--noor-action)]"
-                    style={{
-                      animation: `think-dot 1.3s ease-in-out ${i * 0.18}s infinite`,
-                    }}
-                  />
-                ))}
-              </span>
-            </>
+        <section className="flex w-full max-w-[560px] flex-col items-center gap-[18px] text-center">
+          <span
+            aria-hidden
+            className={cx(
+              STROKE,
+              "flex size-[84px] items-center justify-center rounded-[var(--play-radius-pill)] bg-card",
+              grading ? "guided-wiggle" : "anim-bob"
+            )}
+          >
+            <NoorMark className="size-[54px]" />
+          </span>
+          <p className="font-display text-[0.95rem] font-bold leading-none text-[color:var(--play-text-dim)]">
+            {grading
+              ? rtl
+                ? "الجلسة مشيت إزاي"
+                : "How this session went"
+              : rtl
+                ? "لسه مش جاهز"
+                : "Not ready yet"}
+          </p>
+          <h1 className={cx(HEADING, "text-[1.8rem] leading-[1.1] sm:text-[2.4rem]")}>
+            {grading
+              ? rtl
+                ? "اللي وريته النهاردة"
+                : "What you showed today"
+              : rtl
+                ? "جلستك محفوظة"
+                : "Your session is safe"}
+          </h1>
+          <p role="status" className="max-w-[46ch] font-read text-[1.1rem] leading-[1.7] text-[color:var(--play-text-dim)]">
+            {grading
+              ? rtl
+                ? "نور بترجع تقرأ كل اللي عملته."
+                : "Noor is reading back through everything you did."
+              : rtl
+                ? "نور ماقدرتش تخلّص القراية دلوقتي. جرّب تاني."
+                : "Noor couldn't finish reading it just now. Try again."}
+          </p>
+          {grading ? (
+            <span className="inline-flex gap-[9px] pt-1.5" aria-hidden>
+              {[0, 1, 2].map((i) => (
+                <span
+                  key={i}
+                  className="size-3 rounded-full bg-[var(--noor-action)]"
+                  style={{
+                    animation: `think-dot 1.3s ease-in-out ${i * 0.18}s infinite`,
+                  }}
+                />
+              ))}
+            </span>
           ) : (
-            <>
-              <p className={cx(HEADING, "text-2xl")}>
-                {rtl ? "المصحّح مش متاح دلوقتي" : "The grader is unavailable"}
-              </p>
-              <p className="mt-2 text-[1rem] text-ink-soft">
-                {rtl
-                  ? "جلستك محفوظة — جرّب التقييم تاني."
-                  : "Your session is safe — try the rating again."}
-              </p>
-              <button
-                onClick={() => finish()}
-                className={cx(BUTTON_PRIMARY, "mt-5")}
-              >
-                {rtl ? "جرّب التقييم تاني ←" : "Retry rating →"}
-              </button>
-            </>
+            <button onClick={() => finish()} className={cx(BUTTON_PRIMARY, "px-[26px]")}>
+              {rtl ? "جرّب تاني ←" : "Try again →"}
+            </button>
           )}
         </section>
       </main>
     );
   }
 
-  const stepNow = Math.min(Math.max(covered.length, 1), lesson.los.length);
   const heading = lesson.provenance ? lessonHeading(lesson.provenance) : null;
   const currentLo =
     (covered.length ? loById.get(covered[covered.length - 1]) : undefined) ??
     lesson.los[0];
+  const steps = lessonSteps(lesson.los, covered, currentLo?.id, readyToFinish);
+  const promise = readyToFinish
+    ? rtl
+      ? `خلصنا — دوس "${arCopy.finish}" لتقريرك`
+      : `That's a wrap — tap ${copy.finish} for your report`
+    : rtl
+      ? `${arDigits(lesson.los.length)} خطوات، وبعدها تقرير فهمك`
+      : `${lesson.los.length} steps, then your understanding report`;
 
   return (
     <main
       dir={rtl ? "rtl" : undefined}
-      className="mx-auto flex h-dvh min-h-[540px] w-full max-w-4xl flex-col px-4 pb-3 pt-4 md:px-6"
+      className="guided-page mx-auto flex h-dvh min-h-[540px] w-full max-w-[1440px] flex-col px-3 sm:px-6 sm:pb-6 min-[1280px]:px-7"
     >
-      {/* header */}
-      <section className="anim-rise shrink-0">
-        <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
-          {/* triple-tap = founders' easter egg: toggles the receipts back on */}
-          <div onClick={headerTap} className="select-none">
-            {/* `dir` on the label itself, not just inherited: the Play rule
-                that keeps Arabic out of mono keys on the attribute, and
-                `.rule-label` would otherwise set this Arabic chip in Plex */}
-            <p dir={rtl ? "rtl" : undefined} className="rule-label mb-1 pe-2">
+      {/* header: the way back, the title, Finish (guided pages handoff §4) */}
+      <header className="anim-rise flex shrink-0 items-center gap-4 pb-2 pt-3 sm:pb-2.5 sm:pt-4">
+        {/* triple-tap = founders' easter egg: toggles the receipts back on */}
+        <div onClick={headerTap} className="flex min-w-0 flex-1 select-none flex-col gap-[3px]">
+          <p className="flex flex-wrap items-center gap-x-2.5 font-display text-[0.85rem] font-bold leading-[1.4]">
+            <Link
+              href="/student"
+              className="text-[color:var(--play-text-link)] underline decoration-[color:var(--play-disabled-border)] underline-offset-[5px]"
+            >
+              {rtl ? "رجوع للتسجيل" : "Check-in"}
+            </Link>
+            <span aria-hidden className="text-[color:var(--play-disabled-border)]">
+              ·
+            </span>
+            <span className="text-[color:var(--play-text-dim)]">
               {rtl ? arCopy.chip : copy.chip} · {first}
-              {debug && (
-                <span className="ms-2 text-gold" title="debug receipts on">
-                  · receipts on
-                </span>
-              )}
-            </p>
-            <h1 className={cx(HEADING, "text-xl md:text-2xl")}>
-              {heading ? (
-                // A lesson with book provenance (the Grade 10 book) names its
-                // printed section and its part — "1.7 Factorisation · part 2
-                // of 3" — the check-in's words (FR-4318, backlog #34). The
-                // number reads LTR in any direction. Every National lesson
-                // has no provenance and keeps "Lesson 1-1 — Cartesian product".
-                <>
-                  <span dir="ltr">{heading.number}</span> {heading.title}
-                  {heading.part && (
-                    <span className="text-[color:var(--play-text-muted)]">
-                      {" · "}
-                      {heading.part}
-                    </span>
-                  )}
-                </>
-              ) : (
-                <>
-                  {lesson.lessonRef} — {lesson.title}
-                </>
-              )}
-            </h1>
-          </div>
+            </span>
+            {debug && (
+              <span className="text-gold" title="debug receipts on">
+                · receipts on
+              </span>
+            )}
+          </p>
+          <h1 className={cx(HEADING, "text-[1.15rem] sm:text-[1.5rem]")}>
+            {heading ? (
+              // A lesson with book provenance (the Grade 10 book) names its
+              // printed section and its part — "1.7 Factorisation · part 2
+              // of 3" — the check-in's words (FR-4318, backlog #34). The
+              // number reads LTR in any direction. Every National lesson
+              // has no provenance and keeps "Lesson 1-1 — Cartesian product".
+              <>
+                <span dir="ltr">{heading.number}</span> {heading.title}
+                {heading.part && (
+                  <span className="text-[color:var(--play-text-muted)]">
+                    {" · "}
+                    {heading.part}
+                  </span>
+                )}
+              </>
+            ) : (
+              <>
+                {lesson.lessonRef} — {lesson.title}
+              </>
+            )}
+          </h1>
+        </div>
 
-          <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
             {VOICE_UI_ENABLED && ttsOK && (
               <button
                 onClick={toggleVoice}
@@ -1327,53 +1350,22 @@ export function LessonSession({
               // Amber only once the lesson is done and finishing IS the next
               // step; until then it is a secondary, so the composer's send is
               // the screen's one amber.
-              className={readyToFinish ? cx(BUTTON_PRIMARY, "anim-nudge") : BUTTON_SECONDARY}
+              className={cx(
+                readyToFinish ? BUTTON_PRIMARY : BUTTON_SECONDARY,
+                "min-h-[var(--noor-touch-min)] whitespace-nowrap px-[22px] text-[1.05rem]"
+              )}
             >
               {rtl ? `${arCopy.finish} ←` : `${copy.finish} →`}
             </button>
           </div>
-        </div>
+      </header>
 
-        {/* labeled progress stepper + the up-front promise */}
-        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
-          <span className="flex items-center gap-1.5" aria-hidden>
-            {lesson.los.map((l) => (
-              <span
-                key={l.id}
-                className="h-2 w-7 rounded-full transition-colors duration-500"
-                style={{
-                  backgroundColor: covered.includes(l.id)
-                    ? "var(--accent)"
-                    : "color-mix(in srgb, var(--ink) 15%, transparent)",
-                }}
-              />
-            ))}
-          </span>
-          <span
-            dir={rtl ? "rtl" : "ltr"}
-            className="text-[0.85rem] font-bold text-ink"
-          >
-            {rtl
-              ? `${arDigits(stepNow)} من ${arDigits(lesson.los.length)}`
-              : `${stepNow} of ${lesson.los.length}`}{" "}
-            ·{" "}
-            {/* social LO labels are Arabic — keep them in the RTL flow */}
-            <span dir={rtl ? undefined : "ltr"} className="font-normal text-ink-soft">
-              {/* an objective label may carry maths (backlog #37) */}
-              {currentLo?.label != null && <MathText text={currentLo.label} />}
-            </span>
-          </span>
-          <span dir={rtl ? "rtl" : "ltr"} className="text-[0.85rem] text-ink-faint">
-            {readyToFinish
-              ? rtl
-                ? `خلصنا — دوس "${arCopy.finish}" لما تكون جاهز تشوف تقريرك 📋`
-                : `That's a wrap — tap "${copy.finish}" whenever you're ready for your report 📋`
-              : rtl
-                ? `${arDigits(lesson.los.length)} خطوات وبعدها تقرير فهمك 📋`
-                : `${lesson.los.length} steps, then your understanding report 📋`}
-          </span>
-        </div>
-      </section>
+      {/* iPad and phone: the steps as one line of segments under the title */}
+      <LessonStepper steps={steps} rtl={rtl} promise={promise} />
+
+      <div className="flex min-h-0 flex-1 gap-6">
+        {/* web: the steps as a plain list in their own column — never competing with the chat */}
+        <LessonStepsRail steps={steps} rtl={rtl} promise={promise} />
 
       {boot.state === "prompt" ? (
         <ResumePrompt
@@ -1388,11 +1380,7 @@ export function LessonSession({
           onFresh={startFresh}
         />
       ) : boot.state === "ready" ? (
-        <div className="anim-rise mt-3 flex min-h-0 flex-1 flex-col gap-3">
-          {/* the whiteboard — OUTSIDE the chat scroll container.
-              mobile: collapsible top sheet ≤40dvh; desktop: in-flow right
-              column pinned by the h-dvh app frame (never position:fixed —
-              the Android keyboard pit). */}
+        <div className="anim-rise flex min-h-0 min-w-0 flex-1 flex-col gap-3">
           {boardOn && (
             <div
               className={`min-h-0 shrink-0 md:order-2 md:flex md:min-h-0 md:flex-1 md:flex-col ${
@@ -1427,40 +1415,27 @@ export function LessonSession({
             </div>
           )}
 
-          {/* lesson stream */}
-          {/* The lesson chat handoff: the panel is the stage — the 3px outline and no shadow; the
-              shadow layer is the bubbles, input and Send inside it (globals.css, .lesson-chat). */}
-          <section
-            className={cx(
-              STROKE,
-              "lesson-chat flex min-h-0 flex-1 flex-col overflow-hidden rounded-[var(--play-radius)] bg-card text-ink md:order-1"
-            )}
-          >
-            <div className={cx(HONEY_BAND, "flex items-center gap-3 px-5 py-3.5")}>
-              <span
-                aria-hidden
-                className={cx(
-                  STROKE,
-                  "anim-bob flex size-11 shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] bg-card"
-                )}
-              >
-                <NoorMark className="size-7" />
-              </span>
-              <span className="flex min-w-0 flex-1 flex-col gap-px" dir={rtl ? "rtl" : undefined}>
-                <span className="font-display text-[1.3rem] font-extrabold leading-[1.1] text-ink">Ask Noor</span>
-                <span className="font-display text-[0.85rem] font-semibold leading-[1.2] text-[color:var(--play-text-dim)]">
+          {/* lesson stream — the chat is the page (guided pages handoff §1) */}
+          <section className={cx(GUIDED_CHAT_PANEL, "md:order-1")}>
+            <GuidedChatHeader
+              thinking={thinking}
+              rtl={rtl}
+              sub={
+                <>
                   {lesson.lessonRef} · {lesson.title}
-                </span>
-              </span>
-              {debug && (
-                <span className="font-mono text-[0.72rem] text-ink-faint">
-                  {mode === "review"
-                    ? `turn ${Math.min(turns, REVIEW_FINISH_NUDGE_AT)}/${REVIEW_FINISH_NUDGE_AT} · `
-                    : ""}
-                  ${totalUsd.toFixed(3)} session spend
-                </span>
-              )}
-            </div>
+                </>
+              }
+              trailing={
+                debug ? (
+                    <span className="font-mono text-[0.72rem] text-ink-faint">
+                      {mode === "review"
+                        ? `turn ${Math.min(turns, REVIEW_FINISH_NUDGE_AT)}/${REVIEW_FINISH_NUDGE_AT} · `
+                        : ""}
+                      ${totalUsd.toFixed(3)} session spend
+                    </span>
+                ) : undefined
+              }
+            />
 
             <ChatCore
               surface={mode === "learn" ? "lesson_learn" : "lesson_review"}
@@ -1557,6 +1532,7 @@ export function LessonSession({
               onSwitchSubject={(subj) => router.push(`/student?subject=${subj}`)}
               mathKeys={lessonMathKeys}
               lessonChrome
+              onThinkingChange={setThinking}
               inputAccessory={
                 VOICE_UI_ENABLED && sttOK
                   ? (api) => <MicButton setInput={api.setInput} />
@@ -1568,29 +1544,131 @@ export function LessonSession({
       ) : (
         <div className="min-h-0 flex-1" />
       )}
-
-      {rtl ? (
-        <p dir="rtl" className="mt-2 shrink-0 text-center text-[0.85rem] text-ink-faint">
-          كل جملة من كتاب الوزارة، بمراجعة بشرية · وفي الآخر تقرير فهم بأمانة ·{" "}
-          <Link
-            href="/student"
-            className="font-bold text-[color:var(--play-text-link)] underline decoration-dotted underline-offset-2"
-          >
-            ارجع للبداية
-          </Link>
-        </p>
-      ) : (
-        // the mono strip is gone (lesson chat handoff §2); its way back stays, as a plain link
-        <p className="mt-2 shrink-0 text-center">
-          <Link
-            href="/student"
-            className="font-display text-[0.9rem] font-bold text-[color:var(--play-text-link)] underline decoration-[color:var(--play-disabled-border)] underline-offset-[5px]"
-          >
-            Back to check-in
-          </Link>
-        </p>
-      )}
+      </div>
     </main>
+  );
+}
+
+type StepState = "done" | "now" | "next";
+type LessonStep = { id: string; label: string; state: StepState };
+
+/** Each objective of the lesson as a step: done, the one being taught, or still to come. */
+function lessonSteps(
+  los: { id: string; label: string }[],
+  covered: string[],
+  currentId: string | undefined,
+  allDone: boolean
+): LessonStep[] {
+  return los.map((l) => ({
+    id: l.id,
+    label: l.label,
+    state: allDone
+      ? "done"
+      : l.id === currentId
+        ? "now"
+        : covered.includes(l.id)
+          ? "done"
+          : "next",
+  }));
+}
+
+/**
+ * The steps column (web, 1280px and up): "Your steps", a plain list — done is a filled teal
+ * circle with a tick, the current step a Honey sticker with a white number dot, the rest an
+ * outlined circle in grey — and the promise under it (guided pages handoff §4).
+ */
+function LessonStepsRail({ steps, rtl, promise }: { steps: LessonStep[]; rtl: boolean; promise: string }) {
+  return (
+    <nav
+      aria-label={rtl ? "خطواتك" : "Your steps"}
+      className="hidden w-[236px] shrink-0 flex-col gap-3.5 pt-1.5 min-[1280px]:flex"
+    >
+      <p className="font-display text-[1rem] font-extrabold leading-none text-ink">
+        {rtl ? "خطواتك" : "Your steps"}
+      </p>
+      <ol className="flex flex-col gap-1.5">
+        {steps.map((st, i) => (
+          <li
+            key={st.id}
+            aria-current={st.state === "now" ? "step" : undefined}
+            className={cx(
+              STROKE,
+              "flex min-h-[var(--noor-touch-min)] items-center gap-[11px] rounded-[var(--play-radius-sm)] px-2.5",
+              st.state === "now" ? "bg-card-warm sticker-shadow-sm" : "border-transparent"
+            )}
+          >
+            <span
+              className={cx(
+                STROKE_WIDTH_SM,
+                "flex size-7 shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] font-display text-[0.8rem] font-extrabold",
+                st.state === "done"
+                  ? "border-[color:var(--noor-progress)] bg-[var(--noor-progress)] text-[color:var(--noor-on-progress)]"
+                  : st.state === "now"
+                    ? "border-ink bg-card text-ink"
+                    : "border-[color:var(--play-disabled-border)] text-[color:var(--play-text-dim)]"
+              )}
+            >
+              {st.state === "done" ? "✓" : rtl ? arDigits(i + 1) : i + 1}
+            </span>
+            <span
+              className={cx(
+                "min-w-0 font-display text-[0.98rem] leading-[1.25]",
+                st.state === "now" ? "font-extrabold text-ink" : "font-bold text-[color:var(--play-text-dim)]"
+              )}
+            >
+              {/* an objective label may carry maths (backlog #37) */}
+              <MathText text={st.label} />
+            </span>
+          </li>
+        ))}
+      </ol>
+      <p className="pt-1.5 font-display text-[0.88rem] font-bold leading-[1.5] text-[color:var(--play-text-dim)]">
+        {promise}
+      </p>
+    </nav>
+  );
+}
+
+/** iPad and phone (under 1280px): the steps as 10px segments, "4 of 6 · Relations" and the promise. */
+function LessonStepper({ steps, rtl, promise }: { steps: LessonStep[]; rtl: boolean; promise: string }) {
+  const at = Math.max(steps.findIndex((s) => s.state === "now"), 0);
+  const allDone = steps.every((s) => s.state === "done");
+  return (
+    <div className="flex shrink-0 flex-col gap-[7px] pb-3 min-[1280px]:hidden">
+      <span className="flex gap-[5px]" aria-hidden>
+        {steps.map((st) => (
+          <span
+            key={st.id}
+            className={cx(
+              "h-2.5 flex-1 rounded-[var(--play-radius-pill)] border-2 border-solid",
+              st.state === "done"
+                ? "border-[color:var(--noor-progress)] bg-[var(--noor-progress)]"
+                : st.state === "now"
+                  ? "border-ink bg-card-warm"
+                  : "border-[color:var(--play-disabled-border)]"
+            )}
+          />
+        ))}
+      </span>
+      <p className="flex flex-wrap items-baseline gap-x-2.5 font-display leading-[1.2]">
+        <span dir={rtl ? "rtl" : "ltr"} className="text-[0.9rem] font-bold text-ink">
+          {allDone
+            ? rtl
+              ? `${arDigits(steps.length)} من ${arDigits(steps.length)}`
+              : `${steps.length} of ${steps.length}`
+            : rtl
+              ? `${arDigits(at + 1)} من ${arDigits(steps.length)}`
+              : `${at + 1} of ${steps.length}`}
+          {!allDone && steps[at] && (
+            <>
+              {" · "}
+              <MathText text={steps[at].label} />
+            </>
+          )}
+        </span>
+        <span className="text-[0.85rem] font-bold text-[color:var(--play-text-dim)]">{promise}</span>
+      </p>
+    </div>
   );
 }
 
@@ -1612,15 +1690,27 @@ function ResumePrompt({
   onFresh: () => void;
 }) {
   return (
-    <div className="flex min-h-0 flex-1 items-start justify-center">
-      <section className={cx(STICKER_CARD, "anim-pop mt-10 w-full max-w-md px-8 py-8 text-center")}>
-        <p dir={rtl ? "rtl" : "ltr"} className={cx(HEADING, "text-2xl")}>
+    <div className="flex min-h-0 min-w-0 flex-1 items-center justify-center pb-6">
+      <section
+        className={cx(
+          STROKE,
+          "anim-pop flex w-full max-w-[560px] flex-col gap-4 rounded-[var(--chat-radius-prompt)] bg-card p-7 text-ink",
+          "shadow-[var(--chat-shadow-big)]"
+        )}
+      >
+        <span
+          aria-hidden
+          className={cx(
+            STROKE,
+            "anim-bob flex size-14 items-center justify-center rounded-[var(--play-radius-pill)] bg-card"
+          )}
+        >
+          <NoorMark className="size-9" />
+        </span>
+        <p dir={rtl ? "rtl" : "ltr"} className={cx(HEADING, "text-[1.7rem] leading-[1.15]")}>
           {rtl ? "استكمل الدرس؟" : "Continue the lesson?"}
         </p>
-        <p
-          dir={rtl ? "rtl" : "ltr"}
-          className="mt-2 text-[1rem] text-ink-soft"
-        >
+        <p dir={rtl ? "rtl" : "ltr"} className="font-read text-[1.05rem] leading-[1.7] text-[color:var(--play-text-dim)]">
           {stoppedAt !== null
             ? rtl
               ? `وقفت عند خطوة ${arDigits(stoppedAt)} من ${arDigits(stepCount)} — تحب تكمّل من حيث وقفت؟`
@@ -1629,22 +1719,19 @@ function ResumePrompt({
               ? "كان معاك درس شغّال هنا قبل كده — تحب تكمّل من حيث وقفت؟"
               : "You had a lesson running here before — pick up where you left off?"}
         </p>
-        <div className="mt-5 grid gap-2">
-          <button
-            dir={rtl ? "rtl" : "ltr"}
-            onClick={onResume}
-            className={BUTTON_PRIMARY}
-          >
+        <div className="flex flex-col gap-3 pt-1">
+          <button dir={rtl ? "rtl" : "ltr"} onClick={onResume} className={BUTTON_PRIMARY}>
             {rtl ? "كمل من حيث وقفت ✓" : "Continue where I left off ✓"}
           </button>
-          <button
-            dir={rtl ? "rtl" : "ltr"}
-            onClick={onFresh}
-            className={BUTTON_SECONDARY}
-          >
+          <button dir={rtl ? "rtl" : "ltr"} onClick={onFresh} className={BUTTON_SECONDARY}>
             {rtl ? "لا — ابدأ من الأول" : "No — start from the beginning"}
           </button>
         </div>
+        <p dir={rtl ? "rtl" : "ltr"} className="font-read text-[0.88rem] leading-[1.5] text-[color:var(--play-text-dim)]">
+          {rtl
+            ? "مكانك محفوظ على حسابك، فده بيشتغل على أي جهاز."
+            : "Your place is saved on your account, so this works on any device."}
+        </p>
       </section>
     </div>
   );

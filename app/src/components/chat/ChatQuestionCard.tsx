@@ -47,8 +47,15 @@ export function ChatQuestionCard({
   retryOfAttemptId,
   externalResult,
   symbols = false,
+  guided = false,
 }: {
   question: SpineQuestion;
+  /**
+   * The guided pages' card (handoff §2): a top-level object in the chat — outline and the small
+   * shadow, 18px padding, a plain label line instead of the Honey band, the options in two
+   * columns as flat Honey fills. What is graded, and how, is unchanged.
+   */
+  guided?: boolean;
   /** false = student mode: no db ids, soft failure state, no mastery deltas */
   debug?: boolean;
   /** RTL/Arabic-script subject — student-mode strings render in Arabic, not English */
@@ -187,8 +194,31 @@ export function ChatQuestionCard({
     }
   }
 
+  const bookLabel = [
+    q.provenance.parentQuestionId ? "Practice question" : "Question from your book",
+    q.provenance.sourcePage != null ? `p. ${q.provenance.sourcePage}` : null,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
   return (
-    <div className={cx(STICKER_PANEL, "anim-pop my-2 overflow-hidden")}>
+    <div
+      className={
+        guided
+          ? cx(STROKE, "anim-pop overflow-hidden rounded-[var(--play-radius)] bg-card p-[18px] sticker-shadow-sm")
+          : cx(STICKER_PANEL, "anim-pop my-2 overflow-hidden")
+      }
+    >
+      {guided ? (
+        <p className="flex flex-wrap items-baseline gap-x-2 font-display text-[0.85rem] font-bold leading-none text-[color:var(--play-text-dim)]">
+          {lang === "ar" ? (q.provenance.sourcePage != null ? `سؤال من كتابك · ص ${q.provenance.sourcePage}` : "سؤال من كتابك") : bookLabel}
+          {debug && (
+            <span className="font-mono text-[0.72rem] text-ink-label">
+              {q.id} · {q.tier}
+            </span>
+          )}
+        </p>
+      ) : (
       <div className={cx(HONEY_BAND, "flex flex-wrap items-center justify-between gap-2 px-3.5 py-2")}>
         <span className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-accent-deep">
           ⚡ live question · pushed by the tutor
@@ -210,9 +240,10 @@ export function ChatQuestionCard({
           )}
         </span>
       </div>
+      )}
 
-      <div className="px-3.5 py-3">
-        <p className="tex-block text-[1rem] text-ink">
+      <div className={guided ? "pt-[13px]" : "px-3.5 py-3"}>
+        <p className={cx("tex-block text-ink", guided ? "font-read text-[1.1rem] leading-[1.6]" : "text-[1rem]")}>
           <TeX text={displayStem(q.stem)} />
         </p>
         {/* the question's own figure (A3) — never the "[figure]" placeholder */}
@@ -249,7 +280,7 @@ export function ChatQuestionCard({
                 }
               />
             ) : q.questionType === "mcq" && q.choices ? (
-              <div className="grid gap-2">
+              <div className={cx("grid", guided ? "gap-2.5 sm:grid-cols-2" : "gap-2")}>
                 {mcqChoices(q)!.map((c) => (
                   <button
                     key={c.key}
@@ -259,12 +290,23 @@ export function ChatQuestionCard({
                     // Baloo 700; Selected is the Honey fill, keeping its
                     // stroke and shadow. `text-start`, not `text-left`, so an
                     // Arabic option reads from the right.
-                    className={cx(
-                      STROKE_SM,
-                      "flex min-h-[var(--noor-touch-min)] items-center gap-2.5 rounded-[var(--play-radius-sm)] px-3 py-2 text-start",
-                      "font-display text-[1.05rem] font-bold text-ink sticker-shadow-sm play-pressable",
-                      choice === c.key ? "bg-card-warm" : "bg-card"
-                    )}
+                    className={
+                      guided
+                        ? // flat Honey inside the shadowed card: no outline at rest, the ink
+                          // outline only on the one she picked
+                          cx(
+                            STROKE,
+                            "flex min-h-[var(--noor-touch-min)] items-center gap-2.5 rounded-[var(--play-radius-sm)] bg-card-warm px-4 py-2 text-start",
+                            "font-display text-[1.1rem] font-bold text-ink play-pressable",
+                            choice === c.key ? "border-ink" : "border-transparent"
+                          )
+                        : cx(
+                            STROKE_SM,
+                            "flex min-h-[var(--noor-touch-min)] items-center gap-2.5 rounded-[var(--play-radius-sm)] px-3 py-2 text-start",
+                            "font-display text-[1.05rem] font-bold text-ink sticker-shadow-sm play-pressable",
+                            choice === c.key ? "bg-card-warm" : "bg-card"
+                          )
+                    }
                   >
                     <span
                       className={cx(

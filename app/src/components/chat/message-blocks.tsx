@@ -94,10 +94,13 @@ export function StudentBubble({ children, lesson = false }: { children: ReactNod
       <div
         className={cx(
           lesson
-            ? // lesson chat handoff: the full 3px outline, the notch toward the student, 60ch wide
-              cx(STROKE, "max-w-[60ch] rounded-[var(--play-radius-sm)] rounded-ee-[var(--play-radius-notch)]")
-            : cx(STROKE_SM, "max-w-[85%] rounded-[var(--play-radius)] rounded-es-[var(--play-radius-notch)]"),
-          BUBBLE_SHAPE,
+            ? // guided pages handoff §2: the full 3px outline, 16px with a 4px notch at the
+              // bottom-end, 11px 15px, Cairo 600 at 1.02rem, as wide as Nour's (64ch)
+              cx(
+                STROKE,
+                "max-w-[var(--chat-bubble-max)] rounded-[var(--chat-radius-student)] rounded-ee-[var(--chat-notch-student)] px-[15px] py-[11px] font-read text-[1.02rem] font-semibold leading-[1.5]"
+              )
+            : cx(STROKE_SM, "max-w-[85%] rounded-[var(--play-radius)] rounded-es-[var(--play-radius-notch)]", BUBBLE_SHAPE),
           // the student's own turn is the sky playmate with its paired ink —
           // never ink: their own words are not the darkest thing on screen
           "bg-[var(--play-sky)] text-[color:var(--play-on-sky)] sticker-shadow-sm noor-bubble-student"
@@ -121,8 +124,9 @@ export function TutorBubble({
   error?: boolean;
   style?: React.CSSProperties;
   /**
-   * The lesson chat handoff's bubble: the full 3px outline, 14px 16px padding, 60ch wide, and
-   * `lesson-bubble`, under which anything nested goes flat (globals.css: one shadow layer).
+   * The guided pages' bubble (handoff §2): the full 3px outline, 18px with the 6px notch at
+   * top-start, 15px 18px padding, Cairo 1.05rem/1.7, 64ch wide, and `lesson-bubble`, under which
+   * anything nested goes flat (globals.css: one shadow layer).
    */
   lesson?: boolean;
 }) {
@@ -133,7 +137,7 @@ export function TutorBubble({
           lesson
             ? cx(
                 STROKE,
-                "lesson-bubble max-w-[60ch] min-w-0 rounded-[var(--play-radius)] rounded-ss-[var(--play-radius-notch)] px-4 py-3.5 font-read text-[1rem]"
+                "lesson-bubble min-w-0 max-w-[var(--chat-bubble-max)] rounded-[var(--chat-radius-bubble)] rounded-ss-[var(--play-radius-notch)] px-[18px] py-[15px] font-read text-[1.05rem] leading-[1.7]"
               )
             : cx("max-w-[94%]", TUTOR_BUBBLE_FRAME),
           // A failed turn greys out like a wrong answer does — the inactive
@@ -259,7 +263,11 @@ export function renderChatBlocks(blocks: Block[], o: BlockRenderOptions = {}): R
         <div
           key={i}
           data-chunk-ask=""
-          className="mt-4 mb-0.5 rounded-[var(--play-radius-sm)] bg-card-warm px-3 py-2.5 text-ink"
+          className={cx(
+            "rounded-[var(--play-radius-sm)] bg-card-warm text-ink",
+            // guided pages: the last chunk, 11px under the one before it, 13px 16px
+            o.lesson ? "mt-[11px] px-4 py-[13px]" : "mt-4 mb-0.5 px-3 py-2.5"
+          )}
         >
           {b.paras.map((inlines, k) => (
             <p key={k} dir="auto" className="tex-block my-1 first:mt-0 last:mb-0" style={{ textAlign: "start" }}>
@@ -294,7 +302,8 @@ export function renderChatBlocks(blocks: Block[], o: BlockRenderOptions = {}): R
         dir="auto"
         className={cx(
           "tex-block",
-          o.lesson ? "my-3 first:mt-0 last:mb-0" : "my-1.5 first:mt-0 last:mb-0",
+          // guided pages: 11px between chunks
+          o.lesson ? "my-[11px] first:mt-0 last:mb-0" : "my-1.5 first:mt-0 last:mb-0",
           closingQuestion && "rounded-[var(--play-radius-sm)] bg-card-warm px-4 py-[13px]"
         )}
         style={{ textAlign: "start" }}

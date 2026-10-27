@@ -1485,3 +1485,90 @@ body[data-focus="lesson"] > footer {
 .fig-label-ar {
   font-size: calc(max(var(--type-label), var(--ar-size-min)) * var(--fig-u, 1));
 }
+
+/* ===========================================================================
+   THE GUIDED PAGES — Ask Noor (homework) and the guided lesson
+   ---------------------------------------------------------------------------
+   design_handoff_guided_pages (2026-10-27): one chat in two configurations,
+   and the chat is the page. The values below are that handoff's, named once
+   here so no component carries a literal radius or stroke.
+   ======================================================================== */
+:is([data-ds="play"], [data-ds="noor"]) {
+  --chat-panel-radius: 22px; /* the chat panel and the side card */
+  --chat-radius-bubble: 18px; /* Nour's bubble; the notch is --play-radius-notch */
+  --chat-radius-student: 16px; /* the student's bubble */
+  --chat-notch-student: 4px; /* …and its bottom-end notch */
+  --chat-bubble-max: 64ch; /* bubbles read at 64 characters */
+  --chat-card-max: 640px; /* question cards and widgets */
+  --chat-card-inset: 44px; /* cards start where the bubbles do, past the avatar */
+  --chat-rule: 2px; /* the pinned question's bottom rule */
+  --chat-shadow-big: 5px 5px 0 var(--ink); /* big cards: resume, nothing else */
+  --chat-radius-prompt: 24px; /* the resume prompt */
+}
+
+/* Disabled and inactive are FLAT on the guided pages: a solid 2.5px outline in
+   the disabled border, the inactive fill, no shadow, dim text. No dashed edge
+   (the handoff departs from the system's written disabled rule here, §6). A
+   graded answer option keeps its verdict ink (the [data-verdict] rule above). */
+:is([data-ds="play"], [data-ds="noor"]) .guided-page :is(button:disabled, [disabled]):not([data-verdict]) {
+  border-style: solid;
+  border-color: var(--play-disabled-border);
+  background-color: var(--play-inactive-fill);
+  color: var(--play-text-dim);
+}
+:is([data-ds="play"], [data-ds="noor"]) .guided-page .chat-send-guided:disabled {
+  border-width: var(--play-stroke-sm);
+}
+
+/* The header avatar: bob at rest (the only loop), wiggle while Noor thinks or
+   grades — instead of the bob, never with it (§7). */
+.guided-wiggle {
+  animation: play-wiggle 900ms ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .guided-wiggle {
+    animation: none;
+  }
+}
+
+/* A question card or widget in the chat is a top-level object (§2): outside
+   Nour's bubble, inset to where the bubbles start, 640px at most, on the chat's
+   one shadow layer. */
+:is([data-ds="play"], [data-ds="noor"]) .lesson-chat .chat-card {
+  margin-inline-start: var(--chat-card-inset);
+  max-width: var(--chat-card-max);
+}
+:is([data-ds="play"], [data-ds="noor"]) .lesson-chat .chat-card > [data-chat-interactive] > * {
+  margin-block: 0;
+  box-shadow: var(--play-shadow-sm);
+}
+/* …and nothing nested in it has a shadow. A widget frame inside a question
+   card goes flat — Honey, no outline, no rule under its band — the same
+   treatment a card nested in Nour's bubble always had. */
+:is([data-ds="play"], [data-ds="noor"]) .lesson-chat .chat-card [data-chat-interactive] > * :is(.sticker-shadow, .sticker-shadow-sm) {
+  box-shadow: none;
+}
+:is([data-ds="play"], [data-ds="noor"]) .lesson-chat .chat-card [data-chat-interactive] > * .sticker-shadow.overflow-hidden {
+  margin-block: 0;
+  border-width: 0;
+  background-color: var(--card-warm);
+}
+:is([data-ds="play"], [data-ds="noor"]) .lesson-chat .chat-card [data-chat-interactive] > * .sticker-shadow.overflow-hidden > :first-child {
+  border-bottom-width: 0;
+}
+/* a card's band eyebrow reads as a label, never a mono uppercase strip */
+:is([data-ds="play"], [data-ds="noor"]) .lesson-chat .chat-card [data-chat-interactive] :is(.sticker-shadow, .sticker-shadow-sm) > :first-child .font-mono {
+  font-family: var(--font-display);
+  font-size: var(--type-label);
+  font-weight: 700;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+/* Focus mode (§1): the guided pages carry their own way back ("Check-in",
+   "← Home"), so the app's header and footer step aside and the page's own
+   h-dvh frame is the whole viewport. */
+body:has(.guided-page) > header,
+body:has(.guided-page) > footer {
+  display: none;
+}
