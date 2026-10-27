@@ -11,7 +11,7 @@ import {
   pickerLine,
   type HomeworkMode,
 } from "@/lib/homework-rules";
-import { QUESTION_DONE } from "@/lib/chat-parse";
+import { QUESTION_DONE, repairMarkers } from "@/lib/chat-parse";
 import { ChatCore, type ChatCoreHandle, type ChatSuggestion } from "@/components/chat/ChatCore";
 import { TutorBubble } from "@/components/chat/message-blocks";
 import { NoorMark } from "@/components/NoorMark";
@@ -573,7 +573,7 @@ function QuestionWork({
               handleRef={core}
               onAssistantDone={(text) => {
                 lastTutor.current = text;
-                if (text.includes(QUESTION_DONE)) void onDone();
+                if (repairMarkers(text).includes(QUESTION_DONE)) void onDone();
               }}
             />
           </section>

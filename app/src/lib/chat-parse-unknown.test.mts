@@ -14,7 +14,9 @@ import assert from "node:assert/strict";
 
 import {
   directiveEndAt,
+  hasExpectsMath,
   parseMessage,
+  repairMarkers,
   stripIncompleteTail,
 } from "./chat-parse.ts";
 
@@ -160,4 +162,58 @@ test("streaming: text that can never be a directive is not held back", () => {
   assert.equal(directiveEndAt("{{two words}}", 0), null);
   // maths is not held as a directive (the open "$" holds it, as before)
   assert.equal(stripIncompleteTail("Expand $x^{{n}}$ now"), "Expand $x^{{n}}$ now");
+});
+
+/* ------------------------------------------------- misspelled bare markers */
+
+// A student saw `{{beat{` printed between sentences in the homework chat: the
+// model mistyped the closing braces and the parser reads only the exact form.
+
+/** The text the student reads — every "v" in the rendered blocks. */
+const shown = (text: string, streaming = false) =>
+  [...JSON.stringify(parseMessage(text, streaming)).matchAll(/"v":"([^"]*)"/g)].map((m) => m[1]).join(" ");
+
+test("a mistyped beat marker is a pause, never text", () => {
+  for (const typo of ["{{beat{", "{{beat}", "{beat}}", "{{beat}}}", "{{ beat }}", "{{Beat}}", "{{BEAT}}", "{beat}", "beat}}", "{{beat"]) {
+    const text = `First idea.\n\n${typo}\n\nSecond idea.`;
+    const blocks = parseMessage(text, false);
+    assert.ok(!shown(text).includes("beat"), `${typo} leaked: ${shown(text)}`);
+    assert.deepEqual(blocks.map((b) => b.t), ["para", "beat", "para"], typo);
+  }
+});
+
+test("the other bare markers are repaired the same way", () => {
+  assert.equal(repairMarkers("{{ask{"), "{{ask}}");
+  assert.equal(repairMarkers("{{check_in}"), "{{check_in}}");
+  assert.equal(repairMarkers("{question_done}}"), "{{question_done}}");
+  assert.ok(hasExpectsMath("Type your answer.\n{{expects_math}"));
+});
+
+test("the plain word is never touched — only braces touching it make a marker", () => {
+  for (const prose of [
+    "Feel the beat of the drum.",
+    "Ask your teacher if you are not sure.",
+    "We beat the record: {1, 2} is the set.",
+    "Check in with me later.",
+    "The upbeat}} tail is a longer word.",
+    "A single {beat is not enough.",
+  ]) {
+    assert.equal(repairMarkers(prose), prose, prose);
+  }
+});
+
+test("LaTeX arguments are left alone", () => {
+  for (const tex of ["$\\text{beat}$", "$\\mathrm{ask}$", "$\\{ask\\}$"]) {
+    assert.equal(repairMarkers(tex), tex, tex);
+  }
+});
+
+test("exact markers pass through unchanged, side by side too", () => {
+  const ok = "One.\n{{beat}}\nTwo.{{beat}}{{ask}}\n**Next?**\n{{expects_math}}";
+  assert.equal(repairMarkers(ok), ok);
+});
+
+test("while streaming, a mistyped marker is held back or repaired, never shown", () => {
+  assert.ok(!shown("First idea.\n{{beat{", true).includes("beat"));
+  assert.ok(!shown("First idea.\n{{beat}", true).includes("beat"));
 });

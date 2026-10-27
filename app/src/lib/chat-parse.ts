@@ -94,12 +94,58 @@ export function hasFinishDirective(text: string): boolean {
   return text.includes("{{finish_lesson}}");
 }
 
+/* ------------------------------------------------------------------ */
+/* Misspelled markers                                                  */
+/* ------------------------------------------------------------------ */
+
+/** The markers that carry no payload — the only ones a typo can be repaired
+ *  for, since there is nothing inside them to get wrong but the braces. */
+const BARE_MARKERS = [
+  "beat",
+  "ask",
+  "check_in",
+  "expects_math",
+  "question_done",
+  "finish_lesson",
+  "reveal_answer",
+] as const;
+
+const NEAR_MISS_RE = new RegExp(
+  `([{}]{0,3})[ \\t]*(${BARE_MARKERS.join("|")})(?![A-Za-z0-9_])[ \\t]*([{}]{0,3})`,
+  "gi"
+);
+
+/**
+ * The model sometimes mistypes a marker's braces — `{{beat{`, `{{beat}`,
+ * `{beat}}`, `{{ Beat }}` — and the parser, which reads only the exact
+ * spelling, then showed it to the student as text. This rewrites those near
+ * misses to the exact marker before anything reads the text.
+ *
+ * A near miss is the marker's name with braces touching it: at least two
+ * brace characters in all, and the name not part of a longer word. The word
+ * on its own ("the beat of a drum", "ask your teacher") has no braces, so it
+ * is never touched. LaTeX is left alone too: in `\text{beat}` the brace
+ * belongs to the command before it.
+ */
+export function repairMarkers(text: string): string {
+  if (!text.includes("{") && !text.includes("}")) return text;
+  return text.replace(NEAR_MISS_RE, (whole, open: string, name: string, close: string, at: number) => {
+    if (open.length + close.length < 2) return whole;
+    const before = text.slice(0, at);
+    // part of a longer word: "upbeat}}" is not a marker
+    if (!open && /[A-Za-z0-9_]$/.test(before)) return whole;
+    // a LaTeX argument: \text{beat}, \mathrm{ask}
+    if (open && /\\[A-Za-z]+$/.test(before)) return whole;
+    return `{{${name.toLowerCase()}}}`;
+  });
+}
+
 /**
  * True when the (complete) text carries {{expects_math}}: the tutor has asked for a value, step or
  * equation, so the composer shows the maths symbol tray. Absent means hidden.
  */
 export function hasExpectsMath(text: string): boolean {
-  return text.includes(EXPECTS_MATH);
+  return repairMarkers(text).includes(EXPECTS_MATH);
 }
 
 /** The extracted answer of a complete {{answer_submitted:<given>}}, or null
@@ -550,7 +596,8 @@ const inlineText = (inlines: Inline[]) =>
 
 /** Full message → renderable blocks. Streaming ⇒ incomplete tail withheld. */
 export function parseMessage(text: string, streaming: boolean): Block[] {
-  const s = streaming ? stripIncompleteTail(text) : text;
+  const repaired = repairMarkers(text);
+  const s = streaming ? stripIncompleteTail(repaired) : repaired;
   const blocks: Block[] = [];
   let ask: Extract<Block, { t: "ask" }> | null = null;
   let last = 0;
