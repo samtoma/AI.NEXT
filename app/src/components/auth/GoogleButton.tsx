@@ -10,10 +10,12 @@
  * only other way to tell the client is to expose the client id, which is a
  * credential we have no reason to ship to a browser that is not mid-redirect.
  *
- * With Google unset this renders disabled rather than hidden. A student who
- * signed up with Google on another build and cannot find the button would
- * conclude the account is gone; a dashed, plainly-labelled button says the
- * truth instead (ADR-0013's "state the consequence" rule applied to a UI).
+ * With Google unset this renders nothing. It used to render a disabled,
+ * labelled button, so that a student who signed up with Google on another
+ * build would not conclude the account was gone — but Google has never been
+ * configured on any deployment, so no such account exists, and a dead button
+ * on every sign-in screen only advertised a feature we do not offer. Revisit
+ * if Google is ever switched on in one environment and off in another.
  */
 
 export function GoogleButton({
@@ -23,26 +25,7 @@ export function GoogleButton({
   available: boolean;
   label?: string;
 }) {
-  if (!available) {
-    return (
-      <div>
-        <button
-          type="button"
-          disabled
-          aria-describedby="google-unavailable"
-          className="w-full min-h-[52px] rounded-[20px] border-[3px] px-5 font-display text-[1.05rem] font-bold"
-        >
-          {label}
-        </button>
-        <p
-          id="google-unavailable"
-          className="mt-1.5 text-[0.85rem] text-ink-soft"
-        >
-          Google sign-in isn&apos;t set up yet.
-        </p>
-      </div>
-    );
-  }
+  if (!available) return null;
 
   return (
     // A plain link, not a fetch: the endpoint answers 302 to Google and sets

@@ -267,9 +267,11 @@ export function SignupForm({
         </PrimaryButton>
       </form>
 
-      <div className="mt-4">
-        <GoogleButton available={googleAvailable} label="Sign up with Google" />
-      </div>
+      {googleAvailable && (
+        <div className="mt-4">
+          <GoogleButton available label="Sign up with Google" />
+        </div>
+      )}
 
       <p className="mt-6 text-[0.95rem] text-ink-soft">
         Already have one? <TertiaryLink href="/signin">Sign in</TertiaryLink>

@@ -176,9 +176,11 @@ export function SigninForm({
         </PrimaryButton>
       </form>
 
-      <div className="mt-4">
-        <GoogleButton available={googleAvailable} />
-      </div>
+      {googleAvailable && (
+        <div className="mt-4">
+          <GoogleButton available />
+        </div>
+      )}
 
       <div className="mt-6 flex flex-wrap items-center justify-between gap-x-4">
         <TertiaryLink href="/forgot-password">Forgot your password?</TertiaryLink>
