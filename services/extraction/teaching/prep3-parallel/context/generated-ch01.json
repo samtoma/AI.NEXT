@@ -2,9 +2,9 @@
  "format": "ainext.context-generated/1",
  "book": "prep3-parallel",
  "chapter": 1,
- "made": "2026-10-22",
- "made_by": "book_record_context.py generate-accept (context-gen-v1)",
- "run": "runs/prep3-parallel/context/context-gen-ch01.20261022T145313Z.json",
+ "made": "2026-10-28",
+ "made_by": "book_record_context.py generate-accept (context-gen-v2)",
+ "run": "runs/prep3-parallel/context/context-gen-ch01.20261028T113322Z.json",
  "lessons": [
   {
    "slug": "pp3u1-1",
@@ -18,79 +18,74 @@
     {
      "objective": 1,
      "decision": "generate",
-     "text": "Imagine a cinema ticket shows the seat as an ordered pair (row, seat number). Your friend's ticket reads $(x-2,\\,3)$ and yours reads $(5,\\,y+1)$, and the cashier says both tickets are for exactly the same seat. Work out the values of $x$ and $y$.",
-     "numbers": [
-      {
-       "working": "x - 2 = 5, so x = 7",
-       "value": "7"
-      },
-      {
-       "working": "3 = y + 1, so y = 2",
-       "value": "2"
-      }
-     ],
-     "why": "No lesson story exists; a seat ticket written as (row, seat) is a natural ordered pair where two equal tickets must match in both places.",
+     "text": "Imagine two cinema tickets show the seat as (row, seat number). Sara's ticket says $(x-2,\\,3)$ and her brother's ticket says $(5,\\,y+1)$, and the cashier says both tickets are for exactly the same seat. Work out the values of $x$ and $y$.",
+     "numbers": [],
+     "why": "A cinema seat written (row, seat number) is a genuine ordered pair: row 5 seat 3 is not row 3 seat 5, and two tickets name the same seat only if both components match.",
      "check": {
-      "verdict": "rejected",
+      "verdict": "confirmed",
       "numbers_ok": true,
       "maths_fits": true,
-      "true_to_world": false,
-      "suits_student": false,
-      "why": "The numbers are right (x=7, y=2) and the maths fits. But two different people holding tickets for exactly the same seat is a double booking, so the story is not true to the world. It also copies the worked example's numbers, so it is a poor real-life opener."
+      "true_to_world": true,
+      "suits_student": true,
+      "shows_the_point": true,
+      "why": "x-2=5 gives x=7 and y+1=3 gives y=2. It uses only equal pairs. A (row, seat) ticket really does depend on order, because row 5 seat 3 is not row 3 seat 5."
      },
-     "status": "held",
-     "fingerprint": "1c2f120845ca9cae"
+     "status": "confirmed",
+     "fingerprint": "6f8450e57b0263c7"
     },
     {
      "objective": 2,
      "decision": "generate",
-     "text": "Imagine a bakery sells sandwiches where you choose one filling from $X=\\{\\text{cheese},\\text{falafel}\\}$ and one size from $Y=\\{\\text{small},\\text{medium},\\text{large}\\}$. Each order is written as a pair (filling, size). Write down every possible order as the set $X\\times Y$, then say how many orders there are, and whether $Y\\times X$ would be the same set.",
+     "text": "Imagine a bus company has two departure stations, $X=\\{\\text{Cairo},\\text{Giza}\\}$, and three destination cities, $Y=\\{\\text{Alexandria},\\text{Luxor},\\text{Aswan}\\}$. Each trip is written as (departure, destination). Write every possible trip as an ordered pair, and say how many trips there are. Would trips written (destination, departure) be the same list?",
      "numbers": [],
-     "why": "No lesson story; a bakery combining one choice from each of two sets gives all ordered pairs of X×Y naturally.",
+     "why": "A bus trip is (from, to): Cairo→Aswan differs from Aswan→Cairo, so X×Y ≠ Y×X holds in the world, and the count is n(X)×n(Y).",
      "check": {
-      "verdict": "confirmed",
+      "verdict": "rejected",
       "numbers_ok": true,
       "maths_fits": true,
       "true_to_world": true,
       "suits_student": true,
-      "why": "X×Y has 2×3 = 6 orders: (cheese,small), (cheese,medium), (cheese,large), (falafel,small), (falafel,medium), (falafel,large). Y×X is not the same set, because its pairs are written (size, filling). This uses only this objective's maths, and the setting is familiar to an Egyptian student."
+      "shows_the_point": false,
+      "why": "The 6 pairs and n=6 are correct. The point fails. Writing (destination, departure) describes the same six trips with the labels swapped, so it is only notation. In the world it is the same list, but the maths says Y×X is different. The reversed pairs would also put Luxor or Aswan as a departure station, which is not one."
      },
-     "status": "confirmed",
-     "fingerprint": "cf48d441e8df962c"
+     "status": "held",
+     "fingerprint": "a6f66fb09faf6719"
     },
     {
      "objective": 3,
      "decision": "generate",
-     "text": "Suppose two bus lines, numbered $X=\\{1,2\\}$, each stop at all three stations numbered $Y=\\{3,4,5\\}$. A trip is written as the pair (line, station). Draw the trips as arrows from each line to each station, and then as dots on a grid with lines on one axis and stations on the other. How do the two pictures show the same trips?",
+     "text": "Suppose a bus company numbers its two starting stations $X=\\{1,2\\}$ and its three towns $Y=\\{3,4,5\\}$, and every station has a direct bus to every town. The manager wants a poster of all the routes. Write the routes as ordered pairs, then show how you would draw them with arrows from stations to towns, and as points on a grid.",
      "numbers": [],
-     "why": "No lesson story; bus lines linked to stops is a natural picture of arrows from each element of one set to each of another, and of a grid of pairs.",
+     "why": "Bus links from stations to towns are naturally drawn as arrows from one group to another and as points on a grid, with direction mattering.",
      "check": {
       "verdict": "confirmed",
       "numbers_ok": true,
       "maths_fits": true,
       "true_to_world": true,
       "suits_student": true,
-      "why": "X×Y has 6 trips: (1,3), (1,4), (1,5), (2,3), (2,4), (2,5). That gives 6 arrows and 6 grid dots. Both pictures show the same pairs, so the story fits the arrow and cartesian diagrams. It is clear, and it does not give the answer away."
+      "shows_the_point": true,
+      "why": "X×Y has the 6 pairs (1,3),(1,4),(1,5),(2,3),(2,4),(2,5). Each route is one arrow from a station to a town and one grid point. This matches the objective's arrow and cartesian diagrams."
      },
      "status": "confirmed",
-     "fingerprint": "b591c3929d394860"
+     "fingerprint": "4b13bd1b2f48a03a"
     },
     {
      "objective": 4,
      "decision": "generate",
-     "text": "Imagine a town map where the school is at the point $(0,0)$. A place is written as (blocks east, blocks north), and a negative number means west or south. Suppose a bakery is at $(3,-2)$, a park at $(-4,3)$, a library at $(0,-3)$ and a cafe at $(2,0)$. Mark them on the grid and tell which quadrant or axis each one is on.",
+     "text": "Imagine a town map where the school is at the centre $(0,0)$ and each place is written (blocks east, blocks north), with negative numbers meaning west or south. A bakery is at $(3,-2)$, a library is at $(-4,3)$ and a park is at $(0,-3)$. Mark them on a grid and say which quadrant or axis each one is in.",
      "numbers": [],
-     "why": "No lesson story; a town map with blocks east/west and north/south of the school is a coordinate plane with quadrants and axes.",
+     "why": "A town map with the school as the origin and (blocks east, blocks north) as coordinates makes a point on the plane with quadrants and axes; swapping the numbers gives a different place.",
      "check": {
       "verdict": "confirmed",
       "numbers_ok": true,
       "maths_fits": true,
       "true_to_world": true,
       "suits_student": true,
-      "why": "Bakery (3,-2) is in the fourth quadrant. Park (-4,3) is in the second quadrant. Library (0,-3) is on the y-axis. Cafe (2,0) is on the x-axis. Using east/north as positive and west/south as negative is a realistic map. The maths is plotting points and naming the quadrant or axis, which is this objective's method."
+      "shows_the_point": true,
+      "why": "(3,-2) is in the fourth quadrant. (-4,3) is in the second quadrant. (0,-3) is on the y-axis. Swapping east and north gives a different place, so order matters in the real map. The coordinate plane is the objective's own method."
      },
      "status": "confirmed",
-     "fingerprint": "62b19c4a82803658"
+     "fingerprint": "c39c0a29ec2e3719"
     }
    ]
   },
@@ -105,66 +100,69 @@
     {
      "objective": 1,
      "decision": "generate",
-     "text": "Imagine a taxi charges 4 pounds to start, plus 2 pounds for each kilometre. Let $X=\\{1,2,3\\}$ be the distances in km and $Y=\\{6,8,10,12\\}$ the fares in pounds, with $a\\,R\\,b$ meaning $b = 2a + 4$. Can you write the relation as a set of ordered pairs (distance, fare)?",
+     "text": "Imagine a taxi that charges 4 pounds to start, plus 2 pounds for each kilometre. Let $X=\\{1,2,3\\}$ be the trip lengths in km and $Y=\\{6,8,10,12\\}$ the possible fares in pounds, with $a\\,R\\,b$ meaning «$b = 2a + 4$». Write the relation $R$ as a set of ordered pairs (trip length, fare).",
      "numbers": [
       {
-       "working": "2×1+4",
-       "value": "6"
+       "value": "6",
+       "working": "2×1+4"
       },
       {
-       "working": "2×2+4",
-       "value": "8"
+       "value": "8",
+       "working": "2×2+4"
       },
       {
-       "working": "2×3+4",
-       "value": "10"
+       "value": "10",
+       "working": "2×3+4"
       }
      ],
-     "why": "No lesson story; a taxi fare rule gives b = 2a + 4 as in the book's example.",
+     "why": "No lesson story. A taxi fare gives a rule b = 2a + 4 from distance to fare, and (distance, fare) is not (fare, distance), so order of the pair is real.",
      "check": {
       "verdict": "confirmed",
       "numbers_ok": true,
       "maths_fits": true,
       "true_to_world": true,
       "suits_student": true,
-      "why": "b=2a+4 gives (1,6),(2,8),(3,10). All three fares are in Y (12 is just unused). The task uses only the rule-to-ordered-pairs method. The 'imagine' framing is honest, and a taxi fare is easy to picture."
+      "shows_the_point": true,
+      "why": "b=2a+4 gives 1→6, 2→8, 3→10, so R={(1,6),(2,8),(3,10)}. All values are in Y, and 12 is simply unused. It uses only this objective's method. The taxi fare is a clearly hypothetical, plausible story. Swapping the pair gives (fare, length), which is a different real relation, so order matters."
      },
      "status": "confirmed",
-     "fingerprint": "2e763afd22fb8689"
+     "fingerprint": "f327fdc02848f93f"
     },
     {
      "objective": 2,
      "decision": "generate",
-     "text": "Suppose three friends, Salma, Omar and Nour, each borrow books from the school library. Salma reads science books, Omar reads story books, and Nour reads both kinds. How could you draw this as arrows from each student to the kinds of books they read, and then as points on a grid?",
+     "text": "Suppose three friends, Ali, Mona and Omar, each read some types of books from the school library: Ali reads Science and Culture, Mona reads History, and Omar reads Literature. Here $X$ is the set of friends, $Y$ is the set of book types, and «reads» connects them. Draw this relation as an arrow diagram from each friend to the book types they read, and then as a cartesian diagram.",
      "numbers": [],
-     "why": "No lesson story; a reading-habits situation matches the book's 'read' relation and needs only diagrams.",
+     "why": "No lesson story. Which student reads which type of book is a real pairing with a direction (student to book type), matching the book's own arrow-diagram idea.",
      "check": {
       "verdict": "confirmed",
       "numbers_ok": true,
       "maths_fits": true,
       "true_to_world": true,
       "suits_student": true,
-      "why": "The relation 'reads' gives the pairs (Salma, science), (Omar, story), (Nour, science), (Nour, story). These can be drawn as arrows and as points on a grid, which is exactly this objective's method. The names are fictional, and the setting is familiar and short."
+      "shows_the_point": true,
+      "why": "The relation is {(Ali,Science),(Ali,Culture),(Mona,History),(Omar,Literature)}. It is drawn as an arrow diagram and a cartesian diagram, as the objective asks. The names are invented and the setting is simple. Reversing the direction gives book type → reader, which is a different real relation, so direction matters."
      },
      "status": "confirmed",
-     "fingerprint": "d06c00d9fb2ac20a"
+     "fingerprint": "851ff1c2e5db3fb2"
     },
     {
      "objective": 3,
      "decision": "generate",
-     "text": "Imagine two students, Sara and Omar, can each pick one drink from tea, juice or milk at the canteen. Every possible (student, drink) pairing forms one big set, and today's actual orders are only some of those pairs. Can you decide whether the orders form a subset of all the possible pairings, and which pairs belong to it?",
+     "text": "Imagine a bakery where two customers, Salma and Ahmed, can each buy bread, cake or biscuits. Let $X=\\{\\text{Salma},\\text{Ahmed}\\}$ and $Y=\\{\\text{bread},\\text{cake},\\text{biscuits}\\}$. Suppose Salma bought bread and cake, and Ahmed bought only biscuits. List every possible pair (customer, item) in $X\\times Y$, then decide which of them belong to the relation «bought» and whether this relation is a subset of $X\\times Y$.",
      "numbers": [],
-     "why": "No lesson story; a canteen order situation shows all possible pairs versus the pairs actually chosen.",
+     "why": "No lesson story. A bakery gives all possible (buyer, item) pairs as X × Y, while what was actually bought is only some of them, so the relation is a subset of X × Y; order matters since (buyer, item) is not (item, buyer).",
      "check": {
       "verdict": "confirmed",
       "numbers_ok": true,
       "maths_fits": true,
       "true_to_world": true,
       "suits_student": true,
-      "why": "X×Y for {Sara, Omar} and {tea, juice, milk} has 6 pairs. Any set of actual orders is a subset of it, so R⊂X×Y. This matches the objective's statements. The scenario is believable and simple, and it does not give away the answer."
+      "shows_the_point": true,
+      "why": "X×Y has 2×3=6 pairs. «bought» is {(Salma,bread),(Salma,cake),(Ahmed,biscuits)}, which is a subset of X×Y. This matches the objective, and the story is hypothetical. A pair (item, customer) would belong to Y×X, which is a genuinely different thing."
      },
      "status": "confirmed",
-     "fingerprint": "9dda501f8961e5f1"
+     "fingerprint": "f841dafeeb7cb144"
     }
    ]
   },
@@ -179,53 +177,78 @@
     {
      "objective": 1,
      "decision": "generate",
-     "text": "Imagine a school canteen where three students $X=\\{\\text{Ali},\\text{Mona},\\text{Omar}\\}$ each pick a drink from $Y=\\{\\text{juice},\\text{milk},\\text{tea}\\}$. Suppose the orders are (Ali, juice), (Mona, milk), (Omar, juice). Now suppose instead Mona had ordered both milk and tea. You are asked to decide in which case each student has only one drink, so the relation is a function, and in which case it is not.",
+     "text": "Imagine three students, Ali, Mona and Omar, and a school-bus list that pairs each student with the bus line they ride. List 1 is $\\{(\\text{Ali}, 5), (\\text{Mona}, 7), (\\text{Omar}, 5)\\}$. List 2 is $\\{(\\text{Ali}, 5), (\\text{Mona}, 7), (\\text{Mona}, 9), (\\text{Omar}, 5)\\}$. Which list could be a real timetable where every student has one bus, and how can you tell by looking at the first element of each pair?",
      "numbers": [],
-     "why": "No lesson story exists; a school-canteen situation shows each input having exactly one output.",
+     "why": "Each student rides one school bus, so pairing student → bus is truly a function; a student listed with two buses breaks it, and reversing (bus → student) would not be one since a bus carries many students.",
      "check": {
       "verdict": "confirmed",
       "numbers_ok": true,
       "maths_fits": true,
       "true_to_world": true,
       "suits_student": true,
-      "why": "First case: Ali, Mona and Omar each have one drink, so it is a function. Second case: Mona has two images (milk and tea), so it is not a function. This uses only the 'one image per element' test. The names are generic and the story is clear."
+      "shows_the_point": true,
+      "why": "List 1 has the first elements Ali, Mona and Omar, each once, so it is a function. In List 2 Mona appears twice, with 7 and 9, so one student has two images and it is not a function. In the real timetable a student with two buses breaks the 'one bus each' rule, so the maths matches the world. Only the objective's idea is used and the names are generic."
      },
      "status": "confirmed",
-     "fingerprint": "14987745ce6bfe08"
+     "fingerprint": "b890ad49c1cb8c85"
     },
     {
      "objective": 2,
      "decision": "generate",
-     "text": "Imagine a bakery sells bread rolls in packs, and the number of packs is $x\\in\\{1,2,3\\}$. Suppose the price in pounds is given by the rule $f(x)=5x$. You are asked to write the function as $f : X \\to Y$, list it as a set of ordered pairs, and then draw it as an arrow diagram and a cartesian diagram.",
-     "numbers": [],
-     "why": "No lesson story; a bakery price rule gives a function to write with f(x)=y, as pairs and in diagrams.",
+     "text": "Suppose a bakery sells each loaf of bread for $3$ pounds, and you buy $1$, $2$, $3$ or $4$ loaves. Let $X=\\{1,2,3,4\\}$ be the number of loaves and let $f$ give the price in pounds. Write this as $f : X \\to Y$ with $f(x)=3x$, list the ordered pairs, and draw it as an arrow diagram and a cartesian diagram.",
+     "numbers": [
+      {
+       "working": "f(1)=3×1",
+       "value": "3"
+      },
+      {
+       "working": "f(2)=3×2",
+       "value": "6"
+      },
+      {
+       "working": "f(3)=3×3",
+       "value": "9"
+      },
+      {
+       "working": "f(4)=3×4",
+       "value": "12"
+      }
+     ],
+     "why": "Loaves → price is a rule where each number of loaves has exactly one price, so it is a function that can be written as f(x)=y, as pairs, and drawn.",
      "check": {
-      "verdict": "rejected",
-      "numbers_ok": false,
+      "verdict": "confirmed",
+      "numbers_ok": true,
       "maths_fits": true,
       "true_to_world": true,
-      "suits_student": false,
-      "why": "The pairs are correct: f={(1,5),(2,10),(3,15)}. But the item never names the sets X and Y, and it gives no codomain Y. The student is asked to write f: X→Y and draw both diagrams, and these need a defined Y. The task is therefore under-specified."
+      "suits_student": true,
+      "shows_the_point": true,
+      "why": "f(x)=3x gives f={(1,3),(2,6),(3,9),(4,12)}. Each number of loaves has exactly one price, which is why it is a function in the real shop too. The codomain Y is not stated, but a student can take Y={3,6,9,12} or a larger set. The notation, ordered pairs, arrow diagram and cartesian diagram are all this objective's work."
      },
-     "status": "held",
-     "fingerprint": "c2b434d3d4beae66"
+     "status": "confirmed",
+     "fingerprint": "9c472f425e2726be"
     },
     {
      "objective": 3,
      "decision": "generate",
-     "text": "Suppose a bus route has three stops, $X=\\{1,2,3\\}$ stops travelled, and the ticket office can print fares from $Y=\\{2,3,5,7\\}$ pounds. Imagine the fares charged are $f=\\{(1,3),(2,7),(3,5)\\}$. You are asked to name the set of stops (the domain), the set of printable fares (the codomain), and the set of fares actually charged (the range), and to say how the range relates to the codomain.",
-     "numbers": [],
-     "why": "No lesson story; a bus-fare situation naturally has inputs, a list of possible outputs, and the outputs actually used.",
+     "text": "Imagine a football round where Team A scored $1$ goal, Team B scored $3$ goals and Team C scored $1$ goal. The fixture sheet allows scores of $0, 1, 2$ or $3$ goals. Let $X=\\{A,B,C\\}$ and $Y=\\{0,1,2,3\\}$, with $f$ pairing each team with its goals, so $f=\\{(A,1),(B,3),(C,1)\\}$. What are the domain, the codomain and the range of $f$, and why is the range smaller than the codomain?",
+     "numbers": [
+      {
+       "working": "Images of A, B, C are 1, 3, 1; repeats counted once",
+       "value": "{1,3}"
+      }
+     ],
+     "why": "Teams → goals scored is a function; the possible goal counts form the codomain, but only the goals actually scored form the range, a subset of it.",
      "check": {
-      "verdict": "rejected",
+      "verdict": "confirmed",
       "numbers_ok": true,
       "maths_fits": true,
-      "true_to_world": false,
-      "suits_student": false,
-      "why": "The maths is right: domain {1,2,3}, codomain {2,3,5,7}, range {3,5,7}, and the range is a proper subset of the codomain. But the fares are unrealistic. Two stops cost 7 pounds and three stops cost only 5, so the fare falls as the trip gets longer. That is not how a bus fare works, and it is only there to copy the book's example numbers. It would confuse a student who is picturing a real bus."
+      "true_to_world": true,
+      "suits_student": true,
+      "shows_the_point": true,
+      "why": "The domain is {A,B,C}, the codomain is {0,1,2,3} and the range is {1,3}. The range is smaller because no team scored 0 or 2 goals, so those allowed scores are not images. If the pairing is reversed, a score of 1 goal maps to both A and C, which is not a function. That matches the world, because a score does not identify one team."
      },
-     "status": "held",
-     "fingerprint": "32dc691992acb67d"
+     "status": "confirmed",
+     "fingerprint": "e8056284e72ebd1a"
     }
    ]
   },
@@ -241,75 +264,101 @@
     {
      "objective": 1,
      "decision": "generate",
-     "text": "Imagine a farmer fences a square plot with side $x$ metres. The length of fence needed is $f(x)=4x$ metres, and the area of the plot is $g(x)=x^2$ square metres. Both rules are built from powers of $x$. Which power of $x$ is the highest in each rule, and what degree does that make each polynomial?",
+     "text": "Imagine a bakery owner who models her daily profit, in pounds, from selling $x$ trays of bread with the rule $P(x)=5+3x-2x^3$. Her assistant says the rule is a polynomial, and her cousin says it is a function of the second degree. Which of them is right: is it a polynomial, and what is its degree?",
      "numbers": [],
-     "why": "The lesson has no story. A fenced square plot gives two rules of different degree to compare by their highest power of x.",
+     "why": "The lesson has no story; a profit rule written as a sum of powers of x gives a function whose degree is read from the highest power.",
      "check": {
       "verdict": "confirmed",
       "numbers_ok": true,
       "maths_fits": true,
       "true_to_world": true,
       "suits_student": true,
-      "why": "Fence 4x is degree 1 and area x² is degree 2. Both rules are correct for a square. The task only needs the highest power, which is this objective's maths. The context is simple and does not give the answer away."
+      "shows_the_point": true,
+      "why": "P(x)=5+3x-2x^3 is a polynomial and its highest power is 3, so its degree is 3. The assistant is right and the cousin's 'second degree' is wrong. This uses only the objective's definition. The cubic profit model is plainly an imagined one. The degree is read from the rule, not from how it is written."
      },
      "status": "confirmed",
-     "fingerprint": "a940ffeeac0be0d1"
+     "fingerprint": "d9e05c8ebc3c94da"
     },
     {
      "objective": 2,
      "decision": "generate",
-     "text": "Suppose a small shop finds that its profit on day $x$ of a sale, in pounds, follows the rule $f(x)=x^2-x+3$. On day 2 the profit is $f(2)=4-2+3=5$ pounds. The shopkeeper wants to know the profit on day 4. What is $f(4)$?",
+     "text": "Suppose a workshop charges $f(x)=x^2-x+3$ pounds for engraving a square plate whose side is $x$ dm. Imagine one plate has side $2$ dm and another has side $\\sqrt{3}$ dm. What does each plate cost, that is, what are $f(2)$ and $f(\\sqrt{3})$?",
      "numbers": [
       {
        "working": "f(2)=2^2-2+3=4-2+3",
        "value": "5"
+      },
+      {
+       "working": "f(√3)=(√3)^2-√3+3=3-√3+3",
+       "value": "6-√3"
       }
      ],
-     "why": "No lesson story. A made-up rule from a shop lets the student substitute a value and compute the output, which is exactly evaluating a function value.",
+     "why": "No lesson story. A price rule depending on the side of a square plate lets the student substitute a whole number and a surd.",
      "check": {
-      "verdict": "confirmed",
+      "verdict": "rejected",
       "numbers_ok": true,
       "maths_fits": true,
-      "true_to_world": true,
+      "true_to_world": false,
       "suits_student": true,
-      "why": "f(2)=4-2+3=5 is correct, and f(4)=16-4+3=15. It uses direct substitution as in the book's worked example. The shop is hypothetical and stated as 'suppose', so nothing is presented as fact."
+      "shows_the_point": false,
+      "why": "The values are f(2)=4-2+3=5 and f(√3)=3-√3+3=6-√3≈4.27. The maths fits the objective's worked example. But the story makes a workshop charge an irrational amount, 6-√3 pounds, which no real price can be. The cost rule also falls as the plate grows from 0 to 0.5 dm, which is odd for an engraving charge. The surd is forced into a context where it is not realistic."
      },
-     "status": "confirmed",
-     "fingerprint": "cc929fcb2a6a8828"
+     "status": "held",
+     "fingerprint": "913b7d8aa9bb899b"
     },
     {
      "objective": 3,
      "decision": "generate",
-     "text": "Imagine a phone plan that costs 10 pounds a month plus 3 pounds for each gigabyte used, so the monthly cost is $f(x)=3x+10$ where $x$ is the number of gigabytes. You want to see how the cost grows as you use more data. Find a few ordered pairs $(x, f(x))$ and draw the line that shows the cost.",
-     "numbers": [],
-     "why": "No lesson story. A phone plan with a fixed fee and a per-gigabyte price is a linear function whose ordered pairs can be tabulated and plotted.",
+     "text": "Suppose a taxi charges $5$ pounds to start the ride plus $3$ pounds for each kilometre, so the fare is $f(x)=3x+5$ for a ride of $x$ km. Imagine you want to show the fare for any distance on a graph. Which ordered pairs would you find for $x=0,1,2$, and what shape do they make when you draw them?",
+     "numbers": [
+      {
+       "working": "f(0)=3(0)+5",
+       "value": "5"
+      },
+      {
+       "working": "f(1)=3(1)+5",
+       "value": "8"
+      },
+      {
+       "working": "f(2)=3(2)+5",
+       "value": "11"
+      }
+     ],
+     "why": "No lesson story. A taxi fare with a starting charge plus a fixed price per km is a first-degree rule whose graph is a straight line.",
      "check": {
       "verdict": "confirmed",
       "numbers_ok": true,
       "maths_fits": true,
       "true_to_world": true,
       "suits_student": true,
-      "why": "f(x)=3x+10 is linear with a=3 and b=10. Ordered pairs such as (0,10), (1,13) and (2,16) give a straight line. The method is the book's (find points, draw the line). The phone plan is generic and clear."
+      "shows_the_point": true,
+      "why": "f(0)=5, f(1)=8, f(2)=11, giving the pairs (0,5), (1,8), (2,11). They lie on a straight line, which is a linear function with a=3 and b=5. The taxi fare of a start charge plus a per-km rate really does rise by a constant amount per km, so the straight line is a property of the real fare."
      },
      "status": "confirmed",
-     "fingerprint": "bfb122133ec40131"
+     "fingerprint": "040cff1eb14fff83"
     },
     {
      "objective": 4,
      "decision": "generate",
-     "text": "Suppose you have 20 metres of rope to make a rectangle on the ground. If one side is $x$ metres, the other side is $10-x$ metres, so the area is $f(x)=-x^2+10x$ square metres. You want the biggest possible area. Draw the graph of $f$, and find its vertex, its axis of symmetry and its maximum value.",
-     "numbers": [],
-     "why": "No lesson story. A rectangle with fixed perimeter gives a quadratic rule with a maximum, so the student finds the vertex, axis and maximum value.",
+     "text": "Suppose a farmer has $20$ m of fence and makes a rectangular garden with width $x$ m. The length must then be $10-x$ m, so the area is $f(x)=x(10-x)=-x^2+10x$ square metres. Imagine drawing the graph of this function. Where is its vertex, what is the axis of symmetry, and what is the largest area the farmer can get?",
+     "numbers": [
+      {
+       "working": "perimeter 20 = 2(x + length), so length = 10 - x; area = x(10-x) = -x^2+10x",
+       "value": "-x^2+10x"
+      }
+     ],
+     "why": "No lesson story. Fencing a rectangle with fixed perimeter gives a downward-opening quadratic, whose vertex is the true best (maximum) area.",
      "check": {
       "verdict": "confirmed",
       "numbers_ok": true,
       "maths_fits": true,
       "true_to_world": true,
       "suits_student": true,
-      "why": "20 m of rope is a perimeter of 20, so the sides are x and 10-x and the area is -x²+10x. Here a=-1 and b=10, so the vertex is at x=-b/2a=5 with f(5)=25. The axis is x=5 and the maximum is 25. This uses the book's vertex formula and the downward-opening case. The context is realistic."
+      "shows_the_point": true,
+      "why": "20 m of fence gives width plus length = 10, so the length is 10-x and the area is -x²+10x. Here a=-1 and b=10, so the vertex is at x=-b/2a=5 and f(5)=25. The vertex is (5,25), the axis is x=5, and the maximum area is 25 m², which is the 5 m by 5 m square. The downward-opening curve matches the real fact that the area has a largest value."
      },
      "status": "confirmed",
-     "fingerprint": "18c3f2262cdd4aeb"
+     "fingerprint": "4c0ab9f01480fa06"
     }
    ]
   }

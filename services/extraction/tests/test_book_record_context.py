@@ -110,14 +110,19 @@ class Generated(unittest.TestCase):
     def test_only_a_confirmed_example_is_used_and_it_is_marked_generated(self):
         lesson = {"slug": "l-1", "title": "L", "objectives": [{"n": 1, "id": "l-1:objective-1", "label": "a", "description": ""},
                                                               {"n": 2, "id": "l-1:objective-2", "label": "b", "description": ""},
-                                                              {"n": 3, "id": "l-1:objective-3", "label": "c", "description": ""}],
+                                                              {"n": 3, "id": "l-1:objective-3", "label": "c", "description": ""},
+                                                              {"n": 4, "id": "l-1:objective-4", "label": "d", "description": ""}],
                   "passages": [passage("story", "agreed", "real_life", 0)]}
         run = {"stage": "context-gen", "lessons": [{"slug": "l-1",
                "written": [{"objective": 2, "decision": "generate", "text": "Suppose a tank loses 3 litres a day.", "why": "w"},
                            {"objective": 3, "decision": "generate", "text": "Suppose a phone plan doubles.", "why": "w"},
+                           {"objective": 4, "decision": "generate", "text": "Choose a (filling, size) sandwich.", "why": "w"},
                            {"objective": 1, "decision": "generate", "text": "not a gap: the lesson's story opens objective 1", "why": "w"}],
                "checked": [{"objective": 2, "verdict": "confirmed", "why": "right"},
-                           {"objective": 3, "verdict": "rejected", "why": "the numbers are off"}]}]}
+                           {"objective": 3, "verdict": "rejected", "why": "the numbers are off"},
+                           # v2: a verdict that contradicts its own check is not a confirmation
+                           {"objective": 4, "verdict": "confirmed", "shows_the_point": False,
+                            "why": "a small cheese sandwich is the same sandwich either way"}]}]}
         with tempfile.TemporaryDirectory() as d:
             ctx = Path(d) / "context"
             ctx.mkdir()
@@ -130,6 +135,14 @@ class Generated(unittest.TestCase):
                 (Path(d) / "teaching" / "book" / "context").symlink_to(ctx, target_is_directory=True)
                 rep = C.gen_accept("book", 1, Path(d) / "run.json")
                 gen = C.generated_passages("book", "l-1")
-        self.assertEqual((rep["generated"], rep["held"]), (1, 1))
+        self.assertEqual((rep["generated"], rep["held"]), (1, 2))
         self.assertEqual({(g["objective"], g["status"]) for g in gen}, {(2, "agreed"), (None, "held")})
         self.assertTrue(all(g["generated"] and g["page"] is None for g in gen))
+
+    def test_the_writer_and_checker_both_test_the_objectives_point_in_the_world(self):
+        # S1G is run by ingest.py for every new book, from this one workflow file: the rule lives in its prompts
+        wf = (Path(C.__file__).parent / "runbook" / "context-gen.workflow.js").read_text()
+        self.assertIn("TRUE IN THE WORLD", wf)
+        self.assertIn("5. shows_the_point", wf)
+        self.assertIn('"shows_the_point": {"type": "boolean"}', wf)
+

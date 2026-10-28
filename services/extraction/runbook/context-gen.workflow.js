@@ -14,14 +14,16 @@ export const meta = {
 // objective the book gives none gets, here, either the lesson's own story (when the writer shows it serves this
 // objective too) or ONE short real-life example built only from the objective's own maths — its rules and worked
 // examples, as printed. A second agent, who never sees the writer's working, recomputes every number and judges whether
-// the example uses only this objective's maths, is true to the world, and suits an Egyptian Grade 11 student. The script
+// the example uses only this objective's maths, is true to the world, suits an Egyptian Grade 11 student, and shows the
+// objective's point in the world itself (v2, Tamer 2026-10-28: a sandwich (filling, size) "showed" X×Y ≠ Y×X, but a
+// small cheese sandwich is one sandwich whichever way it is written; the student caught it, the checker had not). The script
 // writes nothing: book_record_context.py generate-accept keeps only what the checker confirms; the rest is held for the
 // review tool's Context task (decision 47: a doubtful one is never shown). Stored unreviewed (ADR-0007/0008).
 // ARGS: { stage: 'context-gen', book: {book, title, grade}, lessons: [{slug, title, lesson_story: string|null,
 //         objectives: [{n, label, description, statements: [string], worked: [string]}], gaps: [n]}], options?: {model} }
 // ---------------------------------------------------------------------------------------------
 
-const PROMPTS_VERSION = 'context-gen-v1'
+const PROMPTS_VERSION = 'context-gen-v2'
 const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
 const BOOK = ARGS.book || {}
 if (ARGS.stage !== 'context-gen' || !Array.isArray(ARGS.lessons)) throw new Error('args must be the output of `uv run book_record_context.py generate-args <book> <unit>`')
@@ -33,6 +35,7 @@ For EACH objective listed under "OBJECTIVES TO OPEN", decide:
 - "lesson_story" when the lesson's own story (given below, from the book) already sets this objective up — the objective's maths happens naturally inside that same situation. Say how in "why". Write no new text.
 - "generate" otherwise: write ONE short real-life example (2–4 sentences) a student could picture — money in Egyptian pounds, a phone plan, a football league, a bus route, a bakery, a school trip, plants growing, a water tank. Rules:
   * Its mathematics is ONLY this objective's, as the book's statements and worked examples below show it. No method from another objective or a later lesson.
+  * The situation must make the objective's point TRUE IN THE WORLD, not only in how it is written. Whatever property the objective is about — order matters, order does not matter, a pairing, a direction, a rule that does or does not hold — must hold of the real things in the story. Test it: change the thing the objective is about (swap the two parts of a pair, reverse a direction, change the order) and ask whether the real thing changes as the maths says. If the objective says it should change and in the story it would not (a cheese sandwich that is small is the same sandwich as a small one that is cheese), the situation does not fit: choose one where it does (a seat in row 3, seat 5 is not row 5, seat 3; a trip from Cairo to Alexandria is not one from Alexandria to Cairo; a match's (home team, away team); a point on a grid), or answer "none".
   * Every number is either given in the situation or computed from it with this objective's method; list each computed one in "numbers" with its working and value, and get them exactly right.
   * Use "suppose" / "imagine" for made-up figures. Never present a made-up statistic as a fact about the world, never name a real person, company or brand, never a medical, political or religious claim.
   * End with what the student would be asked to work out, in plain words, without giving the answer.
@@ -48,13 +51,14 @@ const CHECK = `You check real-life openers written for a school maths textbook (
   1. numbers_ok: every number it states or implies is right;
   2. maths_fits: the maths it needs is THIS objective's (its statements and worked examples below), nothing from another objective or a later lesson;
   3. true_to_world: nothing false or presented as fact that is made up; no real person, company or brand; no medical, political or religious claim;
-  4. suits_student: clear, short, something an Egyptian Grade ${BOOK.grade || '?'} student can picture; it does not give away the answer.
-  verdict "confirmed" only when all four hold; otherwise "rejected" with the reason.
+  4. suits_student: clear, short, something an Egyptian Grade ${BOOK.grade || '?'} student can picture; it does not give away the answer;
+  5. shows_the_point: the property the objective is about holds of the REAL things in the story, not only of how they are written down. Change what the objective is about (swap the two parts of a pair, reverse a direction, reorder) and say what real thing you get: if the maths says it is different but in the world it is the same thing (a small cheese sandwich written (small, cheese) or (cheese, small)), or the other way round, this fails — "the pairs are written in a different order" is notation, not a reason.
+  verdict "confirmed" only when all five hold; otherwise "rejected" with the reason.
 - A "lesson_story" claim: "confirmed" only if the objective's maths really does happen inside the lesson's story as given; otherwise "rejected".
 Return one verdict per item, with its objective number.`
 const CHECK_SCHEMA = {"type": "object", "required": ["verdicts"], "properties": {"verdicts": {"type": "array", "items": {"type": "object",
   "required": ["objective", "verdict", "why"], "properties": {"objective": {"type": "integer"}, "verdict": {"type": "string", "enum": ["confirmed", "rejected"]},
-  "numbers_ok": {"type": "boolean"}, "maths_fits": {"type": "boolean"}, "true_to_world": {"type": "boolean"}, "suits_student": {"type": "boolean"}, "why": {"type": "string"}}}}}}
+  "numbers_ok": {"type": "boolean"}, "maths_fits": {"type": "boolean"}, "true_to_world": {"type": "boolean"}, "suits_student": {"type": "boolean"}, "shows_the_point": {"type": "boolean"}, "why": {"type": "string"}}}}}}
 
 const objBlock = (o) => `${o.n}. ${o.label}: ${o.description}\n   the book's statements: ${o.statements.join(' | ') || '(none)'}\n   its worked examples: ${o.worked.join(' || ') || '(none)'}`
 const lessonHead = (L) => `Lesson: ${L.title}\nThe lesson's own story (from the book): ${L.lesson_story || '(none)'}`

@@ -292,10 +292,11 @@ def gen_accept(book: str, unit: int, run_file: Path) -> dict:
                 entries.append({"objective": n, "decision": "none", "why": x.get("why"), "status": "none"})
                 continue
             v = verdict.get(n) or {}
-            ok = v.get("verdict") == "confirmed" and (x["decision"] == "lesson_story" or bool((x.get("text") or "").strip()))
+            ok = (v.get("verdict") == "confirmed" and v.get("shows_the_point") is not False   # a verdict that contradicts its own check
+                  and (x["decision"] == "lesson_story" or bool((x.get("text") or "").strip())))
             e = {"objective": n, "decision": x["decision"], "text": squash(x.get("text")) if x["decision"] == "generate" else None,
                  "numbers": x.get("numbers") or [], "why": x.get("why"),
-                 "check": {k: v.get(k) for k in ("verdict", "numbers_ok", "maths_fits", "true_to_world", "suits_student", "why")},
+                 "check": {k: v.get(k) for k in ("verdict", "numbers_ok", "maths_fits", "true_to_world", "suits_student", "shows_the_point", "why")},
                  "status": "confirmed" if ok else "held"}
             e["fingerprint"] = hashlib.sha256(json.dumps([n, x["decision"], e["text"]], ensure_ascii=False).encode()).hexdigest()[:16]
             entries.append(e)
