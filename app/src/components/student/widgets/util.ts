@@ -31,12 +31,21 @@ export function stableShuffle<T>(items: T[], keyOf: (t: T, i: number) => string)
   return out;
 }
 
+/**
+ * What a widget reports when it closes: the note for the tutor stream, and
+ * whether the student got it right with no wrong step on the way. These
+ * widgets let a student self-correct until done, so only a clean run is a
+ * right answer for mastery — the first wrong tap is the answer that counts
+ * (Tamer, 2026-10-28).
+ */
+export type WidgetResult = (note: string, firstTry: boolean) => void;
+
 /** onResult must reach the stream exactly once per widget instance. */
-export function useFireOnce(onResult: (note: string) => void): (note: string) => void {
+export function useFireOnce(onResult: WidgetResult): WidgetResult {
   const fired = useRef(false);
-  return (note: string) => {
+  return (note: string, firstTry: boolean) => {
     if (fired.current) return;
     fired.current = true;
-    onResult(note);
+    onResult(note, firstTry);
   };
 }

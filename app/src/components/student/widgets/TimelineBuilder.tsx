@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { arDigits } from "@/components/viz/arabic";
 import { cx } from "@/components/sticker";
-import { stableShuffle, useFireOnce } from "./util";
+import { stableShuffle, useFireOnce, type WidgetResult } from "./util";
 import {
   OPTION_INK,
   SLOT_INK,
@@ -47,7 +47,7 @@ export function TimelineBuilder({
    *  Falls back to a name-free "the student" — never a guess — when a caller
    *  (dev fixture, admin replay) has none to give. */
   studentName?: string;
-  onResult: (note: string) => void;
+  onResult: WidgetResult;
 }) {
   const who = studentName?.trim() || "the student";
   const order = useMemo(() => {
@@ -78,7 +78,8 @@ export function TimelineBuilder({
         fire(
           missteps === 0
             ? `✓ ${who} ordered all ${n} events correctly on the timeline on the first try`
-            : `✓ ${who} completed the timeline order after ${missteps} wrong pick${missteps > 1 ? "s" : ""} (self-corrected)`
+            : `✓ ${who} completed the timeline order after ${missteps} wrong pick${missteps > 1 ? "s" : ""} (self-corrected)`,
+          missteps === 0
         );
       }
     } else {

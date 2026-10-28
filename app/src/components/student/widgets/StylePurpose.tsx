@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { locateSpan } from "@/components/viz/arabic";
 import { categoryStyle } from "@/components/viz/arabic-ui";
 import { cx } from "@/components/sticker";
-import { stableShuffle, useFireOnce } from "./util";
+import { stableShuffle, useFireOnce, type WidgetResult } from "./util";
 import {
   pickInk,
   WIDGET_FRAME,
@@ -49,7 +49,7 @@ export function StylePurpose({
   styles: string[];
   purposes: string[];
   answer: { style: string; purpose: string };
-  onResult: (note: string) => void;
+  onResult: WidgetResult;
 }) {
   const at = useMemo(() => locateSpan(text, span), [text, span]);
   const styleOpts = useMemo(
@@ -80,7 +80,7 @@ export function StylePurpose({
         ? "purpose ✓ first try"
         : `purpose ✗ ${purposeWrong.length}× (answered '${purposeWrong[0]}', correct '${answer.purpose}')`
       : `purpose revealed (answered '${purposeAnswered}', correct '${answer.purpose}')`;
-    fire(`style_purpose: ${sPart}, ${pPart}`);
+    fire(`style_purpose: ${sPart}, ${pPart}`, ok && styleWrong.length === 0 && purposeWrong.length === 0);
   };
 
   const pickStyle = (s: string) => {

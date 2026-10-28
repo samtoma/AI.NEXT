@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { arDigits } from "@/components/viz/arabic";
 import { cx } from "@/components/sticker";
-import { stableShuffle, useFireOnce } from "./util";
+import { stableShuffle, useFireOnce, type WidgetResult } from "./util";
 import {
   OPTION_INK,
   WIDGET_FRAME,
@@ -72,7 +72,7 @@ export function TermMatch({
   prompt?: string;
   pairs: Pair[];
   decoyDefs?: string[];
-  onResult: (note: string) => void;
+  onResult: WidgetResult;
 }) {
   const clean = useMemo(
     () =>
@@ -132,7 +132,8 @@ export function TermMatch({
         fire(
           mistakes === 0
             ? `✓ term_match: matched all ${what} on the first try`
-            : `✓ term_match: matched all ${what} after ${mistakes} wrong link${mistakes > 1 ? "s" : ""}`
+            : `✓ term_match: matched all ${what} after ${mistakes} wrong link${mistakes > 1 ? "s" : ""}`,
+          mistakes === 0
         );
       }
     } else {

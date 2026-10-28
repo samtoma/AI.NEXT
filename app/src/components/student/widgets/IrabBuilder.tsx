@@ -13,7 +13,7 @@ import {
 } from "@/lib/irab";
 import { cx } from "@/components/sticker";
 import { categoryStyle } from "@/components/viz/arabic-ui";
-import { stableShuffle, useFireOnce } from "./util";
+import { stableShuffle, useFireOnce, type WidgetResult } from "./util";
 import {
   pickInk,
   WIDGET_FRAME,
@@ -73,7 +73,7 @@ export function IrabBuilder({
   answer: IrabAnswer;
   rule_ref?: { page?: number; quote?: string };
   nounType?: NounType;
-  onResult: (note: string) => void;
+  onResult: WidgetResult;
 }) {
   const opts = useMemo(
     () => ({ rule: { quote_ar: rule_ref?.quote, page: rule_ref?.page }, nounType }),
@@ -197,7 +197,8 @@ export function IrabBuilder({
       fire(
         `irab_builder «${answer.word_ar}»: ${g.verdict} — role ${
           roleTries.length === 0 ? "✓ first try" : `✗ ${roleTries.length}×`
-        }, sign ${markTries.length === 0 ? "✓ first try" : `✗ ${markTries.length}×`}. ${g.note}`
+        }, sign ${markTries.length === 0 ? "✓ first try" : `✗ ${markTries.length}×`}. ${g.note}`,
+        roleTries.length === 0 && markTries.length === 0
       );
       return;
     }
@@ -210,7 +211,8 @@ export function IrabBuilder({
       fire(
         `irab_builder «${answer.word_ar}»: REVEALED — role ${
           roleTries.length === 0 ? "✓ first try" : `✗ ${roleTries.length}×`
-        }, sign ✗ ${tries.length}× (${tries.map((t) => `'${t}'`).join(", ")}). ${g.note}`
+        }, sign ✗ ${tries.length}× (${tries.map((t) => `'${t}'`).join(", ")}). ${g.note}`,
+        false
       );
     }
   };

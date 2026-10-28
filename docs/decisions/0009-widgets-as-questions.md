@@ -151,3 +151,23 @@ cover and has nothing to offer, which is the failure the widgets were built to r
 3. **"Nailed it" needs one right answer at the hardest tier the objective has, capped at standard** (`capWithoutEvidence` in `app/src/lib/mastery.ts`, applied in `/api/attempts`): without it the score stops at 0.89. Where the bank has nothing above basic for an objective — or no bank questions at all — a basic right answer is enough, so a thin bank never holds a student back. The cap only stops a score rising; a score stored above the cut before this rule is never lowered by a right answer.
 
 **Affects.** `app/src/lib/bkt.ts`, `app/src/lib/mastery.ts`, `app/src/app/api/attempts/route.ts`; the `mastery.evidence` row now also records the tier used and whether the cap applied.
+
+## Amendment 2026-10-28 (2) — count what Noor asks
+
+**Status**: **Proposed — awaiting Samuel.** Proposed by Tamer Deif, 2026-10-28, on `ui-clean-up`; implemented there for review, not on `main` until accepted. Companion to the ADR-0021 amendment of the same date.
+
+**Why.** In the local Prep 3 data, 312 lesson replies produced 35 graded answers. 213 replies asked only a question Noor wrote itself (one in 213 resembled a bank question), 25 of 60 cards shown were never answered on the card, and the later objectives of every lesson had no graded answer at all, though the bank had 22–31 live questions for some of them. Two widget paths recorded nothing: a composed widget whose payload named no objective, and every Social Studies and Arabic widget, which only told the tutor.
+
+**Decision (proposed).**
+
+1. **Checks come from the QUESTION BANK.** The learn prompt says only a bank card or a widget moves the level, so a check of what the student can do uses an unused bank question on that objective; Noor writes its own check only when the bank has nothing left there, and every objective gets at least one card or widget. Open questions about reasoning stay Noor's own and are never graded. Grounding is unchanged: the answer key is always the stored one.
+2. **A card can be answered in chat, in every lesson.** `{{answer_submitted:…}}` is no longer probing-only (ADR-0021 amendment); the card shows the result, so the student sees what was graded. Never for a widget card.
+3. **One answer per question per sitting moves mastery.** A second answer to the same question in the same sitting — the right answer after Noor walked through a wrong one, or a probe's retry of the same question — is recorded and changes nothing: no mastery row, no lesson advance, `counted: false` on the result. A fresh question on the same objective still counts.
+4. **A composed widget with no `"lo"` is filed against the objective the lesson is on** (the last one Noor opened, else the first) instead of being dropped. §3's "a guessed skill is worse than none" is relaxed here: the lesson's current objective is a strong signal, not a guess across the lesson. The prompt still asks for `"lo"`.
+5. **The Social Studies and Arabic widgets are recorded** (`locate_on_map`, `timeline_builder`, `chain_builder`, `term_match`, `extract_spans`, `hamza_seat`, `style_purpose`, `irab_builder`), through the same inline materialisation as §3. They let the student self-correct, so a clean run is right and any wrong step makes the attempt wrong — the first answer is the one that counts, as in point 3.
+
+6. **A typed answer may contain braces.** The tag reader stopped at the first `}`, so a set answer (`\{(2, 4), (2, 0)\}`, copied as the card shows it) reached the grader cut short and the student was told it "can't be read as maths". It now runs to the last `}}` on the line. This was already broken under probing.
+
+**Risk, named.** Point 2 is the first half of issue #53's "credit a student did not earn": Noor decides what is an answer and copies it out. Point 3 removes the other half (a retried question no longer earns credit). Watch: attempts from chat (`givenAnswer` with `time_ms = 0`) whose transcript turn is not a genuine attempt.
+
+**Affects.** `app/src/lib/lesson.ts`, `app/src/lib/socratic-probing.ts`, `app/src/lib/widget-docs.ts`, `app/src/components/chat/ChatCore.tsx`, `app/src/components/student/LessonSession.tsx`, `app/src/components/student/widgets/*`, `app/src/app/api/attempts/route.ts`, `app/src/lib/types.ts`, `app/src/lib/chat-parse.ts`; tests in `app/src/lib/count-what-noor-asks.test.mts`; prompt goldens regenerated.

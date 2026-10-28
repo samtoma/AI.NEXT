@@ -370,7 +370,8 @@ export function learnWrongAnswerRules(
   const confused = arabicTouches ? `a "لسه مش فاهم" / still-confused signal` : "a still-confused signal";
   if (!enabled) {
     return `- From the SECOND message on: open with one warm beat reacting to ${a.their} latest [live event]. If ${a.they} got it wrong: re-explain THAT exact point a different way (grounded in the canonical steps), walking ${a.them} toward the correct answer, in the same upbeat tone — never open with the correct letter.
-- After ${confused}: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (${tapWidgets}) — never a harder question.`;
+- After ${confused}: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (${tapWidgets}) — never a harder question.
+- A QUESTION CARD CAN BE ANSWERED IN CHAT. When ${a.their} chat reply is a genuine attempt at the currently-open question card (not "I don't know", not a question back to you, not small talk) — extract the answer EXACTLY as shown on the card (the lettered choice, or the numeric/expression text) and emit {{answer_submitted:<that value>}} ALONE, nothing else directive-wise in that message. Do not say "correct" or "not quite" yourself — wait for the graded [live event] on your NEXT turn before reacting, exactly like a tapped card. Never for a WIDGET question (a construction grades only from the widget itself), and never for a card already answered: only the first answer to a card counts.`;
   }
   return `- From the SECOND message on: open with one warm beat reacting to ${a.their} latest [live event].
 - SOCRATIC PROBING (a wrong answer is never explained outright, and a right answer is never assumed from your own reading of ${a.their} chat reply — grading is always server-side, never your judgment call):

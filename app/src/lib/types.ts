@@ -504,6 +504,10 @@ export interface AttemptResult {
    *  is empty, and the card shows the answer and a pointer to the lesson's
    *  worked examples instead of steps (consistency review A6). */
   answerOnly?: boolean;
+  /** `false` when this was a second answer to the same question in the same
+   *  sitting: recorded, but mastery stays where the first answer left it
+   *  ("Count what Noor asks", 2026-10-28). Absent on a counted answer. */
+  counted?: false;
   /** this attempt's own row id — carried back so a following attempt can
    *  link to it via `retry_of_attempt_id` (Socratic-probing confirmation
    *  retries; see api/attempts/route.ts). */

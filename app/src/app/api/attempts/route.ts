@@ -356,6 +356,24 @@ export async function POST(req: Request) {
       );
       const attemptId = attemptRes.rows[0].id;
 
+      // ONE ANSWER PER QUESTION PER SITTING MOVES MASTERY ("Count what Noor
+      // asks", Tamer 2026-10-28). A student who answers wrong, is walked
+      // through it, and then gives the right answer to the SAME question has
+      // shown the wrong answer, not the right one — the second is recorded
+      // (the attempt row above stays) and changes nothing. A fresh question
+      // on the same objective still counts. Sittingless attempts have no
+      // session to scope to and are never repeats.
+      const repeat =
+        sessionId != null &&
+        (
+          await client.query(
+            `SELECT EXISTS (SELECT 1 FROM attempts
+                             WHERE student_id = $1 AND question_id = $2
+                               AND session_id = $3 AND id <> $4) AS repeat`,
+            [studentId, questionId, sessionId, attemptId]
+          )
+        ).rows[0].repeat === true;
+
       // 2. temporal mastery update: close the current row, open a new one.
       //
       // The update rule is BKT (lib/bkt.ts, ADR-0007) — it replaced the Elo-style
@@ -396,7 +414,7 @@ export async function POST(req: Request) {
       // the score would cross the cut. The attempt row above is already written,
       // so "a right answer" includes this one.
       let hasEvidence = true;
-      if (evidence.afterTransit >= MASTERY_THRESHOLD) {
+      if (!repeat && evidence.afterTransit >= MASTERY_THRESHOLD) {
         const ev = await client.query(
           `SELECT
              EXISTS (SELECT 1 FROM questions
@@ -411,42 +429,47 @@ export async function POST(req: Request) {
         // nothing harder in the bank: any right answer is the hardest there is
         hasEvidence = !has_harder || harder_right;
       }
-      const newScore = capWithoutEvidence(evidence.afterTransit, hasEvidence, evidence.prior);
+      const newScore = repeat
+        ? oldScore
+        : capWithoutEvidence(evidence.afterTransit, hasEvidence, evidence.prior);
 
-      if (row) {
+      // a repeat writes nothing: the level stays where the first answer left it
+      if (!repeat) {
+        if (row) {
+          await client.query(
+            `UPDATE mastery SET system_to = now() WHERE id = $1`,
+            [row.id]
+          );
+        }
+        // The evidence trail travels with the row it produced, so "why is this
+        // student's mastery here?" is answerable without reconstructing it from
+        // attempt history (FR-301).
         await client.query(
-          `UPDATE mastery SET system_to = now() WHERE id = $1`,
-          [row.id]
+          `INSERT INTO mastery
+             (student_id, lo_id, score, system_from, system_to,
+              p_init, p_transit, p_guess, p_slip, evidence)
+           VALUES ($1, $2, $3, now(), NULL, $4, $5, $6, $7, $8)`,
+          [
+            studentId,
+            q.lo_id,
+            newScore,
+            params.pInit,
+            params.pTransit,
+            params.pGuess,
+            params.pSlip,
+            JSON.stringify({
+              attempt_id: attemptId,
+              question_id: questionId,
+              observation: evidence.observation,
+              prior: evidence.prior,
+              posterior: evidence.posterior,
+              after_transit: evidence.afterTransit,
+              tier,
+              ...(newScore < evidence.afterTransit ? { capped: "nailed_it_needs_a_harder_question" } : {}),
+            }),
+          ]
         );
       }
-      // The evidence trail travels with the row it produced, so "why is this
-      // student's mastery here?" is answerable without reconstructing it from
-      // attempt history (FR-301).
-      await client.query(
-        `INSERT INTO mastery
-           (student_id, lo_id, score, system_from, system_to,
-            p_init, p_transit, p_guess, p_slip, evidence)
-         VALUES ($1, $2, $3, now(), NULL, $4, $5, $6, $7, $8)`,
-        [
-          studentId,
-          q.lo_id,
-          newScore,
-          params.pInit,
-          params.pTransit,
-          params.pGuess,
-          params.pSlip,
-          JSON.stringify({
-            attempt_id: attemptId,
-            question_id: questionId,
-            observation: evidence.observation,
-            prior: evidence.prior,
-            posterior: evidence.posterior,
-            after_transit: evidence.afterTransit,
-            tier,
-            ...(newScore < evidence.afterTransit ? { capped: "nailed_it_needs_a_harder_question" } : {}),
-          }),
-        ]
-      );
 
       // 3. wrong answer → log the canonical-grounded explanation. An
       // `answer_only` question (the book prints no working; Samuel's G2
@@ -491,7 +514,7 @@ export async function POST(req: Request) {
       // (deploy/apply-migrations.sh, the compose `migrate` service), and
       // /student reads the pointer with no such cover.
       let advancedTo: string | null = null;
-      if (attemptCanCrossGate(isCorrect, row !== null)) {
+      if (!repeat && attemptCanCrossGate(isCorrect, row !== null)) {
         await client.query("SAVEPOINT lesson_progress");
         try {
           advancedTo = await advanceIfMastered(client, studentId, q.lo_id);
@@ -520,6 +543,7 @@ export async function POST(req: Request) {
         newScore,
         solution,
         answerOnly,
+        repeat,
       };
     });
 
@@ -537,6 +561,7 @@ export async function POST(req: Request) {
       newScore,
       solution,
       answerOnly,
+      repeat,
     } = outcome;
 
     // Fire-and-forget, and deliberately AFTER commit: an analytics failure must
@@ -652,11 +677,13 @@ export async function POST(req: Request) {
         prior: evidence.prior,
         posterior: evidence.posterior,
         mastery: newScore,
+        ...(repeat ? { counted: false } : {}),
       },
     });
 
     const result: AttemptResult = {
       ...(answerOnly ? { answerOnly: true } : {}),
+      ...(repeat ? { counted: false as const } : {}),
       attemptId,
       isCorrect,
       correctAnswer: q.correct_answer,

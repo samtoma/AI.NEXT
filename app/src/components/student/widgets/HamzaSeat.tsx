@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { arDigits } from "@/components/viz/arabic";
 import { cx } from "@/components/sticker";
-import { useFireOnce } from "./util";
+import { useFireOnce, type WidgetResult } from "./util";
 import {
   pickInk,
   WIDGET_FRAME,
@@ -56,7 +56,7 @@ export function HamzaSeat({
 }: {
   prompt: string;
   items: HamzaItem[];
-  onResult: (note: string) => void;
+  onResult: WidgetResult;
 }) {
   const clean = items.filter((it) => it.word && it.answer).slice(0, 6);
   const fire = useFireOnce(onResult);
@@ -95,7 +95,8 @@ export function HamzaSeat({
           .join(", ");
         fire(
           `hamza_seat ${got}/${clean.length}` +
-            (missed ? ` — missed ${missed}` : " — clean run")
+            (missed ? ` — missed ${missed}` : " — clean run"),
+          next.every((s) => s.wrong.length === 0)
         );
       }
       return next;

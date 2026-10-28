@@ -809,12 +809,69 @@ export function LessonSession({
 
   /* ---------------- ChatCore wiring ---------------- */
 
+  /**
+   * Record a widget Noor composed inline as a graded attempt (ADR-0009 §3):
+   * it has no row behind it, so it materialises on first answer. The
+   * objective is the one the payload names, or — when Noor left it out — the
+   * objective the lesson is on (the last one it opened), so a widget never
+   * evaporates for want of an "lo" ("Count what Noor asks", 2026-10-28).
+   */
+  const recordInlineWidget = useCallback(
+    (name: string, props: Record<string, unknown>, given: string, predicate: string) => {
+      // the same "current objective" the step rail shows (currentLo below)
+      const last = coveredRef.current[coveredRef.current.length - 1];
+      const lo =
+        inlineWidgetLo(props) ?? (last && loById.has(last) ? last : lesson.los[0]?.id);
+      if (!lo) return;
+      const { lo: _lo, prompt, ...spec } = props;
+      // GA4 sees "a widget attempt happened in a lesson" and no more — the
+      // objective id is deliberately excluded from the wrapper's property
+      // list (lib/ga.ts, research A1). A LITERAL rather than `lesson_${mode}`
+      // on purpose: reading the prop here would add a dependency to this
+      // memoised callback for one word of granularity that `sessions.kind`
+      // already carries in the first-party store.
+      track("retrieval_attempt_submitted", { surface: "lesson_widget" });
+      void authFetch("/api/attempts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          questionId: `qw:inline:${name}-${hashOf(JSON.stringify(props))}`,
+          givenAnswer: given,
+          predicate,
+          inlineWidget: {
+            kind: name,
+            spec,
+            loId: lo,
+            stem: typeof prompt === "string" ? prompt : name,
+          },
+        }),
+      })
+        .then((res) => (res.ok ? res.json() : null))
+        .then((j: { isCorrect?: boolean } | null) => {
+          // a right answer on a tutor-built task ticks its step too (M3)
+          if (j?.isCorrect) markPractised(lo);
+        })
+        .catch(() => {
+          // A recording failure must never break the lesson. The student has
+          // already seen their feedback; this is bookkeeping.
+        });
+    },
+    [markPractised, loById, lesson.los]
+  );
+
   const renderWidget = useCallback(
     (
       name: string,
       props: Record<string, unknown>,
       emitNote: (note: string) => void
     ) => {
+      // The Social Studies and Arabic widgets grade on the device and let the
+      // student self-correct; a clean run is a right answer, anything else is
+      // wrong — and both are now recorded, not only told to the tutor.
+      const onResult = (note: string, firstTry: boolean) => {
+        emitNote(note);
+        recordInlineWidget(name, props, firstTry ? "ok" : "missed", firstTry ? "ok" : "missed");
+      };
       // ---- MATHEMATICS widgets. All eleven are validated and constructed in
       // render-math-widget.tsx; a payload that cannot be trusted renders
       // nothing rather than a widget with a nonsense answer key.
@@ -826,46 +883,7 @@ export function LessonSession({
           // Both come from one outcome so they can never disagree about what the
           // student did (ADR-0009).
           emitNote(outcome.detail);
-
-          // An inline widget the tutor composed has no row behind it, so it
-          // materialises on first answer and the attempt is recorded against it.
-          // Without an objective there is nothing to attribute the evidence to,
-          // and filing it against a guessed skill is worse than not filing it —
-          // so no `lo`, no record, and the widget stays a teaching aid.
-          const lo = inlineWidgetLo(props);
-          if (!lo) return;
-          const { lo: _lo, prompt, ...spec } = props;
-          // GA4 sees "a widget attempt happened in a lesson" and no more — the
-          // objective id is deliberately excluded from the wrapper's property
-          // list (lib/ga.ts, research A1). A LITERAL rather than `lesson_${mode}`
-          // on purpose: reading the prop here would add a dependency to this
-          // memoised callback for one word of granularity that `sessions.kind`
-          // already carries in the first-party store.
-          track("retrieval_attempt_submitted", { surface: "lesson_widget" });
-          void authFetch("/api/attempts", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              questionId: `qw:inline:${name}-${hashOf(JSON.stringify(props))}`,
-              givenAnswer: outcome.given,
-              predicate: outcome.predicate,
-              inlineWidget: {
-                kind: name,
-                spec,
-                loId: lo,
-                stem: typeof prompt === "string" ? prompt : name,
-              },
-            }),
-          })
-            .then((res) => (res.ok ? res.json() : null))
-            .then((j: { isCorrect?: boolean } | null) => {
-              // a right answer on a tutor-built task ticks its step too (M3)
-              if (j?.isCorrect) markPractised(lo);
-            })
-            .catch(() => {
-              // A recording failure must never break the lesson. The student has
-              // already seen their feedback; this is bookkeeping.
-            });
+          recordInlineWidget(name, props, outcome.given, outcome.predicate);
         },
         { studentName: first, pronoun: widgetPronoun }
       );
@@ -900,7 +918,7 @@ export function LessonSession({
               target={target}
               decoys={decoys}
               studentName={first}
-              onResult={emitNote}
+              onResult={onResult}
             />
           );
         }
@@ -922,7 +940,7 @@ export function LessonSession({
               events={events as string[]}
               correctOrder={order}
               studentName={first}
-              onResult={emitNote}
+              onResult={onResult}
             />
           );
         }
@@ -950,7 +968,7 @@ export function LessonSession({
                 cards={cards}
                 correctChain={chain}
                 studentName={first}
-                onResult={emitNote}
+                onResult={onResult}
               />
             );
           }
@@ -979,7 +997,7 @@ export function LessonSession({
                 }
                 pairs={pairs}
                 decoyDefs={decoyDefs}
-                onResult={emitNote}
+                onResult={onResult}
               />
             );
           }
@@ -1000,7 +1018,7 @@ export function LessonSession({
               category={strProp(props.category) || "نحو"}
               targets={targets}
               distractorHint={strProp(props.distractorHint) || undefined}
-              onResult={emitNote}
+              onResult={onResult}
             />
           );
         }
@@ -1026,7 +1044,7 @@ export function LessonSession({
             <HamzaSeat
               prompt={strProp(props.prompt) || "الهمزة دي بتتكتب إزاي؟"}
               items={items}
-              onResult={emitNote}
+              onResult={onResult}
             />
           );
         }
@@ -1048,7 +1066,7 @@ export function LessonSession({
               styles={styles}
               purposes={purposes}
               answer={{ style, purpose }}
-              onResult={emitNote}
+              onResult={onResult}
             />
           );
         }
@@ -1081,14 +1099,14 @@ export function LessonSession({
                 page: typeof ref.page === "number" ? ref.page : undefined,
               }}
               nounType={(strProp(props.nounType) || undefined) as NounType | undefined}
-              onResult={emitNote}
+              onResult={onResult}
             />
           );
         }
       }
       return null;
     },
-    [first, widgetPronoun, markPractised]
+    [first, widgetPronoun, recordInlineWidget]
   );
 
   // The book a [[page:N]] receipt points into, as this course cites it

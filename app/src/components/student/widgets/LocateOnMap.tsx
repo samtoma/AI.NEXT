@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { resolvePlace, useBaseMap, type BaseMap } from "@/components/viz/maps";
 import { cx } from "@/components/sticker";
-import { useFireOnce } from "./util";
+import { useFireOnce, type WidgetResult } from "./util";
 import {
   FIGURE_MARK,
   WIDGET_FRAME,
@@ -43,7 +43,7 @@ export function LocateOnMap({
    *  Falls back to a name-free "the student" — never a guess — when a caller
    *  (dev fixture, admin replay) has none to give. */
   studentName?: string;
-  onResult: (note: string) => void;
+  onResult: WidgetResult;
 }) {
   const who = studentName?.trim() || "the student";
   const { map, status } = useBaseMap(base);
@@ -85,7 +85,8 @@ export function LocateOnMap({
     fire(
       ok
         ? `✓ ${who} located "${t.name}" correctly on the ${base} map`
-        : `✗ ${who} tapped ${hit ? `"${hit}"` : "an empty area"} instead of "${t.name}" on the ${base} map`
+        : `✗ ${who} tapped ${hit ? `"${hit}"` : "an empty area"} instead of "${t.name}" on the ${base} map`,
+      ok
     );
   };
 

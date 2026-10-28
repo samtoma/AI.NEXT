@@ -1082,18 +1082,19 @@ export function ChatCore({
           emitNewCites(acc);
           onAssistantDone?.(acc);
           if (acc.includes("{{finish_lesson}}")) onFinishDirective?.();
-          // SOCRATIC PROBING (`507bb31`): a chat-typed answer, tagged by the
-          // tutor with a directive, routed through the SAME grading pipeline
-          // a tapped card uses. Only in a lesson the server says probes (read
-          // from the ref: the value THIS stream declared) — a no-op everywhere
-          // else, even if the model somehow emitted one.
+          // A chat-typed answer, tagged by the tutor with a directive, routed
+          // through the SAME grading pipeline a tapped card uses. Born in
+          // Socratic probing (`507bb31`); since "Count what Noor asks"
+          // (2026-10-28) it runs in every lesson, probing or not — a card
+          // answered in words is still an answer to that card. A no-op on
+          // every other surface, even if the model somehow emitted one.
           //
           // A `{{reveal_answer}}` in the reply changes NOTHING here any more
           // (FR-3112). It used to force the pending wrong count to 2, so one
           // model slip opened the card after a single attempt. The card now
           // opens on the student's second wrong attempt only; `chat-parse`
           // still recognises the directive, so it never shows as text.
-          if (probingActive(surface, serverProbingRef.current)) {
+          if (lessonSurface) {
             const submittedGiven = extractAnswerSubmitted(acc);
             const pendingNow = pendingConfirmationRef.current;
             const targetQuestionId =
@@ -1204,6 +1205,7 @@ export function ChatCore({
       onFinishDirective,
       adoptProbing,
       lookupQuestion,
+      lessonSurface,
     ]
   );
 
@@ -1251,9 +1253,11 @@ export function ChatCore({
       const bandBefore = masteryLabel(r.oldScore);
       const bandAfter = masteryLabel(r.newScore);
       const bandNote =
-        bandBefore === bandAfter
-          ? `still ${bandAfter}`
-          : `${bandBefore} → ${bandAfter}`;
+        r.counted === false
+          ? `a second answer to the same question, so it does not change the level (still ${bandAfter})`
+          : bandBefore === bandAfter
+            ? `still ${bandAfter}`
+            : `${bandBefore} → ${bandAfter}`;
       let note = `${r.isCorrect ? "✓" : "✗"} the student answered ${q.id} ${
         r.isCorrect ? "correctly" : "incorrectly"
       }${r.isCorrect ? "" : ` (correct answer: ${r.correctAnswer})`} — ${bandNote} (for you only: never say the band, a score or a percentage to the student)`;

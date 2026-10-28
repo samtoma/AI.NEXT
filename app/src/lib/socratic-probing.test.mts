@@ -226,7 +226,9 @@ test("off: the learn prompt carries main's wrong-answer rules and nothing of the
   for (const g of ["female", "male", "unspecified", null] as Gender[]) {
     const p = learnPrompt(lesson(g), false);
     assert.ok(!p.includes("SOCRATIC"), `gender=${g}: SOCRATIC block leaked into the prompt`);
-    assert.ok(!p.includes("answer_submitted"), `gender=${g}: answer_submitted leaked`);
+    // a card answered in words counts in every lesson since "Count what Noor
+    // asks" (2026-10-28) — the one piece of the prototype that is not probing
+    assert.ok(p.includes("A QUESTION CARD CAN BE ANSWERED IN CHAT"), `gender=${g}: typed-answer rule missing`);
     assert.ok(!p.includes("reveal_answer"), `gender=${g}: reveal_answer leaked`);
     assert.ok(
       p.includes("got it wrong: re-explain THAT exact point a different way"),
@@ -248,12 +250,13 @@ test("on: the learn prompt carries the probing block, voiced for the student", (
   }
 });
 
-test("off: the rules are main's two lines exactly", () => {
+test("off: the rules are main's two lines and the typed-answer rule, exactly", () => {
   const a = addressForms("female", "Nour Adel");
   assert.equal(
     learnWrongAnswerRules(a, "figure / tap", false),
     `- From the SECOND message on: open with one warm beat reacting to her latest [live event]. If she got it wrong: re-explain THAT exact point a different way (grounded in the canonical steps), walking her toward the correct answer, in the same upbeat tone — never open with the correct letter.
-- After a "لسه مش فاهم" / still-confused signal: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (figure / tap) — never a harder question.`
+- After a "لسه مش فاهم" / still-confused signal: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (figure / tap) — never a harder question.
+- A QUESTION CARD CAN BE ANSWERED IN CHAT. When her chat reply is a genuine attempt at the currently-open question card (not "I don't know", not a question back to you, not small talk) — extract the answer EXACTLY as shown on the card (the lettered choice, or the numeric/expression text) and emit {{answer_submitted:<that value>}} ALONE, nothing else directive-wise in that message. Do not say "correct" or "not quite" yourself — wait for the graded [live event] on your NEXT turn before reacting, exactly like a tapped card. Never for a WIDGET question (a construction grades only from the widget itself), and never for a card already answered: only the first answer to a card counts.`
   );
 });
 

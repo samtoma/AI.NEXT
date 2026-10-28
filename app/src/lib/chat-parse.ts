@@ -173,6 +173,10 @@ interface Action {
 
 const SIMPLE_RE =
   /^\{\{(show_question|highlight|show_passage|answer_submitted):([^}\n]{1,160})\}\}/;
+/** A typed answer may itself hold braces — a set, `\{(2, 4), (2, 0)\}`, copied
+ *  as the card shows it — so it runs to the LAST `}}` on its line (the tag
+ *  stands alone, the prompt says), not the first `}`. */
+const ANSWER_RE = /^\{\{answer_submitted:([^\n]{1,200}?)\}\}(?=[ \t]*(?:\n|$))/;
 const WIDGET_HEAD_RE = /^\{\{widget:([a-z_]{1,40}):/;
 /** Built from the subject registry, so a handoff to a subject the product
  *  actually has is parsed instead of being rendered as raw protocol text.
@@ -260,6 +264,11 @@ function parseActionAt(s: string, i: number): Action | null {
       /* malformed payload — consume silently */
     }
     return { start: i, end, block };
+  }
+  const ans = ANSWER_RE.exec(head);
+  if (ans) {
+    const given = ans[1].trim();
+    return { start: i, end: i + ans[0].length, block: given ? { t: "answer_submitted", given } : null };
   }
   const m = SIMPLE_RE.exec(head);
   if (m) {

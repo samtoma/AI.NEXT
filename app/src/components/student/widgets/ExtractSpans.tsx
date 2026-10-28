@@ -5,7 +5,7 @@ import { locateSpan, tokenizeWords } from "@/components/viz/arabic";
 import { categoryStyle } from "@/components/viz/arabic-ui";
 import { arDigits } from "@/components/viz/arabic";
 import { cx } from "@/components/sticker";
-import { useFireOnce } from "./util";
+import { useFireOnce, type WidgetResult } from "./util";
 import {
   WIDGET_FRAME,
   WIDGET_HEAD,
@@ -48,7 +48,7 @@ export function ExtractSpans({
   category?: string;
   targets: string[];
   distractorHint?: string;
-  onResult: (note: string) => void;
+  onResult: WidgetResult;
 }) {
   const words = useMemo(() => tokenizeWords(text).filter((w) => w.isWord), [text]);
 
@@ -85,7 +85,8 @@ export function ExtractSpans({
       if (next.size >= n)
         fire(
           `✓ extract_spans: found all ${n} «${category}» spans` +
-            (misses > 0 ? ` after ${misses} wrong tap${misses > 1 ? "s" : ""}` : " with no wrong taps")
+            (misses > 0 ? ` after ${misses} wrong tap${misses > 1 ? "s" : ""}` : " with no wrong taps"),
+          misses === 0
         );
       return;
     }

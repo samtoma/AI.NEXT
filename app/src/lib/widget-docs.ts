@@ -217,9 +217,9 @@ export function mathWidgetDocsNamed(
     `- EVERY widget payload above may carry "lo":"lo:…" naming the objective ` +
       `the beat is teaching, and it SHOULD. A widget you compose is recorded ` +
       `as a real attempt against that objective and moves ${a.their} mastery ` +
-      `estimate; without it the widget still teaches but nothing is recorded, ` +
-      `because evidence filed against a guessed skill is worse than evidence ` +
-      `not filed. Use an objective id from the LESSON DATA.`
+      `estimate; without it the attempt is filed against the objective the ` +
+      `lesson is on, which may not be the one the widget tests. Use an ` +
+      `objective id from the LESSON DATA.`
   );
   lines.push(
     `- PREFER A STORED CONSTRUCTION. The QUESTION BANK below contains widget ` +

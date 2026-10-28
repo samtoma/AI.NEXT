@@ -172,10 +172,10 @@ export function ChatQuestionCard({
     }
   };
 
-  // Socratic-probing prototype: a chat-typed answer graded by ChatCore —
-  // sync this card's own display to match, exactly as if it had been tapped
-  // here. Guarded on `!result` so it only ever applies once. Never fires
-  // in a lesson that does not probe: nothing sets `externalResult` then.
+  // A chat-typed answer graded by ChatCore (every lesson since 2026-10-28,
+  // probing or not) — sync this card's own display to match, exactly as if
+  // it had been tapped here, so the student sees what was graded. Guarded on
+  // `!result` so it only ever applies once.
   //
   // Adjusted DURING RENDER when `externalResult` or the question changes
   // (react.dev, "storing information from previous renders"), not in an

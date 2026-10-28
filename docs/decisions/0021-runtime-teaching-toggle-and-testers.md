@@ -273,3 +273,11 @@ assumed away.
 **Nothing about probing's other rules moves.** FR-3101…FR-3111 (the switch, the roles, the per-sitting
 snapshot, FR-3105's narrowing) are unaffected; this amendment changes only what the tutor says and
 does once a sitting is already probing.
+
+## Amendment 2026-10-28 — a card answered in chat counts in every lesson
+
+**Status**: **Proposed — awaiting Samuel.** Proposed by Tamer Deif, 2026-10-28, on `ui-clean-up`; implemented there for review, not on `main` until accepted. The full change is ADR-0009's amendment "count what Noor asks" of the same date.
+
+**What moves out of probing.** Grading a chat-typed answer (`{{answer_submitted:…}}` → `/api/attempts`) was born in the probing prototype and ran only in a sitting that probes, so no real student's typed answer ever reached mastery (probing reaches test accounts only while "Everyone" is locked on #53). It now runs on every lesson surface: the learn prompt's probing-off rules tell Noor to tag a genuine attempt at the open card, and ChatCore grades it whether or not the sitting probes. Everything else about probing — withholding, the probe notes, REVEALED, the switch, the snapshot — is unchanged.
+
+**What changes inside probing.** A probe's retry of the SAME question no longer moves mastery (one answer per question per sitting, ADR-0009 amendment point 3): the wrong answer is the one that counts. The fresh same-tier question that closes a probe still counts. This narrows #53's "credit a student did not earn"; the half it does not close is Noor deciding what counts as an answer, now in every lesson rather than only for testers.
