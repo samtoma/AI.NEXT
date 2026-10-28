@@ -31,7 +31,7 @@
  * @covers FR-3224
  */
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 
@@ -405,9 +405,18 @@ function projection(m: ReturnType<typeof buildSkillMap>) {
   return JSON.parse(JSON.stringify(out)) as unknown;
 }
 
-const MAIN = JSON.parse(readFileSync(here("./skill-map-main.golden.json"), "utf8")) as unknown;
 const g = loadMathsGraph();
 const NATIONAL_TITLES = { "u1-1": "Cartesian product" };
+// Regenerate deliberately, only when the map's OWN rules change (2026-10-28:
+// "One mastery rule" M1/M7 — the lesson level and the band cuts): run this
+// file with WRITE_GOLDEN=1, and diff the golden before committing it.
+if (process.env.WRITE_GOLDEN === "1") {
+  writeFileSync(
+    here("./skill-map-main.golden.json"),
+    JSON.stringify(projection(buildSkillMap(nationalInputs(true), g.edges, NATIONAL_TITLES))) + "\n"
+  );
+}
+const MAIN = JSON.parse(readFileSync(here("./skill-map-main.golden.json"), "utf8")) as unknown;
 
 test("National proof: with no section groups the map is main's v0.11.0 map — chapters, lessons, objectives, links, views, label rules", () => {
   const m = buildSkillMap(nationalInputs(true), g.edges, NATIONAL_TITLES);

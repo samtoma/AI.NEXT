@@ -247,7 +247,7 @@ test("cite() throws on a term with no definition", () => {
 });
 
 test("the mastered definition quotes the threshold the product actually paints", () => {
-  assert.equal(MASTERY_THRESHOLD, 0.75);
+  assert.equal(MASTERY_THRESHOLD, 0.9); // "Nailed it" since the M7 ranges (2026-10-28)
   assert.ok(cite("mastered").text.includes(String(MASTERY_THRESHOLD)));
 });
 

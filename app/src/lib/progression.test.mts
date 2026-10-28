@@ -108,8 +108,9 @@ test("three objectives answered and a fourth never asked is unfinished; one atte
 test("the average must reach Getting there — the boundary itself counts", () => {
   assert.equal(GATE_MIN_STAGE, 2, "the gate is the ramp's second stage");
   const at = (m: number) => [{ id: "a", mastery: m }, { id: "b", mastery: m }];
-  assert.equal(lessonGatePassed(at(0.35)), true);
-  assert.equal(lessonGatePassed(at(0.35 - 1e-9)), false);
+  // "Getting there" starts at 0.40 since the M7 ranges (2026-10-28); was 0.35
+  assert.equal(lessonGatePassed(at(0.4)), true);
+  assert.equal(lessonGatePassed(at(0.4 - 1e-9)), false);
 });
 
 // Accepted knowingly (ADR-0020 amendment): the gate no longer checks the
@@ -138,14 +139,14 @@ test("one weak objective fails lessonMastered even when the others are at ceilin
   const los = [
     { id: "a", mastery: 0.98 },
     { id: "b", mastery: 0.98 },
-    { id: "c", mastery: 0.29 },
+    { id: "c", mastery: 0.75 },
   ];
   const average = los.reduce((s, l) => s + l.mastery, 0) / los.length;
   assert.ok(average >= MASTERED_GATE, "fixture must be one the average passes");
   assert.equal(lessonMastered(los), false);
 });
 
-test("lessonMastered passes only when every objective is at or above 0.75", () => {
+test("lessonMastered passes only when every objective is at Nailed it (0.90)", () => {
   assert.equal(lessonMastered([{ id: "a", mastery: MASTERED_GATE }]), true);
   assert.equal(lessonMastered([{ id: "a", mastery: MASTERED_GATE - 1e-9 }]), false);
 });

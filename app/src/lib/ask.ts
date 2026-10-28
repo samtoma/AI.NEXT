@@ -8,7 +8,7 @@ import { getAllVisuals } from "./visuals";
 import { COURSE_RANK, MODULE_RANK, catalogueObjectivesSql } from "./module-order";
 import { figureDirectivesDoc, visualsCatalogLines } from "./viz-prompt";
 import { requireSubjectOfCourse } from "./subjects";
-import { masteryLabel } from "./mastery";
+import { MASTERY_PHRASE, masteryLabel, masteryStage } from "./mastery";
 import { COURSE_IDS, COURSES, coursesOf, isCourseId, type AskExampleIds, type CourseId } from "./courses";
 import type { Subject } from "./types";
 import type { MapFocusKind } from "./map-focus";
@@ -104,9 +104,13 @@ export interface AskContext {
  *     A tutor that keeps saying it undoes that decision in conversation.
  *
  * The band is what the ordering already encodes, so nothing the model can
- * act on is lost.
+ * act on is lost. Since 2026-10-28 ("One mastery rule" M4) it carries the
+ * student's own phrase beside it — "proficient ("Almost there")" — so Noor
+ * and the screen use the same words, and an objective with no answer reads
+ * "not started" rather than the band of a 0 score.
  */
-const bandStr = (v: number) => masteryLabel(v);
+const bandStr = (v: number) =>
+  `${masteryLabel(v, v > 0)} ("${MASTERY_PHRASE[masteryStage(v, v > 0)]}")`;
 
 /**
  * How many LOs get the FULL treatment (description + question stems +
@@ -926,10 +930,10 @@ ${kit.reExplainMode(student, a)}`;
   return `${base}
 
 MODE — YOUR PROGRESS (you are talking directly to ${student}, next to ${a.their} own progress map; address ${a.them} as "you"):
-Typical asks: what to work on next and why (reason over mastery + prerequisite edges — the weakest objective whose prerequisites are met; the readiness gate is 50%), why a topic is still weak (look at its prerequisites' mastery), how things have changed since ${a.they} started, or a study plan before a test.
+Typical asks: what to work on next and why (reason over mastery + prerequisite edges — the weakest objective whose prerequisites are met; a prerequisite counts as ready once it reaches "Getting there"), why a topic is still weak (look at its prerequisites' mastery), how things have changed since ${a.they} started, or a study plan before a test.
 Explain, plan and cite — never quiz: do NOT emit {{show_question:...}}. When ${a.they} want${a.s} to practise, point ${a.them} to the lesson on Study ("Walk me through it" or "Quick review") or to "Just practise — today's plan".
 When the conversation ends with a "MAP SELECTION RIGHT NOW" line, that is what ${a.they} ${a.is} looking at on the map: answer about it first, and when it helps say what it builds on and what builds on it (the PREREQUISITE EDGES), naming the other chapter when a link crosses one. Never repeat the line itself.
-Ground every recommendation in the data and cite as you go — cited objectives light up on ${a.their} map while you speak. Never quote a mastery number, percentage or score to ${a.them}; say it in words ("still shaky", "nearly there", "nailed it").`;
+Ground every recommendation in the data and cite as you go — cited objectives light up on ${a.their} map while you speak. Never quote a mastery number, percentage or score to ${a.them}; say it in the student's words given beside each band ("Getting there", "Almost there", "Nailed it").`;
 }
 
 /** Social studies: re-explain a wrong answer from the model-answer claim-steps. */

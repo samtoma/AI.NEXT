@@ -31,7 +31,7 @@
  */
 import { slugOfLo } from "./lesson-slug";
 import { termOfModule, withoutTerm } from "./module-term";
-import { masteryStage } from "./mastery";
+import { lessonLevel, masteryStage } from "./mastery";
 import { sectionLabel } from "./section-label";
 
 /* ------------------------------------------------------------- types --- */
@@ -65,6 +65,9 @@ export interface MapObjective {
   chapterId: string;
   stageNow: Stage;
   stageStart: Stage;
+  /** the stored scores behind the two stages — what `lessonStage` averages */
+  scoreNow: number;
+  scoreStart: number;
   x: number;
   y: number;
   /** angle on the ring, radians (0 = east, clockwise on screen) */
@@ -338,6 +341,8 @@ export function buildSkillMap(
           chapterId: c.id,
           stageNow: stageOf(o.current),
           stageStart: stageOf(o.baseline),
+          scoreNow: o.current,
+          scoreStart: o.baseline,
           x: c.cx + c.ro * Math.cos(angle),
           y: c.cy + c.ro * Math.sin(angle),
           angle,
@@ -506,7 +511,10 @@ export function annularSectorPath(
 
 /* ------------------------------------------------------------- stages --- */
 
-/** Lesson stage = round(mean of its objectives' stages). Chapters are never averaged. */
+/** Lesson stage = `lessonLevel` over its objectives' scores — the same rule the
+ *  check-in card uses ("One mastery rule" M1). It used to round the mean of the
+ *  objectives' STAGES, which rounds up: 0.98 / 0.40 / 0.40 / 0.40 read "Almost
+ *  there" here and "Getting there" on the card. Chapters are never averaged. */
 export function lessonStage(
   model: SkillMapModel,
   slug: string,
@@ -514,11 +522,12 @@ export function lessonStage(
 ): Stage {
   const l = model.lessonBySlug.get(slug);
   if (!l || l.objectives.length === 0) return 0;
-  const sum = l.objectives.reduce((s, id) => {
-    const o = model.objectiveById.get(id)!;
-    return s + (asOf === "today" ? o.stageNow : o.stageStart);
-  }, 0);
-  return Math.round(sum / l.objectives.length) as Stage;
+  return lessonLevel(
+    l.objectives.map((id) => {
+      const o = model.objectiveById.get(id)!;
+      return asOf === "today" ? o.scoreNow : o.scoreStart;
+    }),
+  );
 }
 
 export function objectiveStage(

@@ -115,3 +115,55 @@ export function bktUpdate(
 
   return { observation, prior: p, posterior, afterTransit };
 }
+
+/**
+ * QUESTION DIFFICULTY COUNTS ("One mastery rule" M6, 2026-10-28 — proposed to
+ * Samuel; touches ADR-0009).
+ *
+ * Every checked answer used to move mastery by the same rule, so two right
+ * answers on easy questions read exactly like two on hard ones. Guess and slip
+ * are now set per question, from its tier — the item-difficulty extension of
+ * BKT (KT-IDEM, Pardos & Heffernan 2011):
+ *
+ *   - an EASY question is easier to get right without knowing it (higher
+ *     guess) and harder to miss while knowing it (lower slip): a right answer
+ *     moves the estimate less, a wrong one drops it more;
+ *   - a HARD question the other way round.
+ *
+ * Multiple choice takes a guess of one in the number of options, whatever its
+ * tier — that is literally the chance of guessing it. A task the tutor built in
+ * the chat (`qw:inline:…`, materialised unreviewed) has no tier of its own and
+ * counts as basic.
+ *
+ * Starting values, not fitted. Once the pilot has answers, each tier's real
+ * right-answer rate should be checked against its label and these tuned.
+ * pInit and pTransit are unchanged.
+ */
+export type QuestionTier = "basic" | "standard" | "advanced";
+
+export const TIER_PARAMS: Record<QuestionTier, Pick<BktParams, "pGuess" | "pSlip">> = {
+  basic: { pGuess: 0.25, pSlip: 0.05 },
+  standard: { pGuess: 0.15, pSlip: 0.1 },
+  advanced: { pGuess: 0.08, pSlip: 0.18 },
+};
+
+/** The tier an answer counts at: a tutor-built task counts as basic. */
+export function effectiveTier(tier: string | null | undefined, tutorBuilt: boolean): QuestionTier {
+  if (tutorBuilt) return "basic";
+  return tier === "standard" || tier === "advanced" ? tier : "basic";
+}
+
+/** This question's parameters: the student's pInit/pTransit, guess and slip from the question. */
+export function paramsForQuestion(
+  base: BktParams,
+  q: { tier: QuestionTier; questionType: string; optionCount?: number | null }
+): BktParams {
+  const { pGuess, pSlip } = TIER_PARAMS[q.tier];
+  const n = q.optionCount ?? 0;
+  const guess =
+    q.questionType === "mcq" && n >= 2
+      ? // one in n, kept clear of the guess + slip < 1 degeneracy assertSane refuses
+        Math.min(1 / n, 0.95 - pSlip)
+      : pGuess;
+  return { pInit: base.pInit, pTransit: base.pTransit, pGuess: guess, pSlip };
+}

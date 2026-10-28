@@ -344,10 +344,10 @@ test("the place may leave 1.7 only when all three parts pass", () => {
   assert.equal(mayLeaveSection(g, catalog(lessonsAt(["g10m1s7-1", "g10m1s7-2", "g10m1s7-3"], 0.9))), true);
   const single = INDEX.groupOf("g10m1s8-1");
   // exactly the lesson gate — as ADR-0020's 2026-09-30 amendment has it: the
-  // lesson's average reaches "Getting there" (0.35) and every objective has
-  // been attempted
-  assert.equal(mayLeaveSection(single, catalog(lessonsAt(["g10m1s8-1"], 0.35))), true, "exactly the lesson gate");
-  assert.equal(mayLeaveSection(single, catalog(lessonsAt(["g10m1s8-1"], 0.34))), false);
+  // lesson's average reaches "Getting there" (0.40 since the M7 ranges) and
+  // every objective has been attempted
+  assert.equal(mayLeaveSection(single, catalog(lessonsAt(["g10m1s8-1"], 0.4))), true, "exactly the lesson gate");
+  assert.equal(mayLeaveSection(single, catalog(lessonsAt(["g10m1s8-1"], 0.39))), false);
   // an objective never attempted keeps a whole part — and so the section — unpassed
   const untried = (lo: string) => (lo === "lo:g10m1s7-1-3" ? 0 : slugOfLo(lo).startsWith("g10m1s7") ? 0.9 : 0);
   assert.equal(mayLeaveSection(g, catalog(untried)), false);
@@ -408,9 +408,9 @@ test("SC-211: the roll-up agrees with its parts' mastery, and with the leave rul
     const r = sectionRollup(g, cat, INDEX);
     const parts = g.slugs.map((s) => cat.find((l) => l.slug === s)!);
     // the gate, restated independently of `lessonGatePassed`: every objective
-    // attempted and the average at stage 2, "Getting there" (>= 0.35)
+    // attempted and the average at stage 2, "Getting there" (>= 0.40)
     const passing = parts.filter(
-      (l) => l.los.every((lo) => lo.mastery > 0) && l.los.reduce((s, lo) => s + lo.mastery, 0) / l.los.length >= 0.35
+      (l) => l.los.every((lo) => lo.mastery > 0) && l.los.reduce((s, lo) => s + lo.mastery, 0) / l.los.length >= 0.4
     ).length;
     assert.equal(r.mastered, passing);
     assert.equal(r.isMastered, passing === 3);

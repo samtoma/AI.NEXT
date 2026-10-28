@@ -9,13 +9,14 @@ import { courseDef } from "@/lib/courses";
 import { subjectOfCourse } from "@/lib/subjects";
 import { resolveStudentContext } from "@/lib/student-context";
 import { getCurrentLesson, isCourseComplete } from "@/lib/progression-db";
-import { previousCompletedSlug, untriedObjectives } from "@/lib/progression";
+import { lessonGatePassed, previousCompletedSlug, untriedObjectives } from "@/lib/progression";
 import { getCourseOutline } from "@/lib/course-outline-queries";
 import { hasUnpreparedLessons, preparedSlugs } from "@/lib/course-outline";
 import {
   deriveMasteryStage,
   deriveRecommendation,
   deriveWeakestSubskill,
+  restIsSolid,
   estimateMinutes,
   buildRecommendationReason,
 } from "@/lib/checkin";
@@ -329,6 +330,8 @@ export default async function StudentPage({
       hasContent={hasContent}
       masteryStage={masteryStage}
       weakestSubskill={weakestSubskill?.label ?? null}
+      restSolid={restIsSolid(lesson.los, weakestSubskill?.label ?? null)}
+      readyForNext={!courseComplete && lessonGatePassed(lesson.los)}
       recommendation={recommendation}
       estimates={estimates}
       completedToday={false /* no real "attempted today" signal yet — never inferred from time of day */}

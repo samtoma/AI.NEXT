@@ -357,3 +357,22 @@ The first condition is the floor under the average. Without it, two well-answere
 **Not fixed here.** "Quick review" still asks the first three objectives only, so on a four-objective lesson it can never supply the fourth attempt. The card's "hasn't come up yet" line names what is missing and points at the walk-through. Widening review to every objective changes the review prompt, which this ADR holds, so it needs its own approval.
 
 **Affects.** `app/src/lib/progression.ts` (`lessonGatePassed`, new `lessonMastered`, `courseComplete`), `app/src/lib/progression.test.mts`; FR-3202 and FR-3203 amended and FR-3221 added in spec 002.
+
+## Amendment 2026-10-28 — one mastery rule: the cuts move, and the gates are written as stages
+
+**Status**: **Proposed — awaiting Samuel.** Proposed by Tamer Deif, 2026-10-28, on `ui-clean-up`. Implemented there so it can be reviewed running; it does not go to `main` until Samuel accepts it.
+
+**Why.** Each screen turned the same stored scores into a level its own way (the check-in card averaged scores, the skill map rounded the average of stages, the report used an LLM's reading of one sitting's chat), and the gates hard-coded numbers that only happened to equal the old band cuts (0.75, 0.5). One right answer from the prior read "Almost there" and two read "Nailed it".
+
+**Decision (proposed).**
+
+1. **Band cuts move to 0.40 / 0.75 / 0.90** (`BAND_CUTS` in `app/src/lib/mastery.ts`, Tamer's call): Just started below 0.40, Getting there to 0.75, Almost there to 0.90, Nailed it from 0.90.
+2. **Every gate is a stage on that ramp, not a literal**, so the gates follow the cuts:
+   - the lesson gate is unchanged in form — every objective attempted and the lesson level at "Getting there" — and now starts at 0.40 (was 0.35);
+   - `MASTERED_GATE` (course complete) is `MASTERY_THRESHOLD`, "Nailed it", now 0.90 (was 0.75);
+   - `PREREQ_GATE` is "Getting there", now 0.40 (was 0.5) — Tamer's choice of level.
+3. **The card says the gate as its own fact**, "Ready for the next lesson ✓", next to the level, so a lesson at "Getting there" no longer reads as unfinished once it has passed.
+
+**Effect.** Stored scores do not change, but shown levels drop for many students on the day it ships (no notice, Tamer's call). Course completion becomes stricter; prerequisites slightly looser.
+
+**Affects.** `app/src/lib/mastery.ts`, `app/src/lib/progression.ts`, `app/src/lib/checkin.ts`, `app/src/app/(student)/student/page.tsx`, `app/src/components/student/LessonCheckIn.tsx`; tests in `progression.test.mts`, `book-sections.test.mts`, `mastery-rule.test.mts`.

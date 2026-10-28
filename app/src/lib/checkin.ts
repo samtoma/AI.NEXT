@@ -12,7 +12,7 @@
  * prop (see docs/design/handoffs/noor-play), so the caller logs it and stops
  * there rather than passing it down.
  */
-import { MASTERY_LEGEND, masteryStep } from "@/lib/mastery";
+import { BAND_CUTS, MASTERY_LEGEND, MASTERY_THRESHOLD, lessonLevel } from "@/lib/mastery";
 import { addressForms, type Gender } from "@/lib/address";
 import type { LessonLo } from "@/lib/types";
 
@@ -23,27 +23,38 @@ export interface CheckInTopic {
   weakestSubskill: string | null;
 }
 
-/** Topic-level stage: the average LO score, banded the same way the
- *  dashboard bands a single LO. `started` is "has any LO been attempted" —
- *  a topic nobody has touched must land on stage 0, not the cold-start prior. */
+/** Topic-level stage: `lessonLevel` — the one lesson level every surface
+ *  shows ("One mastery rule" M1). A topic nobody has touched lands on stage 0,
+ *  not the cold-start prior. */
 export function deriveMasteryStage(los: readonly LessonLo[]): 0 | 1 | 2 | 3 | 4 {
-  const started = los.some((l) => l.mastery > 0);
-  if (!started || los.length === 0) return 0;
-  const avg = los.reduce((sum, l) => sum + l.mastery, 0) / los.length;
-  return MASTERY_LEGEND.indexOf(masteryStep(avg, true)) as 0 | 1 | 2 | 3 | 4;
+  return lessonLevel(los.map((l) => l.mastery));
 }
 
 /** The one named gap: the weakest LO among those actually attempted, or
  *  null when nothing has been attempted yet (there is no "weakest" of
- *  nothing) or every attempted LO is already at the top band. */
+ *  nothing) or the weakest attempted LO has already reached "Almost there".
+ *
+ *  It feeds "Still a bit shaky on X", and since 2026-10-28 ("One mastery rule"
+ *  M4) "shaky" means what it says: below "Almost there". It used to fire for
+ *  anything short of the top band, so a single right answer read as shaky. */
 export function deriveWeakestSubskill(
   los: readonly LessonLo[]
 ): { label: string; mastery: number } | null {
   const attempted = los.filter((l) => l.mastery > 0);
   if (attempted.length === 0) return null;
   const weakest = attempted.reduce((a, b) => (b.mastery < a.mastery ? b : a));
-  if (masteryStep(weakest.mastery, true).band === "mastered") return null;
+  if (weakest.mastery >= BAND_CUTS.almostThere) return null;
   return { label: weakest.label, mastery: weakest.mastery };
+}
+
+/** May the card follow "Still a bit shaky on X" with "Everything else is
+ *  solid"? Only when it is true: every OTHER objective at "Nailed it", none
+ *  of them untried ("One mastery rule" M4). The card used to say it next to
+ *  "Two parts haven't come up yet". */
+export function restIsSolid(los: readonly LessonLo[], weakestLabel: string | null): boolean {
+  return los
+    .filter((l) => l.label !== weakestLabel)
+    .every((l) => l.mastery >= MASTERY_THRESHOLD);
 }
 
 /** Stage 0-1 (never started / just started) → the full re-teach.

@@ -37,7 +37,7 @@
  * Only a TYPE is imported from lib/book-sections.ts: that module imports the
  * gate from here, and the index object carries the rules this walk applies.
  */
-import { masteryStage } from "@/lib/mastery";
+import { BAND_CUTS, MASTERY_THRESHOLD, masteryStage } from "@/lib/mastery";
 import type { SectionIndex } from "./book-sections";
 
 /**
@@ -59,22 +59,23 @@ export interface ProgressionLesson {
 }
 
 /**
- * The MASTERED cut: every learning objective at or above this score.
+ * The MASTERED cut: every learning objective at "Nailed it".
  *
- * 0.75 is the existing `mastered` band cut in lib/mastery.ts, not a new
- * number — this cut and the ramp the student is looking at must never
- * disagree about the word "mastered".
+ * Written as the ramp's top stage, not a number (2026-10-28, "One mastery
+ * rule" M7, proposed to Samuel as an ADR-0020 amendment): it IS
+ * `MASTERY_THRESHOLD`, so moving the band cuts in lib/mastery.ts moves this
+ * gate with them and the word "Nailed it" and the rule can never disagree.
+ * It was a literal 0.75 that happened to equal the old cut.
  *
  * **Since 2026-09-30 this is no longer the gate that moves a student on.** It
  * is the bar for `lessonMastered`, which only "the whole course" (`courseComplete`)
  * still asks for. See `lessonGatePassed` for what moves the pointer and why.
  *
  * It is `every`, not the average, and that is the whole point of keeping it for
- * the banner. The ramp averages (`deriveMasteryStage`), which means
- * 0.98 / 0.98 / 0.29 renders as mastered — tolerable for a progress bar, not as
- * the rule that tells a student they have been through every topic.
+ * the banner: the lesson level averages, which is tolerable for a progress bar,
+ * not as the rule that tells a student they have been through every topic.
  */
-export const MASTERED_GATE = 0.75;
+export const MASTERED_GATE = MASTERY_THRESHOLD;
 
 /**
  * The lowest ramp stage that lets a lesson count as done: 2, "Getting there".
@@ -84,17 +85,20 @@ export const MASTERED_GATE = 0.75;
 export const GATE_MIN_STAGE = 2;
 
 /**
- * Prerequisite readiness threshold — a prerequisite objective counts as met at
- * or above this score. 0.5 is `getStudentPlan`'s existing gate, moved here
- * rather than copied, so the plan builder and the progression walk can never
- * disagree about what "ready" means.
+ * Prerequisite readiness threshold — a prerequisite objective counts as met
+ * once it reaches "Getting there", the floor of the ramp's second stage.
  *
- * Note it sits BELOW `MASTERED_GATE`: readiness to start something is a lower
- * bar than being done with it, and with the advance rule gating on 0.75 the
- * prerequisite check rarely binds within a course anyway. It binds across
- * units, where the graph's 71 cross-lesson edges actually live.
+ * It was a literal 0.5 (`getStudentPlan`'s original gate). Since 2026-10-28
+ * ("One mastery rule" M7, Tamer's choice of level; an ADR-0020 amendment for
+ * Samuel) it is a stage on the ramp, so it follows the band cuts. With the cuts
+ * at 0.40 / 0.75 / 0.90 that is 0.40: slightly looser than 0.5 — a prerequisite
+ * shown at least once is enough to start what builds on it.
+ *
+ * Still defined here and imported by the plan builder, so the two can never
+ * disagree about what "ready" means. It binds across units, where the graph's
+ * cross-lesson edges live.
  */
-export const PREREQ_GATE = 0.5;
+export const PREREQ_GATE = BAND_CUTS.gettingThere;
 
 /**
  * THE GATE — what moves the pointer, and what makes a lesson "finished".
@@ -114,8 +118,8 @@ export const PREREQ_GATE = 0.5;
  *     never touched: the average counts an untried objective as zero, but two
  *     well-answered objectives out of four still average high enough to reach
  *     "Getting there" on their own.
- *  2. **The lesson's average reaches "Getting there"** (`GATE_MIN_STAGE`, 0.35),
- *     the same average `deriveMasteryStage` puts on the ramp.
+ *  2. **The lesson's average reaches "Getting there"** (`GATE_MIN_STAGE`),
+ *     the same average `lessonLevel` puts on the ramp.
  *
  * What it does NOT do is check the weakest objective: 0.98 / 0.98 / 0.10 passes.
  * ADR-0020 rejected the average as a gate for that reason, and the amendment

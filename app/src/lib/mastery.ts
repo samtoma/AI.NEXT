@@ -70,33 +70,40 @@ const STEPS: readonly Step[] = [
 /**
  * Band boundaries on the BKT posterior.
  *
- * 0.35 / 0.55 / 0.75 are the same cuts the dashboard and the spine surface
- * read, so the two can never disagree about what "proficient" means. They sit
- * above the 0.30 cold-start prior deliberately: a learner who has answered
- * nothing must not appear one step up the ramp for free.
+ * 0.40 / 0.75 / 0.90 since 2026-10-28 ("One mastery rule", M7 — Tamer; the
+ * gates that read them are Samuel's, ADR-0020). They were 0.35 / 0.55 / 0.75,
+ * under which ONE right answer from the 0.30 prior (0.69) already read
+ * "Almost there" and two (0.92) "Nailed it". They still sit above the 0.30
+ * cold-start prior: a learner who has answered nothing must not appear one
+ * step up the ramp for free.
+ *
+ * These are the ONLY copy of the cuts. Every gate is written as a stage on
+ * this ramp (lib/progression.ts), so moving a cut here moves the gates with it
+ * and the screens and the rules can never disagree about a word.
  */
+export const BAND_CUTS = { gettingThere: 0.4, almostThere: 0.75, nailedIt: 0.9 } as const;
+
 /**
  * The floor of the top band: the BKT posterior at which an objective counts as
- * **mastered**.
+ * **mastered** ("Nailed it").
  *
  * Exported because the console's overviews need "how many objectives is this
  * cohort at or above the mastery threshold on" (contracts/admin.md §8, research
  * A3) and the answer must be the SAME number the student's own dashboard paints
- * teal. A console that used 0.8 while the product used 0.75 would report a
+ * teal. A console that used another number than the product would report a
  * cohort falling short of a bar the product never showed them.
  *
- * It is 0.75, from the band boundaries above, and not the 0.80 that appears in
- * some planning prose. `lib/bkt.ts` holds the model, not the bands — it has
- * `MIN_SCORE`/`MAX_SCORE` clamps and no threshold — so the band scale is the
- * only place this number has ever been defined, and it lives here.
+ * `lib/bkt.ts` holds the model, not the bands — it has `MIN_SCORE`/`MAX_SCORE`
+ * clamps and no threshold — so the band scale is the only place this number is
+ * defined, and it lives here.
  */
-export const MASTERY_THRESHOLD = 0.75;
+export const MASTERY_THRESHOLD = BAND_CUTS.nailedIt;
 
 function stepIndex(score: number, started: boolean): number {
   if (!started) return 0;
   const s = Math.max(0, Math.min(1, score));
-  if (s < 0.35) return 1;
-  if (s < 0.55) return 2;
+  if (s < BAND_CUTS.gettingThere) return 1;
+  if (s < BAND_CUTS.almostThere) return 2;
   if (s < MASTERY_THRESHOLD) return 3;
   return 4;
 }
@@ -179,3 +186,83 @@ export const masteryPhrase = (stage: 0 | 1 | 2 | 3 | 4) => MASTERY_PHRASE[stage]
 export const MASTERY_LEGEND: readonly Step[] = STEPS;
 
 export const pct = (score: number) => `${Math.round(score * 100)}%`;
+
+/**
+ * ONE LESSON LEVEL ("One mastery rule" M1, 2026-10-28).
+ *
+ * A lesson's (or unit's) stage from its objectives' stored scores: the average
+ * score, an untried objective counting as 0, banded on the ramp above. Every
+ * surface that shows a level for more than one objective — the check-in card,
+ * the skill map's lesson pills, the dashboard, the lesson report — calls this
+ * and nothing else.
+ *
+ * Before, the card averaged scores while the skill map rounded the average of
+ * STAGES, and the two disagreed: 0.98 / 0.40 / 0.40 / 0.40 was "Getting there"
+ * on the card and "Almost there" on the map. Untried counts as 0 so that two
+ * objectives at the top cannot make a four-objective lesson look finished.
+ *
+ * `scores` are stored scores, 0 for "no mastery row" (an attempted objective
+ * never reads 0 — BKT clamps at `MIN_SCORE`). Nothing attempted, or nothing
+ * to attempt, is stage 0.
+ */
+export function lessonLevel(scores: readonly number[]): 0 | 1 | 2 | 3 | 4 {
+  if (scores.length === 0 || !scores.some((s) => s > 0)) return 0;
+  const avg = scores.reduce((sum, s) => sum + s, 0) / scores.length;
+  return masteryStage(avg, true);
+}
+
+/** How many of these objectives have no answer yet — shown beside every lesson level. */
+export const untriedCount = (scores: readonly number[]) => scores.filter((s) => !(s > 0)).length;
+
+/**
+ * NAILED IT NEEDS ONE HARDER QUESTION ("One mastery rule" M6 part 2).
+ *
+ * The score alone cannot tell a run of easy questions from real mastery, so
+ * reaching "Nailed it" also needs at least one right answer at the hardest tier
+ * the objective HAS, capped at standard: standard or advanced where the bank
+ * has them, basic where it has nothing harder (or no bank questions at all —
+ * then only tutor-built tasks, which count as basic, can practise it). Without
+ * that fallback a thin bank would hold a student below the top for good.
+ *
+ * Applied where the score is written (/api/attempts), so the stored number is
+ * the whole truth and every reader keeps banding on the score alone. Without
+ * the evidence the score stops just under the cut; with it, BKT carries on.
+ */
+export const NAILED_IT_CAP = Math.round((MASTERY_THRESHOLD - 0.01) * 100) / 100;
+
+export function capWithoutEvidence(score: number, hasEvidence: boolean, prior: number): number {
+  // The cap stops a score RISING past the cut; it never pulls one down. A score
+  // already above it (stored before this rule) keeps its place, so a right
+  // answer can never lower a level.
+  return hasEvidence ? score : Math.min(score, Math.max(NAILED_IT_CAP, prior));
+}
+
+/**
+ * The report's level ("One mastery rule" M2): the lesson level from the stored
+ * scores now, and which objectives moved a stage since the sitting began.
+ * Pure — the route reads the scores (now, and as of the sitting's start, from
+ * the bitemporal table) and hands them here.
+ */
+export function reportMastery(
+  los: readonly { label: string; now: number; atStart: number }[],
+  answered: number
+): {
+  stage: 0 | 1 | 2 | 3 | 4;
+  untried: number;
+  answered: number;
+  moved: { label: string; from: 0 | 1 | 2 | 3 | 4; to: 0 | 1 | 2 | 3 | 4 }[];
+} {
+  const now = los.map((l) => l.now);
+  return {
+    stage: lessonLevel(now),
+    untried: untriedCount(now),
+    answered,
+    moved: los
+      .map((l) => ({
+        label: l.label,
+        from: masteryStage(l.atStart, l.atStart > 0),
+        to: masteryStage(l.now, l.now > 0),
+      }))
+      .filter((m) => m.from !== m.to),
+  };
+}

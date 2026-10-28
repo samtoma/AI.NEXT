@@ -5,15 +5,16 @@ import Link from "next/link";
 import type { LessonMode, UnderstandingCheck } from "@/lib/types";
 import { MASTERY_PHRASE, masteryStage } from "@/lib/mastery";
 import { stripInternalIds } from "@/lib/student-text";
+import { MathText } from "@/components/MathText";
 import { BUTTON_PRIMARY, BUTTON_SECONDARY, HEADING, STROKE, STROKE_WIDTH_SM, cx } from "@/components/sticker";
 
 /**
  * The understanding report — "What you showed today" (design_handoff_guided_pages §4).
  *
- * No score, no verdict, nothing numeric reaches the student: the grader's 0–100 session score is
- * read through `masteryStage()` — the same bands the skill map uses — and shown as that stage's
- * phrase on a level pill and the 4-segment mastery ramp, in the skill map's own words
- * (`MASTERY_PHRASE`), so the two screens never name one level two ways. Then three short lists —
+ * No score, no verdict, nothing numeric reaches the student. The level is the lesson's STORED
+ * mastery (`check.mastery`, "One mastery rule" M2, 2026-10-28) — `lessonLevel`, the same rule as
+ * the check-in card and the skill map — with what moved this sitting beneath it. It used to be the
+ * grader's 0–100 reading of the chat, banded, which swung 94 → 15 on the same lesson in an hour. Then three short lists —
  * what you showed, what to work on, what's next — and the three doors.
  *
  * It was a 0–100 dial with a Got it / Nearly / Needs work stamp. The number and the stamp are
@@ -61,7 +62,13 @@ export function ReportCard({
   /** what the level is a level OF — the lesson's title */
   skill?: string;
 }) {
-  const stage = Math.max(1, masteryStage(check.score / 100)) as 1 | 2 | 3 | 4;
+  // "Where you are today" is the lesson's STORED mastery ("One mastery rule"
+  // M2) — the same `lessonLevel` the check-in card and the skill map show, so
+  // the report can no longer contradict them a minute later. The grader's
+  // 0–100 is a reading of one sitting's chat; it stays in the console. Only a
+  // replayed rating, which never carried `mastery`, falls back to it.
+  const m = check.mastery;
+  const stage = m ? m.stage : (Math.max(1, masteryStage(check.score / 100)) as 1 | 2 | 3 | 4);
   const level = MASTERY_PHRASE[stage];
 
   const eyebrow = rtl
@@ -116,6 +123,38 @@ export function ReportCard({
             </span>
           ))}
         </div>
+        {m && (m.moved.length > 0 || m.answered === 0 || m.untried > 0) && (
+          <ul className="flex flex-col gap-1.5 font-read text-[0.95rem] leading-[1.5] text-ink-soft">
+            {m.moved.map((mv) => (
+              <li key={mv.label}>
+                <strong className="font-semibold text-ink">
+                  <MathText text={mv.label} />
+                </strong>
+                : {MASTERY_PHRASE[mv.from]} → {MASTERY_PHRASE[mv.to]}
+              </li>
+            ))}
+            {m.answered === 0 && (
+              <li>
+                {rtl
+                  ? "مفيش أسئلة اتجاوبت المرة دي، فمستواك فضل زي ما هو."
+                  : "No questions answered this time, so your level stayed where it was."}
+              </li>
+            )}
+            {m.untried > 0 && (
+              <li>
+                {rtl
+                  ? m.untried === 1
+                    ? "فيه جزء لسه ما جاش."
+                    : "فيه أجزاء لسه ما جتش."
+                  : m.untried === 1
+                    ? "One part hasn't come up yet."
+                    : m.untried === 2
+                      ? "Two parts haven't come up yet."
+                      : "A few parts haven't come up yet."}
+              </li>
+            )}
+          </ul>
+        )}
       </div>
 
       <div className="grid gap-3 sm:gap-8 md:grid-cols-3">
@@ -147,7 +186,8 @@ export function ReportCard({
         <>
           <p className="font-mono text-[0.72rem] font-medium text-ink-faint">
             understanding_checks #{check.id} · {check.turns} AI turns · score {check.score}/100 · verdict{" "}
-            {check.verdict} · ${costUsd.toFixed(4)} · shown to the student as “{level}”, no number
+            {check.verdict} · ${costUsd.toFixed(4)} · level “{level}”{" "}
+            {m ? "from stored mastery" : "from the grader's score (replay: stored mastery not kept on the row)"}, no number
           </p>
           <p className="rounded-[var(--play-radius)] border-[length:var(--play-stroke)] border-dashed border-[color:var(--play-disabled-border)] px-4 py-2.5 text-center font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-ink-faint">
             the student was offered three next steps here

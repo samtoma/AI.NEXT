@@ -478,6 +478,25 @@ export interface UnderstandingCheck {
   gaps: string[];
   nextStep: string;
   turns: number;
+  /**
+   * The lesson's level from STORED mastery ("One mastery rule" M2) — what the
+   * report shows as "where you are today". Absent on a replayed rating (the
+   * console reads the row, which never stored it); the card then falls back to
+   * the grader's score, which the console labels as such.
+   */
+  mastery?: ReportMastery;
+}
+
+/** The report's level, read from the mastery table rather than the chat. */
+export interface ReportMastery {
+  /** `lessonLevel` over the lesson's objectives now */
+  stage: 0 | 1 | 2 | 3 | 4;
+  /** objectives with no answer yet */
+  untried: number;
+  /** checked answers given in this sitting */
+  answered: number;
+  /** objectives whose stage changed during this sitting, in teaching order */
+  moved: { label: string; from: 0 | 1 | 2 | 3 | 4; to: 0 | 1 | 2 | 3 | 4 }[];
 }
 
 export interface AttemptResult {

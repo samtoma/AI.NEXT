@@ -50,6 +50,9 @@ export interface SavePayload<M = unknown, B = unknown> {
   board: B[];
   focusKey: string | null;
   covered: string[];
+  /** objectives with a right checked answer in this sitting — the steps' full
+   *  tick ("One mastery rule" M3). Optional: saves from before it read as none. */
+  practised?: string[];
   /** set when the student pressed Finish before the lesson was over */
   endedEarly?: boolean;
 }
@@ -113,6 +116,13 @@ export function validateSavePayload(
     !j.covered.every((c) => typeof c === "string" && c.length <= SAVE_LIMITS.key)
   )
     return { ok: false, error: "covered" };
+  if (
+    j.practised !== undefined &&
+    (!Array.isArray(j.practised) ||
+      j.practised.length > SAVE_LIMITS.covered ||
+      !j.practised.every((c) => typeof c === "string" && c.length <= SAVE_LIMITS.key))
+  )
+    return { ok: false, error: "practised" };
   if (j.endedEarly !== undefined && typeof j.endedEarly !== "boolean")
     return { ok: false, error: "endedEarly" };
   if (!hasTutorText(j.messages)) return { ok: false, error: "nothing_to_resume" };
@@ -123,6 +133,7 @@ export function validateSavePayload(
     board: j.board,
     focusKey: j.focusKey as string | null,
     covered: j.covered as string[],
+    ...(Array.isArray(j.practised) ? { practised: j.practised as string[] } : {}),
     ...(j.endedEarly === true ? { endedEarly: true } : {}),
   };
   return { ok: true, save };

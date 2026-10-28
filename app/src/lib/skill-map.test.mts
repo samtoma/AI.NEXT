@@ -121,10 +121,12 @@ test("lesson names: the short title where one exists, else the first objective's
   assert.equal(m.lessonBySlug.get("u1-2")!.title, m.objectiveById.get(m.lessonBySlug.get("u1-2")!.objectives[0]!)!.label);
 });
 
-test("stages: a lesson is the rounded mean of its objectives; the toggle switches snapshot", () => {
-  // u1-1 today: 4, 4, 3, 0 → 2.75 → 3; at baseline: 1, 0, 0, 0 → 0.25 → 0
-  assert.equal(lessonStage(m, "u1-1", "today"), 3);
-  assert.equal(lessonStage(m, "u1-1", "baseline"), 0);
+test("stages: a lesson is lessonLevel of its objectives' scores; the toggle switches snapshot", () => {
+  // "One mastery rule" M1: the card's rule, not the rounded mean of stages.
+  // u1-1 today: 0.98, 0.92, 0.6, 0 → 0.625 → Getting there (2);
+  // at baseline: 0.3, 0, 0, 0 → 0.075, something tried → Just started (1)
+  assert.equal(lessonStage(m, "u1-1", "today"), 2);
+  assert.equal(lessonStage(m, "u1-1", "baseline"), 1);
   assert.deepEqual(lessonsStarted(m, "module:u1", "today"), { started: 1, total: 4 });
   assert.deepEqual(objectivesStarted(m, "today"), { started: 3, total: 90 });
   assert.deepEqual(objectivesStarted(m, "baseline"), { started: 1, total: 90 });

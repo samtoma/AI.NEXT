@@ -22,6 +22,7 @@ import { deriveMasteryStage, learnOpeningFrame } from "@/lib/checkin";
 import { gradeLabel } from "@/lib/profile";
 import { addressForms, type Gender } from "@/lib/address";
 import type { LessonLo, LessonMode } from "@/lib/types";
+import { MASTERY_PHRASE, masteryStage } from "@/lib/mastery";
 
 /** One transcript line as the surface sends it. */
 export interface UnderstandingMsg {
@@ -76,8 +77,15 @@ export function understandingTranscript(
  */
 export function buildUnderstandingPrompt(i: UnderstandingPromptInput): string {
   const a = addressForms(i.gender ?? null, i.studentName);
+  // The stored level beside each objective ("One mastery rule" M2): the
+  // transcript is one sitting, the record is every checked answer she has
+  // ever given. Without it the grader once wrote "did not yet attempt" about
+  // an objective answered right four times in an earlier sitting.
   const loLines = i.los
-    .map((l) => `- ${l.id} "${l.label}": ${l.description ?? ""}`)
+    .map(
+      (l) =>
+        `- ${l.id} "${l.label}": ${l.description ?? ""} [on record: ${MASTERY_PHRASE[masteryStage(l.mastery, l.mastery > 0)]}]`
+    )
     .join("\n");
   const sessionDesc =
     i.mode === "learn"
@@ -89,6 +97,7 @@ Learning objectives covered:
 ${loLines}
 
 GRADING RULES:
+- "[on record: …]" is the student's level from checked answers across ALL sessions, not only this one. Never say an objective was not attempted, or is new, when it has a level on record above "Not started"; this transcript may be only part of the story.
 - Weigh ACTUAL performance — the "[live event]" lines (question attempts ✓/✗, widget results) — far above self-report or politeness.
 - Be honest but fair: in learn mode, visible progress across the session counts in ${a.their} favor; early mistakes that were later corrected are progress, not failure.
 - verdict bands: got_it = score >= 80, nearly = 55–79, needs_work < 55.

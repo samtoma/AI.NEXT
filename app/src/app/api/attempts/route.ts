@@ -2,12 +2,13 @@ import { NextResponse } from "next/server";
 import { withPrincipal } from "@/lib/db";
 import { AuthError, requireStudent } from "@/lib/auth/principal";
 import { mapRlsError } from "@/lib/rls-errors";
-import { bktUpdate, DEFAULT_PARAMS, type BktParams } from "@/lib/bkt";
+import { bktUpdate, DEFAULT_PARAMS, effectiveTier, paramsForQuestion, type BktParams } from "@/lib/bkt";
+import { capWithoutEvidence, MASTERY_THRESHOLD } from "@/lib/mastery";
 import { visibleCoursesFor } from "@/lib/catalog-queries";
 import { emit } from "@/lib/analytics";
 import { getLibraryEntries, flagAuthoringGap } from "@/lib/explanations";
 import { currentSessionSnapshot } from "@/lib/sessions";
-import type { AttemptResult, SolutionStep } from "@/lib/types";
+import { mcqChoices, type AttemptResult, type SolutionStep } from "@/lib/types";
 import { markAnswer, type AttemptRetry } from "@/lib/attempt-grading";
 import { MarkerKeyError } from "@/lib/answer-marker";
 import { ANSWER_ONLY_CARD_NOTE, choiceOptions, isAnswerOnly } from "@/lib/question-flags";
@@ -157,7 +158,8 @@ export async function POST(req: Request) {
       // LEFT joins throughout, so a question whose LO hangs off nothing still
       // returns its row — with a null course, which the gate below refuses.
       const qRes = await client.query(
-        `SELECT q.id, q.lo_id, q.question_type, q.correct_answer, q.choices,
+        `SELECT q.id, q.lo_id, q.tier, q.question_type, q.correct_answer, q.choices,
+                (q.materialised_from IS NOT NULL) AS tutor_built,
                 q.canonical_solution, q.solution_version, n.label AS lo_label,
                 c.id AS course_id, (q.reviewed_by IS NOT NULL) AS solution_reviewed
          FROM questions q
@@ -368,7 +370,7 @@ export async function POST(req: Request) {
       );
 
       const row = mRes.rowCount ? mRes.rows[0] : null;
-      const params: BktParams = row
+      const base: BktParams = row
         ? {
             pInit: Number(row.p_init),
             pTransit: Number(row.p_transit),
@@ -376,10 +378,40 @@ export async function POST(req: Request) {
             pSlip: Number(row.p_slip),
           }
         : DEFAULT_PARAMS;
+      // Question difficulty counts ("One mastery rule" M6, lib/bkt.ts): guess
+      // and slip come from THIS question's tier and type, so a hard question
+      // answered right moves the estimate more than an easy one. The row keeps
+      // the parameters this observation used.
+      const tier = effectiveTier(q.tier, Boolean(q.tutor_built));
+      const params = paramsForQuestion(base, {
+        tier,
+        questionType: q.question_type,
+        optionCount: q.question_type === "mcq" ? (mcqChoices(q)?.length ?? null) : null,
+      });
 
       const oldScore = row ? Number(row.score) : params.pInit;
       const evidence = bktUpdate(oldScore, isCorrect ? "correct" : "incorrect", params);
-      const newScore = evidence.afterTransit;
+      // Nailed it needs one right answer at the hardest tier this objective has,
+      // capped at standard (lib/mastery.ts `capWithoutEvidence`). Asked only when
+      // the score would cross the cut. The attempt row above is already written,
+      // so "a right answer" includes this one.
+      let hasEvidence = true;
+      if (evidence.afterTransit >= MASTERY_THRESHOLD) {
+        const ev = await client.query(
+          `SELECT
+             EXISTS (SELECT 1 FROM questions
+                      WHERE lo_id = $2 AND status = 'live' AND tier IN ('standard','advanced')) AS has_harder,
+             EXISTS (SELECT 1 FROM attempts a JOIN questions eq ON eq.id = a.question_id
+                      WHERE a.student_id = $1 AND eq.lo_id = $2 AND a.is_correct
+                        AND eq.materialised_from IS NULL
+                        AND eq.tier IN ('standard','advanced')) AS harder_right`,
+          [studentId, q.lo_id]
+        );
+        const { has_harder, harder_right } = ev.rows[0];
+        // nothing harder in the bank: any right answer is the hardest there is
+        hasEvidence = !has_harder || harder_right;
+      }
+      const newScore = capWithoutEvidence(evidence.afterTransit, hasEvidence, evidence.prior);
 
       if (row) {
         await client.query(
@@ -410,6 +442,8 @@ export async function POST(req: Request) {
             prior: evidence.prior,
             posterior: evidence.posterior,
             after_transit: evidence.afterTransit,
+            tier,
+            ...(newScore < evidence.afterTransit ? { capped: "nailed_it_needs_a_harder_question" } : {}),
           }),
         ]
       );

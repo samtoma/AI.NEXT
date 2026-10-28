@@ -310,6 +310,12 @@ export function LessonSession({
   const [turns, setTurns] = useState(0);
   // labeled progress stepper: LOs covered so far, in teaching order
   const [covered, setCovered] = useState<string[]>([]);
+  // objectives with a right checked answer in this sitting: the steps' full
+  // tick ("One mastery rule" M3). `covered` alone only means Noor named it.
+  const [practised, setPractised] = useState<string[]>([]);
+  const markPractised = useCallback((loId: string) => {
+    setPractised((prev) => (prev.includes(loId) ? prev : [...prev, loId]));
+  }, []);
   // de-instrumentation: receipts hidden from students by default; the
   // founders' easter egg (triple-tap the header) brings them back
   const [debug, setDebug] = useState(false);
@@ -427,6 +433,7 @@ export function LessonSession({
     setBoard(restoredBoard);
     setFocusKey(saved.focusKey ?? lastFigKey.current);
     setCovered(Array.isArray(saved.covered) ? saved.covered : []);
+    setPractised(Array.isArray(saved.practised) ? saved.practised : []);
     setBoot({ state: "ready", seed: saved });
   }, []);
 
@@ -504,6 +511,8 @@ export function LessonSession({
   focusKeyRef.current = focusKey;
   const coveredRef = useRef(covered);
   coveredRef.current = covered;
+  const practisedRef = useRef(practised);
+  practisedRef.current = practised;
   const readyRef = useRef(readyToFinish);
   readyRef.current = readyToFinish;
   const sessionIdRef = useRef<string | undefined>(sessionId);
@@ -526,6 +535,7 @@ export function LessonSession({
       board: boardRef.current,
       focusKey: focusKeyRef.current,
       covered: coveredRef.current,
+      practised: practisedRef.current,
       ...(endedEarly ? { endedEarly: true } : {}),
     };
     // The channel skips a body identical to the last one sent, so the
@@ -550,7 +560,7 @@ export function LessonSession({
 
   useEffect(() => {
     if (boot.state === "ready") scheduleSave();
-  }, [board, focusKey, covered, boot.state, scheduleSave]);
+  }, [board, focusKey, covered, practised, boot.state, scheduleSave]);
 
   // A bonus, not the mechanism: saves already go out as the lesson settles.
   // On pagehide, flush the pending throttled save and any save the server has
@@ -846,10 +856,16 @@ export function LessonSession({
                 stem: typeof prompt === "string" ? prompt : name,
               },
             }),
-          }).catch(() => {
-            // A recording failure must never break the lesson. The student has
-            // already seen their feedback; this is bookkeeping.
-          });
+          })
+            .then((res) => (res.ok ? res.json() : null))
+            .then((j: { isCorrect?: boolean } | null) => {
+              // a right answer on a tutor-built task ticks its step too (M3)
+              if (j?.isCorrect) markPractised(lo);
+            })
+            .catch(() => {
+              // A recording failure must never break the lesson. The student has
+              // already seen their feedback; this is bookkeeping.
+            });
         },
         { studentName: first, pronoun: widgetPronoun }
       );
@@ -1072,7 +1088,7 @@ export function LessonSession({
       }
       return null;
     },
-    [first, widgetPronoun]
+    [first, widgetPronoun, markPractised]
   );
 
   // The book a [[page:N]] receipt points into, as this course cites it
@@ -1270,7 +1286,7 @@ export function LessonSession({
   const currentLo =
     (covered.length ? loById.get(covered[covered.length - 1]) : undefined) ??
     lesson.los[0];
-  const steps = lessonSteps(lesson.los, covered, currentLo?.id, readyToFinish);
+  const steps = lessonSteps(lesson.los, covered, practised, currentLo?.id, readyToFinish);
   const promise = readyToFinish
     ? rtl
       ? `خلصنا — دوس "${arCopy.finish}" لتقريرك`
@@ -1483,6 +1499,9 @@ export function LessonSession({
               onPendingConfirmationChange={setPendingConfirmation}
               onProbingChange={setProbing}
               onExternalAttemptChange={setExternalAttempt}
+              onAttemptResult={(r, q) => {
+                if (r.isCorrect) markPractised(q.loId);
+              }}
               renderWidget={renderWidget}
               renderPassage={(id, span) => {
                 const p = lookupPassage(id);
@@ -1570,26 +1589,39 @@ export function LessonSession({
   );
 }
 
-type StepState = "done" | "now" | "next";
+type StepState = "done" | "talked" | "now" | "next";
 type LessonStep = { id: string; label: string; state: StepState };
 
-/** Each objective of the lesson as a step: done, the one being taught, or still to come. */
+/**
+ * Each objective of the lesson as a step ("One mastery rule" M3, 2026-10-28):
+ *
+ *   - done   — a right checked answer on it in this sitting (the full tick);
+ *   - talked — Noor has named it, nothing answered right on it yet (a light mark);
+ *   - now    — the one being taught (wins while the lesson runs);
+ *   - next   — still to come.
+ *
+ * A tick used to mean only that Noor had cited the objective, so every step
+ * could be ticked with no question answered. At the end of the lesson
+ * (`allDone`) the current step settles too: ticked if practised, else talked.
+ */
 function lessonSteps(
   los: { id: string; label: string }[],
   covered: string[],
+  practised: string[],
   currentId: string | undefined,
   allDone: boolean
 ): LessonStep[] {
   return los.map((l) => ({
     id: l.id,
     label: l.label,
-    state: allDone
-      ? "done"
-      : l.id === currentId
+    state:
+      !allDone && l.id === currentId
         ? "now"
-        : covered.includes(l.id)
+        : practised.includes(l.id)
           ? "done"
-          : "next",
+          : allDone || covered.includes(l.id)
+            ? "talked"
+            : "next",
   }));
 }
 
@@ -1624,12 +1656,21 @@ function LessonStepsRail({ steps, rtl, promise }: { steps: LessonStep[]; rtl: bo
                 "flex size-7 shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] font-display text-[0.8rem] font-extrabold",
                 st.state === "done"
                   ? "border-[color:var(--noor-progress)] bg-[var(--noor-progress)] text-[color:var(--noor-on-progress)]"
-                  : st.state === "now"
+                  : st.state === "talked"
+                    ? "border-[color:var(--noor-progress)] bg-card text-[color:var(--noor-progress)]"
+                    : st.state === "now"
                     ? "border-ink bg-card text-ink"
                     : "border-[color:var(--play-disabled-border)] text-[color:var(--play-text-dim)]"
               )}
             >
               {st.state === "done" ? "✓" : rtl ? arDigits(i + 1) : i + 1}
+              <span className="sr-only">
+                {st.state === "done"
+                  ? rtl ? " — اتمرنت عليه" : " — practised"
+                  : st.state === "talked"
+                    ? rtl ? " — اتكلمنا عنه" : " — talked about"
+                    : ""}
+              </span>
             </span>
             <span
               className={cx(
@@ -1653,7 +1694,8 @@ function LessonStepsRail({ steps, rtl, promise }: { steps: LessonStep[]; rtl: bo
 /** iPad and phone (under 1280px): the steps as 10px segments, "4 of 6 · Relations" and the promise. */
 function LessonStepper({ steps, rtl, promise }: { steps: LessonStep[]; rtl: boolean; promise: string }) {
   const at = Math.max(steps.findIndex((s) => s.state === "now"), 0);
-  const allDone = steps.every((s) => s.state === "done");
+  // the lesson is over once no step is still being taught or to come
+  const allDone = steps.every((s) => s.state === "done" || s.state === "talked");
   return (
     <div className="flex shrink-0 flex-col gap-[7px] pb-3 min-[1280px]:hidden">
       <span className="flex gap-[5px]" aria-hidden>
@@ -1664,7 +1706,9 @@ function LessonStepper({ steps, rtl, promise }: { steps: LessonStep[]; rtl: bool
               "h-2.5 flex-1 rounded-[var(--play-radius-pill)] border-2 border-solid",
               st.state === "done"
                 ? "border-[color:var(--noor-progress)] bg-[var(--noor-progress)]"
-                : st.state === "now"
+                : st.state === "talked"
+                  ? "border-[color:var(--noor-progress)] bg-card"
+                  : st.state === "now"
                   ? "border-ink bg-card-warm"
                   : "border-[color:var(--play-disabled-border)]"
             )}

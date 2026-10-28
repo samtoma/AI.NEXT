@@ -137,3 +137,17 @@ comparison exists to measure one system, not to maintain two halves of one.
 **Stored-only widgets, no inline composition.** Strongest governance, and briefly attractive.
 Rejected because coverage gaps become hard blocks: the tutor meets a beat the bank does not
 cover and has nothing to offer, which is the failure the widgets were built to remove.
+
+## Amendment 2026-10-28 — question difficulty counts in mastery
+
+**Status**: **Proposed — awaiting Samuel.** Proposed by Tamer Deif, 2026-10-28, on `ui-clean-up`; implemented there for review, not on `main` until accepted.
+
+**Why.** Every checked answer moved mastery by the same rule — an easy question, a hard one, a guessable multiple-choice one, and a task the tutor composed in the chat that nobody reviewed — so two easy right answers read "Nailed it".
+
+**Decision (proposed).**
+
+1. **BKT guess and slip are set per question** (`paramsForQuestion` in `app/src/lib/bkt.ts`, the KT-IDEM item-difficulty extension): basic 0.25 / 0.05, standard 0.15 / 0.10, advanced 0.08 / 0.18. Multiple choice guesses at one in the number of options. pInit and pTransit are unchanged. Starting values, to be tuned against real right-answer rates once the pilot has answers.
+2. **A tutor-built task (`qw:inline:…`) counts as basic** in mastery, whatever tier its materialised row carries.
+3. **"Nailed it" needs one right answer at the hardest tier the objective has, capped at standard** (`capWithoutEvidence` in `app/src/lib/mastery.ts`, applied in `/api/attempts`): without it the score stops at 0.89. Where the bank has nothing above basic for an objective — or no bank questions at all — a basic right answer is enough, so a thin bank never holds a student back. The cap only stops a score rising; a score stored above the cut before this rule is never lowered by a right answer.
+
+**Affects.** `app/src/lib/bkt.ts`, `app/src/lib/mastery.ts`, `app/src/app/api/attempts/route.ts`; the `mastery.evidence` row now also records the tier used and whether the cap applied.

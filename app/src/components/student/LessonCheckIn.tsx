@@ -80,6 +80,10 @@ type CheckInProps = {
    *  right and still watch the card not move. Naming what has not come up
    *  makes that rule visible instead of mysterious. */
   untriedSubskills: string[];
+  /** "Everything else is solid" may follow the shaky line (lib/checkin.ts `restIsSolid`) */
+  restSolid?: boolean;
+  /** This lesson has passed the ADR-0020 gate: shown as its own fact, next to the level ("One mastery rule" M5) */
+  readyForNext?: boolean;
   /** The lesson completed just before the current one, or null. Rendered as a
    *  quiet collapsed row ABOVE the card: the pointer moving on should not make
    *  the lesson the student just worked through disappear, and the gate can
@@ -149,6 +153,8 @@ function PlayCheckIn({
   courseComplete,
   morePreparing = false,
   untriedSubskills,
+  restSolid = false,
+  readyForNext = false,
   justFinished,
   trial,
 }: CheckInProps) {
@@ -633,6 +639,16 @@ function PlayCheckIn({
               </span>
             </div>
 
+            {/* The gate, said as what it is ("One mastery rule" M5): this
+                lesson counts as done for moving on (ADR-0020), whatever level
+                the ramp shows. Without it a lesson at "Getting there" read as
+                unfinished while the pointer had already moved past it. */}
+            {readyForNext && (
+              <p className="font-display text-[0.9rem] font-bold leading-[1.3] text-[color:var(--noor-progress)]">
+                Ready for the next lesson ✓
+              </p>
+            )}
+
             {/* The one gap. Naming a single sub-skill is the actionable part;
                 the closing clause is what stops the sentence reading as bad
                 news. Omitted entirely when there is nothing to name — an
@@ -644,7 +660,7 @@ function PlayCheckIn({
                   {/* an objective label may carry maths (backlog #37) */}
                   <MathText text={weakestSubskill} />
                 </strong>
-                . Everything else is solid.
+                .{restSolid && " Everything else is solid."}
               </p>
             )}
 

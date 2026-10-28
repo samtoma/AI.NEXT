@@ -64,7 +64,9 @@ const BASE = {
 /* -------------------------------------------------------------------------
  * Captured at f90daee, verbatim. Do not reformat. One line added on
  * 2026-10-23 (UI clean-up): the student-facing rule that names objectives by
- * label, never by id.
+ * label, never by id. Two more on 2026-10-28 ("One mastery rule" M2): each
+ * objective's stored level "[on record: …]", and the rule that the record
+ * outweighs a transcript that does not show an attempt.
  * ---------------------------------------------------------------------- */
 
 const BEFORE_SYSTEM = `You are the honest comprehension grader of Noor, an adaptive math tutor. You rate how well the student actually understood a lesson, based ONLY on the session transcript. You output STRICT JSON and nothing else — no markdown fences, no prose.`;
@@ -72,10 +74,11 @@ const BEFORE_SYSTEM = `You are the honest comprehension grader of Noor, an adapt
 const BEFORE_LEARN = `Session: AI-taught lesson (he's had a first go at this one and it's still taking shape).
 Student: Omar Hassan, grade 10. Lesson: 1-1 — Cartesian product (Unit 1).
 Learning objectives covered:
-- lo:u1-1-1 "Ordered pairs": The ordered pair (a, b).
-- lo:u1-1-2 "Cartesian product": A x B as a set of pairs.
+- lo:u1-1-1 "Ordered pairs": The ordered pair (a, b). [on record: Getting there]
+- lo:u1-1-2 "Cartesian product": A x B as a set of pairs. [on record: Not started]
 
 GRADING RULES:
+- "[on record: …]" is the student's level from checked answers across ALL sessions, not only this one. Never say an objective was not attempted, or is new, when it has a level on record above "Not started"; this transcript may be only part of the story.
 - Weigh ACTUAL performance — the "[live event]" lines (question attempts ✓/✗, widget results) — far above self-report or politeness.
 - Be honest but fair: in learn mode, visible progress across the session counts in his favor; early mistakes that were later corrected are progress, not failure.
 - verdict bands: got_it = score >= 80, nearly = 55–79, needs_work < 55.

@@ -34,7 +34,8 @@ import {
   classifyCliFailure,
   type CliCode,
 } from "@/lib/claude-cli";
-import type { LessonMode, UnderstandingCheck, Verdict } from "@/lib/types";
+import type { LessonMode, ReportMastery, UnderstandingCheck, Verdict } from "@/lib/types";
+import { reportMastery } from "@/lib/mastery";
 import { endedTurnOutcome } from "@/lib/stop-turn";
 
 /**
@@ -514,6 +515,7 @@ export async function POST(req: Request) {
 
     // UNIT TWO — the rating and its cost row, after the model has answered and
     // with no connection held while it did.
+    let mastery: ReportMastery | undefined;
     const id = await withPrincipal(studentId, async (client) => {
       const ins = await client.query(
         `INSERT INTO understanding_checks
@@ -538,6 +540,37 @@ export async function POST(req: Request) {
         ]
       );
       const checkId = Number(ins.rows[0].id);
+
+      // "Where you are today" from STORED mastery ("One mastery rule" M2): the
+      // lesson level now, what moved since this sitting opened (the mastery
+      // table is bitemporal, so the score at the sitting's start is a read,
+      // not something to store), and how many checked answers she gave in it.
+      const loIds = data.los.map((l) => l.id);
+      const m = await client.query(
+        `WITH s AS (SELECT opened_at FROM sessions WHERE id = $3)
+         SELECT
+           (SELECT coalesce(json_object_agg(lo_id, score), '{}') FROM mastery
+             WHERE student_id = $1 AND lo_id = ANY($2) AND system_to IS NULL) AS now,
+           (SELECT coalesce(json_object_agg(lo_id, score), '{}') FROM mastery, s
+             WHERE student_id = $1 AND lo_id = ANY($2)
+               AND system_from <= s.opened_at
+               AND (system_to IS NULL OR system_to > s.opened_at)) AS at_start,
+           -- the sitting is this lesson's own, so its attempts are this lesson's
+           (SELECT count(*) FROM attempts
+             WHERE student_id = $1 AND session_id = $3)::int AS answered`,
+        [studentId, loIds, sessionId]
+      );
+      const nowBy: Record<string, number> = m.rows[0].now ?? {};
+      // no sitting to anchor to: nothing can be said to have moved
+      const startBy: Record<string, number> = sessionId === null ? nowBy : (m.rows[0].at_start ?? {});
+      mastery = reportMastery(
+        data.los.map((l) => ({
+          label: l.label,
+          now: Number(nowBy[l.id] ?? 0),
+          atStart: Number(startBy[l.id] ?? 0),
+        })),
+        Number(m.rows[0].answered ?? 0)
+      );
 
       // Cost instrumentation — every LLM call is logged (PRD hard requirement).
       // Behind a SAVEPOINT because the rule this code already stated is that
@@ -628,6 +661,7 @@ export async function POST(req: Request) {
       gaps: rating.gaps,
       nextStep: rating.next_step,
       turns,
+      mastery,
     };
     // The same figure the ledger row carries, arrived at the same way — an
     // imputation at list price, never money that left an account.
