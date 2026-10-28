@@ -1363,27 +1363,30 @@ export function LessonSession({
               </button>
             )}
 
-            <button
-              onClick={requestFinish}
-              // Amber only once the lesson is done and finishing IS the next
-              // step; until then it is a secondary, so the composer's send is
-              // the screen's one amber.
-              className={cx(
-                readyToFinish ? BUTTON_PRIMARY : BUTTON_SECONDARY,
-                "min-h-[var(--noor-touch-min)] whitespace-nowrap px-[22px] text-[1.05rem]"
-              )}
-            >
-              {rtl ? `${arCopy.finish} ←` : `${copy.finish} →`}
-            </button>
+            {/* nothing to finish until the lesson is running: the resume question stands alone */}
+            {boot.state === "ready" && (
+              <button
+                onClick={requestFinish}
+                // Amber only once the lesson is done and finishing IS the next
+                // step; until then it is a secondary, so the composer's send is
+                // the screen's one amber.
+                className={cx(
+                  readyToFinish ? BUTTON_PRIMARY : BUTTON_SECONDARY,
+                  "min-h-[var(--noor-touch-min)] whitespace-nowrap px-[22px] text-[1.05rem]"
+                )}
+              >
+                {rtl ? `${arCopy.finish} ←` : `${copy.finish} →`}
+              </button>
+            )}
           </div>
       </header>
 
       {/* iPad and phone: the steps as one line of segments under the title */}
-      <LessonStepper steps={steps} rtl={rtl} promise={promise} />
+      {boot.state === "ready" && <LessonStepper steps={steps} rtl={rtl} promise={promise} />}
 
       <div className="flex min-h-0 flex-1 gap-6">
         {/* web: the steps as a plain list in their own column — never competing with the chat */}
-        <LessonStepsRail steps={steps} rtl={rtl} promise={promise} />
+        {boot.state === "ready" && <LessonStepsRail steps={steps} rtl={rtl} promise={promise} />}
 
       {boot.state === "prompt" ? (
         <ResumePrompt
@@ -1745,11 +1748,6 @@ function ResumePrompt({
             {rtl ? "لا — ابدأ من الأول" : "No — start from the beginning"}
           </button>
         </div>
-        <p dir={rtl ? "rtl" : "ltr"} className="font-read text-[0.88rem] leading-[1.5] text-[color:var(--play-text-dim)]">
-          {rtl
-            ? "مكانك محفوظ على حسابك، فده بيشتغل على أي جهاز."
-            : "Your place is saved on your account, so this works on any device."}
-        </p>
       </section>
     </div>
   );
