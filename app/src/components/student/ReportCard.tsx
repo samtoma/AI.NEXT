@@ -109,17 +109,9 @@ export function ReportCard({
                 "relative h-4 flex-1 overflow-hidden rounded-[var(--play-radius-pill)] border-ink bg-[var(--mastery-0)]"
               )}
             >
+              {/* filled outright, no fill animation (Tamer, 2026-10-28) */}
               {k < stage && (
-                <span
-                  className="anim-fill-bar absolute inset-y-0 start-0"
-                  style={
-                    {
-                      background: `var(--mastery-${k + 1})`,
-                      "--play-fill-to": "100%",
-                      animationDelay: `${k * 120}ms`,
-                    } as React.CSSProperties
-                  }
-                />
+                <span className="absolute inset-0" style={{ background: `var(--mastery-${k + 1})` }} />
               )}
             </span>
           ))}
