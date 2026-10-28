@@ -1411,9 +1411,14 @@ body[data-focus="lesson"] > footer {
   letter-spacing: normal;
   text-transform: none;
 }
-/* equations never break across lines */
+/* An equation never breaks across lines unless it is wider than the line.
+   As an inline block it moves to the next line whole, the way a word does;
+   capped at the line's width, one too long for the bubble wraps between
+   whole terms (KaTeX's break points, after "=" and "×") instead of running
+   past the frame. */
 .lesson-chat .katex {
-  white-space: nowrap;
+  display: inline-block;
+  max-width: 100%;
 }
 /* maths glyphs on the symbol keys: the math serifs the handoff names, then the
    KaTeX face the app already loads for equations — no new font is fetched */
