@@ -1651,6 +1651,8 @@ def main(argv: list[str]) -> int:
     # and their links dropped, so nothing above can touch them.
     tg = HERE / "teaching" / a.book / "generated"
     report["generated_added"] = {}
+    compiled_qids = {q["id"] for s in slugs for q in new_questions[s]}
+    compiled_entries = {e["id"] for s in slugs for e in new_entries[s]}
     gen_review = GeneratedReview(a.book)
     for name, key in (("generated-questions.json", "questions"), ("widget-questions.json", "questions"), ("misconceptions.json", "misconceptions")):
         f = tg / name
@@ -1658,6 +1660,16 @@ def main(argv: list[str]) -> int:
             continue
         rows = [r for r in json.loads(f.read_text()).get(key) or [] if in_lessons(r.get("lo_id"), slugs)]
         rows = gen_review.apply(rows, key)
+        # a row made on a worked example whose book item compile now asks as a question (a form it learned to mark:
+        # `expl:<objective>:bk-<item>` is now `q:<objective>:bk-<item>`, Tamer, 2026-10-29) hangs on the question; the
+        # loader refuses a teaching parent that is not in the library (staging refused four Prep 3 widgets' parents)
+        for r in rows:
+            parent = str(r.get("parent_question_id") or "")
+            q = "q:" + parent.removeprefix("expl:")
+            if r.get("parent_kind") == "teaching" and parent.startswith("expl:") and parent not in compiled_entries and q in compiled_qids:
+                r["parent_question_id"] = q
+                r.pop("parent_kind")
+                report.setdefault("parents_repointed", []).append({"row": r["id"], "from": parent, "to": q})
         have = {r["id"] for r in generated[name].get(key) or []}
         clash = [r["id"] for r in rows if r["id"] in have]
         if clash:
