@@ -235,6 +235,12 @@ def answer_type(ans: str, marker_kinds: bool = True):
     a = re.sub(r"\\[,;! ]", " ", a).replace("−", "-").replace("\\{", "{").replace("\\}", "}")
     a = re.sub(r"\s+", " ", a).strip()
     if re.fullmatch(NUM, a):
+        # a fraction goes to the marker: grade() reads parseFloat("3/7") as 3, so a numeric "3/7" marked the right
+        # answer wrong and "3" right (found 2026-10-29, ten live Prep 3 questions); the marker compares values
+        if "/" in a:
+            spec = {"kind": "expression", "key": a, "variables": []}
+            if _reads(spec):
+                return "short", {"marker": spec}, a
         return "numeric", None, a
     # values of a function, "f(-2) = 9, f(0) = 3, f(\\sqrt{3}) = 6-\\sqrt{3}": the values, in any order (the app's
     # marker reads no function name; Grade 10's typing makes several values a `values` key the same way)
@@ -288,6 +294,102 @@ def measure_type(a: str):
     if c and c.group(0).strip() != c.group(1):
         return "numeric", None, c.group(1)
     return None
+
+
+# An answer of several parts, split so each part the app can mark is asked on its own (Tamer, 2026-10-29: "split
+# multi-part answers"). Only where the parts line up with the question without guessing:
+#   numbered   "1) …; 2) …", "Part 1: …. Part 2: …"         → "Answer only part (2)."
+#   named      every part "name = value" ("x = 45, m(arc AB) = 158°", "n(x) = …, domain R - {0}") → "Answer only: x = ?"
+#   blanks     as many parts as the question has blanks (……), in order ("on; MA = r") → "Answer only the 2nd blank."
+# A part with "≈", sin/cos/tan, or a value the app cannot mark is left out (the others are still asked); an answer
+# with an inequality, a question that asks for a proof, or one whose parts line up with nothing is not split at all.
+# The whole answer still teaches, as the library worked example it was.
+BLANK = re.compile(r"(?:\\ldots|\\dots|…|\.{3,}|\\cdots)(?:\s*(?:\\ldots|\\dots|…|\.{2,}|\\cdots))*")
+ORD = {1: "1st", 2: "2nd", 3: "3rd"}
+
+
+def _split_top(a: str, seps: str = r",|;|\band\b|\.\s+(?=[A-Za-z(])") -> list[str]:
+    """Split at separators outside brackets: "R - {-3, 3}" and "(2, -2)" stay whole."""
+    out, depth, cur, i = [], 0, "", 0
+    sep = re.compile(seps)
+    while i < len(a):
+        ch = a[i]
+        if ch in "({[":
+            depth += 1
+        elif ch in ")}]":
+            depth = max(0, depth - 1)
+        if depth == 0:
+            m = sep.match(a, i)
+            if m and m.end() > i:
+                out.append(cur)
+                cur, i = "", m.end()
+                continue
+        cur += ch
+        i += 1
+    out.append(cur)
+    return [x.strip().rstrip(".") for x in out if x.strip().rstrip(".")]
+
+
+def _value_type(v: str):
+    v = re.sub(r"\s*\((?=[^()]*[A-Za-z=])[^()]*\)\s*$", "", v).strip()   # "6 cm (ME = MO)" → "6 cm"
+    if not v or "≈" in v or re.search(r"\b(?:sin|cos|tan)\b", v):
+        return None
+    t = answer_type(v)
+    if t and t[0] == "short" and not t[1] and len(t[2].split()) > 2:
+        return None   # a phrase checked letter for letter ("the point M"): too easy to type right and be marked wrong
+    if t and (t[1] or {}).get("marker", {}).get("kind") == "interval" and "!=" in t[2]:
+        return None   # "R - {3}": the app's marker cannot read the book's notation in an answer yet (2026-10-29)
+    return t
+
+
+def answer_parts(ans: str, stem: str) -> list[tuple[str, tuple]]:
+    a = str(ans or "").replace("$", "").strip()
+    if re.search(r"[<>≤≥≠]|\\(?:le|ge|neq)\b|\bsee steps\b|\b(?:Row|Case|Observation)\b", a) or re.search(r"\bprove\b", stem or "", re.I):
+        return []
+    num = [m for m in re.finditer(r"(?:^|[;.]\s*)\(?(\d)\)\s*|(?:^|\.\s*)Part (\d):\s*", a)]
+    if len(num) >= 2:
+        bodies = [a[m.end():(num[k + 1].start() if k + 1 < len(num) else len(a))].strip().rstrip(";.") for k, m in enumerate(num)]
+        out = []
+        for m, b in zip(num, bodies):
+            t = _value_type(b) if "=" not in b else (measure_type(b) or _value_type(b.rsplit("=", 1)[1]) if len(_split_top(b)) == 1 and b.count("=") == 1 and re.fullmatch(r"[A-Za-z][\w() ∠]*", b.split("=")[0].strip()) else None)
+            if t:
+                out.append((f"Answer only part ({m.group(1) or m.group(2)}).", t))
+        return out
+    segs = [x for x in _split_top(a) if not re.match(r"(?i)(?:so|thus|we notice|therefore|where)\b", x)]
+    if len(segs) < 2:
+        return []
+    blanks = len(BLANK.findall(stem or ""))
+    out = []
+    named = all("=" in x or re.match(r"(?i)domain\b", x) for x in segs)
+    if named:
+        fn = None   # the function a following "domain …" belongs to: "n1(x) = …, domain R - {3}"
+        fns = {re.match(r"([A-Za-z]\w*)\(x\)", x).group(1) for x in segs if re.match(r"[A-Za-z]\w*\(x\)\s*=", x)}
+        for x in segs:
+            if re.match(r"(?i)domain\b", x) and "=" not in x:
+                name, val = "the domain", re.sub(r"(?i)^domain\s*", "", x)
+            else:
+                name, val = x.split("=", 1)[0].strip(), x.rsplit("=", 1)[1].strip()
+                name = "the domain" if name.lower() == "domain" else name
+                m = re.match(r"([A-Za-z]\w*)\(x\)$", name)
+                fn = m.group(1) if m else fn
+            if name == "the domain" and len(fns) > 1 and fn:
+                name = f"the domain of {fn}"
+            if re.search(r"\bis\b", val):
+                continue
+            t = _value_type(val)
+            if t:
+                out.append((f"Answer only: {name} = ?", t))
+        return out
+    if blanks == len(segs):
+        for k, x in enumerate(segs, 1):
+            pre = re.escape(x.split("=", 1)[0].strip()) if "=" in x else None
+            if "=" in x and not re.search(pre + r"\s*=\s*" + BLANK.pattern, stem or ""):
+                continue   # "MA = r" filling "because ……": the blank is the whole relation, not a value
+            t = _value_type(x.rsplit("=", 1)[1] if "=" in x else x)
+            if t:
+                out.append((f"Answer only the {ORD.get(k, f'{k}th')} blank.", t))
+        return out
+    return []
 
 
 # The app's marker reads more than the forms above (answer-marker.ts MARKER_KINDS): an expression, an equation, a surd,
@@ -638,6 +740,9 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
                 skipped.append({"ref": ref, "why": "no usable answer yet (none printed; the generated one is not approved or not agreed)"})
                 continue
             typed = answer_type(ans, marker_kinds=r["type"] != "worked_example") if ans else None
+            # an answer of several parts the app cannot mark whole: each part it can mark is asked on its own
+            # (answer_parts; Tamer, 2026-10-29: "split multi-part answers"). The whole answer still teaches, below.
+            parts = [] if typed or not ans or r["type"] == "worked_example" else answer_parts(ans, stem)
             if not typed:
                 # a worked example the book solves, or an answer a person approved / two readings agreed on, that the
                 # app cannot mark: the tutor still teaches from it, as a worked example in the library
@@ -658,40 +763,45 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
                                     "source_page": r["source_page"], "generated_by": f"answer_gen.py ({how}); compile_book_records.py {VERSION}",
                                     "_item": r["id"]})
                     skipped.append({"ref": ref, "why": f"not markable ({str(ans)[:60]}): kept as a worked example in the library", "teaching": True})
-                else:
+                elif not parts:
                     skipped.append({"ref": ref, "why": f"an answer the app cannot mark: {str(ans)[:90]}"})
-                continue
-            qtype, choices, key = typed
-            tier, tier_from = (tiers or {}).get(ref, ("standard", "no tier yet"))
-            q = {"_item": r["id"], "_ref": ref, "_tier_from": tier_from, "id": f"q:{lo.removeprefix('lo:')}:bk-{local}", "lo": lo, "tier": tier,
-                 "type": qtype, "stem": stem,
-                 "answer": key, "solution": [x for x in sol if x] or [f"The book's answer: {key}"],
-                 "source_page": r["source_page"], "source": "seed",
-                 "source_note": f"The book's own {r['type'].replace('_', ' ')} ({ref}, printed p.{r['source_page']}); answer {how}. "
-                                "Compiled from the book record (compile_book_records.py)."}
-            if choices:
-                q["choices"] = choices
-            if p:
-                # which part of the prompt this is, and its own words: a drill of several numbered figures shows
-                # each part only its own figure (lesson_figures, `_figure_of_part`)
-                q["_part"] = {"i": (r.get("parts") or []).index(p), "n": len(r.get("parts") or []), "words": p.get("stem") or p.get("label") or ""}
-            if r["type"] == "worked_example" and printed:
-                q["solution_provenance"] = "book_worked"
-            if not printed and gen:  # two independent readings agreed (or a person approved): the loader records the AI check
-                q["verified"] = True
-                if gen.get("decision"):
-                    q["_decision"] = gen["decision"]
-            if printed:  # the blind re-solve of a printed answer (answer_gen.py check-printed), Grade 10's S3 rule
-                c = checks.get(ref)
-                if c and c["status"] == "agreed":
+                if parts:   # asked part by part: not a skipped prompt
+                    skipped[:] = [x for x in skipped if x.get("ref") != ref]
+                else:
+                    continue
+            variants = [("", "", typed)] if typed else [(f"-p{k}", f" {ask}", t) for k, (ask, t) in enumerate(parts, 1)]
+            for suffix, ask, (qtype, choices, key) in variants:
+                tier, tier_from = (tiers or {}).get(ref, ("standard", "no tier yet"))
+                q = {"_item": r["id"], "_ref": ref, "_tier_from": tier_from, "id": f"q:{lo.removeprefix('lo:')}:bk-{local}{suffix}", "lo": lo, "tier": tier,
+                     "type": qtype, "stem": stem + ask,
+                     "answer": key, "solution": [x for x in sol if x] or [f"The book's answer: {key}"],
+                     "source_page": r["source_page"], "source": "seed",
+                     "source_note": f"The book's own {r['type'].replace('_', ' ')} ({ref}, printed p.{r['source_page']}); answer {how}. "
+                                    + (f"Part {suffix[2:]} of {len(variants)} of its answer, asked on its own. " if suffix else "") +
+                                    "Compiled from the book record (compile_book_records.py)."}
+                if choices:
+                    q["choices"] = choices
+                if p:
+                    # which part of the prompt this is, and its own words: a drill of several numbered figures shows
+                    # each part only its own figure (lesson_figures, `_figure_of_part`)
+                    q["_part"] = {"i": (r.get("parts") or []).index(p), "n": len(r.get("parts") or []), "words": p.get("stem") or p.get("label") or ""}
+                if r["type"] == "worked_example" and printed:
+                    q["solution_provenance"] = "book_worked"
+                if not printed and gen:  # two independent readings agreed (or a person approved): the loader records the AI check
                     q["verified"] = True
-                elif c and c["status"] == "disagreed":
-                    q["hold_reason"] = "answer_mismatch"
-                    q["_why"] = f"a blind re-solve answered {c['blind']!r}, the book prints {printed!r}"
-                elif c is None or c["status"] != "agreed":
-                    q["hold_reason"] = "unverified"
-                    q["_why"] = "the printed answer was not re-solved" if c is None else f"the blind re-solve could not answer ({c.get('note') or c['status']})"
-            out.append(q)
+                    if gen.get("decision"):
+                        q["_decision"] = gen["decision"]
+                if printed:  # the blind re-solve of a printed answer (answer_gen.py check-printed), Grade 10's S3 rule
+                    c = checks.get(ref)
+                    if c and c["status"] == "agreed":
+                        q["verified"] = True
+                    elif c and c["status"] == "disagreed":
+                        q["hold_reason"] = "answer_mismatch"
+                        q["_why"] = f"a blind re-solve answered {c['blind']!r}, the book prints {printed!r}"
+                    elif c is None or c["status"] != "agreed":
+                        q["hold_reason"] = "unverified"
+                        q["_why"] = "the printed answer was not re-solved" if c is None else f"the blind re-solve could not answer ({c.get('note') or c['status']})"
+                out.append(q)
     carry_over(record, out, stems, unresolved)
     return out
 

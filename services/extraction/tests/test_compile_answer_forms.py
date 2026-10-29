@@ -58,5 +58,46 @@ class StillNotMarked(unittest.TestCase):
             self.assertIsNone(C.answer_type(ans, marker_kinds=False), ans)
 
 
+class Fractions(unittest.TestCase):
+    def test_a_fraction_goes_to_the_marker(self):
+        # grade() reads parseFloat("3/7") as 3: a numeric "3/7" marked "3" right and "3/7" wrong
+        for k in ["3/7", "-2/3", "1/4"]:
+            t = C.answer_type(k)
+            self.assertEqual(t[0], "short", k)
+            self.assertEqual(t[1]["marker"]["kind"], "expression", k)
+        self.assertEqual(C.answer_type("7"), ("numeric", None, "7"))
+
+
+class Parts(unittest.TestCase):
+    def asks(self, ans, stem=""):
+        return [(a, t[2]) for a, t in C.answer_parts(ans, stem)]
+
+    def test_named_parts(self):
+        self.assertEqual(self.asks("x = 45, m(arc AB) = 158°"),
+                         [("Answer only: x = ?", "45"), ("Answer only: m(arc AB) = ?", "158")])
+        self.assertEqual(self.asks("CD = AB, X = 3, EM = 6, AM = 10")[1:], [("Answer only: X = ?", "3"),
+                         ("Answer only: EM = ?", "6"), ("Answer only: AM = ?", "10")])
+
+    def test_numbered_parts(self):
+        self.assertEqual(self.asks("Part 1: {(-1, 2)}. Part 2: {(1, 2)}."),
+                         [("Answer only part (1).", "\\{(-1, 2)\\}"), ("Answer only part (2).", "\\{(1, 2)\\}")])
+
+    def test_blanks_in_order(self):
+        stem = "The event of having 7 is .......... and the event is called .......... and the probability = ......"
+        self.assertEqual(self.asks("φ (empty set); impossible event; 0", stem),
+                         [("Answer only the 2nd blank.", "impossible event"), ("Answer only the 3rd blank.", "0")])
+
+    def test_two_domains_name_their_function_but_are_not_asked_yet(self):
+        # the marker cannot read "R - {3}" in an answer yet, so no domain part is asked
+        self.assertEqual(self.asks("n(x) = 2, domain R - {-2}"), [("Answer only: n(x) = ?", "2")])
+
+    def test_not_split(self):
+        self.assertEqual(self.asks("f(3) = 0 and g(3) = 0, so f(3) = g(3) = 0", "If f(x)=x^2-3x, g(x)=x-3 Prove that f(3)=g(3)=0"), [])
+        self.assertEqual(self.asks("MA > r, MB = r, MC < r"), [])                      # relations, not values
+        self.assertEqual(self.asks("(1, 1), (3, 5), (-1, -3), (4, 7)", "Tell another four solutions"), [])
+        self.assertEqual(self.asks("inside; the point M (the centre)", "A is ...... circle M and represented by ......"),
+                         [("Answer only the 1st blank.", "inside")])          # a 3-word phrase is not asked
+
+
 if __name__ == "__main__":
     unittest.main()
