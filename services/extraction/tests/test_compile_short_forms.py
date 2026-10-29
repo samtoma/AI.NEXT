@@ -107,10 +107,10 @@ class Tables(unittest.TestCase):
     def test_two_columns_are_written_across(self):
         self.assertEqual(C.table_tex(self.XY), "$\\begin{array}{c|cc} x & 3 & -2 \\\\ \\hline y & 6 & -9 \\end{array}$")
 
-    def test_a_table_takes_the_place_of_the_placeholder(self):
+    def test_a_table_follows_the_words_on_its_own_line(self):
         out = C.with_tables("The distribution shows the goals (table). Find the mean.", [self.XY])
-        self.assertTrue(out.startswith("The distribution shows the goals $\\begin{array}"))
-        self.assertTrue(out.endswith("\\end{array}$. Find the mean."))
+        self.assertTrue(out.startswith("The distribution shows the goals. Find the mean.\n$\\begin{array}"))
+        self.assertTrue(out.endswith("\\end{array}$\n"))
 
     def test_several_are_named_by_position(self):
         out = C.with_tables("Which is which?", [self.XY, self.XY])

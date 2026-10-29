@@ -243,7 +243,8 @@ export function ChatQuestionCard({
       )}
 
       <div className={guided ? "pt-[13px]" : "px-3.5 py-3"}>
-        <p className={cx("tex-block text-ink", guided ? "font-read text-[1.1rem] leading-[1.6]" : "text-[1rem]")}>
+        {/* pre-line: a book table compile writes into the stem sits on its own line ("\n"); nothing else puts one there */}
+        <p className={cx("tex-block whitespace-pre-line text-ink", guided ? "font-read text-[1.1rem] leading-[1.6]" : "text-[1rem]")}>
           <TeX text={displayStem(q.stem)} />
         </p>
         {/* the question's own figure (A3) — never the "[figure]" placeholder */}

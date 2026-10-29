@@ -20,9 +20,17 @@ export const dynamic = "force-dynamic";
  * only to obtain the operator id its own read needs — the decision is the
  * layout's and the seam's, not a second one.
  */
-export default async function WidgetQuestionsPage() {
+export default async function WidgetQuestionsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const access = await consoleAccess("/dev/widget-questions");
   if (!access.ok) return <ConsoleRefusal status={access.status} roles={["evidence-access"]} />;
+  // `?ids=q:a,q:b`: those rows, whatever their type, in the same card — to see a book question as a student would
+  // (a table in its stem, multiple choice) without a lesson putting it in front of you
+  const rawIds = (await searchParams).ids;
+  const ids = (Array.isArray(rawIds) ? rawIds.join(",") : rawIds ?? "").split(",").map((x) => x.trim()).filter(Boolean);
 
   const res = await withOperator(access.operatorId, (db) =>
     db.query(
@@ -31,8 +39,9 @@ export default async function WidgetQuestionsPage() {
             q.source, q.parent_question_id, q.source_sha256, q.source_page,
             q.source_note, q.reviewed_by, q.reviewed_at
        FROM questions q
-      WHERE q.question_type = 'widget' AND q.status = 'live'
-      ORDER BY q.lo_id, q.id`
+      WHERE ${ids.length ? "q.id = ANY($1)" : "q.question_type = 'widget'"} AND q.status = 'live'
+      ORDER BY q.lo_id, q.id`,
+      ids.length ? [ids] : []
     )
   );
 
@@ -68,7 +77,7 @@ export default async function WidgetQuestionsPage() {
   );
   const los = new Set(questions.map((q) => q.loId));
   const mappings = questions.reduce(
-    (n, q) => n + (!Array.isArray(q.choices) && q.choices ? q.choices.diagnostics.length : 0),
+    (n, q) => n + (!Array.isArray(q.choices) && q.choices ? (q.choices.diagnostics?.length ?? 0) : 0),
     0
   );
 

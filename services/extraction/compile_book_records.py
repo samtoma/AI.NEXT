@@ -822,16 +822,14 @@ def table_tex(it: dict) -> str:
 
 
 def with_tables(text: str, tables: list[dict]) -> str:
-    """The tables a prompt prints (`belongs_to`), in its words: in place of the "(table)" the extraction left, else
-    after them. Several are named "First table: …", as the book's drills ask about them by position (found
-    2026-10-29: no table had ever reached a student, so five exercises, one of them live, asked about data nobody
-    could see)."""
+    """The tables a prompt prints (`belongs_to`), after its words, each on its own line (the card keeps a stem's line
+    breaks) and named "First table: …" when there are several, as the book's drills ask about them by position. A
+    "(table)" the extraction left in the words goes. Found 2026-10-29: no table had ever reached a student, so five
+    exercises, one of them live, asked about data nobody could see."""
+    words = re.sub(r"\s*\(\s*tables?\s*\)", "", text).rstrip()
     tex = [table_tex(t) for t in tables]
-    block = tex[0] if len(tex) == 1 else "  ".join(f"{_ORDINALS[k] if k < len(_ORDINALS) else k + 1} table: {t}"
-                                                  for k, t in enumerate(tex))
-    if re.search(r"\(\s*tables?\s*\)", text):
-        return re.sub(r"\(\s*tables?\s*\)", lambda _m: block, text, count=1)
-    return f"{text.rstrip()} {block}"
+    lines = tex if len(tex) == 1 else [f"{_ORDINALS[k] if k < len(_ORDINALS) else k + 1} table: {t}" for k, t in enumerate(tex)]
+    return words + "\n" + "\n".join(lines) + "\n"
 
 
 def book_questions(slug: str, record: dict, answers: dict, skipped: list, entries: list, checks: dict | None = None,
@@ -928,7 +926,7 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
             for suffix, ask, (qtype, choices, key) in variants:
                 tier, tier_from = (tiers or {}).get(ref, ("standard", "no tier yet"))
                 q = {"_item": r["id"], "_ref": ref, "_tier_from": tier_from, "id": f"q:{lo.removeprefix('lo:')}:bk-{local}{suffix}", "lo": lo, "tier": tier,
-                     "type": qtype, "stem": stem + ask,
+                     "type": qtype, "stem": stem + (("\n" + ask.strip()) if ask and stem.endswith("\\end{array}$") else ask),
                      "answer": key, "solution": [x for x in sol if x] or [f"The book's answer: {next(c['text'] for c in choices if c['key'] == key) if qtype == 'mcq' else key}"],
                      "source_page": r["source_page"], "source": "seed",
                      "source_note": f"The book's own {r['type'].replace('_', ' ')} ({ref}, printed p.{r['source_page']}); answer {how}. "
