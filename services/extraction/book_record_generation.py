@@ -389,19 +389,49 @@ def s6_topup(book: str, slugs: list[str], catalogue: Path, cap: float, args_only
     new = [p for p in written if p.exists()]   # a held one was renamed _held--…
     if not new:
         return []
-    d = HERE / "work" / book / "unit-view" / slugs[0] / "families-topup"
+    grade_only(book, slugs, view, new, cap, "topup")
+    return new
+
+
+def grade_only(book: str, slugs: list[str], view: Path, files: list[Path], cap: float, label: str) -> None:
+    """Grade ONLY these families, blind, as s6-grade does; `finish` reads every s6-grade run. For new families (the
+    top-up) and for ones a person fixed or released from hold (s6-regrade): the unit's accepted families are never
+    graded again, so a second blind run can never reject one."""
+    d = HERE / "work" / book / "unit-view" / slugs[0] / f"families-{label}"
     d.mkdir(parents=True, exist_ok=True)
     for f in d.iterdir():
         f.unlink()
-    for p in new:
+    for p in files:
         (d / p.name).symlink_to(p.resolve())
     runs = HERE / "runs" / book / "families"
-    gargs = runs / "s6-topup-grade.args.json"
-    gq("--families", str(d), "--book", str(view), "--grading-set", str(runs / "grading-set.topup.json"), "--grade-args", str(gargs))
-    gcopy = EW.default_out(book, "families", "s6-grade.topup.bookrecord")
+    gargs = runs / f"s6-{label}-grade.args.json"
+    gq("--families", str(d), "--book", str(view), "--grading-set", str(runs / f"grading-set.{label}.json"), "--grade-args", str(gargs))
+    gcopy = EW.default_out(book, "families", f"s6-grade.{label}.bookrecord")
     print(EW.summary(EW.write(HERE / "runbook" / "families.workflow.js", json.loads(gargs.read_text()), gcopy)), file=sys.stderr)
     WR.run_copy(gcopy, [CF.figures_dir(book)], cap, "s6-grade", book, "families", stage="S6")
-    return new
+
+
+def repoint_parents(view: Path, files: list[Path]) -> list[str]:
+    """A family modelled on a worked example whose book item has since become a question (compile asks a form it
+    could not mark before: `expl:<objective>:bk-<item>` is now `q:<objective>:bk-<item>`, Tamer, 2026-10-29) points
+    at the question instead, recorded in the spec's notes. The item is the same; only how the book record holds it
+    changed, so nothing is held for it. The changed spec is graded again like any other (its sha changes)."""
+    import generate_questions as GQ  # noqa: PLC0415
+    qids, teaching = GQ.book_parents(book_config.load_book(view))
+    done = []
+    for f in files:
+        spec = json.loads(f.read_text())
+        parent = str(spec.get("parent_question_id") or "")
+        q = "q:" + parent.removeprefix("expl:")
+        if spec.get("parent_kind") == "teaching" and parent.startswith("expl:") and parent not in teaching and q in qids:
+            spec["parent_question_id"], spec["parent_kind"] = q, "question"
+            spec["notes"] = (spec.get("notes") or "") + (f" PIPELINE NORMALISATION (not an author edit): the parent {parent} became the "
+                                                        f"book question {q} when compile learned to mark its answer; re-pointed.")
+            f.write_text(json.dumps(spec, indent=1, ensure_ascii=False) + "\n")
+            done.append(f.name)
+    if done:
+        print(f"re-pointed {len(done)} famil(ies) from a worked example to the book question it became: {done}", file=sys.stderr)
+    return done
 
 
 def hold_malformed(book: str, slugs: list[str], view: Path) -> list[str]:
@@ -411,6 +441,16 @@ def hold_malformed(book: str, slugs: list[str], view: Path) -> list[str]:
     and un-hold one."""
     fam = families_dir(book)
     held: list[str] = []
+    # Samuel's fan-out normalises before it checks (fanout_advance s6-author): a format slip the pipeline fixes the
+    # same way every time (families/normalise.py) is fixed and recorded in the spec's notes, never held. Prep 3 held
+    # six families for a top-level "answer" beside the real one (2026-10-29)
+    mine = [f for f in sorted(fam.glob("*.json")) if any(f.name.startswith(f"{s}-") for s in slugs)]
+    repoint_parents(view, mine)
+    if mine:
+        p = subprocess.run(["uv", "run", "python", "-m", "families.normalise", *map(str, mine)], cwd=HERE, text=True, capture_output=True)
+        changed = [l for l in p.stdout.splitlines() if l.strip() and not l.endswith("nothing to normalise")]
+        if changed or p.returncode:
+            print("families.normalise:\n" + "\n".join(changed) + (("\n" + p.stderr.strip()) if p.stderr.strip() else ""), file=sys.stderr)
     for _round in range(4):   # holding one can bring the next problem to light (a check stops at some)
         argv = ["uv", "run", "generate_questions.py", "--families", str(unit_dir(book, fam, slugs, "families")), "--book", str(view), "--check"]
         p = subprocess.run(argv, cwd=HERE, text=True, capture_output=True)
@@ -545,6 +585,11 @@ def main(argv: list[str]) -> int:
     s6g.add_argument("lessons", nargs="+")
     s6g.add_argument("--cap", type=float, default=6.0)
     s6g.add_argument("--args-only", action="store_true")
+    s6r = sub.add_parser("s6-regrade", help="check, then grade ONLY the named families (fixed or released from hold)")
+    s6r.add_argument("book")
+    s6r.add_argument("lessons", nargs="+")
+    s6r.add_argument("--families", nargs="+", required=True, help="family file names in teaching/<book>/families/")
+    s6r.add_argument("--cap", type=float, default=2.0)
     s6t = sub.add_parser("s6-topup", help="S6 author + grade again for the objectives S6 left thin, worked examples as parents")
     s6t.add_argument("book")
     s6t.add_argument("lessons", nargs="+")
@@ -617,6 +662,15 @@ def main(argv: list[str]) -> int:
         written = fanout.write_specs(run, fam, view)
         print(f"wrote {len(written)} spec(s) to {fam.relative_to(HERE)}", file=sys.stderr)
         hold_malformed(a.book, a.lessons, view)
+        return 0
+    if a.cmd == "s6-regrade":
+        view = book_view(a.book, a.lessons)
+        hold_malformed(a.book, a.lessons, view)
+        fam = families_dir(a.book)
+        files = [fam / n for n in a.families if (fam / n).exists()]
+        print(f"s6-regrade: {len(files)} of {len(a.families)} famil(ies) passed the check: {[f.name for f in files]}", file=sys.stderr)
+        if files:
+            grade_only(a.book, a.lessons, view, files, a.cap, "regrade")
         return 0
     if a.cmd == "s6-topup":
         s6_topup(a.book, a.lessons, a.catalogue, a.cap, a.args_only)

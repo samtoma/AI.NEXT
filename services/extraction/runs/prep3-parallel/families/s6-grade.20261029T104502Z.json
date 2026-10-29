@@ -1,0 +1,88 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "b71594aa6e5b699c73e16acbff39c19c809aa8eb8d9eabdc65b9d45327501022",
+  "generated_sha256": "8e0f96e2ef1c03fb928bdca1c5ff023591358c07c6d4cc39db21b4ed08be625f",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u9-3-3:equal-radii",
+   "spec_sha": "7a185047454cbf7547c5f0ae976a8ab42ba14c711f778542fca8b97cd24fa9ef",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-3-3:g001-equal-",
+     "stem_sha": "e7ceba371ec4caf7",
+     "answer": {
+      "value": "15"
+     },
+     "working": "M on axis of AB gives MA=MB; M on axis of BC gives MB=MC; so MC=MA=15."
+    },
+    {
+     "instance_id": "q:pp3u9-3-3:g006-equal-",
+     "stem_sha": "344c8a457ad90183",
+     "answer": {
+      "value": "12"
+     },
+     "working": "MA=MB=MC, so MC=12."
+    },
+    {
+     "instance_id": "q:pp3u9-3-3:g007-equal-",
+     "stem_sha": "c5dcd95423081de1",
+     "answer": {
+      "value": "9"
+     },
+     "working": "MA=MB=MC, so MC=9."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No wrong options are given, so distractors_ok is true by default. In all three instances the key equals MA (15, 12, 9). That is correct: M lies on both perpendicular bisectors, so MA = MB = MC. The key is a plain number in cm, as the stem asks. The solution steps are correct. Step 1 is stated rather than proved, but it matches the book's usual statement. \"Axis\" for perpendicular bisector is the book's term. The task named no files, so I opened none."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u9-3-3:radius-coord",
+   "spec_sha": "74f30ec740d801a486662a2dcc9b98cfbf42cd302c8d46338be7bd4511ca944d",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-3-3:g006-radius",
+     "stem_sha": "fdfce5e5c9d154d5",
+     "answer": {
+      "value": "10"
+     },
+     "working": "Right angle at A, so BC is a diameter. BC = sqrt(144+256) = 20, so r = 10. Check: M = (6,8), distance to A = 10."
+    },
+    {
+     "instance_id": "q:pp3u9-3-3:g008-radius",
+     "stem_sha": "8660c78a1840fbd5",
+     "answer": {
+      "value": "10"
+     },
+     "working": "Right angle at A, so BC is a diameter. BC = sqrt(256+144) = 20, so r = 10. Check: M = (8,6), distance to A = 10."
+    },
+    {
+     "instance_id": "q:pp3u9-3-3:g009-radius",
+     "stem_sha": "4a10e25e06fafdbd",
+     "answer": {
+      "value": "5"
+     },
+     "working": "Right angle at A, so BC is a diameter. BC = sqrt(36+64) = 10, so r = 5. Check: M = (3,4), distance to A = 5."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by hand. Each has a right angle at A, so BC is a diameter. g006: BC = 20, radius 10. g008: BC = 20, radius 10. g009: BC = 10, radius 5. The keys match the worked solutions. The midpoints, axes, M = (6,8), (8,6) and (3,4), and the MA distances are all correct. The keys are plain numbers, which is the form the stem asks for. The stems are unambiguous. No wrong options were given, so there are no distractors to judge. The stem spells \"centre\" and the solutions spell \"center\", which is only a minor inconsistency."
+   }
+  }
+ ]
+}

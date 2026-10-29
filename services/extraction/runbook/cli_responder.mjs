@@ -19,7 +19,9 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 
-const SYSTEM = 'You are one agent in a workflow. Do exactly the task in the message. Open every file it names with the Read tool. Return the structured output it asks for.'
+// What the work is, said once: without it the model's safety filter refused some plain circle-geometry exercises
+// outright ("safeguards flagged this message"), the same stem passing with other numbers (Prep 3 S6, 2026-10-29)
+const SYSTEM = 'You are one agent in a workflow that checks school mathematics: the exercises of a secondary-school maths textbook (algebra, statistics, geometry of circles and triangles) and questions generated from them for students. Do exactly the task in the message. Open every file it names with the Read tool. Return the structured output it asks for.'
 let spent = 0
 
 function run(args, prompt, cwd) {
@@ -45,14 +47,30 @@ export async function respond({ label, prompt, schema, phase, model, stub }) {
     args.push('--tools', 'Read', '--allowedTools', 'Read')
     for (const d of dirs) args.push('--add-dir', d)
   } else args.push('--tools', '')
-  const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'wf-agent-'))
-  const out = await run(args, prompt, cwd)
-  fs.rmSync(cwd, { recursive: true, force: true })
-  let res
-  try { res = JSON.parse(out.so) } catch {
-    throw new Error(`${label}: the CLI returned no JSON (exit ${out.code}): ${(out.se || out.so).slice(-400)}`)
+  // a call the CLI flags as an error with nothing written (an API error under parallel load: is_error, subtype
+  // "success", 0 output tokens) is asked again, twice at most; it used to come back as no answer, and the grade read
+  // that as a disagreement (Prep 3 S6, 2026-10-29: 6 of 17 families, never the same ones twice)
+  let res, cost = 0, tries = 0, failed = []
+  for (;;) {
+    const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'wf-agent-'))
+    const out = await run(args, prompt, cwd)
+    fs.rmSync(cwd, { recursive: true, force: true })
+    try { res = JSON.parse(out.so) } catch {
+      throw new Error(`${label}: the CLI returned no JSON (exit ${out.code}): ${(out.se || out.so).slice(-400)}`)
+    }
+    cost += Number(res.total_cost_usd || 0)
+    const wrote = Object.values(res.modelUsage || {}).reduce((a, u) => a + (u.outputTokens || 0), 0)
+    if (!(res.is_error && !wrote) || tries >= 2) break
+    const why = String(res.result || res.api_error_status || res.subtype || 'error')
+    failed.push(why.slice(0, 200))
+    tries += 1
+    // a safety filter's false positive on a maths prompt repeats on the same model: the next try is another model
+    if (/safeguards flagged/i.test(why) && args[args.indexOf('--model') + 1] !== 'opus') {
+      args[args.indexOf('--model') + 1] = 'opus'
+      failed[failed.length - 1] += ' (asked again on opus)'
+    }
+    await new Promise((r) => setTimeout(r, 2000 * tries))
   }
-  const cost = Number(res.total_cost_usd || 0)
   spent += cost
   if (stub.ledger) {
     // per model, the tokens meter_run.py prices (input, cache writes 5m/1h, cache reads, output): one call here is
@@ -69,7 +87,9 @@ export async function respond({ label, prompt, schema, phase, model, stub }) {
       byModel[models[0]].cache_write_1h = c.ephemeral_1h_input_tokens || 0
     }
     fs.appendFileSync(stub.ledger, JSON.stringify({ label, phase: phase || null, model: m, cost_usd: Math.round(cost * 1e4) / 1e4,
-      turns: res.num_turns ?? null, error: res.is_error ? (res.subtype || true) : null, by_model: byModel }) + '\n')
+      turns: res.num_turns ?? null, error: res.is_error ? (res.subtype || true) : null,
+      ...(res.is_error ? { error_text: String(res.result || res.api_error_status || '').slice(0, 300) } : {}),
+      ...(failed.length ? { retried: failed } : {}), by_model: byModel }) + '\n')
   }
   process.stderr.write(`  ${label}: $${cost.toFixed(4)} (total $${spent.toFixed(3)} of $${cap})\n`)
   if (res.is_error) return null

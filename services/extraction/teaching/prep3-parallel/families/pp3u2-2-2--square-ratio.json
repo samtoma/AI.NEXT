@@ -1,6 +1,6 @@
 {
  "format": "ainext.family/1",
- "id": "tpl:pp3u2-2-2:ratio-square",
+ "id": "tpl:pp3u2-2-2:square-ratio",
  "kind": "family",
  "lo_id": "lo:pp3u2-2-2",
  "parent_question_id": "expl:pp3u2-2-2:bk-example-1",
@@ -71,7 +71,6 @@
   "gcd(p, q) == 1"
  ],
  "stem": "If $\\frac{x}{y}=\\frac{{=p}}{{=q}}$, find the value of $\\frac{{=u}x^2+{=v}y^2}{{=w}xy}$. Give the answer as a fraction in its simplest form (a whole number if it is one).",
- "answer": "{=n}/{=d}",
  "solution": [
   "Since $\\frac{x}{y}=\\frac{{=p}}{{=q}}$, let $x={=p}m$ and $y={=q}m$ with $m\\neq 0$.",
   "$\\frac{{=u}x^2+{=v}y^2}{{=w}xy}=\\frac{{=u}\\times {=p*p}m^2+{=v}\\times {=q*q}m^2}{{=w}\\times {=p*q}m^2}=\\frac{{=n0}m^2}{{=d0}m^2}$.",
@@ -85,5 +84,5 @@
   "tolerance": null
  },
  "proposed_misconceptions": [],
- "notes": "Advanced twist: squares and a product, so m^2 cancels. Denominator w*p*q is never zero. Modelled on book example 1 with the substitution x=pm, y=qm."
+ "notes": "Advanced twist: squares and a product, so m^2 cancels. Denominator w*p*q is never zero. Modelled on book example 1 with the substitution x=pm, y=qm.\n\nPIPELINE NORMALISATION (not an author edit): drop-redundant-answer: removed the top-level \"answer\" (\"{=n}/{=d}\"); an expression family's answer is marker.answer (\"{=n}/{=d}\"), unchanged. EDIT (Claude for TD, 2026-10-29, not an author edit): renamed from ratio-square, which shares its first six letters (the item ids) with ratio-linear."
 }

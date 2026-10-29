@@ -1,0 +1,83 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "aa97003eef6ba01847fc1ef5cc9d28edf53c29e4e7c5bc2a1e7d3840fe62ba2a",
+  "generated_sha256": "1b93444904f26802a1db3fbdf9b3befe7be819f2b2d8cb53124012edd395f790",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u10-7-2:opposite-angle",
+   "spec_sha": "26db869a87c6b023fecfc675f0f81303198b4be3add1783568d96104208580e5",
+   "answers": [
+    {
+     "instance_id": "q:pp3u10-7-2:g005-opposi",
+     "stem_sha": "05ec5858cf0dc728",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u10-7-2:g007-opposi",
+     "stem_sha": "656d59793e619eb2",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u10-7-2:g009-opposi",
+     "stem_sha": "f94063acecc7d64f",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No options were given, so there are no distractors to check. I checked the keys with the angle sum. In g005, C=60, B=80, so in triangle BXY the angles are 60, 80 and 40 (at Y). That gives XYC = 180−40 = 140, which matches the key. g007 (C=77, B=19) and g009 (C=42, B=89) are valid triangles and give 96 and 131. The method is tangent–chord angle, then parallel lines, then the exterior-angle test for a cyclic quadrilateral, then supplementary opposite angles. Each step is correct. The problem asks for a proof and a number, and the key gives the number. The worked solution covers both parts."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u10-7-2:tangent-exterior",
+   "spec_sha": "687a15dd4d06b5702eb2a48884f9bef80218d1c80310f36203b915c3ef5990d4",
+   "answers": [
+    {
+     "instance_id": "q:pp3u10-7-2:g001-tangen",
+     "stem_sha": "3f066b686049bf71",
+     "answer": {
+      "value": "79"
+     },
+     "working": "The tangent-chord angle between BD and BA equals inscribed angle C. XY ∥ BD, so angle BXY equals that angle (alternate angles), which is C = 79."
+    },
+    {
+     "instance_id": "q:pp3u10-7-2:g002-tangen",
+     "stem_sha": "979b944c1c05b4bc",
+     "answer": {
+      "value": "63"
+     },
+     "working": "The tangent-chord angle between BD and BA equals inscribed angle C. XY ∥ BD, so angle BXY equals that angle (alternate angles), which is C = 63."
+    },
+    {
+     "instance_id": "q:pp3u10-7-2:g005-tangen",
+     "stem_sha": "51669be4247369fa",
+     "answer": {
+      "value": "56"
+     },
+     "working": "The tangent-chord angle between BD and BA equals inscribed angle C. XY ∥ BD, so angle BXY equals that angle (alternate angles), which is C = 56."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I found no problems and checked the geometry by reasoning only. No files were named, so I opened none. The tangent-chord angle gives DBA = C. D and Y lie on opposite sides of AB, so DBX and BXY are alternate interior angles and are equal. So BXY = C, which matches the keys 79, 63 and 56. The extra remark that XYCA is cyclic is true. The instances list no answer options, so there are no distractors to judge.",
+    "distractors": []
+   }
+  }
+ ]
+}

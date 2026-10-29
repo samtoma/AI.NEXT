@@ -64,7 +64,6 @@
   "ssa != ssb"
  ],
  "stem": "The marks of four students in Class A are ${=m+pa[0]}, {=m+pa[1]}, {=m+pa[2]}, {=m+pa[3]}$ and the marks of four students in Class B are ${=m+pb[0]}, {=m+pb[1]}, {=m+pb[2]}, {=m+pb[3]}$. Both sets have the same mean. By calculating the standard deviations, decide which class is more homogeneous in its marks.",
- "answer": "Class {=w}",
  "solution": [
   "The sum of Class A marks is {=4*m}, so its mean is {=m}; likewise the mean of Class B is {=m}.",
   "Class A deviations from the mean: {=pa[0]}, {=pa[1]}, {=pa[2]}, {=pa[3]}. The sum of their squares is {=ssa}, so $\\sigma_A^2 = \\frac{{=ssa}}{4}$ and $\\sigma_A \\approx {=sga}$.",
@@ -97,5 +96,5 @@
    "description": "Student picks the set with the larger standard deviation, forgetting that larger standard deviation means more dispersed and so less homogeneous."
   }
  ],
- "notes": "Deviation patterns are symmetric with distinct sums of squares (4,10,20,16,18,26,34), so sets are sorted, means equal m, and the comparison is never a tie. The population standard deviation is used, as in the book's solution."
+ "notes": "Deviation patterns are symmetric with distinct sums of squares (4,10,20,16,18,26,34), so sets are sorted, means equal m, and the comparison is never a tie. The population standard deviation is used, as in the book's solution.\n\nPIPELINE NORMALISATION (not an author edit): drop-redundant-answer: removed the top-level \"answer\" (\"Class {=w}\"); a multiple-choice family's answer is choices.correct, the same text, unchanged."
 }

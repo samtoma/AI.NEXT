@@ -1,0 +1,164 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "3c289c8253f1d53590394511307455eb8b59fa55e6b84a22d27367f9352fc910",
+  "generated_sha256": "040315ea5af420529239d12ed5a2bb7590657b11f2daac5ed8f160e72095e4a3",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u2-2-2:quad-ratio",
+   "spec_sha": "67718e2b0b222010d8c4b2fbf452a481884ebeabfbf8198ccd6c4a2116a3cd1a",
+   "answers": [
+    {
+     "instance_id": "q:pp3u2-2-2:g002-quad-r",
+     "stem_sha": "f5d65bd43328f6b0",
+     "answer": {
+      "plain": "13/22"
+     },
+     "working": "Let x=1,y=2: numerator 3+10=13, denominator 12+10=22."
+    },
+    {
+     "instance_id": "q:pp3u2-2-2:g003-quad-r",
+     "stem_sha": "0d354a5e107302cf",
+     "answer": {
+      "plain": "75/62"
+     },
+     "working": "Let x=5,y=4: numerator 50+100=150, denominator 64+60=124; simplify 75/62."
+    },
+    {
+     "instance_id": "q:pp3u2-2-2:g008-quad-r",
+     "stem_sha": "494f0a21958b2773",
+     "answer": {
+      "plain": "4/11"
+     },
+     "working": "Let x=1,y=3: numerator 3+9=12, denominator 18+15=33; simplify 4/11."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances with x and y set to the given ratio. g002 gives 13/22 (numerator 3+10=13, denominator 12+10=22). g003 gives 150/124 = 75/62. g008 gives 12/33 = 4/11. Each key is in simplest form and matches its answer_check. The family has no wrong options, so distractors_ok is vacuously true. The only blemish is in g002 step 4, which reads \"13/22 = 13/22\" because no simplifying is needed. That is redundant but not wrong.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u2-2-2:ratio-linear",
+   "spec_sha": "366faa7e3abd32aad9decf52db2bbc9bfaa689565a2240679aa9b8a2872792ea",
+   "answers": [
+    {
+     "instance_id": "q:pp3u2-2-2:g001-ratio-",
+     "stem_sha": "bb38a3fa6c1137a2",
+     "answer": {
+      "plain": "20/7"
+     },
+     "working": "(3a+2b)/b = 3(a/b)+2 = 6/7+2 = 20/7"
+    },
+    {
+     "instance_id": "q:pp3u2-2-2:g002-ratio-",
+     "stem_sha": "18627761bb3b33ef",
+     "answer": {
+      "plain": "4"
+     },
+     "working": "(3a+3b)/b = 3(a/b)+3 = 1+3 = 4"
+    },
+    {
+     "instance_id": "q:pp3u2-2-2:g006-ratio-",
+     "stem_sha": "32ca2195264d2e3f",
+     "answer": {
+      "plain": "32/7"
+     },
+     "working": "(4a+4b)/b = 4(a/b)+4 = 4/7+4 = 32/7"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": false,
+    "context_ok": true,
+    "solution_ok": false,
+    "notes": "The family has no options, so distractors_ok is true. g001 and g006 are correct (20/7 and 32/7). g002 is wrong in form. The value is 4, but the key and answer_check are \"\\frac{4}{1}\" / \"4/1\". The stem says to give a whole number if the answer is one, so the key should be 4. The g002 solution also says \"in simplest form is 4/1\", which is wrong because 4 is the simplest form. Its step 3 also goes from 12m/3m to 12/3 and then labels that 4/1, which skips the simplification. The template must render whole-number results as integers."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u2-2-2:square-ratio",
+   "spec_sha": "1d821bf5582a2c2ba33892a73773bafe33cd61e1e2c04ea7602370e3f10cd790",
+   "answers": [
+    {
+     "instance_id": "q:pp3u2-2-2:g001-square",
+     "stem_sha": "b1e1e493e529ed0f",
+     "answer": {
+      "plain": "101/15"
+     },
+     "working": "Divide top and bottom by y^2, with r=x/y=1/5: (r+4/r)/(3r)... equivalently (x^2+4y^2)/(3xy) = (r+4/r)/3 = (1/5+20)/3 = (101/5)/3 = 101/15."
+    },
+    {
+     "instance_id": "q:pp3u2-2-2:g002-square",
+     "stem_sha": "f13d9e1654b65275",
+     "answer": {
+      "plain": "19/12"
+     },
+     "working": "(r+3/r)/3 with r=3/4: (3/4+4)/3 = (19/4)/3 = 19/12."
+    },
+    {
+     "instance_id": "q:pp3u2-2-2:g010-square",
+     "stem_sha": "bb511f3683e3b0ce",
+     "answer": {
+      "plain": "7/2"
+     },
+     "working": "(3r+2/r)/2 with r=1/3: (1+6)/2 = 7/2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": false,
+    "solution_ok": true,
+    "notes": "I checked the arithmetic and it is correct. g001 gives (1+100)/15 = 101/15. g002 gives 57/36 = 19/12. g010 gives 21/6 = 7/2. Each key matches its answer_check and is in simplest form. The family has no options, so distractors_ok is true. The worked solutions use the substitution x = am, y = bm and cancel m², which is sound. The stems show a coefficient of 1 explicitly, as in \"1x^2\" in g001 and g002. The worked steps do the same with \"x=1m\" and \"1×1m²\". A prep-3 student would not normally see a written coefficient of 1, so this is unnatural and could confuse them. I marked context_ok false for that reason. The fix is to drop the explicit 1 when the coefficient is 1."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u2-2-2:sum-ratio",
+   "spec_sha": "d73ef1084666abaf6597a42c27bf8bd12f1b5cc6fec264f06243eaee513e48e3",
+   "answers": [
+    {
+     "instance_id": "q:pp3u2-2-2:g007-sum-ra",
+     "stem_sha": "ef62decf4fd71d06",
+     "answer": {
+      "plain": "13/4"
+     },
+     "working": "(3a+b)/b = 3(a/b)+1 = 9/4+1 = 13/4"
+    },
+    {
+     "instance_id": "q:pp3u2-2-2:g009-sum-ra",
+     "stem_sha": "29204d6ebb86d97f",
+     "answer": {
+      "plain": "3/2"
+     },
+     "working": "(3a+b)/b = 3(1/6)+1 = 1/2+1 = 3/2"
+    },
+    {
+     "instance_id": "q:pp3u2-2-2:g010-sum-ra",
+     "stem_sha": "b9a2211718641225",
+     "answer": {
+      "plain": "10/3"
+     },
+     "working": "(2a+b)/b = 2(7/6)+1 = 7/3+1 = 10/3"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": false,
+    "context_ok": true,
+    "solution_ok": false,
+    "notes": "The stem asks for the simplest form, but the keys for g009 (9/6) and g010 (20/6) are not simplified. They should be 3/2 and 10/3. The worked solutions stop at the unreduced fraction and never reduce it. g007 (13/4) is fine. The family has no options, so distractors_ok is true.",
+    "distractors": []
+   }
+  }
+ ]
+}

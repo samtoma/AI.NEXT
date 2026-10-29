@@ -3,7 +3,7 @@
   "course_id": "course:prep3-parallel-math-en",
   "book": "prep3-parallel",
   "reviewed": false,
-  "generator": "S5 runbook/misconceptions.workflow.js (Sonnet author, Sonnet fail-closed verifier) via assemble_misconceptions.py — runs s5-final.20261018T102128Z.json; pipeline-generated, UNREVIEWED",
+  "generator": "S5 runbook/misconceptions.workflow.js (Sonnet author, Sonnet fail-closed verifier) via assemble_misconceptions.py — runs s5-final.20261018T102048Z.json; pipeline-generated, UNREVIEWED",
   "misconceptions": [
     {
       "id": "mc:pp3u8-1-1:event-occurs-only-if-outcome-is-whole-set",
@@ -147,6 +147,554 @@
           }
         ],
         "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u4-1-3:ratio-inverted",
+      "lo_id": "lo:pp3u4-1-3",
+      "label": "Ratio written upside down",
+      "description": "Divides the hypotenuse by a leg instead of the leg by the hypotenuse.",
+      "signal": "The answer is greater than 1 for a sine or cosine, which is impossible.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The two sides are correct — they are the wrong way up."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\sin$ and $\\cos$ put the HYPOTENUSE on the bottom, so both are always less than $1$ in a right-angled triangle."
+        },
+        {
+          "step": 3,
+          "text_md": "An answer above $1$ for a sine or cosine is a signal to flip the fraction and check."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101846Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. The refutation is correct: sin and cos have the hypotenuse as denominator, so they are below 1. The signal (sine or cosine greater than 1) correctly diagnoses a student who flips the fraction. For the 12-13-5 triangle, sin A = 5/13, not 13/5. The refutation names no external references.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u4-1-3:tan-uses-hypotenuse",
+      "lo_id": "lo:pp3u4-1-3",
+      "label": "Hypotenuse used in the tangent",
+      "description": "Builds tan from a leg and the hypotenuse rather than from the two legs.",
+      "signal": "The tangent is reported as a sine or cosine value.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are choosing between the three sides, which is the right process."
+        },
+        {
+          "step": 2,
+          "text_md": "The tangent is the only ratio that does NOT use the hypotenuse: opposite over adjacent, the two legs."
+        },
+        {
+          "step": 3,
+          "text_md": "If the hypotenuse appears in your fraction, you have written a sine or a cosine."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101846Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. The refutation is correct: tan is opposite over adjacent, the two legs, and any fraction with the hypotenuse is a sine or cosine. The signal fits, because a leg-over-hypotenuse tan equals a sine or cosine value. The refutation names no external references.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u5-1-1:legs-added-before-squaring",
+      "lo_id": "lo:pp3u5-1-1",
+      "label": "Differences added before squaring",
+      "description": "Computes (dx + dy) rather than √(dx² + dy²).",
+      "signal": "The answer equals the sum of the two coordinate differences.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Both differences are right — it is how they combine that changes."
+        },
+        {
+          "step": 2,
+          "text_md": "They cannot simply be added: the two directions are perpendicular, so Pythagoras applies. $\\sqrt{6^2 + 8^2} = 10$, not $6 + 8 = 14$."
+        },
+        {
+          "step": 3,
+          "text_md": "Square, add, then root — in that order."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real: for M(3,2), N(7,5) a student gets 4+3=7 instead of 5. The refutation is correct (√(36+64)=10 vs 14) and matches the canonical Pythagoras method. It is specific to adding the legs, and the signal is accurate.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u5-1-1:one-coordinate-used",
+      "lo_id": "lo:pp3u5-1-1",
+      "label": "Distance read from one point only",
+      "description": "Reports one point's coordinate as the distance instead of the separation between both.",
+      "signal": "The answer equals one of the given coordinates.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "That number is in the question, which is why it is tempting."
+        },
+        {
+          "step": 2,
+          "text_md": "A distance always involves BOTH points: $|6 - 2| = 4$, not $6$ or $2$ on their own."
+        },
+        {
+          "step": 3,
+          "text_md": "Ask what the number is measuring FROM as well as to."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Plausible error, since a student may report a given coordinate. The refutation is mathematically correct (|6-2|=4) and consistent with the book's difference method. It names no external references.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u5-1-1:root-not-taken",
+      "lo_id": "lo:pp3u5-1-1",
+      "label": "Square root never taken in the distance rule",
+      "description": "Stops at the sum of the squares.",
+      "signal": "The answer is the square of the correct distance.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your squares are right: $6^2 + 8^2 = 36 + 64 = 100$."
+        },
+        {
+          "step": 2,
+          "text_md": "That $100$ is the square of the distance. The rule ends with a root: $\\sqrt{100} = 10$."
+        },
+        {
+          "step": 3,
+          "text_md": "$AB = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$ — the root is part of the formula, not an optional tidy-up."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real: a student stops at 25 for MN. The refutation is correct (36+64=100, √100=10) and matches the canonical formula. It targets the missing root specifically, and the signal fits.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u5-1-2:equal-sides-enough-for-square",
+      "lo_id": "lo:pp3u5-1-2",
+      "label": "Four equal sides taken as proof of a square",
+      "description": "The student finds all four side lengths equal and concludes the figure is a square without checking the diagonals.",
+      "signal": "A proof that ends after the four side lengths, e.g. AB = BC = CD = DA = √41, so 'it is a square'.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found all four sides equal, and that part is right: it shows the figure is either a rhombus or a square. The extra step you skipped is what tells those two apart."
+        },
+        {
+          "step": 2,
+          "text_md": "Four equal sides can still lean over, like a pushed-over box. Such a rhombus has the same side lengths as a square but its angles are not $90^\\circ$, so equal sides alone cannot prove a square."
+        },
+        {
+          "step": 3,
+          "text_md": "A square has one more property: its two diagonals are equal in length. In the example with A (2, 4), B (-3, 0), C (-7, 5), D (-2, 9), the sides are all $\\sqrt{41}$, and only after finding $AC=\\sqrt{(-9)^2+1^2}=\\sqrt{82}$ and $BD=\\sqrt{(-1)^2+9^2}=\\sqrt{82}$ can we say the figure is a square."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time: after the four sides are equal, write 'rhombus or square', then find both diagonals with the distance rule. If $AC = BD$, it is a square."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The book's own example stops at 'square or rhombus' after four equal sides and then uses equal diagonals to reach 'square'. The numbers in the refutation are correct: AC=√82 and BD=√82. It argues against this specific error, and it names no question id or page.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:pp3u5-1-2:bk-example-1"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u5-3-1:slope-inverted",
+      "lo_id": "lo:pp3u5-3-1",
+      "label": "Run divided by rise",
+      "description": "Computes Δx/Δy instead of Δy/Δx.",
+      "signal": "The answer is the reciprocal of the correct slope.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Both differences are right — the fraction is upside down."
+        },
+        {
+          "step": 2,
+          "text_md": "Slope is RISE over RUN: $m = \\frac{y_2 - y_1}{x_2 - x_1}$."
+        },
+        {
+          "step": 3,
+          "text_md": "A memory hook: slope answers 'how much does it climb for each step sideways', so the climb is on top."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Inverting the fraction is a real error for the two-point slope. The refutation keeps the canonical formula (y2-y1)/(x2-x1) and addresses the upside-down fraction specifically. The rise/run wording is a light gloss on that formula and does not change the method.",
+        "sources": [],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-3-1:live-line-equation-standard#slope-inverted",
+            "question_id": "q:pp3u5-3-1:w001",
+            "text": "Slope taken as run over rise instead of rise over run",
+            "tagged": "mc:pp3u5-3-1:slope-inverted"
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-3-1:live-line-equation-standard-4#slope-inverted",
+            "question_id": "q:pp3u5-3-1:w004",
+            "text": "Slope taken as run over rise instead of rise over run",
+            "tagged": "mc:pp3u5-3-1:slope-inverted"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:pp3u5-3-3:perpendicular-sign-only",
+      "lo_id": "lo:pp3u5-3-3",
+      "label": "Sign flipped without taking the reciprocal",
+      "description": "Uses −m for a perpendicular slope instead of −1/m.",
+      "signal": "The answer is the negative of the original slope.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Changing the sign is half of the rule, and you got that half."
+        },
+        {
+          "step": 2,
+          "text_md": "Perpendicular slopes multiply to $-1$, so the other slope is $\\frac{-1}{m}$ — flip the fraction AND change the sign."
+        },
+        {
+          "step": 3,
+          "text_md": "Check by multiplying: if the product is not $-1$, the lines are not perpendicular."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. For slope 3/2, a student gives -3/2 instead of -2/3 (drill 7). The refutation is correct and uses the book's m1×m2=-1 rule. It targets the missing reciprocal and gives a product check that would expose the error. It names no outside references and adds nothing beyond the book.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
+      "lo_id": "lo:pp3u5-4-1",
+      "label": "Reading m and b straight off the equation without isolating y",
+      "description": "The student takes the number in front of $x$ as the slope, or the constant term as the y-intercept, without first writing the equation as $y = mx + b$.",
+      "signal": "For $x - 2y + 4 = 0$, answers such as slope $1$ or y-intercept $4$ instead of $\\frac{1}{2}$ and $2$.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are using the idea that $m$ is the coefficient of $x$ and $b$ is the constant. That is right, but only once the equation is written as $y = mx + b$, with $y$ alone and with coefficient 1."
+        },
+        {
+          "step": 2,
+          "text_md": "Take $x - 2y + 4 = 0$. Here $y$ has coefficient $-2$, so the equation is not yet in that form. Rewrite it: $2y = x + 4$, then divide both sides by 2: $y = \\frac{1}{2}x + 2$."
+        },
+        {
+          "step": 3,
+          "text_md": "Now the slope is $\\frac{1}{2}$ and the y-intercept is $2$. The numbers $1$ and $4$ you can see in the original equation were both still to be divided by 2."
+        },
+        {
+          "step": 4,
+          "text_md": "You can check this against the graph. The line passes through $(0, 2)$, so the y-intercept is 2, not 4. Always get $y$ alone first, then read off $m$ and $b$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real error. The refutation reproduces book example 1 (2y=x+4, y=1/2 x+2, intercept 2 matches the point (0,2)). The math is correct, it targets the specific misreading of coefficients, and it adds nothing outside the book.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "pp3u5-4:rule-1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "expl:pp3u5-4-1:bk-example-1"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-4-1:draw-from-general-form-advanced#off-target",
+            "question_id": "q:pp3u5-4-1:w001",
+            "text": "Neither the slope nor the intercept matches",
+            "tagged": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-4-1:draw-from-general-form-basic#off-target",
+            "question_id": "q:pp3u5-4-1:w002",
+            "text": "Neither the slope nor the intercept matches",
+            "tagged": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-4-1:draw-from-general-form-standard#off-target",
+            "question_id": "q:pp3u5-4-1:w003",
+            "text": "Neither the slope nor the intercept matches",
+            "tagged": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:pp3u5-4-1:slope-drops-minus-sign",
+      "lo_id": "lo:pp3u5-4-1",
+      "label": "Slope written as a/b, losing the minus",
+      "description": "The student uses the slope rule on $ax + by + c = 0$ but writes $m = \\frac{a}{b}$ instead of $-\\frac{a}{b}$.",
+      "signal": "Slope has the right size but the opposite sign, e.g. $\\frac{3}{4}$ for $3x + 4y - 5 = 0$.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You remembered that the slope comes from the two numbers $a$ and $b$ in $ax + by + c = 0$, and you put them in the right fraction. The only thing missing is the minus sign: the rule is $m = -\\frac{a}{b}$."
+        },
+        {
+          "step": 2,
+          "text_md": "See why by writing the line as $y = mx + b$. For $3x + 4y - 5 = 0$ we get $4y = -3x + 5$, so $y = -\\frac{3}{4}x + \\frac{5}{4}$. The $3x$ moves to the other side and changes sign, so the coefficient of $x$ is $-\\frac{3}{4}$, not $\\frac{3}{4}$."
+        },
+        {
+          "step": 3,
+          "text_md": "The sign tells you the direction. With $m = -\\frac{3}{4}$ the line goes down as $x$ increases. A slope of $\\frac{3}{4}$ would make it go up, which is a different line."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time, use $m = -\\frac{a}{b}$, or write $y = mx + b$ and read $m$ as the coefficient of $x$. The two methods should give the same sign."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Real error. The refutation matches book example 2 (m=-a/b, 4y=-3x+5, y=-3/4 x+5/4). The algebra is correct, the sign/direction explanation is sound, and no outside references appear.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "pp3u5-4:rule-1"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "expl:pp3u5-4-1:bk-example-2"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-4-1:draw-from-general-form-advanced#slope-sign-flipped",
+            "question_id": "q:pp3u5-4-1:w001",
+            "text": "Right gradient, wrong sign — the line leans the other way",
+            "tagged": "mc:pp3u5-4-1:slope-drops-minus-sign"
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-4-1:draw-from-general-form-basic#slope-sign-flipped",
+            "question_id": "q:pp3u5-4-1:w002",
+            "text": "Right gradient, wrong sign — the line leans the other way",
+            "tagged": "mc:pp3u5-4-1:slope-drops-minus-sign"
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-4-1:draw-from-general-form-standard#slope-sign-flipped",
+            "question_id": "q:pp3u5-4-1:w003",
+            "text": "Right gradient, wrong sign — the line leans the other way",
+            "tagged": "mc:pp3u5-4-1:slope-drops-minus-sign"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:pp3u6-2-3:keeps-solution-that-does-not-fit-context",
+      "lo_id": "lo:pp3u6-2-3",
+      "label": "Keeps the negative solution as an answer",
+      "description": "The student solves with the formula, gets two values of x, and gives the negative one (or both) as the answer without checking it against the situation.",
+      "signal": "Answers x = -2.59, or says the disk lands at both -2.59 and 116.55 meters.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You used the formula correctly and found both roots, $-2.59$ and $116.5465116$. The slip is treating a quadratic's two solutions as two answers to the question, when only one may fit the situation."
+        },
+        {
+          "step": 2,
+          "text_md": "In the disk race, $x$ is the horizontal distance in meters from the player. A distance of $-2.59$ meters has no meaning here, so that value is refused."
+        },
+        {
+          "step": 3,
+          "text_md": "The question asks where the disk falls. The root that fits is $x=\\frac{-4.9-5.123}{-0.086}=116.5465116$ meters."
+        },
+        {
+          "step": 4,
+          "text_md": "So the answer is not $-2.59$, and it is not both values. The disk lands about $116.55$ meters away."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, after finding both solutions, ask what $x$ stands for in the problem. Cross out any value that cannot be that quantity, then round the one left to the place asked for."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101933Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "I checked the arithmetic: the discriminant is 26.246 and its root is about 5.123. That gives x = -2.59 and x = 116.5465116, matching the canonical solution. The refutation rejects the negative distance because x is a distance, picks the root that fits, and gives about 116.55 m. It names no outside references. It targets this specific error rather than restating the method. The signal (answering -2.59, or both values) matches the error.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "expl:pp3u6-2-3:bk-example-3"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u7-2-1:excludes-numerator-zeroes",
+      "lo_id": "lo:pp3u7-2-1",
+      "label": "Removes the zeroes of the numerator instead of the denominator",
+      "description": "The student sets the top of the fraction equal to zero and takes the domain as R minus those values.",
+      "signal": "For $\\frac{x^2-1}{x^2+1}$ the student writes domain $R-\\{-1, 1\\}$ instead of $R$.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are looking for values of $x$ that must be removed, and you are right that you find them by solving an expression $=0$. The slip is choosing the top of the fraction rather than the bottom."
+        },
+        {
+          "step": 2,
+          "text_md": "A fraction only breaks when you divide by zero. A zero on top just makes the whole value $0$, which is a perfectly good answer."
+        },
+        {
+          "step": 3,
+          "text_md": "Test it on $n(x)=\\frac{x^2-1}{x^2+1}$. At $x=2$ the value is $\\frac{3}{5}$, and at $x=0$ it is $-1$. At $x=1$ the top is $0$, so $n(1)=\\frac{0}{2}=0$, which exists. So $1$ must not be removed."
+        },
+        {
+          "step": 4,
+          "text_md": "The domain is $R$ minus the set of zeroes of the denominator. Here $x^2+1=0$ has no real solution, so nothing is removed and the domain is $R$."
+        },
+        {
+          "step": 5,
+          "text_md": "Cover the top with your hand, set only the denominator equal to $0$, solve, and remove those values from $R$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101955Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Error is real. The refutation is correct: n(1)=0/2=0 is defined, x^2+1 has no real zero, domain R, matching the canonical solution for (x^2-1)/(x^2+1). It is backed by the book's rule that the domain is R minus the denominator's zeroes. It names no outside references.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "pp3u7-2:rule-3"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u7-2-1:exclude-numerator-trap#extra-values",
+            "question_id": "q:pp3u7-2-1:w001",
+            "text": "Marked values that the answer set does not contain",
+            "tagged": "mc:pp3u7-2-1:excludes-numerator-zeroes"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:pp3u7-2-1:one-root-only-denominator",
+      "lo_id": "lo:pp3u7-2-1",
+      "label": "Finds only the positive root of the denominator",
+      "description": "When the denominator has the form $x^2=k$, the student gives only $x=\\sqrt{k}$ and loses the negative root.",
+      "signal": "For $\\frac{x^2+9}{x^2-16}$ the student writes domain $R-\\{4\\}$.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You correctly set the denominator equal to zero and found that $x=4$ must be removed. The step that is missing is taking both square roots."
+        },
+        {
+          "step": 2,
+          "text_md": "Check $x=-4$ in $n(x)=\\frac{x^2+9}{x^2-16}$. The denominator is $(-4)^2-16=16-16=0$, so $n(-4)$ is a division by zero and cannot be in the domain."
+        },
+        {
+          "step": 3,
+          "text_md": "From $x^2=16$ we get $x=4$ or $x=-4$. The set of zeroes is $\\{-4, 4\\}$, so the domain is $R-\\{-4, 4\\}$."
+        },
+        {
+          "step": 4,
+          "text_md": "After solving $x^2=k$ for a positive $k$, write both $\\pm$ roots, then substitute each back into the denominator to check it gives $0$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101955Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Error is real. The refutation matches the canonical solution for (x^2+9)/(x^2-16): x=±4 and domain R-{-4,4}. The check of x=-4 is correct. The rule remark supports it.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "pp3u7-2:rule-3"
+          }
+        ],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u7-2-1:exclude-numerator-trap#missed-values",
+            "question_id": "q:pp3u7-2-1:w001",
+            "text": "Part of the answer set was not marked",
+            "tagged": "mc:pp3u7-2-1:one-root-only-denominator"
+          }
+        ]
       }
     },
     {
@@ -742,637 +1290,6 @@
       }
     },
     {
-      "id": "mc:pp3u3-2-1:equal-means-same-dispersion",
-      "lo_id": "lo:pp3u3-2-1",
-      "label": "Equal means, so equally spread",
-      "description": "The student finds that two sets have the same mean and concludes that their values are equally spread out, or that the sets are alike.",
-      "signal": "Says two sets with the same mean have the same dispersion, without finding either range.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You found that both means are equal, and that part is right: both sets of wages have a mean of LE 200. The slip is in treating the mean as if it also told you how spread out the values are."
-        },
-        {
-          "step": 2,
-          "text_md": "Look at the two sets of wages. Set A is $170, 180, 180, 230, 240$ and set B is $50, 180, 180, 190, 400$. Both add up to $1000$, so both have mean $200$."
-        },
-        {
-          "step": 3,
-          "text_md": "But the values are not equally spread. Set A stays between $170$ and $240$, close to its mean. Set B runs from $50$ up to $400$, far on both sides of $200$. The mean is the same, yet B is clearly more scattered."
-        },
-        {
-          "step": 4,
-          "text_md": "The mean tells you where the centre of the values is. It says nothing about how far the values stretch around that centre. Sets with the same mean can have very different spreads."
-        },
-        {
-          "step": 5,
-          "text_md": "To compare dispersion, find the range of each set as greatest value $-$ smallest value. Compare the two ranges: the bigger range means the more divergent set."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T101835Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "Uses the book's wage sets (both mean 200, sums 1000 correct). Describes the spread correctly (A 170-240, B 50-400). Range method matches the canonical solution, and the bigger-range-means-more-divergent conclusion matches it too. It argues against this specific error. Remark rule-7 and the canonical items support it.",
-        "sources": [
-          {
-            "type": "canonical_solution",
-            "ref": "expl:pp3u3-2-1:bk-think-and-discuss-1"
-          },
-          {
-            "type": "remark",
-            "ref": "pp3u3-2:rule-7"
-          }
-        ],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u3-2-2:deviations-not-averaged",
-      "lo_id": "lo:pp3u3-2-2",
-      "label": "Squared deviations summed but not averaged",
-      "description": "Divides by nothing before taking the root, so the sum is used in place of its mean.",
-      "signal": "The answer is √(Σd²) rather than √(Σd²/n).",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "Your deviations and their squares are right."
-        },
-        {
-          "step": 2,
-          "text_md": "They have to be AVERAGED before the root: divide the sum by $n$, the number of values."
-        },
-        {
-          "step": 3,
-          "text_md": "Sum $= 8$, $n = 4$, so the average is $2$ and $\\sigma = \\sqrt{2}$ — not $\\sqrt{8}$."
-        },
-        {
-          "step": 4,
-          "text_md": "The formula carries the division inside the root: $\\sigma = \\sqrt{\\frac{\\sum (x - \\bar{x})^2}{n}}$."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T101835Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "Omitting the division by n is a plausible slip against the canonical formula σ=√(Σ(x−x̄)²/n). The refutation's arithmetic is correct: 3,5,5,7 has mean 5, squared deviations sum to 8, n=4, so σ=√2. It uses the book's method, names no outside references, and contrasts √8 with √2.",
-        "sources": [],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u4-1-3:ratio-inverted",
-      "lo_id": "lo:pp3u4-1-3",
-      "label": "Ratio written upside down",
-      "description": "Divides the hypotenuse by a leg instead of the leg by the hypotenuse.",
-      "signal": "The answer is greater than 1 for a sine or cosine, which is impossible.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "The two sides are correct — they are the wrong way up."
-        },
-        {
-          "step": 2,
-          "text_md": "$\\sin$ and $\\cos$ put the HYPOTENUSE on the bottom, so both are always less than $1$ in a right-angled triangle."
-        },
-        {
-          "step": 3,
-          "text_md": "An answer above $1$ for a sine or cosine is a signal to flip the fraction and check."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T101846Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real. The refutation is correct: sin and cos have the hypotenuse as denominator, so they are below 1. The signal (sine or cosine greater than 1) correctly diagnoses a student who flips the fraction. For the 12-13-5 triangle, sin A = 5/13, not 13/5. The refutation names no external references.",
-        "sources": [],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u4-1-3:tan-uses-hypotenuse",
-      "lo_id": "lo:pp3u4-1-3",
-      "label": "Hypotenuse used in the tangent",
-      "description": "Builds tan from a leg and the hypotenuse rather than from the two legs.",
-      "signal": "The tangent is reported as a sine or cosine value.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You are choosing between the three sides, which is the right process."
-        },
-        {
-          "step": 2,
-          "text_md": "The tangent is the only ratio that does NOT use the hypotenuse: opposite over adjacent, the two legs."
-        },
-        {
-          "step": 3,
-          "text_md": "If the hypotenuse appears in your fraction, you have written a sine or a cosine."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T101846Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real. The refutation is correct: tan is opposite over adjacent, the two legs, and any fraction with the hypotenuse is a sine or cosine. The signal fits, because a leg-over-hypotenuse tan equals a sine or cosine value. The refutation names no external references.",
-        "sources": [],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u5-1-1:legs-added-before-squaring",
-      "lo_id": "lo:pp3u5-1-1",
-      "label": "Differences added before squaring",
-      "description": "Computes (dx + dy) rather than √(dx² + dy²).",
-      "signal": "The answer equals the sum of the two coordinate differences.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "Both differences are right — it is how they combine that changes."
-        },
-        {
-          "step": 2,
-          "text_md": "They cannot simply be added: the two directions are perpendicular, so Pythagoras applies. $\\sqrt{6^2 + 8^2} = 10$, not $6 + 8 = 14$."
-        },
-        {
-          "step": 3,
-          "text_md": "Square, add, then root — in that order."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T101917Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real: for M(3,2), N(7,5) a student gets 4+3=7 instead of 5. The refutation is correct (√(36+64)=10 vs 14) and matches the canonical Pythagoras method. It is specific to adding the legs, and the signal is accurate.",
-        "sources": [],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u5-1-1:one-coordinate-used",
-      "lo_id": "lo:pp3u5-1-1",
-      "label": "Distance read from one point only",
-      "description": "Reports one point's coordinate as the distance instead of the separation between both.",
-      "signal": "The answer equals one of the given coordinates.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "That number is in the question, which is why it is tempting."
-        },
-        {
-          "step": 2,
-          "text_md": "A distance always involves BOTH points: $|6 - 2| = 4$, not $6$ or $2$ on their own."
-        },
-        {
-          "step": 3,
-          "text_md": "Ask what the number is measuring FROM as well as to."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T101917Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "Plausible error, since a student may report a given coordinate. The refutation is mathematically correct (|6-2|=4) and consistent with the book's difference method. It names no external references.",
-        "sources": [],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u5-1-1:root-not-taken",
-      "lo_id": "lo:pp3u5-1-1",
-      "label": "Square root never taken in the distance rule",
-      "description": "Stops at the sum of the squares.",
-      "signal": "The answer is the square of the correct distance.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "Your squares are right: $6^2 + 8^2 = 36 + 64 = 100$."
-        },
-        {
-          "step": 2,
-          "text_md": "That $100$ is the square of the distance. The rule ends with a root: $\\sqrt{100} = 10$."
-        },
-        {
-          "step": 3,
-          "text_md": "$AB = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$ — the root is part of the formula, not an optional tidy-up."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T101917Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real: a student stops at 25 for MN. The refutation is correct (36+64=100, √100=10) and matches the canonical formula. It targets the missing root specifically, and the signal fits.",
-        "sources": [],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u5-1-2:equal-sides-enough-for-square",
-      "lo_id": "lo:pp3u5-1-2",
-      "label": "Four equal sides taken as proof of a square",
-      "description": "The student finds all four side lengths equal and concludes the figure is a square without checking the diagonals.",
-      "signal": "A proof that ends after the four side lengths, e.g. AB = BC = CD = DA = √41, so 'it is a square'.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You found all four sides equal, and that part is right: it shows the figure is either a rhombus or a square. The extra step you skipped is what tells those two apart."
-        },
-        {
-          "step": 2,
-          "text_md": "Four equal sides can still lean over, like a pushed-over box. Such a rhombus has the same side lengths as a square but its angles are not $90^\\circ$, so equal sides alone cannot prove a square."
-        },
-        {
-          "step": 3,
-          "text_md": "A square has one more property: its two diagonals are equal in length. In the example with A (2, 4), B (-3, 0), C (-7, 5), D (-2, 9), the sides are all $\\sqrt{41}$, and only after finding $AC=\\sqrt{(-9)^2+1^2}=\\sqrt{82}$ and $BD=\\sqrt{(-1)^2+9^2}=\\sqrt{82}$ can we say the figure is a square."
-        },
-        {
-          "step": 4,
-          "text_md": "Next time: after the four sides are equal, write 'rhombus or square', then find both diagonals with the distance rule. If $AC = BD$, it is a square."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T101917Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The book's own example stops at 'square or rhombus' after four equal sides and then uses equal diagonals to reach 'square'. The numbers in the refutation are correct: AC=√82 and BD=√82. It argues against this specific error, and it names no question id or page.",
-        "sources": [
-          {
-            "type": "canonical_solution",
-            "ref": "q:pp3u5-1-2:bk-example-1"
-          }
-        ],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u5-3-1:slope-inverted",
-      "lo_id": "lo:pp3u5-3-1",
-      "label": "Run divided by rise",
-      "description": "Computes Δx/Δy instead of Δy/Δx.",
-      "signal": "The answer is the reciprocal of the correct slope.",
-      "kind": "generated_distractor",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "Both differences are right — the fraction is upside down."
-        },
-        {
-          "step": 2,
-          "text_md": "Slope is RISE over RUN: $m = \\frac{y_2 - y_1}{x_2 - x_1}$."
-        },
-        {
-          "step": 3,
-          "text_md": "A memory hook: slope answers 'how much does it climb for each step sideways', so the climb is on top."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T101917Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "Inverting the fraction is a real error for the two-point slope. The refutation keeps the canonical formula (y2-y1)/(x2-x1) and addresses the upside-down fraction specifically. The rise/run wording is a light gloss on that formula and does not change the method.",
-        "sources": [],
-        "covers": [
-          {
-            "origin": "S7",
-            "ref": "wt:pp3u5-3-1:live-line-equation-standard#slope-inverted",
-            "question_id": "q:pp3u5-3-1:w001",
-            "text": "Slope taken as run over rise instead of rise over run",
-            "tagged": "mc:pp3u5-3-1:slope-inverted"
-          },
-          {
-            "origin": "S7",
-            "ref": "wt:pp3u5-3-1:live-line-equation-standard-4#slope-inverted",
-            "question_id": "q:pp3u5-3-1:w004",
-            "text": "Slope taken as run over rise instead of rise over run",
-            "tagged": "mc:pp3u5-3-1:slope-inverted"
-          }
-        ]
-      }
-    },
-    {
-      "id": "mc:pp3u5-3-3:perpendicular-sign-only",
-      "lo_id": "lo:pp3u5-3-3",
-      "label": "Sign flipped without taking the reciprocal",
-      "description": "Uses −m for a perpendicular slope instead of −1/m.",
-      "signal": "The answer is the negative of the original slope.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "Changing the sign is half of the rule, and you got that half."
-        },
-        {
-          "step": 2,
-          "text_md": "Perpendicular slopes multiply to $-1$, so the other slope is $\\frac{-1}{m}$ — flip the fraction AND change the sign."
-        },
-        {
-          "step": 3,
-          "text_md": "Check by multiplying: if the product is not $-1$, the lines are not perpendicular."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T101917Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real. For slope 3/2, a student gives -3/2 instead of -2/3 (drill 7). The refutation is correct and uses the book's m1×m2=-1 rule. It targets the missing reciprocal and gives a product check that would expose the error. It names no outside references and adds nothing beyond the book.",
-        "sources": [],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
-      "lo_id": "lo:pp3u5-4-1",
-      "label": "Reading m and b straight off the equation without isolating y",
-      "description": "The student takes the number in front of $x$ as the slope, or the constant term as the y-intercept, without first writing the equation as $y = mx + b$.",
-      "signal": "For $x - 2y + 4 = 0$, answers such as slope $1$ or y-intercept $4$ instead of $\\frac{1}{2}$ and $2$.",
-      "kind": "generated_distractor",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You are using the idea that $m$ is the coefficient of $x$ and $b$ is the constant. That is right, but only once the equation is written as $y = mx + b$, with $y$ alone and with coefficient 1."
-        },
-        {
-          "step": 2,
-          "text_md": "Take $x - 2y + 4 = 0$. Here $y$ has coefficient $-2$, so the equation is not yet in that form. Rewrite it: $2y = x + 4$, then divide both sides by 2: $y = \\frac{1}{2}x + 2$."
-        },
-        {
-          "step": 3,
-          "text_md": "Now the slope is $\\frac{1}{2}$ and the y-intercept is $2$. The numbers $1$ and $4$ you can see in the original equation were both still to be divided by 2."
-        },
-        {
-          "step": 4,
-          "text_md": "You can check this against the graph. The line passes through $(0, 2)$, so the y-intercept is 2, not 4. Always get $y$ alone first, then read off $m$ and $b$."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T101917Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "Real error. The refutation reproduces book example 1 (2y=x+4, y=1/2 x+2, intercept 2 matches the point (0,2)). The math is correct, it targets the specific misreading of coefficients, and it adds nothing outside the book.",
-        "sources": [
-          {
-            "type": "remark",
-            "ref": "pp3u5-4:rule-1"
-          },
-          {
-            "type": "canonical_solution",
-            "ref": "expl:pp3u5-4-1:bk-example-1"
-          }
-        ],
-        "covers": [
-          {
-            "origin": "S7",
-            "ref": "wt:pp3u5-4-1:draw-from-general-form-advanced#off-target",
-            "question_id": "q:pp3u5-4-1:w001",
-            "text": "Neither the slope nor the intercept matches",
-            "tagged": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
-          },
-          {
-            "origin": "S7",
-            "ref": "wt:pp3u5-4-1:draw-from-general-form-basic#off-target",
-            "question_id": "q:pp3u5-4-1:w002",
-            "text": "Neither the slope nor the intercept matches",
-            "tagged": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
-          },
-          {
-            "origin": "S7",
-            "ref": "wt:pp3u5-4-1:draw-from-general-form-standard#off-target",
-            "question_id": "q:pp3u5-4-1:w003",
-            "text": "Neither the slope nor the intercept matches",
-            "tagged": "mc:pp3u5-4-1:read-coefficients-without-isolating-y"
-          }
-        ]
-      }
-    },
-    {
-      "id": "mc:pp3u5-4-1:slope-drops-minus-sign",
-      "lo_id": "lo:pp3u5-4-1",
-      "label": "Slope written as a/b, losing the minus",
-      "description": "The student uses the slope rule on $ax + by + c = 0$ but writes $m = \\frac{a}{b}$ instead of $-\\frac{a}{b}$.",
-      "signal": "Slope has the right size but the opposite sign, e.g. $\\frac{3}{4}$ for $3x + 4y - 5 = 0$.",
-      "kind": "generated_distractor",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You remembered that the slope comes from the two numbers $a$ and $b$ in $ax + by + c = 0$, and you put them in the right fraction. The only thing missing is the minus sign: the rule is $m = -\\frac{a}{b}$."
-        },
-        {
-          "step": 2,
-          "text_md": "See why by writing the line as $y = mx + b$. For $3x + 4y - 5 = 0$ we get $4y = -3x + 5$, so $y = -\\frac{3}{4}x + \\frac{5}{4}$. The $3x$ moves to the other side and changes sign, so the coefficient of $x$ is $-\\frac{3}{4}$, not $\\frac{3}{4}$."
-        },
-        {
-          "step": 3,
-          "text_md": "The sign tells you the direction. With $m = -\\frac{3}{4}$ the line goes down as $x$ increases. A slope of $\\frac{3}{4}$ would make it go up, which is a different line."
-        },
-        {
-          "step": 4,
-          "text_md": "Next time, use $m = -\\frac{a}{b}$, or write $y = mx + b$ and read $m$ as the coefficient of $x$. The two methods should give the same sign."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T101917Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "Real error. The refutation matches book example 2 (m=-a/b, 4y=-3x+5, y=-3/4 x+5/4). The algebra is correct, the sign/direction explanation is sound, and no outside references appear.",
-        "sources": [
-          {
-            "type": "remark",
-            "ref": "pp3u5-4:rule-1"
-          },
-          {
-            "type": "canonical_solution",
-            "ref": "expl:pp3u5-4-1:bk-example-2"
-          }
-        ],
-        "covers": [
-          {
-            "origin": "S7",
-            "ref": "wt:pp3u5-4-1:draw-from-general-form-advanced#slope-sign-flipped",
-            "question_id": "q:pp3u5-4-1:w001",
-            "text": "Right gradient, wrong sign — the line leans the other way",
-            "tagged": "mc:pp3u5-4-1:slope-drops-minus-sign"
-          },
-          {
-            "origin": "S7",
-            "ref": "wt:pp3u5-4-1:draw-from-general-form-basic#slope-sign-flipped",
-            "question_id": "q:pp3u5-4-1:w002",
-            "text": "Right gradient, wrong sign — the line leans the other way",
-            "tagged": "mc:pp3u5-4-1:slope-drops-minus-sign"
-          },
-          {
-            "origin": "S7",
-            "ref": "wt:pp3u5-4-1:draw-from-general-form-standard#slope-sign-flipped",
-            "question_id": "q:pp3u5-4-1:w003",
-            "text": "Right gradient, wrong sign — the line leans the other way",
-            "tagged": "mc:pp3u5-4-1:slope-drops-minus-sign"
-          }
-        ]
-      }
-    },
-    {
-      "id": "mc:pp3u6-2-3:keeps-solution-that-does-not-fit-context",
-      "lo_id": "lo:pp3u6-2-3",
-      "label": "Keeps the negative solution as an answer",
-      "description": "The student solves with the formula, gets two values of x, and gives the negative one (or both) as the answer without checking it against the situation.",
-      "signal": "Answers x = -2.59, or says the disk lands at both -2.59 and 116.55 meters.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You used the formula correctly and found both roots, $-2.59$ and $116.5465116$. The slip is treating a quadratic's two solutions as two answers to the question, when only one may fit the situation."
-        },
-        {
-          "step": 2,
-          "text_md": "In the disk race, $x$ is the horizontal distance in meters from the player. A distance of $-2.59$ meters has no meaning here, so that value is refused."
-        },
-        {
-          "step": 3,
-          "text_md": "The question asks where the disk falls. The root that fits is $x=\\frac{-4.9-5.123}{-0.086}=116.5465116$ meters."
-        },
-        {
-          "step": 4,
-          "text_md": "So the answer is not $-2.59$, and it is not both values. The disk lands about $116.55$ meters away."
-        },
-        {
-          "step": 5,
-          "text_md": "Next time, after finding both solutions, ask what $x$ stands for in the problem. Cross out any value that cannot be that quantity, then round the one left to the place asked for."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T101933Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "I checked the arithmetic: the discriminant is 26.246 and its root is about 5.123. That gives x = -2.59 and x = 116.5465116, matching the canonical solution. The refutation rejects the negative distance because x is a distance, picks the root that fits, and gives about 116.55 m. It names no outside references. It targets this specific error rather than restating the method. The signal (answering -2.59, or both values) matches the error.",
-        "sources": [
-          {
-            "type": "canonical_solution",
-            "ref": "expl:pp3u6-2-3:bk-example-3"
-          }
-        ],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u7-2-1:excludes-numerator-zeroes",
-      "lo_id": "lo:pp3u7-2-1",
-      "label": "Removes the zeroes of the numerator instead of the denominator",
-      "description": "The student sets the top of the fraction equal to zero and takes the domain as R minus those values.",
-      "signal": "For $\\frac{x^2-1}{x^2+1}$ the student writes domain $R-\\{-1, 1\\}$ instead of $R$.",
-      "kind": "generated_distractor",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You are looking for values of $x$ that must be removed, and you are right that you find them by solving an expression $=0$. The slip is choosing the top of the fraction rather than the bottom."
-        },
-        {
-          "step": 2,
-          "text_md": "A fraction only breaks when you divide by zero. A zero on top just makes the whole value $0$, which is a perfectly good answer."
-        },
-        {
-          "step": 3,
-          "text_md": "Test it on $n(x)=\\frac{x^2-1}{x^2+1}$. At $x=2$ the value is $\\frac{3}{5}$, and at $x=0$ it is $-1$. At $x=1$ the top is $0$, so $n(1)=\\frac{0}{2}=0$, which exists. So $1$ must not be removed."
-        },
-        {
-          "step": 4,
-          "text_md": "The domain is $R$ minus the set of zeroes of the denominator. Here $x^2+1=0$ has no real solution, so nothing is removed and the domain is $R$."
-        },
-        {
-          "step": 5,
-          "text_md": "Cover the top with your hand, set only the denominator equal to $0$, solve, and remove those values from $R$."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T101955Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "Error is real. The refutation is correct: n(1)=0/2=0 is defined, x^2+1 has no real zero, domain R, matching the canonical solution for (x^2-1)/(x^2+1). It is backed by the book's rule that the domain is R minus the denominator's zeroes. It names no outside references.",
-        "sources": [
-          {
-            "type": "remark",
-            "ref": "pp3u7-2:rule-3"
-          }
-        ],
-        "covers": [
-          {
-            "origin": "S7",
-            "ref": "wt:pp3u7-2-1:exclude-numerator-trap#extra-values",
-            "question_id": "q:pp3u7-2-1:w001",
-            "text": "Marked values that the answer set does not contain",
-            "tagged": "mc:pp3u7-2-1:excludes-numerator-zeroes"
-          }
-        ]
-      }
-    },
-    {
-      "id": "mc:pp3u7-2-1:one-root-only-denominator",
-      "lo_id": "lo:pp3u7-2-1",
-      "label": "Finds only the positive root of the denominator",
-      "description": "When the denominator has the form $x^2=k$, the student gives only $x=\\sqrt{k}$ and loses the negative root.",
-      "signal": "For $\\frac{x^2+9}{x^2-16}$ the student writes domain $R-\\{4\\}$.",
-      "kind": "generated_distractor",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You correctly set the denominator equal to zero and found that $x=4$ must be removed. The step that is missing is taking both square roots."
-        },
-        {
-          "step": 2,
-          "text_md": "Check $x=-4$ in $n(x)=\\frac{x^2+9}{x^2-16}$. The denominator is $(-4)^2-16=16-16=0$, so $n(-4)$ is a division by zero and cannot be in the domain."
-        },
-        {
-          "step": 3,
-          "text_md": "From $x^2=16$ we get $x=4$ or $x=-4$. The set of zeroes is $\\{-4, 4\\}$, so the domain is $R-\\{-4, 4\\}$."
-        },
-        {
-          "step": 4,
-          "text_md": "After solving $x^2=k$ for a positive $k$, write both $\\pm$ roots, then substitute each back into the denominator to check it gives $0$."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T101955Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "Error is real. The refutation matches the canonical solution for (x^2+9)/(x^2-16): x=±4 and domain R-{-4,4}. The check of x=-4 is correct. The rule remark supports it.",
-        "sources": [
-          {
-            "type": "remark",
-            "ref": "pp3u7-2:rule-3"
-          }
-        ],
-        "covers": [
-          {
-            "origin": "S7",
-            "ref": "wt:pp3u7-2-1:exclude-numerator-trap#missed-values",
-            "question_id": "q:pp3u7-2-1:w001",
-            "text": "Part of the answer set was not marked",
-            "tagged": "mc:pp3u7-2-1:one-root-only-denominator"
-          }
-        ]
-      }
-    },
-    {
       "id": "mc:pp3u2-1-2:adding-preserves-ratio",
       "lo_id": "lo:pp3u2-1-2",
       "label": "Adding the same number to both terms assumed to preserve the ratio",
@@ -1531,6 +1448,124 @@
             "ref": "pp3u2-3:rule-8"
           }
         ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u3-2-1:equal-means-same-dispersion",
+      "lo_id": "lo:pp3u3-2-1",
+      "label": "Equal means, so equally spread",
+      "description": "The student finds that two sets have the same mean and concludes that their values are equally spread out, or that the sets are alike.",
+      "signal": "Says two sets with the same mean have the same dispersion, without finding either range.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found that both means are equal, and that part is right: both sets of wages have a mean of LE 200. The slip is in treating the mean as if it also told you how spread out the values are."
+        },
+        {
+          "step": 2,
+          "text_md": "Look at the two sets of wages. Set A is $170, 180, 180, 230, 240$ and set B is $50, 180, 180, 190, 400$. Both add up to $1000$, so both have mean $200$."
+        },
+        {
+          "step": 3,
+          "text_md": "But the values are not equally spread. Set A stays between $170$ and $240$, close to its mean. Set B runs from $50$ up to $400$, far on both sides of $200$. The mean is the same, yet B is clearly more scattered."
+        },
+        {
+          "step": 4,
+          "text_md": "The mean tells you where the centre of the values is. It says nothing about how far the values stretch around that centre. Sets with the same mean can have very different spreads."
+        },
+        {
+          "step": 5,
+          "text_md": "To compare dispersion, find the range of each set as greatest value $-$ smallest value. Compare the two ranges: the bigger range means the more divergent set."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101835Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Uses the book's wage sets (both mean 200, sums 1000 correct). Describes the spread correctly (A 170-240, B 50-400). Range method matches the canonical solution, and the bigger-range-means-more-divergent conclusion matches it too. It argues against this specific error. Remark rule-7 and the canonical items support it.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "expl:pp3u3-2-1:bk-think-and-discuss-1"
+          },
+          {
+            "type": "remark",
+            "ref": "pp3u3-2:rule-7"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u3-2-2:deviations-not-averaged",
+      "lo_id": "lo:pp3u3-2-2",
+      "label": "Squared deviations summed but not averaged",
+      "description": "Divides by nothing before taking the root, so the sum is used in place of its mean.",
+      "signal": "The answer is √(Σd²) rather than √(Σd²/n).",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your deviations and their squares are right."
+        },
+        {
+          "step": 2,
+          "text_md": "They have to be AVERAGED before the root: divide the sum by $n$, the number of values."
+        },
+        {
+          "step": 3,
+          "text_md": "Sum $= 8$, $n = 4$, so the average is $2$ and $\\sigma = \\sqrt{2}$ — not $\\sqrt{8}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The formula carries the division inside the root: $\\sigma = \\sqrt{\\frac{\\sum (x - \\bar{x})^2}{n}}$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101835Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Omitting the division by n is a plausible slip against the canonical formula σ=√(Σ(x−x̄)²/n). The refutation's arithmetic is correct: 3,5,5,7 has mean 5, squared deviations sum to 8, n=4, so σ=√2. It uses the book's method, names no outside references, and contrasts √8 with √2.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u10-5-1:cyclic-angles-equal",
+      "lo_id": "lo:pp3u10-5-1",
+      "label": "Opposite angles of a cyclic quadrilateral taken as equal",
+      "description": "Applies the parallelogram property to a cyclic quadrilateral.",
+      "signal": "The answer repeats the given angle instead of its supplement.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are using a real property of quadrilaterals — it belongs to parallelograms."
+        },
+        {
+          "step": 2,
+          "text_md": "In a CYCLIC quadrilateral the opposite angles are SUPPLEMENTARY: they add to $180^\\circ$."
+        },
+        {
+          "step": 3,
+          "text_md": "So $m(\\angle A) = 100^\\circ$ gives $m(\\angle C) = 80^\\circ$."
+        },
+        {
+          "step": 4,
+          "text_md": "Equal opposite angles would only happen when both are $90^\\circ$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102128Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real: a student gives the opposite angle as equal (e.g. B=80 gives D=80 instead of 100). The refutation is correct and matches the book's supplementary-angle method (100 gives 80). It contrasts the parallelogram property with the cyclic one and cites no ids, figures or pages. The 90° remark is a correct, trivial consequence of equal plus supplementary.",
+        "sources": [],
         "covers": []
       }
     },
@@ -1850,41 +1885,6 @@
             "ref": "pp3u9-4:linking-text-2"
           }
         ],
-        "covers": []
-      }
-    },
-    {
-      "id": "mc:pp3u10-5-1:cyclic-angles-equal",
-      "lo_id": "lo:pp3u10-5-1",
-      "label": "Opposite angles of a cyclic quadrilateral taken as equal",
-      "description": "Applies the parallelogram property to a cyclic quadrilateral.",
-      "signal": "The answer repeats the given angle instead of its supplement.",
-      "kind": "conceptual",
-      "refutation": [
-        {
-          "step": 1,
-          "text_md": "You are using a real property of quadrilaterals — it belongs to parallelograms."
-        },
-        {
-          "step": 2,
-          "text_md": "In a CYCLIC quadrilateral the opposite angles are SUPPLEMENTARY: they add to $180^\\circ$."
-        },
-        {
-          "step": 3,
-          "text_md": "So $m(\\angle A) = 100^\\circ$ gives $m(\\angle C) = 80^\\circ$."
-        },
-        {
-          "step": 4,
-          "text_md": "Equal opposite angles would only happen when both are $90^\\circ$."
-        }
-      ],
-      "maps": [],
-      "aliases": [],
-      "provenance": {
-        "run": "s5-final.20261018T102128Z.json",
-        "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real: a student gives the opposite angle as equal (e.g. B=80 gives D=80 instead of 100). The refutation is correct and matches the book's supplementary-angle method (100 gives 80). It contrasts the parallelogram property with the cyclic one and cites no ids, figures or pages. The 90° remark is a correct, trivial consequence of equal plus supplementary.",
-        "sources": [],
         "covers": []
       }
     }

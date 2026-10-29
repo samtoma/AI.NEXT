@@ -1,0 +1,133 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "52642fc36d8a861b30604da8b24a2d17140c9864ec396e825463fad561c72014",
+  "generated_sha256": "e6c67627159175165c4aebbfbe8ba0b3638896a8f658df24f89071fd3c358149",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u9-1-2:through-centre",
+   "spec_sha": "036c0c16e6a3c3eb478ae95257d5a36fbf37fc8d45b774a174e16660c3791dfa",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-1-2:g005-throug",
+     "stem_sha": "3b29a154bb51702f",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u9-1-2:g008-throug",
+     "stem_sha": "1c9cd6a4a1f8320d",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u9-1-2:g009-throug",
+     "stem_sha": "d35747c8874c3faf",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "No options are shown, so there are no distractors to check. The key equals the number of lines, which is correct, because every line through the centre of a circle is an axis of symmetry. The stem is unambiguous. The solution steps are correct. I didn't open any files because the task named none."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u9-4-1:dist-compare",
+   "spec_sha": "0a1223bd25640136ce84d58bd1757f93e4e8c67e10f5c5f580526dcf80d5510e",
+   "answers": [
+    {
+     "instance_id": "q:pp3u9-4-1:g001-dist-c",
+     "stem_sha": "42698f3022f6beb5",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$AB < CD$"
+     },
+     "working": "In a circle, the chord closer to the center is longer. AB is 3 cm from M and CD is 2 cm from M, so AB is farther and shorter: AB < CD."
+    },
+    {
+     "instance_id": "q:pp3u9-4-1:g002-dist-c",
+     "stem_sha": "c3aedb5cee9d7d35",
+     "answer": {
+      "choice": "D",
+      "choice_text": "$AB < CD$"
+     },
+     "working": "The chord closer to the center is longer. AB is 9 cm from M and CD is 2 cm from M, so AB is farther and shorter: AB < CD."
+    },
+    {
+     "instance_id": "q:pp3u9-4-1:g005-dist-c",
+     "stem_sha": "1ae0c2983ba00060",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$AB < CD$"
+     },
+     "working": "The chord closer to the center is longer. AB is 7 cm from M and CD is 3 cm from M, so AB is farther and shorter: AB < CD."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances and found no problems. In each, the chord farther from the center is shorter, so AB < CD is correct, and the key points to that option every time. The tagged distractor \"AB > CD\" (farther-longer) is exactly what a student with that misconception would pick. The untagged options \"=\" and \"cannot be compared\" are wrong, because the distances differ and both chords are in the same circle. The stem doesn't give the radius, but that doesn't matter, since the rule only needs the two distances. The solution steps are correct and follow the book's rule.",
+    "distractors": [
+     {
+      "instance_id": "q:pp3u9-4-1:g001-dist-c",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u9-4-1:g001-dist-c",
+      "option": "C",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u9-4-1:g001-dist-c",
+      "option": "D",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u9-4-1:g002-dist-c",
+      "option": "A",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u9-4-1:g002-dist-c",
+      "option": "B",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u9-4-1:g002-dist-c",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u9-4-1:g005-dist-c",
+      "option": "A",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u9-4-1:g005-dist-c",
+      "option": "C",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u9-4-1:g005-dist-c",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR"
+     }
+    ]
+   }
+  }
+ ]
+}

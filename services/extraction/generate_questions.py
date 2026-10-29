@@ -1745,6 +1745,11 @@ def apply_grades(specs, questions: list[dict], grade_files: list[Path]) -> tuple
         reasons, graded = [], 0
         for fname, r in runs:
             for a in r.get("answers", []):
+                if a.get("working") == "NO ANSWER" and not a.get("answer"):
+                    # the blind solver's call never returned (families.workflow.js marks it so): no verdict, not a
+                    # disagreement. The family still needs GRADE_SAMPLE graded instances, from this run or another
+                    # (Prep 3 rejected two sound families for three failed calls each, 2026-10-29)
+                    continue
                 q = by_id.get(a.get("instance_id"))
                 if q is None or _stem_sha(q["stem"]) != a.get("stem_sha"):
                     reasons.append(f"{a.get('instance_id')}: graded instance is not in this run")

@@ -1,0 +1,188 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "51c5a24583c879b720720f940ecebeb4e2e48cd013cfa59f0a581f0884ef4184",
+  "generated_sha256": "c711aa135e540aaf276aaaf23661a34d3533e2a2437b1baa805553161c364813",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u3-2-4:fromdata",
+   "spec_sha": "d32412b8ec5a3c879f72d081dae9c015f238ffb22819c5f0417453e3a0b66e4f",
+   "answers": [
+    {
+     "instance_id": "q:pp3u3-2-4:g002-fromda",
+     "stem_sha": "2e24f813c5dfa899",
+     "answer": {
+      "choice": "C",
+      "choice_text": "Class A"
+     },
+     "working": "Both means are 32. Sum of squared deviations: A=10, B=18. A has the smaller SD, so A is more homogeneous."
+    },
+    {
+     "instance_id": "q:pp3u3-2-4:g003-fromda",
+     "stem_sha": "a096fee680530d1b",
+     "answer": {
+      "choice": "A",
+      "choice_text": "Class A"
+     },
+     "working": "Both means are 21. Sum of squared deviations: A=10, B=16. A has the smaller SD, so A is more homogeneous."
+    },
+    {
+     "instance_id": "q:pp3u3-2-4:g004-fromda",
+     "stem_sha": "4a770fb4f198355d",
+     "answer": {
+      "choice": "A",
+      "choice_text": "Class A"
+     },
+     "working": "Both means are 31. Sum of squared deviations: A=18, B=26. A has the smaller SD, so A is more homogeneous."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked the arithmetic in all three instances. The sums, means, deviations and sums of squares are all correct. In every instance Class A has the smaller standard deviation: 1.58 against 2.12, 1.58 against 2.00, and 2.12 against 2.55. The key is Class A in each, and the key letter matches the Class A option each time. The \"Class B\" option is the larger-SD-homogeneous error, so its tag fits. The \"cannot be decided\" and \"equally homogeneous\" options are untagged and definitely wrong.",
+    "distractors": [
+     {
+      "instance_id": "q:pp3u3-2-4:g002-fromda",
+      "option": "A: It cannot be decided",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g002-fromda",
+      "option": "B: Class B",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g002-fromda",
+      "option": "D: Both classes are equally homogeneous",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g003-fromda",
+      "option": "B: Both classes are equally homogeneous",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g003-fromda",
+      "option": "C: Class B",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g003-fromda",
+      "option": "D: It cannot be decided",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g004-fromda",
+      "option": "B: It cannot be decided",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g004-fromda",
+      "option": "C: Both classes are equally homogeneous",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g004-fromda",
+      "option": "D: Class B",
+      "verdict": "IS_THAT_ERROR"
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:pp3u3-2-4:givensd",
+   "spec_sha": "244a2a9678614e373133657932854f06f8c168cf407ac8c9f96cb18dc8027407",
+   "answers": [
+    {
+     "instance_id": "q:pp3u3-2-4:g003-givens",
+     "stem_sha": "2daf002bf00d98d2",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u3-2-4:g006-givens",
+     "stem_sha": "fd2cb0ec77b6e4d5",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u3-2-4:g008-givens",
+     "stem_sha": "487272614686d904",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:pp3u3-2-4:g003-givens",
+      "option": "D Class B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Picks the class with the larger SD (8) as homogeneous."
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g003-givens",
+      "option": "B equally homogeneous",
+      "verdict": "UNTAGGED_OK",
+      "why": "SDs differ, so wrong."
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g003-givens",
+      "option": "C cannot be decided",
+      "verdict": "UNTAGGED_OK",
+      "why": "The SDs are enough to decide, so wrong."
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g006-givens",
+      "option": "C Class B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Picks the larger SD (5)."
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g006-givens",
+      "option": "A cannot be decided",
+      "verdict": "UNTAGGED_OK",
+      "why": "Wrong."
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g006-givens",
+      "option": "D equally homogeneous",
+      "verdict": "UNTAGGED_OK",
+      "why": "Wrong; 4≠5."
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g008-givens",
+      "option": "D Class A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Picks the larger SD (9)."
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g008-givens",
+      "option": "A equally homogeneous",
+      "verdict": "UNTAGGED_OK",
+      "why": "Wrong."
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g008-givens",
+      "option": "C cannot be decided",
+      "verdict": "UNTAGGED_OK",
+      "why": "Wrong."
+     }
+    ],
+    "notes": "I checked all three instances. Each key matches the class with the smaller SD, and each solution reaches that class by comparing the SDs. In g006 the key is B, whose text is \"Class A\". That is correct because σ_A = 4 is smaller than σ_B = 5. Each tagged option is the class with the larger SD, which is the larger-sd-homogeneous error. The untagged options are wrong because the SDs differ and they are enough to decide."
+   }
+  }
+ ]
+}

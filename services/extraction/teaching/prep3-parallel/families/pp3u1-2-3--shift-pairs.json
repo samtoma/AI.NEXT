@@ -10,10 +10,6 @@
  "context": null,
  "params": [
   {
-   "name": "X",
-   "let": "sorted(sample_x)"
-  },
-  {
    "name": "d",
    "randint": [
     1,
@@ -31,5 +27,5 @@
   "The number of x in X that work is {=len([x for x in [1,2,3,4] if x + d in [2,3,4,5,6,7]])}.",
   "So R has {=len([x for x in [1,2,3,4] if x + d in [2,3,4,5,6,7]])} ordered pairs."
  ],
- "notes": "Fixed X, Y; d in 1..4. d=1: 4 pairs, d=2: 4, d=3: 4 (4,7 ok), d=4: x=1..2 give 5,6; 3->7; 4->8 no: 3 pairs. All answers >=3, none empty. Parameter X is unused (placeholder removed in practice)."
+ "notes": "Fixed X, Y; d in 1..4. d=1: 4 pairs, d=2: 4, d=3: 4 (4,7 ok), d=4: x=1..2 give 5,6; 3->7; 4->8 no: 3 pairs. All answers >=3, none empty. Parameter X is unused (placeholder removed in practice). EDIT (Claude for TD, 2026-10-29, not an author edit): removed the param X = sorted(sample_x): sample_x is no function the evaluator knows, and X is used nowhere (the stem prints X = {1, 2, 3, 4})."
 }

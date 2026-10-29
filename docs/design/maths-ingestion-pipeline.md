@@ -119,3 +119,19 @@ marker contract's amendment of the same date has the details, and it is Proposed
 When an answer fills several blanks, only its last blank is asked ("Answer only the last blank.").
 Nothing is asked from words outside these lists: "undefined", "inside", or a sentence.
 
+### Families held or rejected for no fault of their maths (2026-10-29)
+
+Before checking, S6 now does two mechanical repairs, the way Samuel's fan-out does:
+- It runs `families.normalise`. For multiple choice, that now also drops a top-level `answer` that repeats
+  `choices.correct`.
+- It re-points a family whose worked-example parent has since become a book question (`repoint_parents`).
+
+A blind solver call that never returned (`NO ANSWER`) is no verdict, rather than a wrong answer. A family
+still needs three graded instances to pass. The CLI responder asks such a call again. Its system prompt
+now says the work is school mathematics, because without that line the model's safety filter refused some
+plain circle-geometry stems. A flagged call is asked again on Opus.
+
+`book_record_generation.py s6-regrade <book> <lessons> --families …` checks and then grades only the
+named families: ones a person fixed or released from hold. The unit's accepted families are never graded
+again.
+

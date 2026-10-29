@@ -64,11 +64,11 @@
   },
   {
    "name": "r",
-   "let": "sqrt(p*p + q*q)"
+   "let": "isqrt(p*p + q*q)"
   }
  ],
  "constraints": [],
- "stem": "On a coordinate plane, $A = (0, 0)$, $B = ({=2*p}, 0)$ and $C = (0, {=2*q})$. The circle through A, B and C is drawn as the intersection of the axes of $\\overline{AB}$ and $\\overline{AC}$ gives its center M. Find the radius of this circle in units.",
+ "stem": "On a coordinate plane, $A = (0, 0)$, $B = ({=2*p}, 0)$ and $C = (0, {=2*q})$. The axes of symmetry of $\\overline{AB}$ and $\\overline{AC}$ meet at M, the centre of the circle that passes through A, B and C. Find the radius of this circle in units.",
  "answer": "r",
  "solution": [
   "The axis of $\\overline{AB}$ is the vertical line $x = {=p}$, through the midpoint of $\\overline{AB}$.",
@@ -76,6 +76,6 @@
   "They intersect at the center $M = ({=p}, {=q})$.",
   "The radius is $MA = \\sqrt{{=p}^2 + {=q}^2} = \\sqrt{{=p*p + q*q}} = {=r}$ units."
  ],
- "notes": "Right angle at A, so M is the midpoint of BC; sqrt(p^2+q^2) is an integer for all listed pairs (Pythagorean).",
+ "notes": "Right angle at A, so M is the midpoint of BC; sqrt(p^2+q^2) is an integer for all listed pairs (Pythagorean). EDIT (Claude for TD, 2026-10-29, not an author edit): r is isqrt(p*p + q*q), not sqrt: every listed pair is a Pythagorean triple, so the radius is whole, and the check refuses a float key such as 5.0. EDIT (Claude for TD, 2026-10-29, not an author edit): the stem's second sentence rewritten; the S6 judge found it ungrammatical (context_ok false). The maths is unchanged.",
  "proposed_misconceptions": []
 }

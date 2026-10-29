@@ -1,0 +1,52 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "40b2c030f9cb482c6778ae2f0e30be6803d5aff2d20ccdcb857d62f1ca693c13",
+  "generated_sha256": "1c9b39c58f78eb9eb209db90e1c8cab23a544d18705beb69816af72e5a088ec6",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u10-7-2:opposite-angle",
+   "spec_sha": "26db869a87c6b023fecfc675f0f81303198b4be3add1783568d96104208580e5",
+   "answers": [
+    {
+     "instance_id": "q:pp3u10-7-2:g005-opposi",
+     "stem_sha": "05ec5858cf0dc728",
+     "answer": {
+      "value": "140"
+     },
+     "working": "Tangent-chord: angle C = angle DBA = 60. XY ∥ BD gives angle BXY = angle DBA = 60 = angle C, so exterior angle at X equals opposite interior angle C, hence XYCA cyclic. Then angle XYC = 180 - angle A = 140."
+    },
+    {
+     "instance_id": "q:pp3u10-7-2:g007-opposi",
+     "stem_sha": "656d59793e619eb2",
+     "answer": {
+      "value": "96"
+     },
+     "working": "Tangent-chord: angle C = 77. XY ∥ BD gives angle BXY = 77 = angle C, so XYCA cyclic. Angle XYC = 180 - 84 = 96."
+    },
+    {
+     "instance_id": "q:pp3u10-7-2:g009-opposi",
+     "stem_sha": "f94063acecc7d64f",
+     "answer": {
+      "value": "131"
+     },
+     "working": "Tangent-chord: angle C = 42. XY ∥ BD gives angle BXY = 42 = angle C, so XYCA cyclic. Angle XYC = 180 - 49 = 131."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No options are given, so distractors_ok is true by default. The geometry holds: the tangent–chord angle gives ∠C = ∠DBA, and D and C lie on opposite sides of AB, so ∠BXY = ∠DBA by alternate angles. That equals ∠C, so XYCA is cyclic. ∠XYC is opposite ∠A, so ∠XYC = 180° − ∠A. The keys 140, 96 and 131 follow, and the triangles are valid (∠B = 80°, 19° and 89°).",
+    "distractors": []
+   }
+  }
+ ]
+}

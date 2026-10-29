@@ -1,0 +1,101 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "60ad78a10ff38402c70528f238e63c5921c5c39d4b0dd7c8bd9080e8d7f4c67c",
+  "generated_sha256": "0c4446282ab31447e9b5c30d395b4e11d7d79e92be8dd27338526b641fc01cc4",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u3-2-4:givensd",
+   "spec_sha": "244a2a9678614e373133657932854f06f8c168cf407ac8c9f96cb18dc8027407",
+   "answers": [
+    {
+     "instance_id": "q:pp3u3-2-4:g003-givens",
+     "stem_sha": "2daf002bf00d98d2",
+     "answer": {
+      "choice": "A",
+      "choice_text": "Class A"
+     },
+     "working": "Same mean, so smaller SD means more homogeneous. 3 < 8, so Class A."
+    },
+    {
+     "instance_id": "q:pp3u3-2-4:g006-givens",
+     "stem_sha": "fd2cb0ec77b6e4d5",
+     "answer": {
+      "choice": "B",
+      "choice_text": "Class A"
+     },
+     "working": "Same mean, so smaller SD means more homogeneous. 4 < 5, so Class A."
+    },
+    {
+     "instance_id": "q:pp3u3-2-4:g008-givens",
+     "stem_sha": "487272614686d904",
+     "answer": {
+      "choice": "D",
+      "choice_text": "Class B"
+     },
+     "working": "Same mean, so smaller SD means more homogeneous. 4 < 9, so Class B."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The task named no files, so I read none and judged only the instances in the message. All three keys match the smaller standard deviation: g003 A is Class A, g006 B is Class A, and g008 D is Class B. Each tagged distractor is the larger-SD class, which is exactly what a student making that error would pick. The \"equally homogeneous\" and \"cannot be decided\" options are wrong because the SDs differ and the means are equal. The worked solutions are correct and end on the keyed class.",
+    "distractors": [
+     {
+      "instance_id": "q:pp3u3-2-4:g003-givens",
+      "option": "B: Both classes are equally homogeneous",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g003-givens",
+      "option": "C: It cannot be decided",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g003-givens",
+      "option": "D: Class B",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g006-givens",
+      "option": "A: It cannot be decided",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g006-givens",
+      "option": "C: Class B",
+      "verdict": "IS_THAT_ERROR"
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g006-givens",
+      "option": "D: Both classes are equally homogeneous",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g008-givens",
+      "option": "A: Both classes are equally homogeneous",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g008-givens",
+      "option": "B: It cannot be decided",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:pp3u3-2-4:g008-givens",
+      "option": "C: Class A",
+      "verdict": "IS_THAT_ERROR"
+     }
+    ]
+   }
+  }
+ ]
+}

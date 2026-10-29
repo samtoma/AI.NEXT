@@ -1,0 +1,284 @@
+{
+  "mode": "grade",
+  "book": {
+    "config_version": 1,
+    "book": "prep3-parallel",
+    "title": "Mathematics — Student's Book, Preparatory Year Three (First and Second Term), English medium",
+    "course_id": "course:prep3-parallel-math-en",
+    "curriculum": "eg-national-en",
+    "subject": "math",
+    "grade": "prep-3",
+    "language": "en",
+    "direction": "ltr",
+    "id_prefixes": [
+      "pp3geo",
+      "pp3t",
+      "pp3u"
+    ],
+    "id_prefix": null,
+    "load_order": 15,
+    "sources": {
+      "pdf": "docs/Source/Math_En_Prp3_Tr1_2.pdf",
+      "epub": null,
+      "teacher_pdf": null
+    },
+    "page_offsets": [],
+    "objectives_mode": "printed",
+    "notation": null,
+    "sacred_content": false,
+    "bundles": [
+      "services/extraction/work/prep3-parallel/bookrecord/bundle-1.json"
+    ],
+    "superseded_bundles": {},
+    "content_files": [],
+    "manifest": null,
+    "generated": null,
+    "parity": null,
+    "program": null,
+    "status": "ingest",
+    "maths_source": null,
+    "lesson_unit": null,
+    "answer_rules": null,
+    "lesson_titles": {
+      "pp3u9-1": "Basic Definitions and Concepts",
+      "pp3u9-2": "Positions of a point, a Straight Line and a Circle with Respect to a Circle",
+      "pp3u9-3": "Identifying the Circle",
+      "pp3u9-4": "The Relation Between the Chords of a Circle and its Center"
+    },
+    "lesson_titles_note": "A book of its own, ingested from its PDF by the book-record pipeline (Tamer, 2026-10-17: treated as a separate book, unrelated to any live course). Its course, course:prep3-parallel-math-en (app/src/lib/courses.ts), is hidden until an operator makes it live. Its lesson slugs carry the pp3 prefixes (pp3u1-1, …), so none of its ids can meet another course's. Lesson titles, page offsets and units come from its own S0 lesson map, approved at G0.",
+    "paths": {
+      "repo_root": "/Users/tdeif/Developer/Noor",
+      "extraction_dir": "/Users/tdeif/Developer/Noor/services/extraction",
+      "pdf": "/Users/tdeif/Developer/Noor/docs/Source/Math_En_Prp3_Tr1_2.pdf",
+      "epub": null,
+      "teacher_pdf": null
+    }
+  },
+  "grading_set": {
+    "format": "ainext.family-grading/1",
+    "seed": 20260925,
+    "sample_per_family": 3,
+    "families": [
+      {
+        "family_id": "tpl:pp3u9-3-3:equal-radii",
+        "spec_sha": "7a185047454cbf7547c5f0ae976a8ab42ba14c711f778542fca8b97cd24fa9ef",
+        "kind": "family",
+        "lo_id": "lo:pp3u9-3-3",
+        "tier": "basic",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:pp3u9-3-3:bk-exercise-1",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:pp3u9-3-3:g001-equal-",
+            "blind": {
+              "instance_id": "q:pp3u9-3-3:g001-equal-",
+              "stem": "A, B and C are three points that are not on one straight line. The axis of $\\overline{AB}$ and the axis of $\\overline{BC}$ intersect at the point M, and $MA = 15$ cm. Find the length of $\\overline{MC}$ in cm.",
+              "stem_sha": "e7ceba371ec4caf7",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "15",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since A, B and C are not collinear, the axes of $\\overline{AB}$ and $\\overline{BC}$ intersect at one point M."
+                },
+                {
+                  "step": 2,
+                  "text_md": "M is on the axis of $\\overline{AB}$, so $MA = MB = 15$ cm."
+                },
+                {
+                  "step": 3,
+                  "text_md": "M is on the axis of $\\overline{BC}$, so $MB = MC$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "So $MC = MB = MA = 15$ cm. M is the center of the circle through A, B and C."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:pp3u9-3-3:g006-equal-",
+            "blind": {
+              "instance_id": "q:pp3u9-3-3:g006-equal-",
+              "stem": "A, B and C are three points that are not on one straight line. The axis of $\\overline{AB}$ and the axis of $\\overline{BC}$ intersect at the point M, and $MA = 12$ cm. Find the length of $\\overline{MC}$ in cm.",
+              "stem_sha": "344c8a457ad90183",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "12",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since A, B and C are not collinear, the axes of $\\overline{AB}$ and $\\overline{BC}$ intersect at one point M."
+                },
+                {
+                  "step": 2,
+                  "text_md": "M is on the axis of $\\overline{AB}$, so $MA = MB = 12$ cm."
+                },
+                {
+                  "step": 3,
+                  "text_md": "M is on the axis of $\\overline{BC}$, so $MB = MC$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "So $MC = MB = MA = 12$ cm. M is the center of the circle through A, B and C."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:pp3u9-3-3:g007-equal-",
+            "blind": {
+              "instance_id": "q:pp3u9-3-3:g007-equal-",
+              "stem": "A, B and C are three points that are not on one straight line. The axis of $\\overline{AB}$ and the axis of $\\overline{BC}$ intersect at the point M, and $MA = 9$ cm. Find the length of $\\overline{MC}$ in cm.",
+              "stem_sha": "c5dcd95423081de1",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "9",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Since A, B and C are not collinear, the axes of $\\overline{AB}$ and $\\overline{BC}$ intersect at one point M."
+                },
+                {
+                  "step": 2,
+                  "text_md": "M is on the axis of $\\overline{AB}$, so $MA = MB = 9$ cm."
+                },
+                {
+                  "step": 3,
+                  "text_md": "M is on the axis of $\\overline{BC}$, so $MB = MC$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "So $MC = MB = MA = 9$ cm. M is the center of the circle through A, B and C."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:pp3u9-3-3:radius-coord",
+        "spec_sha": "74f30ec740d801a486662a2dcc9b98cfbf42cd302c8d46338be7bd4511ca944d",
+        "kind": "family",
+        "lo_id": "lo:pp3u9-3-3",
+        "tier": "advanced",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:pp3u9-3-3:bk-exercise-1",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:pp3u9-3-3:g006-radius",
+            "blind": {
+              "instance_id": "q:pp3u9-3-3:g006-radius",
+              "stem": "On a coordinate plane, $A = (0, 0)$, $B = (12, 0)$ and $C = (0, 16)$. The axes of symmetry of $\\overline{AB}$ and $\\overline{AC}$ meet at M, the centre of the circle that passes through A, B and C. Find the radius of this circle in units.",
+              "stem_sha": "fdfce5e5c9d154d5",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "10",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The axis of $\\overline{AB}$ is the vertical line $x = 6$, through the midpoint of $\\overline{AB}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The axis of $\\overline{AC}$ is the horizontal line $y = 8$, through the midpoint of $\\overline{AC}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "They intersect at the center $M = (6, 8)$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The radius is $MA = \\sqrt{6^2 + 8^2} = \\sqrt{100} = 10$ units."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:pp3u9-3-3:g008-radius",
+            "blind": {
+              "instance_id": "q:pp3u9-3-3:g008-radius",
+              "stem": "On a coordinate plane, $A = (0, 0)$, $B = (16, 0)$ and $C = (0, 12)$. The axes of symmetry of $\\overline{AB}$ and $\\overline{AC}$ meet at M, the centre of the circle that passes through A, B and C. Find the radius of this circle in units.",
+              "stem_sha": "8660c78a1840fbd5",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "10",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The axis of $\\overline{AB}$ is the vertical line $x = 8$, through the midpoint of $\\overline{AB}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The axis of $\\overline{AC}$ is the horizontal line $y = 6$, through the midpoint of $\\overline{AC}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "They intersect at the center $M = (8, 6)$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The radius is $MA = \\sqrt{8^2 + 6^2} = \\sqrt{100} = 10$ units."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:pp3u9-3-3:g009-radius",
+            "blind": {
+              "instance_id": "q:pp3u9-3-3:g009-radius",
+              "stem": "On a coordinate plane, $A = (0, 0)$, $B = (6, 0)$ and $C = (0, 8)$. The axes of symmetry of $\\overline{AB}$ and $\\overline{AC}$ meet at M, the centre of the circle that passes through A, B and C. Find the radius of this circle in units.",
+              "stem_sha": "4a10e25e06fafdbd",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "5",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The axis of $\\overline{AB}$ is the vertical line $x = 3$, through the midpoint of $\\overline{AB}$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The axis of $\\overline{AC}$ is the horizontal line $y = 4$, through the midpoint of $\\overline{AC}$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "They intersect at the center $M = (3, 4)$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The radius is $MA = \\sqrt{3^2 + 4^2} = \\sqrt{25} = 5$ units."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "book": "prep3-parallel",
+    "per_family": 10
+  }
+}

@@ -1,0 +1,52 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "1b4a84dcfd1a02ad1954e94bb2c8eb86aba2bb72f5c2ed64e8a0fecb5c8014c4",
+  "generated_sha256": "f485a76b6dd34852164c29c6f07e8209b8166be2367cd53ae06730f5efb69d22",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u1-2-3:shift-pairs",
+   "spec_sha": "5af1106876e898dc1c9aad2ac1c6876e7d2476c9abe62042ab18564d79c86d9a",
+   "answers": [
+    {
+     "instance_id": "q:pp3u1-2-3:g001-shift-",
+     "stem_sha": "bedac23106306c80",
+     "answer": {
+      "value": "4"
+     },
+     "working": "y=x+1 gives 2,3,4,5 for x=1..4; all in Y, so 4 pairs."
+    },
+    {
+     "instance_id": "q:pp3u1-2-3:g003-shift-",
+     "stem_sha": "8094e51786f0099d",
+     "answer": {
+      "value": "4"
+     },
+     "working": "y=x+3 gives 4,5,6,7; all in Y, so 4 pairs."
+    },
+    {
+     "instance_id": "q:pp3u1-2-3:g004-shift-",
+     "stem_sha": "1c1fab2ca2043c23",
+     "answer": {
+      "value": "4"
+     },
+     "working": "y=x+2 gives 3,4,5,6; all in Y, so 4 pairs."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by hand. X = {1,2,3,4} and Y = {2,3,4,5,6,7}.\n- y = x+1 gives 2, 3, 4, 5, which are all in Y, so 4 pairs.\n- y = x+2 gives 3, 4, 5, 6, which are all in Y, so 4 pairs.\n- y = x+3 gives 4, 5, 6, 7, which are all in Y, so 4 pairs.\nEach key of 4 is correct. The solutions are terse. Step 4 states the count of 4 without listing the pairs. The method is still correct.\nNo wrong options were provided, so there were no distractors to judge.\nThe three instances all have the answer 4, so they don't differ in difficulty. That doesn't make any one of them wrong.",
+    "distractors": []
+   }
+  }
+ ]
+}

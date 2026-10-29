@@ -1,0 +1,114 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "06f72355e08583698f6cd4a310dcc49ddbff18bb2488543c18b77ff5462f1763",
+  "generated_sha256": "215b0a197fccb5cc538c334b87ff021caf082abd55d5fb78847748e41af9ef0c",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u10-7-2:opposite-angle",
+   "spec_sha": "26db869a87c6b023fecfc675f0f81303198b4be3add1783568d96104208580e5",
+   "answers": [
+    {
+     "instance_id": "q:pp3u10-7-2:g005-opposi",
+     "stem_sha": "05ec5858cf0dc728",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u10-7-2:g007-opposi",
+     "stem_sha": "656d59793e619eb2",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u10-7-2:g009-opposi",
+     "stem_sha": "f94063acecc7d64f",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No files were named, so I judged from the instances shown. Keys 140, 96 and 131 equal 180° minus ∠A. The solution steps use the tangent-chord angle, corresponding angles, the exterior-angle test for a cyclic quadrilateral, and supplementary opposite angles. The triangles are valid (∠B = 80°, 19°, 89°). There are no options, so no distractors to check.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u10-7-2:tangent-exterior",
+   "spec_sha": "687a15dd4d06b5702eb2a48884f9bef80218d1c80310f36203b915c3ef5990d4",
+   "answers": [
+    {
+     "instance_id": "q:pp3u10-7-2:g001-tangen",
+     "stem_sha": "3f066b686049bf71",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u10-7-2:g002-tangen",
+     "stem_sha": "979b944c1c05b4bc",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u10-7-2:g005-tangen",
+     "stem_sha": "51669be4247369fa",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No wrong options were given, so distractors_ok is true by default. The key is correct. The tangent-chord angle gives ∠DBA = ∠C, because D lies on the opposite side of AB from C. XY ∥ BD with transversal AB then gives ∠BXY = ∠DBA as alternate angles. So m(∠BXY) = m(∠C), and the keys 79, 63 and 56 match the stems. The closing claim that XYCA is cyclic is valid, since the exterior angle at X equals the opposite interior angle at C. The stems are the same template with different values and are unambiguous."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u10-7-2:two-step-angle",
+   "spec_sha": "f41ebb2f6e57f659385819746bba92ecda7e1bfaf93b89e3ab9ea66de775eec8",
+   "answers": [
+    {
+     "instance_id": "q:pp3u10-7-2:g007-two-st",
+     "stem_sha": "60bb68b10bdf9510",
+     "answer": {
+      "value": "135"
+     },
+     "working": "Tangent-chord: ∠ACB=∠DBA=70. XY∥BD gives ∠BXY=∠DBA=70=∠ACB, so XYCA cyclic. ∠A=180-65-70=45; opposite angles: ∠XYC=180-45=135."
+    },
+    {
+     "instance_id": "q:pp3u10-7-2:g009-two-st",
+     "stem_sha": "aabeb2219c765b6b",
+     "answer": {
+      "value": "105"
+     },
+     "working": "∠ACB=∠DBA=33; ∠BXY=33 so cyclic. ∠A=180-72-33=75; ∠XYC=180-75=105."
+    },
+    {
+     "instance_id": "q:pp3u10-7-2:g010-two-st",
+     "stem_sha": "813a807ad77d184b",
+     "answer": {
+      "value": "103"
+     },
+     "working": "∠ACB=∠DBA=55; ∠BXY=55 so cyclic. ∠A=180-48-55=77; ∠XYC=180-77=103."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked the three instances by hand and found no errors. No options were listed, so no distractors needed checking.\n\n- **Geometry:** The tangent-chord angle gives angle C = angle DBA. Because XY ∥ BD, angle BXY equals angle C, so XYCA is cyclic. Then angle XYC = 180° − angle A.\n- **Arithmetic:** g007 gives A = 45°, so 135. g009 gives A = 75°, so 105. g010 gives A = 77°, so 103. Each matches its key.\n- **Stem:** The stem says \"prove ... and find\", but the answer is a single number. The solution covers the proof in step 2, so this is acceptable."
+   }
+  }
+ ]
+}

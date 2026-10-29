@@ -1,0 +1,52 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "5379ed6cf16cb2ccae6fb0ad6ee198c0288257cf0be1bc871cd124ea90dd50b2",
+  "generated_sha256": "3c4d5cd66734ec6b11097f02b02fa6d14946a12e2e79c51394d729259c380607",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u3-2-3:mean-of-freq",
+   "spec_sha": "85e7f0d8d0ef1d1656206d1b0facc0bdcdbd4f921ce29f108841d8aee7c6549a",
+   "answers": [
+    {
+     "instance_id": "q:pp3u3-2-3:g002-mean-o",
+     "stem_sha": "7cfdaabed223b23b",
+     "answer": {
+      "value": "6"
+     },
+     "working": "n=3+1+6+3+2=15; sum kx=6+4+36+24+20=90; 90/15=6"
+    },
+    {
+     "instance_id": "q:pp3u3-2-3:g004-mean-o",
+     "stem_sha": "059b127aa4a6eabb",
+     "answer": {
+      "value": "3"
+     },
+     "working": "n=19; sum=4+6+15+12+20=57; 57/19=3"
+    },
+    {
+     "instance_id": "q:pp3u3-2-3:g009-mean-o",
+     "stem_sha": "50408681c1792cef",
+     "answer": {
+      "value": "3"
+     },
+     "working": "n=15; sum=3+2+18+12+10=45; 45/15=3"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances and each key matches its worked solution.\n- g002: Σk = 15 and Σxk = 90, so the mean is 6.\n- g004: Σk = 19 and Σxk = 57, so the mean is 3.\n- g009: Σk = 15 and Σxk = 45, so the mean is 3.\nThe stems are unambiguous and use the book's Σxk/Σk method. No wrong options were provided, so the distractors list is empty.",
+    "distractors": []
+   }
+  }
+ ]
+}

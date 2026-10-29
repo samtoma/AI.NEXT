@@ -7,7 +7,9 @@ Most such refusals are the author's to fix, and go back to the author. Four are 
 all, and this module fixes them the same way every time:
 
   drop-redundant-answer   an expression family carries a top-level "answer" beside marker.answer. Its answer
-                          IS marker.answer (spec.py); the extra field is dropped, the marker untouched.
+                          IS marker.answer (spec.py); the extra field is dropped, the marker untouched. The same
+                          for a multiple-choice family whose "answer" is word for word its choices.correct
+                          (Prep-3 S6, 2026-10-29); an "answer" that differs is the author's, and left.
   rename-shadowing-param  a param is named like a built-in (num, frac, gcd …), which would hide it. The param
                           is renamed <name>_v in every expression and every {=…} hole — never where the name is
                           CALLED, which is the built-in — and nothing else changes.
@@ -102,6 +104,11 @@ def normalise(raw: dict) -> tuple[dict, list[str]]:
         done.append(f"drop-redundant-answer: removed the top-level \"answer\" ({json.dumps(out['answer'], ensure_ascii=False)}); "
                     f"an expression family's answer is marker.answer ({json.dumps(marker['answer'], ensure_ascii=False)}), "
                     "unchanged")
+        del out["answer"]
+    ch = out.get("choices") if isinstance(out.get("choices"), dict) else {}
+    if out.get("answer_type") == "mcq" and "answer" in out and ch.get("correct") and out["answer"] == ch["correct"]:
+        done.append(f"drop-redundant-answer: removed the top-level \"answer\" ({json.dumps(out['answer'], ensure_ascii=False)}); "
+                    "a multiple-choice family's answer is choices.correct, the same text, unchanged")
         del out["answer"]
     stem = out.get("stem")
     if (out.get("answer_type") == "mcq" and isinstance(stem, str) and not out.get("distinct_by_choices")
