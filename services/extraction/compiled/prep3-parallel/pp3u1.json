@@ -1112,6 +1112,26 @@
       "verified": true
     },
     {
+      "id": "q:pp3u1-2-3:bk-think-1",
+      "lo": "lo:pp3u1-2-3",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Is R a subset from the cartesian product $X \\times Y$?",
+      "answer": "Yes",
+      "solution": [
+        "R = {(a, Science), (a, Culture), (b, History), (c, Literature), (e, History)}.",
+        "X × Y is the set of all ordered pairs whose first projection is in X and whose second projection is in Y.",
+        "In every pair of R, the first element (a, b, c or e) belongs to X.",
+        "In every pair of R, the second element (Science, Culture, History or Literature) belongs to Y.",
+        "So every pair of R is in X × Y, and R ⊂ X × Y.",
+        "Yes, R is a subset of X × Y."
+      ],
+      "source_page": 13,
+      "source": "seed",
+      "source_note": "The book's own open prompt (pp3u1-2:think-1, printed p.13); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
       "id": "q:pp3u1-2-1:bk-example-1",
       "lo": "lo:pp3u1-2-1",
       "tier": "standard",
@@ -2663,8 +2683,8 @@
     },
     {
       "id": "v:pp3u1-2:figure-2",
-      "lo": "lo:pp3u1-2-2",
-      "question": null,
+      "lo": "lo:pp3u1-2-3",
+      "question": "q:pp3u1-2-3:bk-think-1",
       "kind": "arrow_map",
       "spec": {
         "X": [
@@ -3726,7 +3746,7 @@
         },
         {
           "step": 3,
-          "text_md": "$Y\\times X=\\{-1, 0, 3\\}\\times\\{a, b\\}=\\{(-1, a), (-1, b), (0, a), (0, b), (3, 0), (3, b)\\}$"
+          "text_md": "$Y\\times X=\\{-1, 0, 3\\}\\times\\{a, b\\}=\\{(-1, a), (-1, b), (0, a), (0, b), (3, a), (3, b)\\}$"
         },
         {
           "step": 4,
@@ -3821,7 +3841,7 @@
       "content": [
         {
           "kind": "problem",
-          "text_md": "If $X=\\{1, 2\\}$, $Y\\{3, 4, 5\\}$ Find: $X\\times Y$, and represent it: First: by the arrow diagram. Second: by the cartesian diagram."
+          "text_md": "If $X=\\{1, 2\\}$, $Y = \\{3, 4, 5\\}$ Find: $X\\times Y$, and represent it: First: by the arrow diagram. Second: by the cartesian diagram."
         },
         {
           "step": 1,

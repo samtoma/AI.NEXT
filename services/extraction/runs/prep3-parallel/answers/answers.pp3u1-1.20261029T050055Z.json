@@ -1,0 +1,76 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "5eedcc3516df1bb837d77f0360fb704907bc2bd067b10b23a2d5ac486a2faa41",
+  "generated_sha256": "a8f483c5b6e2e39ba7f13b2a273f97c956cd2b02d46abe4a3ae6660e90ff1f86",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u1-1:page",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u1-1:example-4:First",
+      "kind": "drawing",
+      "answer": "Arrow diagram: arrows from 1 to 3, 4, 5 and from 2 to 3, 4, 5, for X×Y = {(1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5)}.",
+      "solution": [
+       "Write X×Y = {1, 2} × {3, 4, 5} = {(1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5)}.",
+       "Draw two ovals. Write the elements of X (1 and 2) in the left oval.",
+       "Write the elements of Y (3, 4 and 5) in the right oval.",
+       "Each ordered pair is an arrow from its first projection (in X) to its second projection (in Y).",
+       "Draw arrows from 1 to 3, from 1 to 4 and from 1 to 5.",
+       "Draw arrows from 2 to 3, from 2 to 4 and from 2 to 5.",
+       "This gives 6 arrows, one for each of the 6 ordered pairs of X×Y."
+      ],
+      "grounded_in": [
+       "pp3u1-1:example-4",
+       "pp3u1-1:rule-6",
+       "pp3u1-1:rule-8"
+      ]
+     },
+     {
+      "ref": "pp3u1-1:example-4:Second",
+      "kind": "drawing",
+      "answer": "Cartesian diagram: plot the 6 points (1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5) on a perpendicular net, with X horizontal and Y vertical.",
+      "solution": [
+       "Write X×Y = {(1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5)}.",
+       "Draw a horizontal line and a vertical line meeting at O.",
+       "Mark the elements of X (1, 2) on the horizontal line.",
+       "Mark the elements of Y (3, 4, 5) on the vertical line.",
+       "Draw a vertical line through each of 1 and 2.",
+       "Draw a horizontal line through each of 3, 4 and 5.",
+       "Mark the 6 points where these lines meet: (1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5).",
+       "These 6 points are the cartesian diagram of X×Y."
+      ],
+      "grounded_in": [
+       "pp3u1-1:example-4",
+       "pp3u1-1:rule-6",
+       "pp3u1-1:method-1",
+       "pp3u1-1:method-3"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u1-1:example-4:First",
+      "kind": "drawing",
+      "answer": "Arrow diagram: two ovals, X = {1, 2} and Y = {3, 4, 5}; six arrows 1→3, 1→4, 1→5, 2→3, 2→4, 2→5. X×Y = {(1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5)}."
+     },
+     {
+      "ref": "pp3u1-1:example-4:Second",
+      "kind": "drawing",
+      "answer": "Cartesian diagram: a perpendicular grid with X = {1, 2} on the horizontal axis and Y = {3, 4, 5} on the vertical axis; six points marked at (1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5)."
+     }
+    ]
+   }
+  }
+ ]
+}

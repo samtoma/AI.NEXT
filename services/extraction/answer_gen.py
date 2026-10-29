@@ -76,21 +76,90 @@ def book_of(path: Path) -> str:
     raise SystemExit(f"{path}: not under groundtruth/<book>/ or book-records/<book>/")
 
 
-def with_intended(rec: dict) -> dict:
-    """The record as the tutor should read it: a confirmed misprint's intended text in place of the printed one."""
+# A misprint is recorded as the page shows it ("X × Z"); the record keeps maths as LaTeX ("$X \\times Z$"). Matched
+# exactly, 26 of Prep 3's 36 never applied and the tutor and the answer generator read the printed mistake (found
+# 2026-10-29 on pp3u1-2:think-1). So: exact first, else the same characters with the notation and spacing allowed to
+# differ, and the intended text written back in the notation the match used.
+_FLEX = {"×": r"(?:×|\\times(?![A-Za-z])\s*)", "∠": r"(?:∠|\\angle(?![A-Za-z])\s*)", "∈": r"(?:∈|\\in(?![A-Za-z])\s*)",
+         "≠": r"(?:≠|\\neq?(?![A-Za-z])\s*)", "{": r"(?:\\\{|\{)", "}": r"(?:\\\}|\})", "-": r"(?:-|−)", "−": r"(?:-|−)",
+         "°": r"(?:°|\^\s*\\circ|\^\{\\circ\})", "√": r"(?:√|\\sqrt(?![A-Za-z]))"}
+_TO_TEX = {"×": "\\times ", "∠": "\\angle ", "∈": "\\in ", "≠": "\\neq ", "°": "^\\circ", "√": "\\sqrt"}
+
+
+def _flex_pattern(printed: str) -> str:
+    out = []
+    for ch in printed:
+        if ch.isspace():
+            continue
+        out.append(_FLEX.get(ch, re.escape(ch)))
+    return r"[\s,]*".join(out)   # "SHIFT sin 0,5…" is "SHIFT, sin, 0,5…" in the record
+
+
+def _replace_misprint(value: str, printed: str, intended: str) -> str | None:
+    """`value` with the misprint corrected, or None when the printed text is not in it."""
+    if printed in value:
+        return value.replace(printed, intended)
+    if len(printed.strip()) < 3:
+        return None
+    m = re.search(_flex_pattern(printed), value)
+    if not m or "$" in m.group(0):
+        return None
+    span = m.group(0)
+    fixed = intended
+    if "\\" in span:   # the match was LaTeX: write the correction the same way
+        for ch, tex in _TO_TEX.items():
+            fixed = fixed.replace(ch, tex)
+        if "\\{" in span:
+            fixed = fixed.replace("{", "\\{").replace("}", "\\}")
+    out = value[:m.start()] + fixed + value[m.end():]
+    return re.sub(r"(\\[a-z]+) {2,}", r"\1 ", out)
+
+
+def _has(value: str, text: str) -> bool:
+    """`text` is in `value`, notation, spacing and letter case aside."""
+    return text in value or (len(text.strip()) >= 3 and re.search(_flex_pattern(text), value, re.I) is not None)
+
+
+def apply_misprints(rec: dict) -> tuple[dict, list[dict]]:
+    """The record with every misprint it can place corrected, and the misprints it could not place (each with its
+    item, field, printed and intended text): a description rather than the printed words, or a field that differs
+    more than by notation. Those reach the tutor as printed; compile reports them."""
     r = copy.deepcopy(rec)
+    missed = []
     for holder in [r] + list(r.get("parts") or []):
         for m in holder.get("misprints") or []:
             field = m.get("field", "")
             mm = re.match(r"^([a-z_]+)(?:\[(\d+)\])?$", field)
-            if not mm or mm.group(1) == "quote" or mm.group(1) not in holder:
+            if not mm or mm.group(1) == "quote" or mm.group(1) not in holder or not m.get("printed"):
                 continue
+            if re.fullmatch(r"(?i)\s*(?:same|unchanged|no change|none|n/?a)\s*", m.get("intended") or ""):
+                continue   # a reader's "no error found", not a correction: it once replaced a worked step with "same"
             key, idx = mm.group(1), mm.group(2)
-            if idx is None and isinstance(holder[key], str):
-                holder[key] = holder[key].replace(m["printed"], m["intended"])
-            elif idx is not None and isinstance(holder[key], list) and int(idx) < len(holder[key]):
-                holder[key][int(idx)] = str(holder[key][int(idx)]).replace(m["printed"], m["intended"])
-    return r
+            done = None
+            if isinstance(holder[key], str):
+                done = _replace_misprint(holder[key], m["printed"], m["intended"])
+                if done is not None:
+                    holder[key] = done
+                elif _has(holder[key], m["intended"]) and not _has(holder[key], m["printed"]):
+                    done = holder[key]   # the extractor already wrote the intended text and only recorded the misprint
+            elif isinstance(holder[key], list):
+                # the named step first, then any step: a misprint's index is often one off from the step that has it
+                order = ([int(idx)] if idx is not None and int(idx) < len(holder[key]) else []) + list(range(len(holder[key])))
+                for k in order:
+                    done = _replace_misprint(str(holder[key][k]), m["printed"], m["intended"])
+                    if done is not None:
+                        holder[key][k] = done
+                        break
+                if done is None and any(_has(str(x), m["intended"]) for x in holder[key]) and not any(_has(str(x), m["printed"]) for x in holder[key]):
+                    done = ""   # already intended
+            if done is None:
+                missed.append({"item": rec.get("id"), "field": field, "printed": m["printed"], "intended": m["intended"]})
+    return r, missed
+
+
+def with_intended(rec: dict) -> dict:
+    """The record as the tutor should read it: a confirmed misprint's intended text in place of the printed one."""
+    return apply_misprints(rec)[0]
 
 
 def page_context(doc: dict, page, own_id: str) -> list[str]:

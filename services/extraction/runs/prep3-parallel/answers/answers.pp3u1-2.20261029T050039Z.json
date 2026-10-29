@@ -1,0 +1,49 @@
+{
+ "stage": "S3-answers",
+ "workflow": "answers",
+ "mode": "answer",
+ "prompts_version": "ans-v3",
+ "embedded": {
+  "source": "runbook/answers.workflow.js",
+  "source_sha256": "e3aad871f74bea18f93663736766835fa78721d10b49840743d5871e68580850",
+  "args_sha256": "25164d1ef356bc64f660798c17e4cde0f786f199bf98822654cae62545b619c7",
+  "generated_sha256": "d21a610a16499fe0270aad77449881eb58704e69270af99359e7e0b88916102a",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "groups": [
+  {
+   "label": "pp3u1-2:text",
+   "authored": {
+    "answers": [
+     {
+      "ref": "pp3u1-2:think-1",
+      "kind": "value",
+      "answer": "Yes",
+      "solution": [
+       "R = {(a, Science), (a, Culture), (b, History), (c, Literature), (e, History)}.",
+       "X × Y is the set of all ordered pairs whose first projection is in X and whose second projection is in Y.",
+       "In every pair of R, the first element (a, b, c or e) belongs to X.",
+       "In every pair of R, the second element (Science, Culture, History or Literature) belongs to Y.",
+       "So every pair of R is in X × Y, and R ⊂ X × Y.",
+       "Yes, R is a subset of X × Y."
+      ],
+      "grounded_in": [
+       "pp3u1-2:definition-2",
+       "pp3u1-2:definition-3",
+       "pp3u1-2:rule-2"
+      ]
+     }
+    ]
+   },
+   "resolved": {
+    "answers": [
+     {
+      "ref": "pp3u1-2:think-1",
+      "kind": "explanation",
+      "answer": "Yes. Every ordered pair in R = {(a, Science), (a, Culture), (b, History), (c, Literature), (e, History)} has its first element in X and its second element in Y, so $R \\subset X \\times Y$."
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1269,7 +1269,7 @@ def main(argv: list[str]) -> int:
         if before - set(a.lessons):
             print(f"also compiling the lessons compiled before: {sorted(before - set(a.lessons))}", file=sys.stderr)
     report = {"format": FORMAT_REPORT, "version": VERSION, "book": a.book, "printed_decimal": decimal, "lessons": {},
-              "skipped": [], "left_out_today": {}, "held": [], "figures": [], "stand_ins": [], "figure_reviews": [], "tiers": [], "warnings": [], "errors": [],
+              "skipped": [], "left_out_today": {}, "held": [], "figures": [], "stand_ins": [], "figure_reviews": [], "tiers": [], "warnings": [], "errors": [], "misprints_unplaced": [],
               "multipart": {"carried": [], "unresolved": []}, "g2": []}
 
     bundles = {p: json.loads(rel(p).read_text()) for p in cfg.get("bundles") or []}
@@ -1317,6 +1317,9 @@ def main(argv: list[str]) -> int:
                 q.pop("verified", None)
                 report["held"].append({"question": q["id"], "why": f"the app's marker cannot mark the key: {bad[q['id']]}"})
         report["errors"] += [f"misprint reaches a question: {x}" for x in misprint_leaks(record, qs)]
+        # a misprint answer_gen.with_intended could not place (a description, or text that differs by more than
+        # notation): it reaches the tutor as printed until a person rewrites its `printed` or fixes the record
+        report["misprints_unplaced"] += [{"lesson": slug, **m} for it in record.get("items") or [] for m in AG.apply_misprints(it)[1]]
         for q in qs:
             if q.get("_why"):
                 report["held"].append({"question": q["id"], "why": f"{q['hold_reason']}: {q['_why']}"})
@@ -1559,6 +1562,9 @@ def main(argv: list[str]) -> int:
     teaching = sum(1 for x in report["skipped"] if x.get("teaching"))
     print(f"not questions: {len(report['skipped'])} book prompt(s), {teaching} of them kept as library worked examples; "
           f"held: {len(report['held'])}; book pictures: {len(report['stand_ins'])}", file=sys.stderr)
+    if report["misprints_unplaced"]:
+        print(f"misprints not placed (reach the tutor as printed): {len(report['misprints_unplaced'])} — see misprints_unplaced",
+              file=sys.stderr)
     for w in report["warnings"]:
         print(f"WARNING: {w}", file=sys.stderr)
     for e in report["errors"][:20]:
