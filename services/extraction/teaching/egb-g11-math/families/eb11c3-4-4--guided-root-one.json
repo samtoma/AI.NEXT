@@ -1,0 +1,62 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c3-4-4:guided-root-one",
+ "kind": "family",
+ "lo_id": "lo:eb11c3-4-4",
+ "parent_question_id": "q:eb11c3-4-4:bk-exercise-8",
+ "source_page": 149,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "s",
+   "let": "2*m"
+  },
+  {
+   "name": "p",
+   "let": "2*m+1"
+  },
+  {
+   "name": "c1",
+   "let": "2*m-1"
+  },
+  {
+   "name": "c2",
+   "let": "m*m"
+  },
+  {
+   "name": "D4",
+   "let": "4*m*m"
+  }
+ ],
+ "constraints": [
+  "c1 != c2"
+ ],
+ "stem": "The equation $x^3 - {=p}x^2 + (a+{=s})x - a = 0$ has $x=1$ as a root for every value of the constant $a$. Find all values of $a$ for which the equation has a repeated root.",
+ "solution": [
+  "Let $P(x)=x^3-{=p}x^2+(a+{=s})x-a$. $P(1)=1-{=p}+a+{=s}-a=0$, so $(x-1)$ is a factor.",
+  "$P(x)=(x-1)(x^2-{=s}x+a)$.",
+  "Case 1: $x=1$ is a solution of $x^2-{=s}x+a=0$. $1-{=s}+a=0$, so $a={=c1}$.",
+  "Case 2: $x^2-{=s}x+a=0$ has a repeated root. $D={=D4}-4a=0$, so $a={=c2}$.",
+  "So $a={=c1}, \\ {=c2}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=c1}, {=c2}]",
+  "form": null,
+  "variables": [
+   "a"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic entry: root x=1 is given, quadratic factor is (x^2 - 2m x + a). Two cases: 1 is a root of the quadratic (a=2m-1) or D=0 (a=m^2). m=1 excluded as the values coincide. Modelled on exercise 8 (m=3). EDIT (Claude for TD, 2026-10-29, not an author edit): removed 'Give the values separated by commas.': the key is written 'a = 3 or a = 4', and the judge asked for the stem and key to agree (key_form_ok). Any separator is marked correct."
+}

@@ -1,0 +1,293 @@
+{
+ "mode": "author",
+ "book": "egb-g11-math",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "320ce0ada46c33f2246a11ace98219fbcee133333d4c400db7352827825471eb",
+  "generated_sha256": "4e8dc18a231ecb4fa5998abac7e9658a67b72135737dc14703c22d9ba756188d",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:eb11c3-3-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c3-3-3:quad-rem",
+     "kind": "family",
+     "lo_id": "lo:eb11c3-3-3",
+     "parent_question_id": "q:eb11c3-3-3:bk-exercise-14-c-p2",
+     "source_page": 139,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        -5,
+        5
+       ],
+       "resample_while": "q == 0"
+      },
+      {
+       "name": "r",
+       "randint": [
+        -9,
+        9
+       ],
+       "resample_while": "r == 0"
+      },
+      {
+       "name": "a",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "qs",
+       "let": "(\"+ \" if q > 0 else \"- \") + str(abs(q))"
+      },
+      {
+       "name": "rs",
+       "let": "(\"+ \" if r > 0 else \"- \") + str(abs(r))"
+      },
+      {
+       "name": "m1",
+       "let": "p * a"
+      },
+      {
+       "name": "s1",
+       "let": "q + m1"
+      },
+      {
+       "name": "m2",
+       "let": "s1 * a"
+      },
+      {
+       "name": "rem",
+       "let": "r + m2"
+      }
+     ],
+     "constraints": [],
+     "stem": "Using synthetic division, find the remainder when $A = {=p}x^2 {=qs}x {=rs}$ is divided by $B = x - {=a}$. Answer only the remainder.",
+     "answer": "rem",
+     "solution": [
+      "Coefficients of $A$: {=p}, {=q}, {=r}. The divisor is $x - {=a}$, so write {=a} on the left.",
+      "Bring down {=p}. Multiply: ${=p}\\times{=a}={=m1}$, and add: ${=q}+({=m1})={=s1}$.",
+      "Multiply: ${=s1}\\times{=a}={=m2}$, and add: ${=r}+({=m2})={=rem}$.",
+      "Bottom row: {=p}, {=s1}, remainder {=rem}. The quotient is ${=p}x + ({=s1})$ and the remainder is {=rem}."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic: quadratic, no missing term, positive a."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c3-3-3:quartic-quo",
+     "kind": "family",
+     "lo_id": "lo:eb11c3-3-3",
+     "parent_question_id": "q:eb11c3-3-3:bk-exercise-14-d-p2",
+     "source_page": 139,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        -4,
+        4
+       ],
+       "resample_while": "q == 0"
+      },
+      {
+       "name": "s",
+       "randint": [
+        -5,
+        5
+       ],
+       "resample_while": "s == 0"
+      },
+      {
+       "name": "t",
+       "randint": [
+        -9,
+        9
+       ],
+       "resample_while": "t == 0"
+      },
+      {
+       "name": "c",
+       "choice": [
+        -3,
+        -2,
+        -1,
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "name": "b1",
+       "let": "q + p * c"
+      },
+      {
+       "name": "b2",
+       "let": "b1 * c"
+      },
+      {
+       "name": "b3",
+       "let": "s + b2 * c"
+      },
+      {
+       "name": "rem",
+       "let": "t + b3 * c"
+      },
+      {
+       "require": "b1 != 0 and b2 != 0 and b3 != 0 and abs(b3) <= 40",
+       "why": "clean nonzero quotient coefficients"
+      },
+      {
+       "name": "qs",
+       "let": "(\"+ \" if q > 0 else \"- \") + str(abs(q))"
+      },
+      {
+       "name": "ss",
+       "let": "(\"+ \" if s > 0 else \"- \") + str(abs(s))"
+      },
+      {
+       "name": "ts",
+       "let": "(\"+ \" if t > 0 else \"- \") + str(abs(t))"
+      },
+      {
+       "name": "ds",
+       "let": "(\"- \" + str(c)) if c > 0 else (\"+ \" + str(abs(c)))"
+      },
+      {
+       "name": "b1s",
+       "let": "(\"+ \" if b1 > 0 else \"- \") + str(abs(b1))"
+      },
+      {
+       "name": "b2s",
+       "let": "(\"+ \" if b2 > 0 else \"- \") + str(abs(b2))"
+      },
+      {
+       "name": "b3s",
+       "let": "(\"+ \" if b3 > 0 else \"- \") + str(abs(b3))"
+      }
+     ],
+     "constraints": [],
+     "stem": "Using synthetic division, find the quotient when $A = {=p}x^4 {=qs}x^3 {=ss}x {=ts}$ is divided by $B = x {=ds}$. Write the quotient as a polynomial in $x$.",
+     "answer": "",
+     "solution": [
+      "The $x^2$ term is missing, so insert a zero. Coefficients of $A$: {=p}, {=q}, 0, {=s}, {=t}.",
+      "The divisor is $x {=ds}$, so write {=c} on the left.",
+      "Bring down {=p}. Then ${=q}+({=p})({=c})={=b1}$; $0+({=b1})({=c})={=b2}$; ${=s}+({=b2})({=c})={=b3}$; ${=t}+({=b3})({=c})={=rem}$.",
+      "Bottom row: {=p}, {=b1}, {=b2}, {=b3}, remainder {=rem}.",
+      "Quotient: ${=p}x^3 {=b1s}x^2 {=b2s}x {=b3s}$, remainder {=rem}."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "({=p})*x**3 + ({=b1})*x**2 + ({=b2})*x + ({=b3})",
+      "form": "expanded",
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced: quartic with missing x^2 term and divisor x-c with c of either sign; asks for the quotient only."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:eb11c3-4-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:eb11c3-4-4:guided-root-one",
+     "kind": "family",
+     "lo_id": "lo:eb11c3-4-4",
+     "parent_question_id": "q:eb11c3-4-4:bk-exercise-8",
+     "source_page": 149,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "s",
+       "let": "2*m"
+      },
+      {
+       "name": "p",
+       "let": "2*m+1"
+      },
+      {
+       "name": "c1",
+       "let": "2*m-1"
+      },
+      {
+       "name": "c2",
+       "let": "m*m"
+      },
+      {
+       "name": "D4",
+       "let": "4*m*m"
+      }
+     ],
+     "constraints": [
+      "c1 != c2"
+     ],
+     "stem": "The equation $x^3 - {=p}x^2 + (a+{=s})x - a = 0$ has $x=1$ as a root for every value of the constant $a$. Find all values of $a$ for which the equation has a repeated root. Give the values separated by commas.",
+     "solution": [
+      "Let $P(x)=x^3-{=p}x^2+(a+{=s})x-a$. $P(1)=1-{=p}+a+{=s}-a=0$, so $(x-1)$ is a factor.",
+      "$P(x)=(x-1)(x^2-{=s}x+a)$.",
+      "Case 1: $x=1$ is a solution of $x^2-{=s}x+a=0$. $1-{=s}+a=0$, so $a={=c1}$.",
+      "Case 2: $x^2-{=s}x+a=0$ has a repeated root. $D={=D4}-4a=0$, so $a={=c2}$.",
+      "So $a={=c1}, \\ {=c2}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[{=c1}, {=c2}]",
+      "form": null,
+      "variables": [
+       "a"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic entry: root x=1 is given, quadratic factor is (x^2 - 2m x + a). Two cases: 1 is a root of the quadratic (a=2m-1) or D=0 (a=m^2). m=1 excluded as the values coincide. Modelled on exercise 8 (m=3)."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  }
+ ],
+ "revised": []
+}

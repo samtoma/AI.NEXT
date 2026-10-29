@@ -1,0 +1,78 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c3-3-3:quad-rem",
+ "kind": "family",
+ "lo_id": "lo:eb11c3-3-3",
+ "parent_question_id": "q:eb11c3-3-3:bk-exercise-14-c-p2",
+ "source_page": 139,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    -5,
+    5
+   ],
+   "resample_while": "q == 0"
+  },
+  {
+   "name": "r",
+   "randint": [
+    -9,
+    9
+   ],
+   "resample_while": "r == 0"
+  },
+  {
+   "name": "a",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "qs",
+   "let": "(\"+ \" if q > 0 else \"- \") + str(abs(q))"
+  },
+  {
+   "name": "rs",
+   "let": "(\"+ \" if r > 0 else \"- \") + str(abs(r))"
+  },
+  {
+   "name": "m1",
+   "let": "p * a"
+  },
+  {
+   "name": "s1",
+   "let": "q + m1"
+  },
+  {
+   "name": "m2",
+   "let": "s1 * a"
+  },
+  {
+   "name": "rem",
+   "let": "r + m2"
+  }
+ ],
+ "constraints": [],
+ "stem": "Using synthetic division, find the remainder when $A = {=p}x^2 {=qs}x {=rs}$ is divided by $B = x - {=a}$. Answer only the remainder.",
+ "answer": "rem",
+ "solution": [
+  "Coefficients of $A$: {=p}, {=q}, {=r}. The divisor is $x - {=a}$, so write {=a} on the left.",
+  "Bring down {=p}. Multiply: ${=p}\\times{=a}={=m1}$, and add: ${=q}+({=m1})={=s1}$.",
+  "Multiply: ${=s1}\\times{=a}={=m2}$, and add: ${=r}+({=m2})={=rem}$.",
+  "Bottom row: {=p}, {=s1}, remainder {=rem}. The quotient is ${=p}x + ({=s1})$ and the remainder is {=rem}."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic: quadratic, no missing term, positive a."
+}

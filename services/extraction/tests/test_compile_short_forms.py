@@ -119,3 +119,17 @@ class Tables(unittest.TestCase):
 
     def test_words_are_text(self):
         self.assertIn("\\text{Number of goals}", C.table_tex({"header": ["Number of goals", "1"], "rows": [["Matches", "4"]]}))
+
+
+class SeveralValuesAndDivision(unittest.TestCase):
+    def test_one_letter_several_values_is_a_set(self):
+        self.assertEqual(C.answer_type("a = -4, 9/4"), ("short", {"marker": {"kind": "values", "key": "-4, 9/4", "variables": ["a"]}}, "-4, 9/4"))
+        self.assertEqual(C.answer_type("x = 1 or 3")[2], "1, 3")
+        self.assertNotEqual((C.answer_type("a = -4, 9/4", marker_kinds=False) or (None, None, None))[1], {"marker": {"kind": "values", "key": "-4, 9/4", "variables": ["a"]}})
+
+    def test_quotient_and_remainder_are_asked_apart(self):
+        parts = C.answer_parts("Quotient x^2 - 2x + 9, remainder -7", "Use synthetic division")
+        self.assertEqual([p[0] for p in parts], ["Answer only the quotient.", "Answer only the remainder."])
+        self.assertEqual(parts[0][1][1]["marker"], {"kind": "expression", "key": "x^2 - 2x + 9", "variables": ["x"]})
+        self.assertEqual(parts[1][1][2], "-7")
+

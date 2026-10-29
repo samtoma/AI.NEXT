@@ -1,0 +1,65 @@
+{
+ "stage": "SW",
+ "workflow": "working-check",
+ "prompts_version": "sw-v3",
+ "book": "egb-g11-math",
+ "chapter": 4,
+ "part": 1,
+ "parts": 1,
+ "batch": 5,
+ "agents": 1,
+ "effort": "high",
+ "model": "sonnet",
+ "pass_id": "A",
+ "order": "bundle",
+ "by_ref": {
+  "dir": "/Users/tdeif/Developer/Noor/services/extraction/work/egb-g11-math/packets/sw-ch04-delta-20261029",
+  "stage": "SW",
+  "shards_sha256": "39eaa90b5412cf6f80b443a6aba043e46c35be165afdae713e0290b34df70dc3",
+  "files": 5
+ },
+ "embedded": {
+  "source": "runbook/working-check.workflow.js",
+  "source_sha256": "352a846920d85b4c224df7fb36d3f9a8ea598155cc2b4ee4ba9ef7e4791b6385",
+  "args_sha256": "e8b7f732f9ddb93f3579920489757be49acbec5a9765eea02fd9905a01bec864",
+  "generated_sha256": "62909ee1281fb0097e4a7ad529d3ce555c4b201c090c9a1cc26fd48b532d81d7",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "solution_id": "q:eb11c4-2-5:bk-warm-up-10",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:eb11c4-2-5:bk-try-23",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:eb11c4-2-5:bk-work-with-a-partner-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:eb11c4-2-5:bk-exercise-39",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:eb11c4-2-5:bk-exercise-40",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  }
+ ],
+ "problems": [],
+ "meter": {
+  "stage": "SW",
+  "record": "uv run meter_run.py record --book egb-g11-math --stage SW --run <runId>"
+ }
+}

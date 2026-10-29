@@ -1,0 +1,127 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:eb11c3-3-3:quartic-quo",
+ "kind": "family",
+ "lo_id": "lo:eb11c3-3-3",
+ "parent_question_id": "q:eb11c3-3-3:bk-exercise-14-d-p2",
+ "source_page": 139,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    -4,
+    4
+   ],
+   "resample_while": "q == 0"
+  },
+  {
+   "name": "s",
+   "randint": [
+    -5,
+    5
+   ],
+   "resample_while": "s == 0"
+  },
+  {
+   "name": "t",
+   "randint": [
+    -9,
+    9
+   ],
+   "resample_while": "t == 0"
+  },
+  {
+   "name": "c",
+   "choice": [
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "b1",
+   "let": "q + p * c"
+  },
+  {
+   "name": "b2",
+   "let": "b1 * c"
+  },
+  {
+   "name": "b3",
+   "let": "s + b2 * c"
+  },
+  {
+   "name": "rem",
+   "let": "t + b3 * c"
+  },
+  {
+   "require": "b1 != 0 and b2 != 0 and b3 != 0 and abs(b3) <= 40",
+   "why": "clean nonzero quotient coefficients"
+  },
+  {
+   "name": "qs",
+   "let": "(\"+ \" if q > 0 else \"- \") + str(abs(q))"
+  },
+  {
+   "name": "ss",
+   "let": "(\"+ \" if s > 0 else \"- \") + str(abs(s))"
+  },
+  {
+   "name": "ts",
+   "let": "(\"+ \" if t > 0 else \"- \") + str(abs(t))"
+  },
+  {
+   "name": "ds",
+   "let": "(\"- \" + str(c)) if c > 0 else (\"+ \" + str(abs(c)))"
+  },
+  {
+   "name": "b1s",
+   "let": "(\"+ \" if b1 > 0 else \"- \") + str(abs(b1))"
+  },
+  {
+   "name": "b2s",
+   "let": "(\"+ \" if b2 > 0 else \"- \") + str(abs(b2))"
+  },
+  {
+   "name": "b3s",
+   "let": "(\"+ \" if b3 > 0 else \"- \") + str(abs(b3))"
+  }
+ ],
+ "constraints": [
+  "b1 != 0",
+  "b2 != 0",
+  "b3 != 0"
+ ],
+ "stem": "Using synthetic division, find the quotient when $A = {=p}x^4 {=qs}x^3 {=ss}x {=ts}$ is divided by $B = x {=ds}$. Write the quotient as a polynomial in $x$.",
+ "solution": [
+  "The $x^2$ term is missing, so insert a zero. Coefficients of $A$: {=p}, {=q}, 0, {=s}, {=t}.",
+  "The divisor is $x {=ds}$, so write {=c} on the left.",
+  "Bring down {=p}. Then ${=q}+({=p})({=c})={=b1}$; $0+({=b1})({=c})={=b2}$; ${=s}+({=b2})({=c})={=b3}$; ${=t}+({=b3})({=c})={=rem}$.",
+  "Bottom row: {=p}, {=b1}, {=b2}, {=b3}, remainder {=rem}.",
+  "Quotient: ${=p}x^3 {=b1s}x^2 {=b2s}x {=b3s}$, remainder {=rem}."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=p}*x**3 {=signed(b1)}*x**2 {=signed(b2)}*x {=signed(b3)}",
+  "form": "expanded",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced: quartic with missing x^2 term and divisor x-c with c of either sign; asks for the quotient only.\n\nPIPELINE NORMALISATION (not an author edit): drop-redundant-answer: removed the top-level \"answer\" (\"\"); an expression family's answer is marker.answer (\"({=p})*x**3 + ({=b1})*x**2 + ({=b2})*x + ({=b3})\"), unchanged. EDIT (Claude for TD, 2026-10-29, not an author edit): the key writes each coefficient with its sign (signed()), not '+ (-2)x^2' (the S6 judge, key_form_ok), and the quotient's coefficients are kept non-zero so no '+ 0x' term is printed."
+}

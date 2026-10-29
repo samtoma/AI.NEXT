@@ -252,6 +252,13 @@ def answer_type(ans: str, marker_kinds: bool = True):
     if asg and re.sub(rf"\b[a-zA-Z]\s*=\s*{NUM}|[,;\s]|\band\b", "", a) == "":
         key = ", ".join(f"{v} = {x}" for v, x in asg)
         return "short", {"marker": {"kind": "values", "key": key, "variables": list(dict.fromkeys(v for v, _ in asg))}}, key   # each once
+    # one letter, several values: "a = -4, 9/4", "x = 1 or 3" (the values that make a cubic's root repeat; EB Grade 11
+    # 3-4-4, Tamer, 2026-10-29): the set of values, in any order
+    several = re.fullmatch(rf"([a-zA-Z])\s*=\s*({NUM}(?:\s*(?:,|\bor\b|\band\b)\s*{NUM})+)", a)
+    if several and marker_kinds:
+        vals = re.findall(NUM, several.group(2))
+        key = ", ".join(vals)
+        return "short", {"marker": {"kind": "values", "key": key, "variables": [several.group(1)]}}, key
     pair = re.fullmatch(rf"(?:[A-Za-z]\w*\s*(?:is|=)\s*)?\(\s*({NUM})\s*,\s*({NUM})\s*\)", a)
     if pair:
         key = f"({pair.group(1)}, {pair.group(2)})"
@@ -342,6 +349,11 @@ def _value_type(v: str):
 
 def answer_parts(ans: str, stem: str) -> list[tuple[str, tuple]]:
     a = str(ans or "").replace("$", "").strip()
+    # a division's quotient and remainder (synthetic or long division; EB Grade 11 3-3-3): each asked on its own
+    qr = re.fullmatch(r"(?i)\s*quotient\s*:?\s*(.+?)\s*[,;]\s*(?:and\s+)?remainder\s*:?\s*(.+?)\s*\.?", a)
+    if qr:
+        parts = [(f"Answer only the {name}.", answer_type(v)) for name, v in (("quotient", qr.group(1)), ("remainder", qr.group(2)))]
+        return parts if all(t for _, t in parts) else []
     if re.search(r"[<>≤≥≠]|\\(?:le|ge|neq)\b|\bsee steps\b|\b(?:Row|Case|Observation)\b", a) or re.search(r"\bprove\b", stem or "", re.I):
         return []
     num = [m for m in re.finditer(r"(?:^|[;.]\s*)\(?(\d)\)\s*|(?:^|\.\s*)Part (\d):\s*", a)]

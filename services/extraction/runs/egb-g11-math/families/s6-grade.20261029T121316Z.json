@@ -1,0 +1,84 @@
+{
+ "mode": "grade",
+ "book": "egb-g11-math",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "0b13da277b33a0403878805d1bf10f10717f0a8739adb916f910de0a60659978",
+  "generated_sha256": "cb351300ab1d9060d2e1ea361781dbd385657ccbe5a16bf2c1a45bbdf60094dc",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:eb11c3-3-3:quartic-quo",
+   "spec_sha": "893f4d0f8dc4b56cece8c5eb54d9ea06ca947308efb420b0ba33023e12d04fa1",
+   "answers": [
+    {
+     "instance_id": "q:eb11c3-3-3:g003-quarti",
+     "stem_sha": "5773240d5a064784",
+     "answer": {
+      "plain": "3*x^3 - 2*x^2 + 4*x - 12"
+     },
+     "working": "Root -2; coefficients 3,4,0,-4,-4 -> 3,-2,4,-12, remainder 20."
+    },
+    {
+     "instance_id": "q:eb11c3-3-3:g004-quarti",
+     "stem_sha": "b66195f06a4e6d61",
+     "answer": {
+      "plain": "2*x^3 + 4*x^2 + 4*x + 7"
+     },
+     "working": "Root 1; coefficients 2,2,0,3,-3 -> 2,4,4,7, remainder 4."
+    },
+    {
+     "instance_id": "q:eb11c3-3-3:g010-quarti",
+     "stem_sha": "ee2699465f602b3f",
+     "answer": {
+      "plain": "2*x^3 + 4*x^2 + 12*x + 33"
+     },
+     "working": "Root 3; coefficients 2,-2,0,-3,2 -> 2,4,12,33, remainder 101."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No options in the family. I checked each synthetic division by hand and all three keys and remainders are correct. Each key matches its answer_check and is in expanded form. The solutions insert the zero for the missing x² term and use the right root (-2, 1, 3).",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c3-4-4:guided-root-one",
+   "spec_sha": "0718f431d234eae9dbe16e901608c05ace2eea28ff15ad404ac1627da3a6b7ac",
+   "answers": [
+    {
+     "instance_id": "q:eb11c3-4-4:g001-guided",
+     "stem_sha": "de2606fadea0b5a3",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c3-4-4:g002-guided",
+     "stem_sha": "893be009320549c9",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c3-4-4:g005-guided",
+     "stem_sha": "8ffae5ee771e541c",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by expanding the factorisation (x-1)(x^2-bx+a). It reproduces each cubic, with b = 4, 8 and 6 for g001, g002 and g005. Case 1 (x=1 is a root of the quadratic) gives a = b-1. Case 2 (discriminant zero) gives a = b²/4. That gives 3 and 4, 7 and 16, and 5 and 9, matching the keys and answer_check lists. The keys list both values, which is what \"find all values\" asks for. The family has no wrong options, so distractors_ok is true by default. There is no word problem, so context is fine.",
+    "distractors": []
+   }
+  }
+ ]
+}

@@ -1,0 +1,450 @@
+{
+  "format": "ainext.family-grading/1",
+  "seed": 20260925,
+  "sample_per_family": 3,
+  "families": [
+    {
+      "family_id": "tpl:eb11c3-3-3:quad-rem",
+      "spec_sha": "d6ea0cb09ac5cc5b97f174f071649a451136f3c511d727a553a05a39ffe553af",
+      "kind": "family",
+      "lo_id": "lo:eb11c3-3-3",
+      "tier": "basic",
+      "answer_type": "numeric",
+      "context": null,
+      "parent_question_id": "q:eb11c3-3-3:bk-exercise-14-c-p2",
+      "instances_available": 10,
+      "instances": [
+        {
+          "instance_id": "q:eb11c3-3-3:g006-quad-r",
+          "blind": {
+            "instance_id": "q:eb11c3-3-3:g006-quad-r",
+            "stem": "Using synthetic division, find the remainder when $A = 2x^2 - 4x + 6$ is divided by $B = x - 1$. Answer only the remainder.",
+            "stem_sha": "20f161d5ca7ebfc9",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "4",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "Coefficients of $A$: 2, -4, 6. The divisor is $x - 1$, so write 1 on the left."
+              },
+              {
+                "step": 2,
+                "text_md": "Bring down 2. Multiply: $2\\times1=2$, and add: $-4+(2)=-2$."
+              },
+              {
+                "step": 3,
+                "text_md": "Multiply: $-2\\times1=-2$, and add: $6+(-2)=4$."
+              },
+              {
+                "step": 4,
+                "text_md": "Bottom row: 2, -2, remainder 4. The quotient is $2x + (-2)$ and the remainder is 4."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:eb11c3-3-3:g007-quad-r",
+          "blind": {
+            "instance_id": "q:eb11c3-3-3:g007-quad-r",
+            "stem": "Using synthetic division, find the remainder when $A = 3x^2 + 1x - 5$ is divided by $B = x - 4$. Answer only the remainder.",
+            "stem_sha": "567deb6474d477ab",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "47",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "Coefficients of $A$: 3, 1, -5. The divisor is $x - 4$, so write 4 on the left."
+              },
+              {
+                "step": 2,
+                "text_md": "Bring down 3. Multiply: $3\\times4=12$, and add: $1+(12)=13$."
+              },
+              {
+                "step": 3,
+                "text_md": "Multiply: $13\\times4=52$, and add: $-5+(52)=47$."
+              },
+              {
+                "step": 4,
+                "text_md": "Bottom row: 3, 13, remainder 47. The quotient is $3x + (13)$ and the remainder is 47."
+              }
+            ]
+          }
+        },
+        {
+          "instance_id": "q:eb11c3-3-3:g009-quad-r",
+          "blind": {
+            "instance_id": "q:eb11c3-3-3:g009-quad-r",
+            "stem": "Using synthetic division, find the remainder when $A = 3x^2 - 1x - 9$ is divided by $B = x - 4$. Answer only the remainder.",
+            "stem_sha": "3c1f7e2510deda05",
+            "answer_format": {
+              "type": "number"
+            }
+          },
+          "sealed": {
+            "correct_answer": "35",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "Coefficients of $A$: 3, -1, -9. The divisor is $x - 4$, so write 4 on the left."
+              },
+              {
+                "step": 2,
+                "text_md": "Bring down 3. Multiply: $3\\times4=12$, and add: $-1+(12)=11$."
+              },
+              {
+                "step": 3,
+                "text_md": "Multiply: $11\\times4=44$, and add: $-9+(44)=35$."
+              },
+              {
+                "step": 4,
+                "text_md": "Bottom row: 3, 11, remainder 35. The quotient is $3x + (11)$ and the remainder is 35."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "family_id": "tpl:eb11c3-3-3:quartic-quo",
+      "spec_sha": "070a6cc27961fccb333abac92a846a0dee7366fc5375fb12d044392644942661",
+      "kind": "family",
+      "lo_id": "lo:eb11c3-3-3",
+      "tier": "advanced",
+      "answer_type": "expression",
+      "context": null,
+      "parent_question_id": "q:eb11c3-3-3:bk-exercise-14-d-p2",
+      "instances_available": 10,
+      "instances": [
+        {
+          "instance_id": "q:eb11c3-3-3:g003-quarti",
+          "blind": {
+            "instance_id": "q:eb11c3-3-3:g003-quarti",
+            "stem": "Using synthetic division, find the quotient when $A = 3x^4 + 4x^3 - 4x - 4$ is divided by $B = x + 2$. Write the quotient as a polynomial in $x$.",
+            "stem_sha": "5773240d5a064784",
+            "answer_format": {
+              "type": "expression",
+              "kind": "expression",
+              "form": "expanded",
+              "variables": [
+                "x"
+              ]
+            }
+          },
+          "sealed": {
+            "correct_answer": "3x^{3} + (-2)x^{2} + 4x - 12",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "The $x^2$ term is missing, so insert a zero. Coefficients of $A$: 3, 4, 0, -4, -4."
+              },
+              {
+                "step": 2,
+                "text_md": "The divisor is $x + 2$, so write -2 on the left."
+              },
+              {
+                "step": 3,
+                "text_md": "Bring down 3. Then $4+(3)(-2)=-2$; $0+(-2)(-2)=4$; $-4+(4)(-2)=-12$; $-4+(-12)(-2)=20$."
+              },
+              {
+                "step": 4,
+                "text_md": "Bottom row: 3, -2, 4, -12, remainder 20."
+              },
+              {
+                "step": 5,
+                "text_md": "Quotient: $3x^3 - 2x^2 + 4x - 12$, remainder 20."
+              }
+            ],
+            "marker": {
+              "kind": "expression",
+              "key": "3x^{3} + (-2)x^{2} + 4x - 12",
+              "form": "expanded",
+              "variables": [
+                "x"
+              ],
+              "tolerance": null
+            },
+            "answer_check": "(3)*x**3 + (-2)*x**2 + (4)*x + (-12)"
+          }
+        },
+        {
+          "instance_id": "q:eb11c3-3-3:g004-quarti",
+          "blind": {
+            "instance_id": "q:eb11c3-3-3:g004-quarti",
+            "stem": "Using synthetic division, find the quotient when $A = 2x^4 + 2x^3 + 3x - 3$ is divided by $B = x - 1$. Write the quotient as a polynomial in $x$.",
+            "stem_sha": "b66195f06a4e6d61",
+            "answer_format": {
+              "type": "expression",
+              "kind": "expression",
+              "form": "expanded",
+              "variables": [
+                "x"
+              ]
+            }
+          },
+          "sealed": {
+            "correct_answer": "2x^{3} + 4x^{2} + 4x + 7",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "The $x^2$ term is missing, so insert a zero. Coefficients of $A$: 2, 2, 0, 3, -3."
+              },
+              {
+                "step": 2,
+                "text_md": "The divisor is $x - 1$, so write 1 on the left."
+              },
+              {
+                "step": 3,
+                "text_md": "Bring down 2. Then $2+(2)(1)=4$; $0+(4)(1)=4$; $3+(4)(1)=7$; $-3+(7)(1)=4$."
+              },
+              {
+                "step": 4,
+                "text_md": "Bottom row: 2, 4, 4, 7, remainder 4."
+              },
+              {
+                "step": 5,
+                "text_md": "Quotient: $2x^3 + 4x^2 + 4x + 7$, remainder 4."
+              }
+            ],
+            "marker": {
+              "kind": "expression",
+              "key": "2x^{3} + 4x^{2} + 4x + 7",
+              "form": "expanded",
+              "variables": [
+                "x"
+              ],
+              "tolerance": null
+            },
+            "answer_check": "(2)*x**3 + (4)*x**2 + (4)*x + (7)"
+          }
+        },
+        {
+          "instance_id": "q:eb11c3-3-3:g010-quarti",
+          "blind": {
+            "instance_id": "q:eb11c3-3-3:g010-quarti",
+            "stem": "Using synthetic division, find the quotient when $A = 2x^4 - 2x^3 - 3x + 2$ is divided by $B = x - 3$. Write the quotient as a polynomial in $x$.",
+            "stem_sha": "ee2699465f602b3f",
+            "answer_format": {
+              "type": "expression",
+              "kind": "expression",
+              "form": "expanded",
+              "variables": [
+                "x"
+              ]
+            }
+          },
+          "sealed": {
+            "correct_answer": "2x^{3} + 4x^{2} + 12x + 33",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "The $x^2$ term is missing, so insert a zero. Coefficients of $A$: 2, -2, 0, -3, 2."
+              },
+              {
+                "step": 2,
+                "text_md": "The divisor is $x - 3$, so write 3 on the left."
+              },
+              {
+                "step": 3,
+                "text_md": "Bring down 2. Then $-2+(2)(3)=4$; $0+(4)(3)=12$; $-3+(12)(3)=33$; $2+(33)(3)=101$."
+              },
+              {
+                "step": 4,
+                "text_md": "Bottom row: 2, 4, 12, 33, remainder 101."
+              },
+              {
+                "step": 5,
+                "text_md": "Quotient: $2x^3 + 4x^2 + 12x + 33$, remainder 101."
+              }
+            ],
+            "marker": {
+              "kind": "expression",
+              "key": "2x^{3} + 4x^{2} + 12x + 33",
+              "form": "expanded",
+              "variables": [
+                "x"
+              ],
+              "tolerance": null
+            },
+            "answer_check": "(2)*x**3 + (4)*x**2 + (12)*x + (33)"
+          }
+        }
+      ]
+    },
+    {
+      "family_id": "tpl:eb11c3-4-4:guided-root-one",
+      "spec_sha": "8cad86972bb65d5f06148760bab7f5c4211ef6e27a3f8800842e17c48298ae43",
+      "kind": "family",
+      "lo_id": "lo:eb11c3-4-4",
+      "tier": "basic",
+      "answer_type": "expression",
+      "context": null,
+      "parent_question_id": "q:eb11c3-4-4:bk-exercise-8",
+      "instances_available": 5,
+      "instances": [
+        {
+          "instance_id": "q:eb11c3-4-4:g001-guided",
+          "blind": {
+            "instance_id": "q:eb11c3-4-4:g001-guided",
+            "stem": "The equation $x^3 - 5x^2 + (a+4)x - a = 0$ has $x=1$ as a root for every value of the constant $a$. Find all values of $a$ for which the equation has a repeated root. Give the values separated by commas.",
+            "stem_sha": "edfaec71468617fe",
+            "answer_format": {
+              "type": "expression",
+              "kind": "values",
+              "form": null,
+              "variables": [
+                "a"
+              ]
+            }
+          },
+          "sealed": {
+            "correct_answer": "a = 3 \\text{ or } a = 4",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "Let $P(x)=x^3-5x^2+(a+4)x-a$. $P(1)=1-5+a+4-a=0$, so $(x-1)$ is a factor."
+              },
+              {
+                "step": 2,
+                "text_md": "$P(x)=(x-1)(x^2-4x+a)$."
+              },
+              {
+                "step": 3,
+                "text_md": "Case 1: $x=1$ is a solution of $x^2-4x+a=0$. $1-4+a=0$, so $a=3$."
+              },
+              {
+                "step": 4,
+                "text_md": "Case 2: $x^2-4x+a=0$ has a repeated root. $D=16-4a=0$, so $a=4$."
+              },
+              {
+                "step": 5,
+                "text_md": "So $a=3, \\ 4$."
+              }
+            ],
+            "marker": {
+              "kind": "values",
+              "key": "a = 3 \\text{ or } a = 4",
+              "form": null,
+              "variables": [
+                "a"
+              ],
+              "tolerance": null
+            },
+            "answer_check": "[3, 4]"
+          }
+        },
+        {
+          "instance_id": "q:eb11c3-4-4:g002-guided",
+          "blind": {
+            "instance_id": "q:eb11c3-4-4:g002-guided",
+            "stem": "The equation $x^3 - 9x^2 + (a+8)x - a = 0$ has $x=1$ as a root for every value of the constant $a$. Find all values of $a$ for which the equation has a repeated root. Give the values separated by commas.",
+            "stem_sha": "e9c8fd180fb11833",
+            "answer_format": {
+              "type": "expression",
+              "kind": "values",
+              "form": null,
+              "variables": [
+                "a"
+              ]
+            }
+          },
+          "sealed": {
+            "correct_answer": "a = 7 \\text{ or } a = 16",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "Let $P(x)=x^3-9x^2+(a+8)x-a$. $P(1)=1-9+a+8-a=0$, so $(x-1)$ is a factor."
+              },
+              {
+                "step": 2,
+                "text_md": "$P(x)=(x-1)(x^2-8x+a)$."
+              },
+              {
+                "step": 3,
+                "text_md": "Case 1: $x=1$ is a solution of $x^2-8x+a=0$. $1-8+a=0$, so $a=7$."
+              },
+              {
+                "step": 4,
+                "text_md": "Case 2: $x^2-8x+a=0$ has a repeated root. $D=64-4a=0$, so $a=16$."
+              },
+              {
+                "step": 5,
+                "text_md": "So $a=7, \\ 16$."
+              }
+            ],
+            "marker": {
+              "kind": "values",
+              "key": "a = 7 \\text{ or } a = 16",
+              "form": null,
+              "variables": [
+                "a"
+              ],
+              "tolerance": null
+            },
+            "answer_check": "[7, 16]"
+          }
+        },
+        {
+          "instance_id": "q:eb11c3-4-4:g005-guided",
+          "blind": {
+            "instance_id": "q:eb11c3-4-4:g005-guided",
+            "stem": "The equation $x^3 - 7x^2 + (a+6)x - a = 0$ has $x=1$ as a root for every value of the constant $a$. Find all values of $a$ for which the equation has a repeated root. Give the values separated by commas.",
+            "stem_sha": "4826f836c8f2bcaa",
+            "answer_format": {
+              "type": "expression",
+              "kind": "values",
+              "form": null,
+              "variables": [
+                "a"
+              ]
+            }
+          },
+          "sealed": {
+            "correct_answer": "a = 5 \\text{ or } a = 9",
+            "canonical_solution": [
+              {
+                "step": 1,
+                "text_md": "Let $P(x)=x^3-7x^2+(a+6)x-a$. $P(1)=1-7+a+6-a=0$, so $(x-1)$ is a factor."
+              },
+              {
+                "step": 2,
+                "text_md": "$P(x)=(x-1)(x^2-6x+a)$."
+              },
+              {
+                "step": 3,
+                "text_md": "Case 1: $x=1$ is a solution of $x^2-6x+a=0$. $1-6+a=0$, so $a=5$."
+              },
+              {
+                "step": 4,
+                "text_md": "Case 2: $x^2-6x+a=0$ has a repeated root. $D=36-4a=0$, so $a=9$."
+              },
+              {
+                "step": 5,
+                "text_md": "So $a=5, \\ 9$."
+              }
+            ],
+            "marker": {
+              "kind": "values",
+              "key": "a = 5 \\text{ or } a = 9",
+              "form": null,
+              "variables": [
+                "a"
+              ],
+              "tolerance": null
+            },
+            "answer_check": "[5, 9]"
+          }
+        }
+      ]
+    }
+  ],
+  "book": "egb-g11-math",
+  "per_family": 10
+}

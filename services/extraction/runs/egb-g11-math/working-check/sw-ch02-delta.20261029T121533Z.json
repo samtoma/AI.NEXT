@@ -1,0 +1,53 @@
+{
+ "stage": "SW",
+ "workflow": "working-check",
+ "prompts_version": "sw-v3",
+ "book": "egb-g11-math",
+ "chapter": 2,
+ "part": 1,
+ "parts": 1,
+ "batch": 5,
+ "agents": 1,
+ "effort": "high",
+ "model": "sonnet",
+ "pass_id": "A",
+ "order": "bundle",
+ "by_ref": {
+  "dir": "/Users/tdeif/Developer/Noor/services/extraction/work/egb-g11-math/packets/sw-ch02-delta-20261029",
+  "stage": "SW",
+  "shards_sha256": "de35c6dee314b85ca6818f93b4c35c2ab67abcbd8dea7b1418167fcf91310dea",
+  "files": 3
+ },
+ "embedded": {
+  "source": "runbook/working-check.workflow.js",
+  "source_sha256": "352a846920d85b4c224df7fb36d3f9a8ea598155cc2b4ee4ba9ef7e4791b6385",
+  "args_sha256": "d0034783398cce3827b6d1c676385ef7ae176a42345ce2c6b6933d3d341a1674",
+  "generated_sha256": "f4dff7a0b1a7347605a27be3156ca32dc1dd515b33590c6731c5818abf731b31",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "solution_id": "q:eb11c2-1-3:bk-warm-up-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:eb11c2-1-3:bk-try-7",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:eb11c2-1-3:bk-exercise-9",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  }
+ ],
+ "problems": [],
+ "meter": {
+  "stage": "SW",
+  "record": "uv run meter_run.py record --book egb-g11-math --stage SW --run <runId>"
+ }
+}

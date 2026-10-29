@@ -1,0 +1,126 @@
+{
+ "mode": "grade",
+ "book": "egb-g11-math",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "7c104791ced927476e48368d63dfd074ae951c51546867b6ab35a0c72007544b",
+  "generated_sha256": "51c72834bf5bc87366730ad3f8685d380cefbb5ac4db2df0ce0e44889d90155e",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:eb11c3-3-3:quad-rem",
+   "spec_sha": "d6ea0cb09ac5cc5b97f174f071649a451136f3c511d727a553a05a39ffe553af",
+   "answers": [
+    {
+     "instance_id": "q:eb11c3-3-3:g006-quad-r",
+     "stem_sha": "20f161d5ca7ebfc9",
+     "answer": {
+      "value": "4"
+     },
+     "working": "Synthetic division with root 1: coefficients 2, -4, 6 → 2, -2, 4. Remainder 4."
+    },
+    {
+     "instance_id": "q:eb11c3-3-3:g007-quad-r",
+     "stem_sha": "567deb6474d477ab",
+     "answer": {
+      "value": "47"
+     },
+     "working": "Root 4: coefficients 3, 1, -5 → 3, 13, 47. Remainder 47."
+    },
+    {
+     "instance_id": "q:eb11c3-3-3:g009-quad-r",
+     "stem_sha": "3c1f7e2510deda05",
+     "answer": {
+      "value": "35"
+     },
+     "working": "Root 4: coefficients 3, -1, -9 → 3, 11, 35. Remainder 35."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked each key with the Remainder Theorem, f(c) for the divisor x − c. All three keys are correct.\n- g006: f(1) = 2 − 4 + 6 = 4.\n- g007: f(4) = 48 + 4 − 5 = 47.\n- g009: f(4) = 48 − 4 − 9 = 35.\n\nThe synthetic division steps are arithmetically correct in all three solutions. Each one gives the right quotient and the right remainder. The only blemish is cosmetic: the parentheses in expressions like \"−4+(2)\" and \"1+(12)\" are awkward but not wrong.\n\nNo wrong options were supplied, so there are no distractors to judge. Each key is a single integer, which is what the stem asks for.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c3-3-3:quartic-quo",
+   "spec_sha": "070a6cc27961fccb333abac92a846a0dee7366fc5375fb12d044392644942661",
+   "answers": [
+    {
+     "instance_id": "q:eb11c3-3-3:g003-quarti",
+     "stem_sha": "5773240d5a064784",
+     "answer": {
+      "plain": "3*x^3 - 2*x^2 + 4*x - 12"
+     },
+     "working": "Root -2, coefficients 3,4,0,-4,-4 -> 3,-2,4,-12, remainder 20."
+    },
+    {
+     "instance_id": "q:eb11c3-3-3:g004-quarti",
+     "stem_sha": "b66195f06a4e6d61",
+     "answer": {
+      "plain": "2*x^3 + 4*x^2 + 4*x + 7"
+     },
+     "working": "Root 1, coefficients 2,2,0,3,-3 -> 2,4,4,7, remainder 4."
+    },
+    {
+     "instance_id": "q:eb11c3-3-3:g010-quarti",
+     "stem_sha": "ee2699465f602b3f",
+     "answer": {
+      "plain": "2*x^3 + 4*x^2 + 12*x + 33"
+     },
+     "working": "Root 3, coefficients 2,-2,0,-3,2 -> 2,4,12,33, remainder 101."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": false,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The quotients and remainders for all three instances are correct, and the worked solutions are correct. The g003 LaTeX key reads \"3x^{3} + (-2)x^{2} + 4x - 12\". It is equivalent to answer_check, but the \"+ (-2)\" is not simplified notation. The key should be written 3x^3 - 2x^2 + 4x - 12, so regenerate the key rendering to merge a negative coefficient into \"-\". The family has no options, so distractors_ok is true. No file was named in the task, so none was opened."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c3-4-4:guided-root-one",
+   "spec_sha": "8cad86972bb65d5f06148760bab7f5c4211ef6e27a3f8800842e17c48298ae43",
+   "answers": [
+    {
+     "instance_id": "q:eb11c3-4-4:g001-guided",
+     "stem_sha": "edfaec71468617fe",
+     "answer": {
+      "plain": "[3, 4]"
+     },
+     "working": "Factor: (x-1)(x^2-4x+a). Repeated root if the quadratic has a double root (16-4a=0, a=4) or has root 1 (1-4+a=0, a=3)."
+    },
+    {
+     "instance_id": "q:eb11c3-4-4:g002-guided",
+     "stem_sha": "e9c8fd180fb11833",
+     "answer": {
+      "plain": "[7, 16]"
+     },
+     "working": "Factor: (x-1)(x^2-8x+a). Double root: 64-4a=0, a=16. Root 1: 1-8+a=0, a=7."
+    },
+    {
+     "instance_id": "q:eb11c3-4-4:g005-guided",
+     "stem_sha": "4826f836c8f2bcaa",
+     "answer": {
+      "plain": "[5, 9]"
+     },
+     "working": "Factor: (x-1)(x^2-6x+a). Double root: 36-4a=0, a=9. Root 1: 1-6+a=0, a=5."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": false,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The maths is correct in all three instances. I expanded each factorisation and it matches the cubic. For g001, a=3 gives (x-1)^2(x-3) and a=4 gives (x-1)(x-2)^2. g002 (a=7, 16) and g005 (a=5, 9) work the same way, and both cases are covered. The family has no options, so distractors_ok is vacuously true. The stem asks for the values \"separated by commas\", but the displayed key is \"a = 3 \\text{ or } a = 4\". The answer_check list [3, 4] is consistent with the values, but the key's form does not match the requested format. That is why key_form_ok is false. The fix is to make the key \"3, 4\" (or to change the stem wording to match)."
+   }
+  }
+ ]
+}

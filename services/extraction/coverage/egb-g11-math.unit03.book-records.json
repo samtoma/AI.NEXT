@@ -13,9 +13,9 @@
   "status": "RED",
   "summary": {
     "checks": 21,
-    "hold": 15,
+    "hold": 16,
     "excepted": 0,
-    "fail": 6
+    "fail": 5
   },
   "checks": [
     {
@@ -84,25 +84,16 @@
       "id": "objective_evidence",
       "title": "Objectives = objectives with a statement, a book question and evidence of two kinds, one a worked example or exercise (Samuel's rule 1)",
       "want": 17,
-      "got": 15,
-      "state": "fails",
-      "failures": [
-        {
-          "scope": "lo:eb11c3-3-3",
-          "detail": "lacks a book question"
-        },
-        {
-          "scope": "lo:eb11c3-4-4",
-          "detail": "lacks a book question"
-        }
-      ],
+      "got": 17,
+      "state": "holds",
+      "failures": [],
       "excepted_scopes": []
     },
     {
       "id": "tier_floor",
       "title": "Objectives × 3 tiers = cells with a live question, book or generated",
       "want": 51,
-      "got": 39,
+      "got": 44,
       "state": "fails",
       "failures": [
         {
@@ -122,18 +113,6 @@
           "detail": "no live question at this tier"
         },
         {
-          "scope": "lo:eb11c3-3-3 basic",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:eb11c3-3-3 standard",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:eb11c3-3-3 advanced",
-          "detail": "no live question at this tier"
-        },
-        {
           "scope": "lo:eb11c3-4-2 basic",
           "detail": "no live question at this tier"
         },
@@ -143,14 +122,6 @@
         },
         {
           "scope": "lo:eb11c3-4-4 basic",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:eb11c3-4-4 standard",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:eb11c3-4-4 advanced",
           "detail": "no live question at this tier"
         }
       ],
@@ -321,8 +292,8 @@
     {
       "id": "items_typed_once",
       "title": "Book questions = distinct prompts asked once, each with one type",
-      "want": 227,
-      "got": 227,
+      "want": 253,
+      "got": 253,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -330,8 +301,8 @@
     {
       "id": "solution_sources",
       "title": "Book questions = answers printed in the book + generated answers approved or agreed",
-      "want": 227,
-      "got": 227,
+      "want": 253,
+      "got": 253,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -339,8 +310,8 @@
     {
       "id": "notation",
       "title": "Un-normalised decimal commas, `(x; y)` and display environments left in the unit = 0",
-      "want": 2381,
-      "got": 2381,
+      "want": 2615,
+      "got": 2615,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -421,16 +392,16 @@
     "teaching/egb-g11-math/visuals/eb11c3-2.json": "0009bb08efacb57502d7b804891afc763cb9582ecf29fbf025cdb7d358fb7d96",
     "teaching/egb-g11-math/visuals/eb11c3-3.json": "868b2c828634dae3dd1b6e8be4972527c82904a5d050b3071955655c5ac377a8",
     "teaching/egb-g11-math/visuals/eb11c3-4.json": "1ba36ba26968fcadc04a87d8c2666db20538cbbec82587706ef535f0befb2025",
-    "compiled/egb-g11-math/compile-report.json": "33555dadebf36cc6265affd835b7b73dabf91f84795d3c08cd3611486140e6a0",
+    "compiled/egb-g11-math/compile-report.json": "844ff1250d9e33da5415ccfe584e68f493cfd2dfb9357a18385c917a69d80f40",
     "compiled/egb-g11-math/eb11c1.json": "704b289b96c7faa652843f8de6d793794762fc6aa3d34ecc3e014d8b61e09366",
-    "compiled/egb-g11-math/eb11c2.json": "4d71de548b62fbf2a2ebe562f125408ae483ca15bb7adc25287c7d005afbfa95",
-    "compiled/egb-g11-math/eb11c3.json": "55bb60734e96ecf751f73862fa6b5e5bdf3f5d76d21bff03299351f414271927",
-    "compiled/egb-g11-math/eb11c4.json": "d04e5607970e50e7c8ac6b089322ed545a70ecf9509af451f0e1766429fadc54",
-    "compiled/egb-g11-math/generated-questions.json": "c39a0f1cf138ed50881f79ae2cb1c12ead51258bd7ecd8f18fa636b2319cfdc3",
+    "compiled/egb-g11-math/eb11c2.json": "c4e903965981b7d012e21888c3d5db2c5438c346ce75289b0a57d0fbb7a85801",
+    "compiled/egb-g11-math/eb11c3.json": "62cf4b1159429ba72f15023407ade4fe9ccd8073eb0f9f99d50985e89868075f",
+    "compiled/egb-g11-math/eb11c4.json": "dd3c81f739790c672fb3469e7d8e69d45ec97427e7a87596c3353f327ff4e026",
+    "compiled/egb-g11-math/generated-questions.json": "1cc7615661e5ae3eea8d2a657f184bbabf4675857f0260deba3b5c610ddc9a90",
     "compiled/egb-g11-math/generated-questions.review-queue.json": "a871457e755e372313509ef81e288d38510d797b0161508636e1ddd8125dd60c",
-    "compiled/egb-g11-math/misconceptions.json": "8a17a48d3975bc8cb588501aea8d42819cf95095d09edbb1367c07e2934c8ae5",
+    "compiled/egb-g11-math/misconceptions.json": "10d491d2d55ae1cdc75a85a70931731bc6576fae4fc248cb99ca06b961509185",
     "compiled/egb-g11-math/review-stamps.json": "fa991d10eb16fca7729d627e5c5559856100a69090a48aadc951aa42e414959b",
-    "compiled/egb-g11-math/widget-questions.json": "18884dc9ebb4b513117be5b7735589478f11e230ffecd86433d66f1318c1d300",
+    "compiled/egb-g11-math/widget-questions.json": "9060e7e177df4fd775a270eb22d4068231839a1f976679f4f59fb945f216c670",
     "compiled/egb-g11-math/widget-questions.review-queue.json": "85e3f66db34dec00dadce6225567bfe66ce39ffd8b8e23796ae45b36d03e464d",
     "compiled/egb-g11-math/content/eb11c3-1.json": "a9da2f02a00ee1bb71d0d1cc70b88416e8b27c919ea645126507ec51d8554a7b",
     "compiled/egb-g11-math/content/eb11c3-2.json": "24c31bc67a01f107baf5b20300cd1b1f7b0fcf3305933942c6622aca9b8b68b5",
