@@ -1,0 +1,661 @@
+{
+ "mode": "grade",
+ "book": "egb-g11-math",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "e415eabac573851beca62c09ba22cb7426ae1dd491c4724260d77dfdcef782e9",
+  "generated_sha256": "148d6a2db839781b4e14470728027157446f89a0a2a27084abb8a9f8188c6bfd",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:eb11c1-1-1:power-two",
+   "spec_sha": "65df5c2a526d8acf3e6a63b58046155e5dc0c9a16de8ac50c0c4bbbd70c424ef",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-1-1:g005-power-",
+     "stem_sha": "5fc12fff1d960b40",
+     "answer": {
+      "value": "486"
+     },
+     "working": "(3x^2+3)^4 = 81(x^2+1)^4. x^4 needs (x^2)^2, so C(4,2)=6. Coefficient = 81*6 = 486."
+    },
+    {
+     "instance_id": "q:eb11c1-1-1:g006-power-",
+     "stem_sha": "76ace1fc6293174c",
+     "answer": {
+      "value": "270"
+     },
+     "working": "x^6 needs (3x^2)^3: C(5,3)*27 = 10*27 = 270."
+    },
+    {
+     "instance_id": "q:eb11c1-1-1:g008-power-",
+     "stem_sha": "8912840a6c7bd8e4",
+     "answer": {
+      "value": "-80"
+     },
+     "working": "x^8 needs (2x^2)^4 * (-1)^1: C(5,4)*16*(-1) = -80."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No wrong options were given, so there are no distractors to check. I recomputed each key. g005: C(4,2)·3²·3² = 6·9·9 = 486. g006: C(5,3)·3³·1 = 10·27 = 270. g008: C(5,4)·2⁴·(−1) = −80. Each k comes from 2k equal to the target power, and each solution follows the general-term method step by step.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-1-2:binom-plus",
+   "spec_sha": "3428178c28e8f085c47e1371a66e7af5d750c9c372e397d988452102e44fa95e",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-1-2:g002-binom-",
+     "stem_sha": "0a96bca5dbfe1bca",
+     "answer": {
+      "plain": "x^4+12*x^3+54*x^2+108*x+81"
+     },
+     "working": "a=3: 4a=12, 6a²=54, 4a³=108, a^4=81"
+    },
+    {
+     "instance_id": "q:eb11c1-1-2:g003-binom-",
+     "stem_sha": "c488530c8078e530",
+     "answer": {
+      "plain": "x^4+20*x^3+150*x^2+500*x+625"
+     },
+     "working": "a=5: 4a=20, 6a²=150, 4a³=500, a^4=625"
+    },
+    {
+     "instance_id": "q:eb11c1-1-2:g004-binom-",
+     "stem_sha": "15563108e9f4e81c",
+     "answer": {
+      "plain": "x^4+24*x^3+216*x^2+864*x+1296"
+     },
+     "working": "a=6: 4a=24, 6a²=216, 4a³=864, a^4=1296"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No wrong options are given, so distractors_ok is true by default. I checked all three expansions by hand. (x+3)^4 gives 1, 12, 54, 108, 81. (x+5)^4 gives 1, 20, 150, 500, 625. (x+6)^4 gives 1, 24, 216, 864, 1296. Each key matches its answer_check and is in expanded form, as the stem asks. Each solution applies the binomial theorem with coefficients 1, 4, 6, 4, 1, and the arithmetic is correct. There is no word problem, and the stems are clear.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-1-2:diff-binom",
+   "spec_sha": "f21ebd2f37acf3420a8910f2861fffcad3ad768f1f4757996472344d0cf2ffc5",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-1-2:g002-diff-b",
+     "stem_sha": "94493c4284bb334f",
+     "answer": {
+      "plain": "243*x^5 - 2025*x^4*y + 6750*x^3*y^2 - 11250*x^2*y^3 + 9375*x*y^4 - 3125*y^5"
+     },
+     "working": "Binomial theorem with coefficients 1,5,10,10,5,1; a=3, b=5."
+    },
+    {
+     "instance_id": "q:eb11c1-1-2:g006-diff-b",
+     "stem_sha": "5508f9b4b40b1917",
+     "answer": {
+      "plain": "243*x^5 - 810*x^4*y + 1080*x^3*y^2 - 720*x^2*y^3 + 240*x*y^4 - 32*y^5"
+     },
+     "working": "Binomial theorem with coefficients 1,5,10,10,5,1; a=3, b=2."
+    },
+    {
+     "instance_id": "q:eb11c1-1-2:g010-diff-b",
+     "stem_sha": "8522b44629be2c9c",
+     "answer": {
+      "plain": "1024*x^5 - 3840*x^4*y + 5760*x^3*y^2 - 4320*x^2*y^3 + 1620*x*y^4 - 243*y^5"
+     },
+     "working": "Binomial theorem with coefficients 1,5,10,10,5,1; a=4, b=3."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The task named no files, so I opened none and checked the arithmetic by hand. The family has no wrong options, so distractors_ok is true by default.\n\nAll three expansions use the binomial coefficients 1, 5, 10, 10, 5, 1 and alternating signs from the negative second term. Each worked solution reaches its key correctly, and each key matches its answer_check.\n\n- **g002, (3x−5y)^5:** the coefficients are 243, 5·81·5 = 2025, 10·27·25 = 6750, 10·9·125 = 11250, 5·3·625 = 9375 and 5^5 = 3125.\n- **g006, (3x−2y)^5:** the coefficients are 243, 5·81·2 = 810, 10·27·4 = 1080, 10·9·8 = 720, 5·3·16 = 240 and 2^5 = 32.\n- **g010, (4x−3y)^5:** the coefficients are 4^5 = 1024, 5·256·3 = 3840, 10·64·9 = 5760, 10·16·27 = 4320, 5·4·81 = 1620 and 3^5 = 243.\n\nThe stem asks for the expansion, and the expanded form is the right form for that.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-1-2:minus-five",
+   "spec_sha": "4300ec7b5b39dc25c79497800aa76e4f9a72374b12fbd5f8d8c68bced6d0d77f",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-1-2:g001-minus-",
+     "stem_sha": "a0bd837e6597eee2",
+     "answer": {
+      "plain": "32*x^5 - 240*x^4*y + 720*x^3*y^2 - 1080*x^2*y^3 + 810*x*y^4 - 243*y^5"
+     },
+     "working": "Binomial theorem with coefficients 1,5,10,10,5,1, a=2x, b=-3y."
+    },
+    {
+     "instance_id": "q:eb11c1-1-2:g002-minus-",
+     "stem_sha": "5508f9b4b40b1917",
+     "answer": {
+      "plain": "243*x^5 - 810*x^4*y + 1080*x^3*y^2 - 720*x^2*y^3 + 240*x*y^4 - 32*y^5"
+     },
+     "working": "Binomial theorem with a=3x, b=-2y."
+    },
+    {
+     "instance_id": "q:eb11c1-1-2:g003-minus-",
+     "stem_sha": "8bdfe94dd712182a",
+     "answer": {
+      "plain": "32*x^5 - 320*x^4*y + 1280*x^3*y^2 - 2560*x^2*y^3 + 2560*x*y^4 - 1024*y^5"
+     },
+     "working": "(2x-4y)^5=32(x-2y)^5; expand (x-2y)^5 = x^5-10x^4y+40x^3y^2-80x^2y^3+80xy^4-32y^5, times 32."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I recomputed all three expansions with the binomial coefficients 1, 5, 10, 10, 5, 1. Each key and each worked solution matches. The signs alternate correctly. Each LaTeX key matches its answer_check expression. The instances list no wrong options, so there are no distractors to check. The stems are unambiguous."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-1-2:plus-four",
+   "spec_sha": "be28ba1e1daf0c820675e2597f49acc2032015b9d54dc7bf44ce3c81c34f86c1",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-1-2:g001-plus-f",
+     "stem_sha": "90bcf8956d0fa9ab",
+     "answer": {
+      "plain": "x^4 + 16*x^3 + 96*x^2 + 256*x + 256"
+     },
+     "working": "Binomial coefficients 1,4,6,4,1 with powers of 4: 1, 4*4=16, 6*16=96, 4*64=256, 256."
+    },
+    {
+     "instance_id": "q:eb11c1-1-2:g003-plus-f",
+     "stem_sha": "0a96bca5dbfe1bca",
+     "answer": {
+      "plain": "x^4 + 12*x^3 + 54*x^2 + 108*x + 81"
+     },
+     "working": "Coefficients 1,4,6,4,1 with powers of 3: 1, 4*3=12, 6*9=54, 4*27=108, 81."
+    },
+    {
+     "instance_id": "q:eb11c1-1-2:g004-plus-f",
+     "stem_sha": "90dfcabede4dc126",
+     "answer": {
+      "plain": "x^4 + 8*x^3 + 24*x^2 + 32*x + 16"
+     },
+     "working": "Coefficients 1,4,6,4,1 with powers of 2: 1, 4*2=8, 6*4=24, 4*8=32, 16."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "All three expansions verified by binomial coefficients 1,4,6,4,1. Keys match answer_check. No options are listed, so there are no distractors to judge. Solutions follow the binomial theorem step by step."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-1-4:sumcoef",
+   "spec_sha": "3831bb089a4a9624e405219ddc06f3e55c781b9df5fdaf4a33b302a6f9c9a4d7",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-1-4:g002-sumcoe",
+     "stem_sha": "5619f722a0ab1521",
+     "answer": {
+      "value": "128"
+     },
+     "working": "Set x=1: sum = 2^7 = 128"
+    },
+    {
+     "instance_id": "q:eb11c1-1-4:g003-sumcoe",
+     "stem_sha": "161f44257f9f2151",
+     "answer": {
+      "value": "32"
+     },
+     "working": "Set x=1: sum = 2^5 = 32"
+    },
+    {
+     "instance_id": "q:eb11c1-1-4:g004-sumcoe",
+     "stem_sha": "e0e314604a51fd00",
+     "answer": {
+      "value": "64"
+     },
+     "working": "Set x=1: sum = 2^6 = 64"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "No options were provided, so there are no distractors to check. The keys 128, 32 and 64 equal 2^7, 2^5 and 2^6. Each worked solution substitutes x=1 and evaluates the power correctly."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-2-1:cubic-by-quad",
+   "spec_sha": "7ccae11685477bcd6c79a9ff626ea6f23666f50f564f1db26b21cdc1b069d8af",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-2-1:g007-cubic-",
+     "stem_sha": "d427e33bd1ab001b",
+     "answer": {
+      "plain": "-2*x-1"
+     },
+     "working": "3x*(x^2-2x-1)=3x^3-6x^2-3x; subtract: 2x^2-6x-3. 2*(divisor)=2x^2-4x-2; subtract: -2x-1. Quotient 3x+2."
+    },
+    {
+     "instance_id": "q:eb11c1-2-1:g008-cubic-",
+     "stem_sha": "aedaf2377ff350a2",
+     "answer": {
+      "plain": "3*x+4"
+     },
+     "working": "3x*(divisor)=3x^3+9x^2+15x; subtract: 3x^2+12x+19. 3*(divisor)=3x^2+9x+15; subtract: 3x+4. Quotient 3x+3."
+    },
+    {
+     "instance_id": "q:eb11c1-2-1:g009-cubic-",
+     "stem_sha": "25c19dffbf21e4b7",
+     "answer": {
+      "plain": "-3*x+1"
+     },
+     "working": "3x*(divisor)=3x^3-12x^2-3x; subtract: 4x^2-19x-3. 4*(divisor)=4x^2-16x-4; subtract: -3x+1. Quotient 3x+4."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three divisions by hand, and each worked solution is correct step by step.\n- g007: 3x³ − 4x² − 9x − 3 = (x² − 2x − 1)(3x + 2) + (−2x − 1).\n- g008: 3x³ + 12x² + 27x + 19 = (x² + 3x + 5)(3x + 3) + (3x + 4).\n- g009: 3x³ − 8x² − 22x − 3 = (x² − 4x − 1)(3x + 4) + (−3x + 1).\nThe family has no options, so there are no distractors to judge. The task named no files, so I opened none.\nOne cosmetic point: the keys for g007 and g009 are written \"(-2)x - 1\" and \"(-3)x + 1\", with parentheses around the coefficient. They equal the answer_check values (-2x - 1 and -3x + 1), so I marked key_form_ok true. If the key is ever shown to students, it should be cleaned up."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-2-1:linear-divisor",
+   "spec_sha": "941ef954ed09d0d6f7754288fd906ba5af08d7f1dcdacb613de0084047de004a",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-2-1:g001-linear",
+     "stem_sha": "ce1ed8c1bb3f4b7b",
+     "answer": {
+      "plain": "cannot be determined: the question has unfilled placeholders"
+     },
+     "working": "The question text has unfilled template placeholders ({gs}, {gp}, {gm}), so the actual polynomial x^2 + (?)x + (?) and the divisor x - (?) are unknown. The quotient can't be computed. Generally, for x^2 + s*x + p divided by x - m, the quotient is x + (s+m), with remainder p + m*(s+m). I won't guess values."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The family lists no options, so distractors_ok is true. The key \"x + 5\" matches answer_check \"x + (5)\". The solution is consistent only if the quotient constant is fixed at 5, the divisor is x+m, gs = 5+m and gp = 5m. Then x(x+m) leaves 5x+gp, and 5(x+m) = 5x+gp leaves remainder 0. The hard-coded \"5\" in steps 2–4 and \"x {gn}\" in step 5 depend on that. I could not see the placeholder values, so this is inferred. I also could not rule out a degenerate m = 0. If the generator allows m = 0, the divisor becomes x and the question is trivial."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-2-1:quad-by-linear",
+   "spec_sha": "72f4ed07921dde8c1d5a2f5095b4e62b6e3731c0782398c8b5ba9780c327502b",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-2-1:g001-quad-b",
+     "stem_sha": "52cf5a27246a78d7",
+     "answer": {
+      "plain": "x - 5"
+     },
+     "working": "x^2/x = x; subtract x(x-4) leaves -5x+20; -5x/x = -5; -5(x-4) = -5x+20, remainder 0. Check: (x-4)(x-5)=x^2-9x+20."
+    },
+    {
+     "instance_id": "q:eb11c1-2-1:g008-quad-b",
+     "stem_sha": "5b632aca7827411a",
+     "answer": {
+      "plain": "x + 6"
+     },
+     "working": "x^2/x = x; subtract x(x+5) leaves 6x+30; 6x/x = 6; 6(x+5)=6x+30, remainder 0. Check: (x+5)(x+6)=x^2+11x+30."
+    },
+    {
+     "instance_id": "q:eb11c1-2-1:g009-quad-b",
+     "stem_sha": "20883a7aba95d9b7",
+     "answer": {
+      "plain": "x + 6"
+     },
+     "working": "x^2/x = x; subtract x(x+3) leaves 6x+18; 6x/x = 6; 6(x+3)=6x+18, remainder 0. Check: (x+3)(x+6)=x^2+9x+18."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by factoring the dividend. (x-4)(x-5) = x²-9x+20, (x+5)(x+6) = x²+11x+30, and (x+3)(x+6) = x²+9x+18, so each key is right. The intermediate remainders in the worked steps are correct: -5x+20, 6x+30 and 6x+18. The keys match answer_check. No wrong options were supplied, so there are no distractors to judge.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-2-1:remainder-quad",
+   "spec_sha": "5615b55faca0c85ef74ce31c5eb2ebd25291e7384fca3a2bfa0f2b14cd49222b",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-2-1:g001-remain",
+     "stem_sha": "4eac5fc3ead81a99",
+     "answer": {
+      "plain": ""
+     },
+     "working": "The question text has unfilled template placeholders ({g2}, {g1}, {g0}, {ga}, {gb}) instead of numbers. The dividend and divisor coefficients are missing, so the remainder can't be computed. For general coefficients, the remainder would be linear in x."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": false,
+    "solution_ok": false,
+    "notes": "The instance shows unrendered placeholders ({g2}, {g1}, {g0}, {ga}, {gb}, {ge1}, {gac}, {gbc}, {gr0}, {gc}). I can't check any arithmetic, and a student would see raw braces. The key is a fixed 3x + 4, but the solution only fits if the quotient is x+2 and the remainder is 3x+4. Those constraints aren't visible, so I can't confirm the family is consistent. The stem has two readability problems. Sign handling like \"x^2 {ga}x\" depends on the placeholders carrying their own signs. The remainder step also needs \"3x {gr0}\" to render as 3x + 4. The key and answer_check agree: (3)*x + (4) equals 3x + 4. There are no wrong options, so distractors are vacuously fine. I'm rejecting because the instance can't be verified as rendered."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-2-2:dividend-linear",
+   "spec_sha": "83cb5ab2c881e7e23928d0444b0e3eafe9a904c268668fe8f7a7a849aa0e5f64",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-2-2:g004-divide",
+     "stem_sha": "0afe67df3f9a2d54",
+     "answer": {
+      "plain": "x^2 + 8*x + 19"
+     },
+     "working": "A = (x+2)(x+6) + 7 = x^2 + 8x + 12 + 7 = x^2 + 8x + 19"
+    },
+    {
+     "instance_id": "q:eb11c1-2-2:g008-divide",
+     "stem_sha": "34b940d4b7bf09aa",
+     "answer": {
+      "plain": "x^2 + 7*x + 15"
+     },
+     "working": "A = (x+5)(x+2) + 5 = x^2 + 7x + 10 + 5 = x^2 + 7x + 15"
+    },
+    {
+     "instance_id": "q:eb11c1-2-2:g010-divide",
+     "stem_sha": "7fd73789583c1794",
+     "answer": {
+      "plain": "x^2 + 10*x + 30"
+     },
+     "working": "A = (x+5)(x+5) + 5 = x^2 + 10x + 25 + 5 = x^2 + 10x + 30"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The task named no files, so I checked the arithmetic directly. For each instance I used A = BQ + R.\n- g004: (x+2)(x+6) + 7 = x²+8x+12 + 7 = x²+8x+19. This matches the key and answer_check.\n- g008: (x+5)(x+2) + 5 = x²+7x+10 + 5 = x²+7x+15. This matches the key and answer_check.\n- g010: (x+5)(x+5) + 5 = x²+10x+25 + 5 = x²+10x+30. This matches the key and answer_check.\nEach remainder is a constant, so its degree is below that of the linear divisor, which makes the stems valid division setups. The keys are in expanded form, the form the stems ask for. The family lists no wrong options, so there are no distractors to check.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-2-2:find-dividend",
+   "spec_sha": "54f988e0be721912f09c7ef647d0e74e6bb88367f2c36d0f23c5113f95549f94",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-2-2:g001-find-d",
+     "stem_sha": "b8628f23d13ac703",
+     "answer": {
+      "plain": "x^2+8*x+19"
+     },
+     "working": "A = (x+3)(x+5)+4 = x^2+8x+15+4"
+    },
+    {
+     "instance_id": "q:eb11c1-2-2:g004-find-d",
+     "stem_sha": "864d5d54729a8a37",
+     "answer": {
+      "plain": "x^2+6*x+12"
+     },
+     "working": "A = (x+2)(x+4)+4 = x^2+6x+8+4"
+    },
+    {
+     "instance_id": "q:eb11c1-2-2:g006-find-d",
+     "stem_sha": "39fc6babcc6aef44",
+     "answer": {
+      "plain": "x^2+9*x+26"
+     },
+     "working": "A = (x+5)(x+4)+6 = x^2+9x+20+6"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances with A = B·Q + R.\n- g001: (x+3)(x+5) + 4 = x²+8x+15+4 = x²+8x+19.\n- g004: (x+2)(x+4) + 4 = x²+6x+8+4 = x²+6x+12.\n- g006: (x+5)(x+4) + 6 = x²+9x+20+6 = x²+9x+26.\nEach key matches its answer_check and is in expanded form, as the stem asks. The steps are correct and follow the book's method. The family lists no wrong options, so there are no distractors to judge. The task named no files, so I opened none."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-3-1:factor-twist",
+   "spec_sha": "9c56ef3380193b840ae0dcc9326b7bca12d162e937f66252d36912b9727a1f9b",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-3-1:g002-factor",
+     "stem_sha": "eb53a7c5c14fac55",
+     "answer": {
+      "plain": "4*(x-2)/(x*(x+4))"
+     },
+     "working": "Numerator 4(x-2)^2; denominator x(x^2+2x-8)=x(x+4)(x-2). Cancel (x-2)."
+    },
+    {
+     "instance_id": "q:eb11c1-3-1:g006-factor",
+     "stem_sha": "3d8b0a49f16584e3",
+     "answer": {
+      "plain": "3*(x-3)/(x*(x+2))"
+     },
+     "working": "Numerator 3(x-3)^2; denominator x(x^2-x-6)=x(x-3)(x+2). Cancel (x-3)."
+    },
+    {
+     "instance_id": "q:eb11c1-3-1:g008-factor",
+     "stem_sha": "cf703c265ab7c415",
+     "answer": {
+      "plain": "4*(x-1)/(x*(x+3))"
+     },
+     "working": "Numerator 4(x-1)^2; denominator x(x^2+2x-3)=x(x+3)(x-1). Cancel (x-1)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The family has no options, so there are no distractors to judge. I checked all three instances by hand.\n\n- g002: 4x²−16x+16 = 4(x−2)². x³+2x²−8x = x(x−2)(x+4). Cancelling (x−2) gives 4(x−2)/(x(x+4)).\n- g006: 3x²−18x+27 = 3(x−3)². x³−x²−6x = x(x−3)(x+2). Cancelling (x−3) gives 3(x−3)/(x(x+2)).\n- g008: 4x²−8x+4 = 4(x−1)². x³+2x²−3x = x(x−1)(x+3). Cancelling (x−1) gives 4(x−1)/(x(x+3)).\n\nEach LaTeX key matches its answer_check expression. The keys are fully factorised and in simplest form, as the stem asks. The numbers are realistic.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-3-3:same-denominator",
+   "spec_sha": "bab6955c005a0b95a559f9b23b74d3c6b36d012cfb741e2775bf6047c172e506",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-3-3:g007-same-d",
+     "stem_sha": "33181957ce32f951",
+     "answer": {
+      "plain": "x-2"
+     },
+     "working": "Same denominator: (x^2-6+2)/(x+2) = (x^2-4)/(x+2) = (x-2)(x+2)/(x+2) = x-2"
+    },
+    {
+     "instance_id": "q:eb11c1-3-3:g009-same-d",
+     "stem_sha": "c5caef252023078d",
+     "answer": {
+      "plain": "x-2"
+     },
+     "working": "(x^2-8+4)/(x+2) = (x^2-4)/(x+2) = x-2"
+    },
+    {
+     "instance_id": "q:eb11c1-3-3:g010-same-d",
+     "stem_sha": "e8d6a91a90d89326",
+     "answer": {
+      "plain": "x-4"
+     },
+     "working": "(x^2-20+4)/(x+4) = (x^2-16)/(x+4) = (x-4)(x+4)/(x+4) = x-4"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The three instances have no wrong options, so distractors_ok is true by default. I checked the arithmetic in each. g007: x²−6+2 = x²−4 = (x−2)(x+2), which gives x−2. g009: x²−8+4 = x²−4, which gives x−2. g010: x²−20+4 = x²−16 = (x−4)(x+4), which gives x−4. Each key matches its answer_check and is fully simplified. The solutions follow the combine, factorise, cancel method. None of them states the restriction x ≠ −2 (or x ≠ −4), which is a minor omission."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-3-3:two-linear",
+   "spec_sha": "5d5fa312427b3a2f87aec90e1df34d3d4a9af88547b9e1073a43c3e9fb49388f",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-3-3:g002-two-li",
+     "stem_sha": "00f44e6d6144bc53",
+     "answer": {
+      "plain": "(2*x+9)/((x+3)*(x+6))"
+     },
+     "working": "Common denominator (x+3)(x+6). Numerator (x+6)+(x+3)=2x+9."
+    },
+    {
+     "instance_id": "q:eb11c1-3-3:g004-two-li",
+     "stem_sha": "cf2d00690f95da5c",
+     "answer": {
+      "plain": "(2*x+5)/((x+2)*(x+3))"
+     },
+     "working": "Common denominator (x+2)(x+3). Numerator (x+3)+(x+2)=2x+5."
+    },
+    {
+     "instance_id": "q:eb11c1-3-3:g008-two-li",
+     "stem_sha": "3107972da46580c3",
+     "answer": {
+      "plain": "(2*x+5)/((x+1)*(x+4))"
+     },
+     "working": "Common denominator (x+1)(x+4). Numerator (x+4)+(x+1)=2x+5."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three keys verified by hand and match answer_check. Solutions are correct. The family has no wrong options, so distractors_ok is vacuously true. The \"nothing cancels\" step holds in each case, because the numerator is not a multiple of either denominator factor.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-3-4:one-over-x",
+   "spec_sha": "71e9e3f618b5d06b1a40be41e76a241a2e04abecf374b92c1f7157ed4148df78",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-3-4:g003-one-ov",
+     "stem_sha": "e08c92b07b89ab3a",
+     "answer": {
+      "plain": "(2*x+1)/(5*x+1)"
+     },
+     "working": "Multiply top and bottom by x: (2x+1)/(5x+1)."
+    },
+    {
+     "instance_id": "q:eb11c1-3-4:g006-one-ov",
+     "stem_sha": "a7963737ca44fbee",
+     "answer": {
+      "plain": "(3*x+1)/(5*x+1)"
+     },
+     "working": "Multiply top and bottom by x: (3x+1)/(5x+1)."
+    },
+    {
+     "instance_id": "q:eb11c1-3-4:g007-one-ov",
+     "stem_sha": "025f05a4c514e09a",
+     "answer": {
+      "plain": "(3*x+1)/(4*x+1)"
+     },
+     "working": "Multiply top and bottom by x: (3x+1)/(4x+1)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The family has no options, so there are no distractors to check. I checked all three instances by multiplying the top and bottom by x. That gives (2x+1)/(5x+1), (3x+1)/(5x+1) and (3x+1)/(4x+1). Each LaTeX key matches its answer_check. Each result is already in simplest form, because the numerator and denominator share no common factor. The worked steps are correct. The phrase \"small fraction\" in step 1 is slightly informal but clear."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-4-1:expand-compare",
+   "spec_sha": "e47630a39692b137f8e078d9f73aea233ba37b27c4be6c2adeacdd731fb35561",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-4-1:g001-expand",
+     "stem_sha": "2a483092e4f1d8b5",
+     "answer": {
+      "plain": "[5, 10]"
+     },
+     "working": "Expand: x^2+(5+a)x+5a. 5a=25 so a=5; b=5+a=10."
+    },
+    {
+     "instance_id": "q:eb11c1-4-1:g003-expand",
+     "stem_sha": "c1fd28b2b3e67d47",
+     "answer": {
+      "plain": "[3, 7]"
+     },
+     "working": "Expand: x^2+(4+a)x+4a. 4a=12 so a=3; b=7."
+    },
+    {
+     "instance_id": "q:eb11c1-4-1:g004-expand",
+     "stem_sha": "9681af1ed0909319",
+     "answer": {
+      "plain": "[4, 8]"
+     },
+     "working": "Expand: x^2+(4+a)x+4a. 4a=16 so a=4; b=8."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The task named no files, so I opened none. I checked the three instances by hand.\n- g001: (x+5)(x+5) = x²+10x+25, so a=5, b=10.\n- g003: 4a=12 gives a=3, and b=4+3=7.\n- g004: 4a=16 gives a=4, and b=4+4=8.\nEach worked solution expands, compares coefficients, solves for a, then finds b, and each reaches its key. The keys are listed in the order a, b, which matches the marker's variables. No options are listed, so there are no distractors to check. The stems have no word-problem context.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c1-5-2:scaled-sq",
+   "spec_sha": "c7e4fcf9f47eacfa986bbc86ec9967f67322bdb92e58d828a78034992a80759c",
+   "answers": [
+    {
+     "instance_id": "q:eb11c1-5-2:g004-scaled",
+     "stem_sha": "1fd8e509fcca613f",
+     "answer": {
+      "value": "-9"
+     },
+     "working": "Move terms: 4(a-3)^2+4(b+3)^2 >=0 (since 36+36=72). Equality a=3,b=-3."
+    },
+    {
+     "instance_id": "q:eb11c1-5-2:g005-scaled",
+     "stem_sha": "fcec383cbc635a6b",
+     "answer": {
+      "value": "-4"
+     },
+     "working": "4(a-2)^2+9(b+2)^2 >=0 (16+36=52). Equality a=2,b=-2."
+    },
+    {
+     "instance_id": "q:eb11c1-5-2:g008-scaled",
+     "stem_sha": "14dd8294ff7403ca",
+     "answer": {
+      "value": "-4"
+     },
+     "working": "9(a-2)^2+9(b+2)^2 >=0 (36+36=72). Equality a=2,b=-2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "No options. I verified the algebra for all three instances: g004 gives ab=-9, g005 and g008 give ab=-4. Each completed-square form expands back to LHS−RHS, and each key matches the equality point."
+   }
+  }
+ ]
+}

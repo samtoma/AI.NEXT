@@ -52,7 +52,6 @@
   "p + q > 0"
  ],
  "stem": "Deduce the general term of the sequence $\\{a_n\\}$: ${=m1}, -{=m2}, {=m3}, -{=m4}, {=m5}, \\dots$ Give $a_n$ as a formula in $n$.",
- "answer": "",
  "solution": [
   "The first term is positive and the signs alternate, so the sign part is $(-1)^{n+1}$.",
   "Ignoring signs, the numbers ${=m1}, {=m2}, {=m3}, {=m4}, {=m5}$ increase by ${=p}$ each time, so they are ${=p}n$ plus a constant.",
@@ -70,5 +69,5 @@
   "tolerance": null
  },
  "proposed_misconceptions": [],
- "notes": "Advanced: combines alternating sign with first term positive (so (-1)^(n+1), not the book's (-1)^n) and an arithmetic magnitude pa+q needing a shift. Equivalent forms such as (-1)^(n-1) should be accepted by the marker. Check signed() renders readable signs; q is never 0."
+ "notes": "Advanced: combines alternating sign with first term positive (so (-1)^(n+1), not the book's (-1)^n) and an arithmetic magnitude pa+q needing a shift. Equivalent forms such as (-1)^(n-1) should be accepted by the marker. Check signed() renders readable signs; q is never 0.\n\nPIPELINE NORMALISATION (not an author edit): drop-redundant-answer: removed the top-level \"answer\" (\"\"); an expression family's answer is marker.answer (\"a_n = (-1)^(n+1)*({=p}*n + {=q})\"), unchanged."
 }

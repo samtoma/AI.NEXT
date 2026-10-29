@@ -19,7 +19,6 @@
  ],
  "constraints": [],
  "stem": "Find the expansion of $(x+{=a})^4$.",
- "answer": "x^4 + {=4*a}x^3 + {=6*a**2}x^2 + {=4*a**3}x + {=a**4}",
  "solution": [
   "$(x+{=a})^4 = {}^4C_0 x^4 + {}^4C_1 x^3({=a}) + {}^4C_2 x^2({=a})^2 + {}^4C_3 x({=a})^3 + {}^4C_4 ({=a})^4$.",
   "The combinations are 1, 4, 6, 4, 1.",
@@ -36,5 +35,5 @@
   "tolerance": null
  },
  "proposed_misconceptions": [],
- "notes": "Entry point: (x+a)^4 with small positive a, modelled on book (x+1)^4."
+ "notes": "Entry point: (x+a)^4 with small positive a, modelled on book (x+1)^4.\n\nPIPELINE NORMALISATION (not an author edit): drop-redundant-answer: removed the top-level \"answer\" (\"x^4 + {=4*a}x^3 + {=6*a**2}x^2 + {=4*a**3}x + {=a**4}\"); an expression family's answer is marker.answer (\"x^4 + {=4*a}*x^3 + {=6*a**2}*x^2 + {=4*a**3}*x + {=a**4}\"), unchanged."
 }

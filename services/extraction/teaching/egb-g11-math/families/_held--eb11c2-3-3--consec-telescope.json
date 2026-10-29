@@ -24,7 +24,7 @@
    ]
   },
   {
-   "name": "num",
+   "name": "num_v",
    "let": "n + 1 - m"
   },
   {
@@ -33,20 +33,20 @@
   },
   {
    "name": "g",
-   "let": "gcd(num, den)"
+   "let": "gcd(num_v, den)"
   }
  ],
  "constraints": [
-  "gcd(num, den) >= 1"
+  "gcd(num_v, den) >= 1"
  ],
  "stem": "Find the sum $\\frac{1}{{=m}\\times{=m+1}}+\\frac{1}{{=m+1}\\times{=m+2}}+\\frac{1}{{=m+2}\\times{=m+3}}+\\dots+\\frac{1}{{=n}\\times{=n+1}}$. Give the answer as a fraction in its simplest form, written a/b.",
- "answer": "str(num // g) + \"/\" + str(den // g)",
+ "answer": "str(num_v // g) + \"/\" + str(den // g)",
  "solution": [
   "Split each term: $\\frac{1}{k(k+1)}=\\frac{1}{k}-\\frac{1}{k+1}$.",
   "Write the sum: $\\left(\\frac{1}{{=m}}-\\frac{1}{{=m+1}}\\right)+\\left(\\frac{1}{{=m+1}}-\\frac{1}{{=m+2}}\\right)+\\dots+\\left(\\frac{1}{{=n}}-\\frac{1}{{=n+1}}\\right)$.",
   "Cancel the terms that add to zero; what remains is $\\frac{1}{{=m}}-\\frac{1}{{=n+1}}$.",
-  "$\\frac{1}{{=m}}-\\frac{1}{{=n+1}}=\\frac{{=num}}{{=den}}$, which in simplest form is $\\frac{{=num // g}}{{=den // g}}$."
+  "$\\frac{1}{{=m}}-\\frac{1}{{=n+1}}=\\frac{{=num_v}}{{=den}}$, which in simplest form is $\\frac{{=num_v // g}}{{=den // g}}$."
  ],
  "proposed_misconceptions": [],
- "notes": "Basic entry: unit-difference partial fractions 1/(k(k+1)), numeric start m (1-4) and end n; answer = 1/m - 1/(n+1) reduced. num<den always so answer is never a whole number. Answer string a/b matches book style (e.g. 1425/1984)."
+ "notes": "Basic entry: unit-difference partial fractions 1/(k(k+1)), numeric start m (1-4) and end n; answer = 1/m - 1/(n+1) reduced. num<den always so answer is never a whole number. Answer string a/b matches book style (e.g. 1425/1984).\n\nPIPELINE NORMALISATION (not an author edit): rename-shadowing-param: param 'num' hid the built-in num(); renamed 'num_v' in every expression and hole, nothing else changed."
 }

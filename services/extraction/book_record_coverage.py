@@ -395,7 +395,10 @@ def audit(book, unit: int, slugs: list[str], I: dict, public: Path) -> list[Chec
     for qid in sorted({i for i in ids if ids.count(i) > 1}):
         c.fail(qid, "the same question id twice")
     for ref, qs in asked.items():
-        if len(qs) > 1:
+        # an answer of several parts asked part by part ("-p1", "-p2", a domain "-pd1"; compile answer_parts) is one
+        # prompt asked once: each part has its own id, and every id is the prompt's own
+        stems = {re.sub(r"-pd?\d+$", "", q["id"]) for q in qs}
+        if len(qs) > 1 and not (len(stems) == 1 and all(re.search(r"-pd?\d+$", q["id"]) for q in qs)):
             c.fail(ref, f"asked {len(qs)} times: {', '.join(q['id'] for q in qs)}")
     for q in I["questions"]:
         if not q.get("type"):

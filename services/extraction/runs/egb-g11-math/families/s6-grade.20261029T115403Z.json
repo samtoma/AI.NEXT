@@ -1,0 +1,384 @@
+{
+ "mode": "grade",
+ "book": "egb-g11-math",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "ce38d836e6122cc55a0787b64640c3fc2b4885e4fc5fe3e1d3b66d092dd5cc13",
+  "generated_sha256": "5d971ffce5ebb0ddf29d9dc335575f985b83c3ea58f7ae00946dc8a80b7e54dd",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:eb11c4-1-2:reflect",
+   "spec_sha": "758a6ea897d2ec70dd498f3b4032850fb6720512f9e6434db0e3689a70dd5ce0",
+   "answers": [
+    {
+     "instance_id": "q:eb11c4-1-2:g001-reflec",
+     "stem_sha": "04d98391db45b625",
+     "answer": {
+      "plain": "(6, -7)"
+     },
+     "working": "Reflection in y-axis negates x: (-6,-7) -> (6,-7)"
+    },
+    {
+     "instance_id": "q:eb11c4-1-2:g002-reflec",
+     "stem_sha": "dac4cd116723caf9",
+     "answer": {
+      "plain": "(-7, -3)"
+     },
+     "working": "Reflection in origin negates both: (7,3) -> (-7,-3)"
+    },
+    {
+     "instance_id": "q:eb11c4-1-2:g008-reflec",
+     "stem_sha": "3392aaaa20e960da",
+     "answer": {
+      "plain": "(-3, 5)"
+     },
+     "working": "Reflection in x-axis negates y: (-3,-5) -> (-3,5)"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No wrong options were supplied, so there is nothing to check for distractors. The task named no files, so I read none. I checked all three instances by hand:\n- g001: reflecting (-6, -7) in the y-axis gives (6, -7). The point is in the third quadrant.\n- g002: reflecting (7, 3) in the origin gives (-7, -3). The point is in the first quadrant.\n- g008: reflecting (-3, -5) in the x-axis gives (-3, 5). The point is in the third quadrant.\nEach key matches its answer_check and states the coordinates the stem asks for. The three reflection rules in step 2 are correct and are applied correctly in step 3."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c4-1-2:twostep",
+   "spec_sha": "76e116da6b05f095e9204563d1cdbf43cb039ce72d40c183f137024cf14bc463",
+   "answers": [
+    {
+     "instance_id": "q:eb11c4-1-2:g001-twoste",
+     "stem_sha": "608424aca0a82c04",
+     "answer": {
+      "plain": "(-7, -7)"
+     },
+     "working": "Reflect A(7,7) in y-axis: B(-7,7). Reflect B in x-axis: C(-7,-7)."
+    },
+    {
+     "instance_id": "q:eb11c4-1-2:g005-twoste",
+     "stem_sha": "aceb6bc4cc571708",
+     "answer": {
+      "plain": "(8, -7)"
+     },
+     "working": "Reflect A(8,7) in y-axis: B(-8,7). Reflect B in origin: C(8,-7)."
+    },
+    {
+     "instance_id": "q:eb11c4-1-2:g010-twoste",
+     "stem_sha": "6e5796148abfb2cc",
+     "answer": {
+      "plain": "(2, 3)"
+     },
+     "working": "Reflect A(-2,-3) in x-axis: B(-2,3). Reflect B in y-axis: C(2,3)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The message names no files, so I checked the three instances as given. The family lists no wrong options, so distractors_ok is true by default. I recomputed each key:\n- g001: A(7,7) reflected in the y-axis gives B(-7,7). Reflecting B in the x-axis gives C(-7,-7), which is in the third quadrant.\n- g005: A(8,7) reflected in the y-axis gives B(-8,7). Reflecting B in the origin gives C(8,-7), which is in the fourth quadrant.\n- g010: A(-2,-3) reflected in the x-axis gives B(-2,3). Reflecting B in the y-axis gives C(2,3), which is in the first quadrant.\nEach key matches its answer_check. The reflection rules in step 1 are correct, and the steps follow the book's method."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c4-2-1:isos-right",
+   "spec_sha": "55fe54412859f529d335fbf9217563672c695d3c3b4001d197fa1e093bed0147",
+   "answers": [
+    {
+     "instance_id": "q:eb11c4-2-1:g001-isos-r",
+     "stem_sha": "2d334e3e9c600bd9",
+     "answer": {
+      "choice": "C",
+      "choice_text": "Isosceles right-angled triangle (right angle at A)"
+     },
+     "working": "AB²=8, AC²=8, BC²=16; AB²+AC²=BC² so right angle at A, isosceles."
+    },
+    {
+     "instance_id": "q:eb11c4-2-1:g005-isos-r",
+     "stem_sha": "d20c81f32edb8adf",
+     "answer": {
+      "choice": "C",
+      "choice_text": "Isosceles right-angled triangle (right angle at C)"
+     },
+     "working": "AB²=36, AC²=18, BC²=18; AC=BC and AC²+BC²=AB² so right angle at C."
+    },
+    {
+     "instance_id": "q:eb11c4-2-1:g009-isos-r",
+     "stem_sha": "f3246c5fc2c24e74",
+     "answer": {
+      "choice": "D",
+      "choice_text": "Isosceles right-angled triangle (right angle at A)"
+     },
+     "working": "AB=3, AC=3, BC²=18; right angle at A."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances by hand. The task named no files, so I opened none.\n\n- g001: AB²=8, BC²=16, CA²=8. The triangle is isosceles with the right angle at A. Key C is correct.\n- g005: AB²=36, BC²=18, CA²=18. The triangle is isosceles with the right angle at C. Key C is correct.\n- g009: AB²=9, BC²=18, CA²=9. The triangle is isosceles with the right angle at A. Key D is correct.\n\nThe wrong options are all definitely wrong:\n- \"Equilateral\" fails because the three squared sides are never all equal.\n- A right angle at any vertex other than the true one fails because the Pythagorean sum holds only at the true one.\n- \"Isosceles, not right-angled\" fails because the Pythagorean relation holds in every instance.\n\nThat last option, \"Isosceles, not right-angled\", carries the misconception tag stops-at-isosceles. It is exactly what a student would give if they stopped after finding two equal sides and never checked for a right angle.\n\nThe keys match what the stems ask, and the worked steps are correct and follow the book's method.",
+    "distractors": [
+     {
+      "instance_id": "q:eb11c4-2-1:g001-isos-r",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Matches stopping after finding two equal sides; it is wrong because BC²=AB²+CA²."
+     },
+     {
+      "instance_id": "q:eb11c4-2-1:g001-isos-r",
+      "option": "B",
+      "verdict": "UNTAGGED_OK",
+      "why": "The right angle is at A, not B."
+     },
+     {
+      "instance_id": "q:eb11c4-2-1:g001-isos-r",
+      "option": "D",
+      "verdict": "UNTAGGED_OK",
+      "why": "The sides squared are 8, 16, 8, so the triangle is not equilateral."
+     },
+     {
+      "instance_id": "q:eb11c4-2-1:g005-isos-r",
+      "option": "A",
+      "verdict": "UNTAGGED_OK",
+      "why": "The right angle is at C, not A."
+     },
+     {
+      "instance_id": "q:eb11c4-2-1:g005-isos-r",
+      "option": "B",
+      "verdict": "UNTAGGED_OK",
+      "why": "The sides squared are 36, 18, 18, so the triangle is not equilateral."
+     },
+     {
+      "instance_id": "q:eb11c4-2-1:g005-isos-r",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Matches stopping after finding two equal sides; it is wrong because AB²=BC²+CA²."
+     },
+     {
+      "instance_id": "q:eb11c4-2-1:g009-isos-r",
+      "option": "A",
+      "verdict": "UNTAGGED_OK",
+      "why": "The sides squared are 9, 18, 9, so the triangle is not equilateral."
+     },
+     {
+      "instance_id": "q:eb11c4-2-1:g009-isos-r",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Matches stopping after finding two equal sides; it is wrong because BC²=AB²+CA²."
+     },
+     {
+      "instance_id": "q:eb11c4-2-1:g009-isos-r",
+      "option": "C",
+      "verdict": "UNTAGGED_OK",
+      "why": "The right angle is at A, not B."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:eb11c4-2-5:fixed-point",
+   "spec_sha": "c06dc06a05531ddb4557cf96455820eb1abc2680b23a9d67c51b255816593e1d",
+   "answers": [
+    {
+     "instance_id": "q:eb11c4-2-5:g003-fixed-",
+     "stem_sha": "5420e4167e04f84d",
+     "answer": {
+      "plain": "(2, -2)"
+     },
+     "working": "Group by k: k(x+y)+(4x+5y+2)=0. So x+y=0 and 4x+5y=-2. y=-x gives -x=-2, x=2, y=-2. Check 6*2+7*(-2)=-2."
+    },
+    {
+     "instance_id": "q:eb11c4-2-5:g006-fixed-",
+     "stem_sha": "3538932a61cca806",
+     "answer": {
+      "plain": "(4, -4)"
+     },
+     "working": "k(x+y)+(2x+4y+8)=0. x+y=0, 2x+4y=-8. y=-x gives -2x=-8, x=4, y=-4. Check 24-32=-8."
+    },
+    {
+     "instance_id": "q:eb11c4-2-5:g007-fixed-",
+     "stem_sha": "c97ee67c7a110b54",
+     "answer": {
+      "plain": "(3, -3)"
+     },
+     "working": "k(x+y)+(5x+2y-9)=0. x+y=0, 5x+2y=9. y=-x gives 3x=9, x=3, y=-3. Check 24-15=9."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by hand and each key is correct.\n- g003: x+y=0 and 4x+5y=-2 give -x=-2, so (2,-2). At k=0, 4(2)+5(-2)=-2, which checks.\n- g006: x+y=0 and 2x+4y=-8 give -2x=-8, so (4,-4). At k=0, 2(4)+4(-4)=-8, which checks.\n- g007: x+y=0 and 5x+2y=9 give 3x=9, so (3,-3). At k=0, 5(3)+2(-3)=9, which checks.\nThe method is the standard one: collect the terms in k, set the coefficient of k and the constant term to zero, then solve. The keys match answer_check and give coordinates as the stem asks.\nThe task named no files, so I read none.\nThe family lists no wrong options, so there are no distractors to judge.\nTwo cosmetic points in the wording of the solutions. The \"-(-2)\" in step 1 and the \"-1x\" in g003 step 3 are awkward but not wrong."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c4-2-5:no-triangle",
+   "spec_sha": "4f6ebaece654dbc20b84a680073f7ce7c03e443a2c578f589e0812996e7e3e3b",
+   "answers": [
+    {
+     "instance_id": "q:eb11c4-2-5:g003-no-tri",
+     "stem_sha": "7e8a2275f3a98768",
+     "answer": {
+      "value": "-3"
+     },
+     "working": "Intersection of first two lines: (1,4). No triangle if third is parallel to one (m=1 or m=-1) or passes through (1,4): m+4=1 → m=-3. Sum = 1-1-3 = -3."
+    },
+    {
+     "instance_id": "q:eb11c4-2-5:g006-no-tri",
+     "stem_sha": "ba15ffd3374407b2",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Intersection of first two: (3,1). Parallel: m=1, m=-1. Concurrent: 3m+1=7 → m=2. Sum = 2."
+    },
+    {
+     "instance_id": "q:eb11c4-2-5:g009-no-tri",
+     "stem_sha": "5939160a5889ecea",
+     "answer": {
+      "value": "3"
+     },
+     "working": "Intersection of first two: (1,2). Parallel: m=1, m=-1. Concurrent: m+2=5 → m=3. Sum = 3."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": false,
+    "notes": "The keys are mathematically correct. I checked the intersection points, the parallel cases (m = 1 and m = −1 give distinct lines in every instance), and the sums: −3, 2 and 3. The family has no options, so there are no distractors to judge. Step 6 of each solution contains a stray phrase: \"−3 is not needed;\", \"6 is not needed;\" or \"3 is not needed;\". It looks like leftover template text, is meaningless to a student, and should be removed before use. Fix step 6 to read, for example, \"The third passes through (1, 4): m(1)+4=1, so m=−3.\""
+   }
+  },
+  {
+   "family_id": "tpl:eb11c4-3-2:count-points",
+   "spec_sha": "f64249198321ad82adfe35de87e2aeddcb9c1d580833ab37c9966c56d2631160",
+   "answers": [
+    {
+     "instance_id": "q:eb11c4-3-2:g003-count-",
+     "stem_sha": "75019f87542f1d70",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Distance from origin to line = 3/√2 ≈ 2.12 < radius 3, so the line is a secant: 2 points."
+    },
+    {
+     "instance_id": "q:eb11c4-3-2:g005-count-",
+     "stem_sha": "74a134ccf7f34862",
+     "answer": {
+      "value": "0"
+     },
+     "working": "Distance = 9/√2 ≈ 6.36 > radius 1, so the line misses the circle: 0 points."
+    },
+    {
+     "instance_id": "q:eb11c4-3-2:g007-count-",
+     "stem_sha": "571f6a4aa472b2e4",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Distance = 1/√2 ≈ 0.71 < radius 5, so the line is a secant: 2 points."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances and each key and each worked step is correct. g003 gives 2x²+6x=0 with D=36, so 2 points. g005 gives 2x²+18x+80=0 with D=-316, so 0 points. g007 gives 2x²+2x-24=0 with D=196, so 2 points. No wrong options were supplied, so there were no distractors to judge. One cosmetic point: the constant is written as \"+(0)\" in g003, which is awkward but not wrong.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c4-3-4:position",
+   "spec_sha": "5c98173d1919b78afa84ce50e4f4f6c633b0dc4d32c4e4f49c0e21cc3d46725c",
+   "answers": [
+    {
+     "instance_id": "q:eb11c4-3-4:g003-positi",
+     "stem_sha": "8f1dc7f1c0d9ff72",
+     "answer": {
+      "choice": "A",
+      "choice_text": "the circles are separate (outside each other)"
+     },
+     "working": "d=sqrt(5²+12²)=13; radii 11 and 1; sum 12<13 so separate."
+    },
+    {
+     "instance_id": "q:eb11c4-3-4:g005-positi",
+     "stem_sha": "250bad7c45aa5e72",
+     "answer": {
+      "choice": "C",
+      "choice_text": "the circles intersect at two points"
+     },
+     "working": "d=5; radii 3 and 3; |diff|=0<5<6=sum so two intersection points."
+    },
+    {
+     "instance_id": "q:eb11c4-3-4:g010-positi",
+     "stem_sha": "157447afacbc4dd7",
+     "answer": {
+      "choice": "D",
+      "choice_text": "the circles touch externally"
+     },
+     "working": "d=13; radii 11 and 2; sum 13=d so touch externally."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by hand. g003: d=13, r+r'=12, so the circles are separate (A). g005: d=5, with 0<5<6, so they intersect at two points (C). g010: d=13=11+2, so they touch externally (D). Every wrong option is false in its instance, and the keys and solutions are correct. No wrong option carries a misconception tag, so I marked them all UNTAGGED_OK. Each instance has only one correct choice.",
+    "distractors": [
+     {
+      "instance_id": "q:eb11c4-3-4:g003-positi",
+      "option": "B",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-3-4:g003-positi",
+      "option": "C",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-3-4:g003-positi",
+      "option": "D",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-3-4:g005-positi",
+      "option": "A",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-3-4:g005-positi",
+      "option": "B",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-3-4:g005-positi",
+      "option": "D",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-3-4:g010-positi",
+      "option": "A",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-3-4:g010-positi",
+      "option": "B",
+      "verdict": "UNTAGGED_OK"
+     },
+     {
+      "instance_id": "q:eb11c4-3-4:g010-positi",
+      "option": "C",
+      "verdict": "UNTAGGED_OK"
+     }
+    ]
+   }
+  }
+ ]
+}

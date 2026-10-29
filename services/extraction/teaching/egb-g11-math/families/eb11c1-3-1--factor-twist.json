@@ -49,7 +49,6 @@
   "a != b"
  ],
  "stem": "Simplify the following rational expression. $\\frac{{=k}x^2-{=2*k*a}x+{=k*a*a}}{x^3{=sc}{=cs}x^2-{=a*b}x}$",
- "answer": "{=k}*(x-{=a})/(x*(x+{=b}))",
  "solution": [
   "Factorise the top: take out the common factor {=k}, then recognise a perfect square: ${=k}x^2-{=2*k*a}x+{=k*a*a}={=k}(x^2-{=2*a}x+{=a*a})={=k}(x-{=a})^2$.",
   "Factorise the bottom: take out $x$ first: $x^3{=sc}{=cs}x^2-{=a*b}x=x(x^2{=sc}{=cs}x-{=a*b})$.",
@@ -67,5 +66,5 @@
   "tolerance": null
  },
  "proposed_misconceptions": [],
- "notes": "Modelled on book exercise 1(e): common factor, perfect-square numerator, cubic denominator with x taken out then quadratic factorised. Numerator k(x-a)^2, denominator x(x-a)(x+b), a != b so the x^2 term of the denominator never vanishes (c nonzero) and the printed form is clean. Coefficient 1 is suppressed via cs. Answer is not reducible further."
+ "notes": "Modelled on book exercise 1(e): common factor, perfect-square numerator, cubic denominator with x taken out then quadratic factorised. Numerator k(x-a)^2, denominator x(x-a)(x+b), a != b so the x^2 term of the denominator never vanishes (c nonzero) and the printed form is clean. Coefficient 1 is suppressed via cs. Answer is not reducible further.\n\nPIPELINE NORMALISATION (not an author edit): drop-redundant-answer: removed the top-level \"answer\" (\"{=k}*(x-{=a})/(x*(x+{=b}))\"); an expression family's answer is marker.answer (\"{=k}*(x-{=a})/(x*(x+{=b}))\"), unchanged."
 }

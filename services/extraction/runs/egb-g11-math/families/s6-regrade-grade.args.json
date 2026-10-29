@@ -1,0 +1,1203 @@
+{
+  "mode": "grade",
+  "book": {
+    "config_version": 1,
+    "book": "egb-g11-math",
+    "title": "Mathematics II — Textbook for Grade XI (Egyptian Baccalaureate, 2nd Year), Part One, English",
+    "course_id": "course:egb-g11-math-en",
+    "curriculum": "eg-baccalaureate-en",
+    "subject": "math",
+    "grade": "11",
+    "language": "en",
+    "direction": "ltr",
+    "id_prefixes": [
+      "eb11c"
+    ],
+    "id_prefix": null,
+    "load_order": 50,
+    "sources": {
+      "pdf": "docs/Source/Mathematics-En-EB-Part1.pdf",
+      "epub": null,
+      "teacher_pdf": null
+    },
+    "page_offsets": [],
+    "objectives_mode": "printed",
+    "notation": null,
+    "sacred_content": false,
+    "bundles": [
+      "services/extraction/work/egb-g11-math/bookrecord/bundle-1.json"
+    ],
+    "superseded_bundles": {},
+    "content_files": [],
+    "manifest": null,
+    "generated": null,
+    "parity": null,
+    "program": {
+      "id": "program:eg-baccalaureate-en",
+      "label": "Egyptian Baccalaureate"
+    },
+    "status": "ingest",
+    "maths_source": null,
+    "lesson_unit": null,
+    "answer_rules": null,
+    "lesson_titles": {},
+    "lesson_titles_note": "Egyptian Baccalaureate, Grade 11 (2nd year) Mathematics, Part One (Ministry of Education and Technical Education, 2026; 204 pages: 4 chapters, 18 concepts). A book of its own, ingested from its PDF by the book-record pipeline (Tamer, 2026-10-21, branch egy-bac-g11-maths-ingestion). Its course, course:egb-g11-math-en, and its curriculum, eg-baccalaureate-en, are not yet in the app (app/src/lib/courses.ts, curricula.ts): nothing is shown to students until they are added. Lesson slugs are eb11c<chapter>-<concept>. Part Two is a separate PDF, not yet received. Each concept is printed as numbered sections (1-1 … 4-26, 88 in all), and every section prints its Learning Outcomes: those are the objectives (objectives_mode printed), about five per lesson. Lesson titles, page offsets and units come from its own S0 lesson map, approved at G0.",
+    "paths": {
+      "repo_root": "/Users/tdeif/Developer/Noor",
+      "extraction_dir": "/Users/tdeif/Developer/Noor/services/extraction",
+      "pdf": "/Users/tdeif/Developer/Noor/docs/Source/Mathematics-En-EB-Part1.pdf",
+      "epub": null,
+      "teacher_pdf": null
+    }
+  },
+  "grading_set": {
+    "format": "ainext.family-grading/1",
+    "seed": 20260925,
+    "sample_per_family": 3,
+    "families": [
+      {
+        "family_id": "tpl:eb11c4-1-2:reflect",
+        "spec_sha": "758a6ea897d2ec70dd498f3b4032850fb6720512f9e6434db0e3689a70dd5ce0",
+        "kind": "family",
+        "lo_id": "lo:eb11c4-1-2",
+        "tier": "standard",
+        "answer_type": "expression",
+        "context": null,
+        "parent_question_id": "q:eb11c4-1-2:bk-exercise-3-a",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c4-1-2:g001-reflec",
+            "blind": {
+              "instance_id": "q:eb11c4-1-2:g001-reflec",
+              "stem": "The point $A(-6, -7)$ is given. Find the coordinates of the point symmetric to $A$ with respect to the y-axis.",
+              "stem_sha": "04d98391db45b625",
+              "answer_format": {
+                "type": "expression",
+                "kind": "coordinates",
+                "form": null,
+                "variables": []
+              }
+            },
+            "sealed": {
+              "correct_answer": "(6, -7)",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "$A$ has $x = -6$ and $y = -7$, so it lies in the third quadrant."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Reflection in the x-axis gives $(x, -y)$; in the y-axis gives $(-x, y)$; in the origin gives $(-x, -y)$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "With respect to the y-axis, the symmetric point is $(6, -7)$."
+                }
+              ],
+              "marker": {
+                "kind": "coordinates",
+                "key": "(6, -7)",
+                "form": null,
+                "variables": [],
+                "tolerance": null
+              },
+              "answer_check": "(6, -7)"
+            }
+          },
+          {
+            "instance_id": "q:eb11c4-1-2:g002-reflec",
+            "blind": {
+              "instance_id": "q:eb11c4-1-2:g002-reflec",
+              "stem": "The point $A(7, 3)$ is given. Find the coordinates of the point symmetric to $A$ with respect to the origin.",
+              "stem_sha": "dac4cd116723caf9",
+              "answer_format": {
+                "type": "expression",
+                "kind": "coordinates",
+                "form": null,
+                "variables": []
+              }
+            },
+            "sealed": {
+              "correct_answer": "(-7, -3)",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "$A$ has $x = 7$ and $y = 3$, so it lies in the first quadrant."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Reflection in the x-axis gives $(x, -y)$; in the y-axis gives $(-x, y)$; in the origin gives $(-x, -y)$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "With respect to the origin, the symmetric point is $(-7, -3)$."
+                }
+              ],
+              "marker": {
+                "kind": "coordinates",
+                "key": "(-7, -3)",
+                "form": null,
+                "variables": [],
+                "tolerance": null
+              },
+              "answer_check": "(-7, -3)"
+            }
+          },
+          {
+            "instance_id": "q:eb11c4-1-2:g008-reflec",
+            "blind": {
+              "instance_id": "q:eb11c4-1-2:g008-reflec",
+              "stem": "The point $A(-3, -5)$ is given. Find the coordinates of the point symmetric to $A$ with respect to the x-axis.",
+              "stem_sha": "3392aaaa20e960da",
+              "answer_format": {
+                "type": "expression",
+                "kind": "coordinates",
+                "form": null,
+                "variables": []
+              }
+            },
+            "sealed": {
+              "correct_answer": "(-3, 5)",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "$A$ has $x = -3$ and $y = -5$, so it lies in the third quadrant."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Reflection in the x-axis gives $(x, -y)$; in the y-axis gives $(-x, y)$; in the origin gives $(-x, -y)$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "With respect to the x-axis, the symmetric point is $(-3, 5)$."
+                }
+              ],
+              "marker": {
+                "kind": "coordinates",
+                "key": "(-3, 5)",
+                "form": null,
+                "variables": [],
+                "tolerance": null
+              },
+              "answer_check": "(-3, 5)"
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c4-1-2:twostep",
+        "spec_sha": "76e116da6b05f095e9204563d1cdbf43cb039ce72d40c183f137024cf14bc463",
+        "kind": "family",
+        "lo_id": "lo:eb11c4-1-2",
+        "tier": "advanced",
+        "answer_type": "expression",
+        "context": null,
+        "parent_question_id": "q:eb11c4-1-2:bk-exercise-3-a",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c4-1-2:g001-twoste",
+            "blind": {
+              "instance_id": "q:eb11c4-1-2:g001-twoste",
+              "stem": "The point $B$ is the symmetric of $A(7, 7)$ with respect to the y-axis, and $C$ is the symmetric of $B$ with respect to the x-axis. Find the coordinates of $C$.",
+              "stem_sha": "608424aca0a82c04",
+              "answer_format": {
+                "type": "expression",
+                "kind": "coordinates",
+                "form": null,
+                "variables": []
+              }
+            },
+            "sealed": {
+              "correct_answer": "(-7, -7)",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Reflection in the x-axis gives $(x, -y)$; in the y-axis gives $(-x, y)$; in the origin gives $(-x, -y)$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "$B$, the symmetric of $A(7, 7)$ with respect to the y-axis, is $(-7, 7)$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "$C$, the symmetric of $B$ with respect to the x-axis, is $(-7, -7)$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Since $x = -7$ and $y = -7$, $C$ lies in the third quadrant."
+                }
+              ],
+              "marker": {
+                "kind": "coordinates",
+                "key": "(-7, -7)",
+                "form": null,
+                "variables": [],
+                "tolerance": null
+              },
+              "answer_check": "(-7, -7)"
+            }
+          },
+          {
+            "instance_id": "q:eb11c4-1-2:g005-twoste",
+            "blind": {
+              "instance_id": "q:eb11c4-1-2:g005-twoste",
+              "stem": "The point $B$ is the symmetric of $A(8, 7)$ with respect to the y-axis, and $C$ is the symmetric of $B$ with respect to the origin. Find the coordinates of $C$.",
+              "stem_sha": "aceb6bc4cc571708",
+              "answer_format": {
+                "type": "expression",
+                "kind": "coordinates",
+                "form": null,
+                "variables": []
+              }
+            },
+            "sealed": {
+              "correct_answer": "(8, -7)",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Reflection in the x-axis gives $(x, -y)$; in the y-axis gives $(-x, y)$; in the origin gives $(-x, -y)$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "$B$, the symmetric of $A(8, 7)$ with respect to the y-axis, is $(-8, 7)$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "$C$, the symmetric of $B$ with respect to the origin, is $(8, -7)$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Since $x = 8$ and $y = -7$, $C$ lies in the fourth quadrant."
+                }
+              ],
+              "marker": {
+                "kind": "coordinates",
+                "key": "(8, -7)",
+                "form": null,
+                "variables": [],
+                "tolerance": null
+              },
+              "answer_check": "(8, -7)"
+            }
+          },
+          {
+            "instance_id": "q:eb11c4-1-2:g010-twoste",
+            "blind": {
+              "instance_id": "q:eb11c4-1-2:g010-twoste",
+              "stem": "The point $B$ is the symmetric of $A(-2, -3)$ with respect to the x-axis, and $C$ is the symmetric of $B$ with respect to the y-axis. Find the coordinates of $C$.",
+              "stem_sha": "6e5796148abfb2cc",
+              "answer_format": {
+                "type": "expression",
+                "kind": "coordinates",
+                "form": null,
+                "variables": []
+              }
+            },
+            "sealed": {
+              "correct_answer": "(2, 3)",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Reflection in the x-axis gives $(x, -y)$; in the y-axis gives $(-x, y)$; in the origin gives $(-x, -y)$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "$B$, the symmetric of $A(-2, -3)$ with respect to the x-axis, is $(-2, 3)$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "$C$, the symmetric of $B$ with respect to the y-axis, is $(2, 3)$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Since $x = 2$ and $y = 3$, $C$ lies in the first quadrant."
+                }
+              ],
+              "marker": {
+                "kind": "coordinates",
+                "key": "(2, 3)",
+                "form": null,
+                "variables": [],
+                "tolerance": null
+              },
+              "answer_check": "(2, 3)"
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c4-2-1:isos-right",
+        "spec_sha": "55fe54412859f529d335fbf9217563672c695d3c3b4001d197fa1e093bed0147",
+        "kind": "family",
+        "lo_id": "lo:eb11c4-2-1",
+        "tier": "basic",
+        "answer_type": "mcq",
+        "context": null,
+        "parent_question_id": "q:eb11c4-2-1:bk-try-1",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c4-2-1:g001-isos-r",
+            "blind": {
+              "instance_id": "q:eb11c4-2-1:g001-isos-r",
+              "stem": "Determine the shape of $\\triangle ABC$ with vertices A(1, 0), B(3, 2) and C(3, -2).",
+              "stem_sha": "2d334e3e9c600bd9",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "Isosceles triangle, not right-angled"
+                },
+                {
+                  "key": "B",
+                  "text": "Isosceles right-angled triangle (right angle at B)"
+                },
+                {
+                  "key": "C",
+                  "text": "Isosceles right-angled triangle (right angle at A)"
+                },
+                {
+                  "key": "D",
+                  "text": "Equilateral triangle"
+                }
+              ],
+              "answer_format": {
+                "type": "choice"
+              }
+            },
+            "sealed": {
+              "correct_answer": "C",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "$(AB)^2=(2)^2+(2)^2=8$"
+                },
+                {
+                  "step": 2,
+                  "text_md": "$(BC)^2=(0)^2+(-4)^2=16$"
+                },
+                {
+                  "step": 3,
+                  "text_md": "$(CA)^2=(-2)^2+(2)^2=8$"
+                },
+                {
+                  "step": 4,
+                  "text_md": "$(CA)^2=(AB)^2=8$, so the triangle is isosceles."
+                },
+                {
+                  "step": 5,
+                  "text_md": "$(BC)^2=16=8+8=(CA)^2+(AB)^2$, so it is right-angled at A."
+                },
+                {
+                  "step": 6,
+                  "text_md": "$\\triangle ABC$ is an isosceles right-angled triangle with the right angle at A."
+                }
+              ],
+              "choices": [
+                {
+                  "key": "A",
+                  "text": "Isosceles triangle, not right-angled",
+                  "misconception_id": "mc:eb11c4-2-1:stops-at-isosceles"
+                },
+                {
+                  "key": "B",
+                  "text": "Isosceles right-angled triangle (right angle at B)"
+                },
+                {
+                  "key": "C",
+                  "text": "Isosceles right-angled triangle (right angle at A)"
+                },
+                {
+                  "key": "D",
+                  "text": "Equilateral triangle"
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c4-2-1:g005-isos-r",
+            "blind": {
+              "instance_id": "q:eb11c4-2-1:g005-isos-r",
+              "stem": "Determine the shape of $\\triangle ABC$ with vertices A(1, 2), B(1, -4) and C(-2, -1).",
+              "stem_sha": "d20c81f32edb8adf",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "Isosceles right-angled triangle (right angle at A)"
+                },
+                {
+                  "key": "B",
+                  "text": "Equilateral triangle"
+                },
+                {
+                  "key": "C",
+                  "text": "Isosceles right-angled triangle (right angle at C)"
+                },
+                {
+                  "key": "D",
+                  "text": "Isosceles triangle, not right-angled"
+                }
+              ],
+              "answer_format": {
+                "type": "choice"
+              }
+            },
+            "sealed": {
+              "correct_answer": "C",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "$(AB)^2=(0)^2+(-6)^2=36$"
+                },
+                {
+                  "step": 2,
+                  "text_md": "$(BC)^2=(-3)^2+(3)^2=18$"
+                },
+                {
+                  "step": 3,
+                  "text_md": "$(CA)^2=(3)^2+(3)^2=18$"
+                },
+                {
+                  "step": 4,
+                  "text_md": "$(BC)^2=(CA)^2=18$, so the triangle is isosceles."
+                },
+                {
+                  "step": 5,
+                  "text_md": "$(AB)^2=36=18+18=(BC)^2+(CA)^2$, so it is right-angled at C."
+                },
+                {
+                  "step": 6,
+                  "text_md": "$\\triangle ABC$ is an isosceles right-angled triangle with the right angle at C."
+                }
+              ],
+              "choices": [
+                {
+                  "key": "A",
+                  "text": "Isosceles right-angled triangle (right angle at A)"
+                },
+                {
+                  "key": "B",
+                  "text": "Equilateral triangle"
+                },
+                {
+                  "key": "C",
+                  "text": "Isosceles right-angled triangle (right angle at C)"
+                },
+                {
+                  "key": "D",
+                  "text": "Isosceles triangle, not right-angled",
+                  "misconception_id": "mc:eb11c4-2-1:stops-at-isosceles"
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c4-2-1:g009-isos-r",
+            "blind": {
+              "instance_id": "q:eb11c4-2-1:g009-isos-r",
+              "stem": "Determine the shape of $\\triangle ABC$ with vertices A(1, 2), B(4, 2) and C(1, 5).",
+              "stem_sha": "f3246c5fc2c24e74",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "Equilateral triangle"
+                },
+                {
+                  "key": "B",
+                  "text": "Isosceles triangle, not right-angled"
+                },
+                {
+                  "key": "C",
+                  "text": "Isosceles right-angled triangle (right angle at B)"
+                },
+                {
+                  "key": "D",
+                  "text": "Isosceles right-angled triangle (right angle at A)"
+                }
+              ],
+              "answer_format": {
+                "type": "choice"
+              }
+            },
+            "sealed": {
+              "correct_answer": "D",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "$(AB)^2=(3)^2+(0)^2=9$"
+                },
+                {
+                  "step": 2,
+                  "text_md": "$(BC)^2=(-3)^2+(3)^2=18$"
+                },
+                {
+                  "step": 3,
+                  "text_md": "$(CA)^2=(0)^2+(-3)^2=9$"
+                },
+                {
+                  "step": 4,
+                  "text_md": "$(CA)^2=(AB)^2=9$, so the triangle is isosceles."
+                },
+                {
+                  "step": 5,
+                  "text_md": "$(BC)^2=18=9+9=(CA)^2+(AB)^2$, so it is right-angled at A."
+                },
+                {
+                  "step": 6,
+                  "text_md": "$\\triangle ABC$ is an isosceles right-angled triangle with the right angle at A."
+                }
+              ],
+              "choices": [
+                {
+                  "key": "A",
+                  "text": "Equilateral triangle"
+                },
+                {
+                  "key": "B",
+                  "text": "Isosceles triangle, not right-angled",
+                  "misconception_id": "mc:eb11c4-2-1:stops-at-isosceles"
+                },
+                {
+                  "key": "C",
+                  "text": "Isosceles right-angled triangle (right angle at B)"
+                },
+                {
+                  "key": "D",
+                  "text": "Isosceles right-angled triangle (right angle at A)"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c4-2-5:fixed-point",
+        "spec_sha": "c06dc06a05531ddb4557cf96455820eb1abc2680b23a9d67c51b255816593e1d",
+        "kind": "family",
+        "lo_id": "lo:eb11c4-2-5",
+        "tier": "basic",
+        "answer_type": "expression",
+        "context": null,
+        "parent_question_id": "q:eb11c4-2-5:bk-exercise-35",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c4-2-5:g003-fixed-",
+            "blind": {
+              "instance_id": "q:eb11c4-2-5:g003-fixed-",
+              "stem": "The line $(k+4)x+(k+5)y=-2$ passes through a fixed point for all values of $k$. Find the coordinates of this fixed point.",
+              "stem_sha": "5420e4167e04f84d",
+              "answer_format": {
+                "type": "expression",
+                "kind": "coordinates",
+                "form": null,
+                "variables": []
+              }
+            },
+            "sealed": {
+              "correct_answer": "(2, -2)",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Move all terms to the left and rearrange in $k$: $(x+y)k+(4x+5y-(-2))=0$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "This holds for every $k$, so $x+y=0$ and $4x+5y=-2$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "From the first, $y=-x$. Substitute: $4x-5x=-2$, so $-1x=-2$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Hence $x=2$ and $y=-2$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The fixed point is $(2, -2)$."
+                }
+              ],
+              "marker": {
+                "kind": "coordinates",
+                "key": "(2, -2)",
+                "form": null,
+                "variables": [],
+                "tolerance": null
+              },
+              "answer_check": "(2, -2)"
+            }
+          },
+          {
+            "instance_id": "q:eb11c4-2-5:g006-fixed-",
+            "blind": {
+              "instance_id": "q:eb11c4-2-5:g006-fixed-",
+              "stem": "The line $(k+2)x+(k+4)y=-8$ passes through a fixed point for all values of $k$. Find the coordinates of this fixed point.",
+              "stem_sha": "3538932a61cca806",
+              "answer_format": {
+                "type": "expression",
+                "kind": "coordinates",
+                "form": null,
+                "variables": []
+              }
+            },
+            "sealed": {
+              "correct_answer": "(4, -4)",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Move all terms to the left and rearrange in $k$: $(x+y)k+(2x+4y-(-8))=0$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "This holds for every $k$, so $x+y=0$ and $2x+4y=-8$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "From the first, $y=-x$. Substitute: $2x-4x=-8$, so $-2x=-8$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Hence $x=4$ and $y=-4$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The fixed point is $(4, -4)$."
+                }
+              ],
+              "marker": {
+                "kind": "coordinates",
+                "key": "(4, -4)",
+                "form": null,
+                "variables": [],
+                "tolerance": null
+              },
+              "answer_check": "(4, -4)"
+            }
+          },
+          {
+            "instance_id": "q:eb11c4-2-5:g007-fixed-",
+            "blind": {
+              "instance_id": "q:eb11c4-2-5:g007-fixed-",
+              "stem": "The line $(k+5)x+(k+2)y=9$ passes through a fixed point for all values of $k$. Find the coordinates of this fixed point.",
+              "stem_sha": "c97ee67c7a110b54",
+              "answer_format": {
+                "type": "expression",
+                "kind": "coordinates",
+                "form": null,
+                "variables": []
+              }
+            },
+            "sealed": {
+              "correct_answer": "(3, -3)",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "Move all terms to the left and rearrange in $k$: $(x+y)k+(5x+2y-(9))=0$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "This holds for every $k$, so $x+y=0$ and $5x+2y=9$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "From the first, $y=-x$. Substitute: $5x-2x=9$, so $3x=9$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Hence $x=3$ and $y=-3$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The fixed point is $(3, -3)$."
+                }
+              ],
+              "marker": {
+                "kind": "coordinates",
+                "key": "(3, -3)",
+                "form": null,
+                "variables": [],
+                "tolerance": null
+              },
+              "answer_check": "(3, -3)"
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c4-2-5:no-triangle",
+        "spec_sha": "4f6ebaece654dbc20b84a680073f7ce7c03e443a2c578f589e0812996e7e3e3b",
+        "kind": "family",
+        "lo_id": "lo:eb11c4-2-5",
+        "tier": "standard",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:eb11c4-2-5:bk-challenge-9",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c4-2-5:g003-no-tri",
+            "blind": {
+              "instance_id": "q:eb11c4-2-5:g003-no-tri",
+              "stem": "If the three lines $x+y=5$, $x-y=-3$ and $mx+y=1$ do not form a triangle, then find the sum of all possible values of $m$.",
+              "stem_sha": "7e8a2275f3a98768",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "-3",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The three lines fail to form a triangle if the third is parallel to one of the others, or if all three pass through one point."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Gradients: $-1$, $1$, $-m$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Parallel to the first: $-m=-1$, so $m=1$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Parallel to the second: $-m=1$, so $m=-1$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The first two lines meet at $(1, 4)$."
+                },
+                {
+                  "step": 6,
+                  "text_md": "The third passes through it: $-3$ is not needed; $m(1)+4=1$, so $m=-3$."
+                },
+                {
+                  "step": 7,
+                  "text_md": "Sum $=1+(-1)+(-3)=-3$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c4-2-5:g006-no-tri",
+            "blind": {
+              "instance_id": "q:eb11c4-2-5:g006-no-tri",
+              "stem": "If the three lines $x+y=4$, $x-y=2$ and $mx+y=7$ do not form a triangle, then find the sum of all possible values of $m$.",
+              "stem_sha": "ba15ffd3374407b2",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "2",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The three lines fail to form a triangle if the third is parallel to one of the others, or if all three pass through one point."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Gradients: $-1$, $1$, $-m$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Parallel to the first: $-m=-1$, so $m=1$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Parallel to the second: $-m=1$, so $m=-1$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The first two lines meet at $(3, 1)$."
+                },
+                {
+                  "step": 6,
+                  "text_md": "The third passes through it: $6$ is not needed; $m(3)+1=7$, so $m=2$."
+                },
+                {
+                  "step": 7,
+                  "text_md": "Sum $=1+(-1)+(2)=2$."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c4-2-5:g009-no-tri",
+            "blind": {
+              "instance_id": "q:eb11c4-2-5:g009-no-tri",
+              "stem": "If the three lines $x+y=3$, $x-y=-1$ and $mx+y=5$ do not form a triangle, then find the sum of all possible values of $m$.",
+              "stem_sha": "5939160a5889ecea",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "3",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The three lines fail to form a triangle if the third is parallel to one of the others, or if all three pass through one point."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Gradients: $-1$, $1$, $-m$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "Parallel to the first: $-m=-1$, so $m=1$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Parallel to the second: $-m=1$, so $m=-1$."
+                },
+                {
+                  "step": 5,
+                  "text_md": "The first two lines meet at $(1, 2)$."
+                },
+                {
+                  "step": 6,
+                  "text_md": "The third passes through it: $3$ is not needed; $m(1)+2=5$, so $m=3$."
+                },
+                {
+                  "step": 7,
+                  "text_md": "Sum $=1+(-1)+(3)=3$."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c4-3-2:count-points",
+        "spec_sha": "f64249198321ad82adfe35de87e2aeddcb9c1d580833ab37c9966c56d2631160",
+        "kind": "family",
+        "lo_id": "lo:eb11c4-3-2",
+        "tier": "basic",
+        "answer_type": "numeric",
+        "context": null,
+        "parent_question_id": "q:eb11c4-3-2:bk-warm-up-11",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c4-3-2:g003-count-",
+            "blind": {
+              "instance_id": "q:eb11c4-3-2:g003-count-",
+              "stem": "Find the number of points of intersection of the circle $x^2+y^2=9$ and the line $x-y+3=0$",
+              "stem_sha": "75019f87542f1d70",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "2",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "From $x-y+3=0$, $y=x+3$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute into the circle: $x^2+(x+3)^2=9$, which simplifies to $2x^2+6x+(0)=0$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "$D=(6)^2-4\\cdot2\\cdot(0)=36$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The sign of $D$ gives the number of points: $D>0$ means 2, $D=0$ means 1, $D<0$ means 0. So there are 2 points of intersection."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c4-3-2:g005-count-",
+            "blind": {
+              "instance_id": "q:eb11c4-3-2:g005-count-",
+              "stem": "Find the number of points of intersection of the circle $x^2+y^2=1$ and the line $x-y+9=0$",
+              "stem_sha": "74a134ccf7f34862",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "0",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "From $x-y+9=0$, $y=x+9$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute into the circle: $x^2+(x+9)^2=1$, which simplifies to $2x^2+18x+(80)=0$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "$D=(18)^2-4\\cdot2\\cdot(80)=-316$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The sign of $D$ gives the number of points: $D>0$ means 2, $D=0$ means 1, $D<0$ means 0. So there are 0 points of intersection."
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c4-3-2:g007-count-",
+            "blind": {
+              "instance_id": "q:eb11c4-3-2:g007-count-",
+              "stem": "Find the number of points of intersection of the circle $x^2+y^2=25$ and the line $x-y+1=0$",
+              "stem_sha": "571f6a4aa472b2e4",
+              "answer_format": {
+                "type": "number"
+              }
+            },
+            "sealed": {
+              "correct_answer": "2",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "From $x-y+1=0$, $y=x+1$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "Substitute into the circle: $x^2+(x+1)^2=25$, which simplifies to $2x^2+2x+(-24)=0$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "$D=(2)^2-4\\cdot2\\cdot(-24)=196$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "The sign of $D$ gives the number of points: $D>0$ means 2, $D=0$ means 1, $D<0$ means 0. So there are 2 points of intersection."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "family_id": "tpl:eb11c4-3-4:position",
+        "spec_sha": "5c98173d1919b78afa84ce50e4f4f6c633b0dc4d32c4e4f49c0e21cc3d46725c",
+        "kind": "family",
+        "lo_id": "lo:eb11c4-3-4",
+        "tier": "basic",
+        "answer_type": "mcq",
+        "context": null,
+        "parent_question_id": "q:eb11c4-3-4:bk-exercise-48-a",
+        "instances_available": 10,
+        "instances": [
+          {
+            "instance_id": "q:eb11c4-3-4:g003-positi",
+            "blind": {
+              "instance_id": "q:eb11c4-3-4:g003-positi",
+              "stem": "Circle $x^2+y^2=121$ and circle $(x-5)^2+(y-12)^2=1$. Which describes their positional relationship?",
+              "stem_sha": "8f1dc7f1c0d9ff72",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "the circles are separate (outside each other)"
+                },
+                {
+                  "key": "B",
+                  "text": "the circles touch internally"
+                },
+                {
+                  "key": "C",
+                  "text": "the circles intersect at two points"
+                },
+                {
+                  "key": "D",
+                  "text": "the circles touch externally"
+                }
+              ],
+              "answer_format": {
+                "type": "choice"
+              }
+            },
+            "sealed": {
+              "correct_answer": "A",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The centers are $(0, 0)$ and $(5, 12)$, so $d=\\sqrt{5^2+12^2}=13$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The radii are $r=11$ and $r'=1$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "$r+r'=12$ and $|r-r'|=10$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Comparing with $d=13$: $d>r+r'$, so the circles are separate (outside each other)."
+                }
+              ],
+              "choices": [
+                {
+                  "key": "A",
+                  "text": "the circles are separate (outside each other)"
+                },
+                {
+                  "key": "B",
+                  "text": "the circles touch internally"
+                },
+                {
+                  "key": "C",
+                  "text": "the circles intersect at two points"
+                },
+                {
+                  "key": "D",
+                  "text": "the circles touch externally"
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c4-3-4:g005-positi",
+            "blind": {
+              "instance_id": "q:eb11c4-3-4:g005-positi",
+              "stem": "Circle $x^2+y^2=9$ and circle $(x-3)^2+(y-4)^2=9$. Which describes their positional relationship?",
+              "stem_sha": "250bad7c45aa5e72",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "one circle lies inside the other without touching"
+                },
+                {
+                  "key": "B",
+                  "text": "the circles touch internally"
+                },
+                {
+                  "key": "C",
+                  "text": "the circles intersect at two points"
+                },
+                {
+                  "key": "D",
+                  "text": "the circles are separate (outside each other)"
+                }
+              ],
+              "answer_format": {
+                "type": "choice"
+              }
+            },
+            "sealed": {
+              "correct_answer": "C",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The centers are $(0, 0)$ and $(3, 4)$, so $d=\\sqrt{3^2+4^2}=5$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The radii are $r=3$ and $r'=3$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "$r+r'=6$ and $|r-r'|=0$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Comparing with $d=5$: $|r-r'|<d<r+r'$, so the circles intersect at two points."
+                }
+              ],
+              "choices": [
+                {
+                  "key": "A",
+                  "text": "one circle lies inside the other without touching"
+                },
+                {
+                  "key": "B",
+                  "text": "the circles touch internally"
+                },
+                {
+                  "key": "C",
+                  "text": "the circles intersect at two points"
+                },
+                {
+                  "key": "D",
+                  "text": "the circles are separate (outside each other)"
+                }
+              ]
+            }
+          },
+          {
+            "instance_id": "q:eb11c4-3-4:g010-positi",
+            "blind": {
+              "instance_id": "q:eb11c4-3-4:g010-positi",
+              "stem": "Circle $x^2+y^2=121$ and circle $(x-5)^2+(y-12)^2=4$. Which describes their positional relationship?",
+              "stem_sha": "157447afacbc4dd7",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "the circles touch internally"
+                },
+                {
+                  "key": "B",
+                  "text": "one circle lies inside the other without touching"
+                },
+                {
+                  "key": "C",
+                  "text": "the circles intersect at two points"
+                },
+                {
+                  "key": "D",
+                  "text": "the circles touch externally"
+                }
+              ],
+              "answer_format": {
+                "type": "choice"
+              }
+            },
+            "sealed": {
+              "correct_answer": "D",
+              "canonical_solution": [
+                {
+                  "step": 1,
+                  "text_md": "The centers are $(0, 0)$ and $(5, 12)$, so $d=\\sqrt{5^2+12^2}=13$."
+                },
+                {
+                  "step": 2,
+                  "text_md": "The radii are $r=11$ and $r'=2$."
+                },
+                {
+                  "step": 3,
+                  "text_md": "$r+r'=13$ and $|r-r'|=9$."
+                },
+                {
+                  "step": 4,
+                  "text_md": "Comparing with $d=13$: $d=r+r'$, so the circles touch externally."
+                }
+              ],
+              "choices": [
+                {
+                  "key": "A",
+                  "text": "the circles touch internally"
+                },
+                {
+                  "key": "B",
+                  "text": "one circle lies inside the other without touching"
+                },
+                {
+                  "key": "C",
+                  "text": "the circles intersect at two points"
+                },
+                {
+                  "key": "D",
+                  "text": "the circles touch externally"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "book": "egb-g11-math",
+    "per_family": 10
+  }
+}

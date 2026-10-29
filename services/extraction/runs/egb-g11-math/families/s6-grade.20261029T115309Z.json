@@ -1,0 +1,202 @@
+{
+ "mode": "grade",
+ "book": "egb-g11-math",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "1ba85595d906abb94a7f21675abcb11725a838a53c257df93be1ad1f38042d25",
+  "generated_sha256": "562c003bba6f195ebf7d92a2ea11074855520de9bb91a61669187defe6067be8",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:eb11c2-2-2:middle-term",
+   "spec_sha": "65bcb1ea52e599bf83af7195d09980facca57e611e3122d728a53ce932b56534",
+   "answers": [
+    {
+     "instance_id": "q:eb11c2-2-2:g006-middle",
+     "stem_sha": "e098a26536e11ed3",
+     "answer": {
+      "plain": "[12, -12]"
+     },
+     "working": "x^2 = 2*72 = 144, so x = 12 or -12"
+    },
+    {
+     "instance_id": "q:eb11c2-2-2:g007-middle",
+     "stem_sha": "8053bc49a8dabe62",
+     "answer": {
+      "plain": "[15, -15]"
+     },
+     "working": "x^2 = 5*45 = 225, so x = 15 or -15"
+    },
+    {
+     "instance_id": "q:eb11c2-2-2:g008-middle",
+     "stem_sha": "4e2d92d56516a4a9",
+     "answer": {
+      "plain": "[12, -12]"
+     },
+     "working": "x^2 = 3*48 = 144, so x = 12 or -12"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "No wrong options. Each key matches its answer_check, and the solutions use x² = a·c correctly. Both roots are valid (common ratio ±6, ±3, ±4). The task named no files, so none were read."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c2-2-4:pairs-sums",
+   "spec_sha": "cf0749b59f1fe0bf43e3d04ae7ee3dad0180c4887cd347ce9cebd4b325d51886",
+   "answers": [
+    {
+     "instance_id": "q:eb11c2-2-4:g001-pairs-",
+     "stem_sha": "d63945fd3b32f719",
+     "answer": {
+      "value": "5"
+     },
+     "working": "S4/S2 = 1+r^2 = 5, so r=2. a1 = 15/(1+2) = 5."
+    },
+    {
+     "instance_id": "q:eb11c2-2-4:g004-pairs-",
+     "stem_sha": "61522e4b789f5d45",
+     "answer": {
+      "value": "4"
+     },
+     "working": "S4/S2 = 1+r^2 = 5, so r=2. a1 = 12/3 = 4."
+    },
+    {
+     "instance_id": "q:eb11c2-2-4:g010-pairs-",
+     "stem_sha": "cbf813bbfc39a7bd",
+     "answer": {
+      "value": "3"
+     },
+     "working": "S4/S2 = 1+r^2 = 5, so r=2. a1 = 9/3 = 3."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by direct computation. Each has r = 2.\n- g001: 5 + 10 = 15 and 15 + 20 + 40 = 75, so a1 = 5.\n- g004: 4 + 8 = 12 and 12 + 16 + 32 = 60, so a1 = 4.\n- g010: 3 + 6 = 9 and 9 + 12 + 24 = 45, so a1 = 3.\nEach solution follows the same valid steps: S4 − S2 = r²·S2, then r² = 4, then r = 2 because the ratio is positive, then S2 = a1(1 + r). The stems are unambiguous and each key is a single number. No wrong options were provided, so there are no distractors to judge.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c2-3-4:formula-sum",
+   "spec_sha": "86aa74cf4435a5c925e3a5dd114b126df6e87f5ccdfeabe1ab7987a74aecc340",
+   "answers": [
+    {
+     "instance_id": "q:eb11c2-3-4:g002-formul",
+     "stem_sha": "0464328afb488c3d",
+     "answer": {
+      "plain": "n*2^n"
+     },
+     "working": "Read the garbled exponent as 2^(n-1), so the general term is (k+1)*2^(k-1). Fitted the form (a*n+b)*2^n+c to n=1,2,3 (sums 2, 8, 24), giving n*2^n. It also matches the known closed form."
+    },
+    {
+     "instance_id": "q:eb11c2-3-4:g003-formul",
+     "stem_sha": "dfd4900f62e5fb04",
+     "answer": {
+      "plain": "((2*n+1)*3^n-1)/4"
+     },
+     "working": "General term (k+1)*3^(k-1). The sums for n=1,2,3 are 2, 11, 47. Fitting (a*n+b)*3^n+c gives a=1/2, b=1/4, c=-1/4. Checked at n=3: (7*27-1)/4=47."
+    },
+    {
+     "instance_id": "q:eb11c2-3-4:g004-formul",
+     "stem_sha": "c33d96fbf23d64d0",
+     "answer": {
+      "plain": "((3*n+2)*4^n-2)/9"
+     },
+     "working": "General term (k+1)*4^(k-1). The sums for n=1,2,3 are 2, 14, 78. Fitting (a*n+b)*4^n+c gives a=1/3, b=2/9, c=-2/9. Checked at n=3: (11*64-2)/9=78."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": false,
+    "context_ok": false,
+    "solution_ok": false,
+    "notes": "I didn't open any files; the task named none, so I judged from the instance text alone.\n\nStem: the last term is printed as (n+1)×r^{0n-1}. This is a template glitch, because the exponent should be n-1. As written, the exponent \"0n-1\" is ambiguous and reads as -1. The stem is therefore not sensible for a student.\n\nKey values: the math is correct for the intended sum, the sum over k=1..n of (k+1)r^(k-1).\n- r=2: n=1 gives 2 and n=2 gives 8, matching n·2^n.\n- r=3: n=1 gives 2 and n=2 gives 11, matching ((2n+1)·3^n − 1)/4.\n- r=4: (3n+2)·4^n − 2 over 9 also checks out (n=1: (5·4−2)/9 = 2).\n\nKey form: the keys are not simplified. They contain \"/1^2\", \"(n)\" in parentheses, \"2^2\" and \"3^2\" left unevaluated. The r=2 key should read n·2^n.\n\nSolution: the canonical solution is only \"placeholder\", so there are no worked steps to check.\n\nOptions: no wrong options are present in this family, so distractors_ok is vacuously true.\n\nVerdict: the family should be rejected and rewritten."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c2-5-4:affine-rec",
+   "spec_sha": "7fc313b664ff232a26d853f3e661990743869ca7f635ae54c484dff6ed443266",
+   "answers": [
+    {
+     "instance_id": "q:eb11c2-5-4:g004-affine",
+     "stem_sha": "e4fad9f952a176c4",
+     "answer": {
+      "plain": "3*4^(n-1)-1"
+     },
+     "working": "a2=4*2+3=11, a3=47, a4=191. Adding 1: a_n+1 = 3, 12, 48, 192 = 3*4^(n-1). Guess a_n=3*4^(n-1)-1. Induction: n=1 gives 2 ✓. If a_k=3*4^(k-1)-1 then a_{k+1}=4(3*4^(k-1)-1)+3=3*4^k-1 ✓."
+    },
+    {
+     "instance_id": "q:eb11c2-5-4:g008-affine",
+     "stem_sha": "974667c9cea66605",
+     "answer": {
+      "plain": "4^n-1"
+     },
+     "working": "a2=4*3+3=15, a3=63, a4=255. Adding 1: 4, 16, 64, 256 = 4^n. Guess a_n=4^n-1. Induction: n=1 gives 3 ✓. If a_k=4^k-1 then a_{k+1}=4(4^k-1)+3=4^(k+1)-1 ✓."
+    },
+    {
+     "instance_id": "q:eb11c2-5-4:g009-affine",
+     "stem_sha": "2981ac9b8526f76a",
+     "answer": {
+      "plain": "3*2^(n-1)-1"
+     },
+     "working": "a2=2*2+1=5, a3=11, a4=23. Adding 1: 3, 6, 12, 24 = 3*2^(n-1). Guess a_n=3*2^(n-1)-1. Induction: n=1 gives 2 ✓. If a_k=3*2^(k-1)-1 then a_{k+1}=2(3*2^(k-1)-1)+1=3*2^k-1 ✓."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": false,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No options in the family. Math and induction proofs are correct in all three instances (g004, g008, g009). Problem: g008 key \"4 \\times 4^{n-1} - 1\" is unsimplified (equals 4^n - 1); the natural answer is 4^n - 1 and it should be simplified (key, answer_check, and solution steps) or equivalence-checking confirmed, so a student's 4^n - 1 isn't marked wrong. Rejecting for key form.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c2-5-4:arithmetic-rec",
+   "spec_sha": "de9a74679e3e1579735189c36e47d8e339d7bb7275ebdcf604e66f1d2803a993",
+   "answers": [
+    {
+     "instance_id": "q:eb11c2-5-4:g001-arithm",
+     "stem_sha": "525b5f70855105d0",
+     "answer": {
+      "plain": "7*n-1"
+     },
+     "working": "Terms: 6, 13, 20, 27. Common difference 7, so a_n = 7n - 1. Induction: base a_1 = 7-1 = 6. Step: if a_k = 7k-1 then a_{k+1} = 7k-1+7 = 7(k+1)-1."
+    },
+    {
+     "instance_id": "q:eb11c2-5-4:g002-arithm",
+     "stem_sha": "7624697001ff48ae",
+     "answer": {
+      "plain": "2*n+1"
+     },
+     "working": "Terms: 3, 5, 7, 9. Common difference 2, so a_n = 2n+1. Induction: base a_1 = 3. Step: if a_k = 2k+1 then a_{k+1} = 2k+1+2 = 2(k+1)+1."
+    },
+    {
+     "instance_id": "q:eb11c2-5-4:g003-arithm",
+     "stem_sha": "71812acdc4a79135",
+     "answer": {
+      "plain": "4*n+5"
+     },
+     "working": "Terms: 9, 13, 17, 21. Common difference 4, so a_n = 4n+5. Induction: base a_1 = 9. Step: if a_k = 4k+5 then a_{k+1} = 4k+5+4 = 4(k+1)+5."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The task named no files, so I read none. I checked the three instances by hand.\n\n- **g001:** The terms 6, 13, 20, 27 are right, and a_n = 6 + 7(n−1) = 7n − 1.\n- **g002:** The terms 3, 5, 7, 9 are right, and a_n = 2n + 1.\n- **g003:** The terms 9, 13, 17, 21 are right, and a_n = 4n + 5.\n\nIn each instance the base case and the inductive step are correct, and each key matches its answer_check. There are no wrong options, so there is nothing to check for distractors.\n\nOne cosmetic problem: g001 writes \"7n+(-1)\" in the solution steps, and g002 and g003 write \"+(1)\" and \"+(5)\" in the same way. It is mathematically correct but awkward for a student. A rewrite could print \"7n − 1\" and drop the parentheses."
+   }
+  }
+ ]
+}

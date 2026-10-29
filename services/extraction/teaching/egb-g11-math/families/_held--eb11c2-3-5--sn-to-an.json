@@ -38,7 +38,6 @@
  ],
  "constraints": [],
  "stem": "Find the general term of the sequence $\\{a_n\\}$ in which the sum of the first $n$ terms is $S_n = {=p}n^2 + {=b}n$. Write your answer as $a_n = \\ldots$",
- "answer": "",
  "solution": [
   "For $n \\geq 2$: $a_n = S_n - S_{n-1} = ({=p}n^2 + {=b}n) - \\{{=p}(n-1)^2 + {=b}(n-1)\\}$.",
   "Simplify: $a_n = {=d}n + {=c}$.",
@@ -57,5 +56,5 @@
   "tolerance": null
  },
  "proposed_misconceptions": [],
- "notes": "Basic entry: quadratic S_n with no constant term, so n=1 check always agrees (c = b - p >= 1). Check: p(2n-1)+b = 2pn + b - p. The 'answer' field is unused for expression families; marker carries the key."
+ "notes": "Basic entry: quadratic S_n with no constant term, so n=1 check always agrees (c = b - p >= 1). Check: p(2n-1)+b = 2pn + b - p. The 'answer' field is unused for expression families; marker carries the key.\n\nPIPELINE NORMALISATION (not an author edit): drop-redundant-answer: removed the top-level \"answer\" (\"\"); an expression family's answer is marker.answer (\"a_n = {=d}*n + {=c}\"), unchanged."
 }

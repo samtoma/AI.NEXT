@@ -56,7 +56,6 @@
  ],
  "constraints": [],
  "stem": "Write $\\dfrac{ {=A} + {=B}i}{ {=c} - {=d}i}$ in the form $a + bi$.",
- "answer": "",
  "solution": [
   "The conjugate of the denominator ${=c}-{=d}i$ is ${=c}+{=d}i$. Multiply numerator and denominator by it: $\\dfrac{({=A}+{=B}i)({=c}+{=d}i)}{({=c}-{=d}i)({=c}+{=d}i)}$.",
   "Denominator: $({=c}-{=d}i)({=c}+{=d}i)={=c*c}-{=d*d}i^2={=c*c}+{=d*d}={=N}$.",
@@ -73,5 +72,5 @@
   "tolerance": null
  },
  "proposed_misconceptions": [],
- "notes": "Numerator built as (p+qi)(c-di) so the quotient is the whole-number complex p+qi; the conjugate of the divisor is c+di. Requires q*c-p*d>0 so the numerator prints as A + Bi."
+ "notes": "Numerator built as (p+qi)(c-di) so the quotient is the whole-number complex p+qi; the conjugate of the divisor is c+di. Requires q*c-p*d>0 so the numerator prints as A + Bi.\n\nPIPELINE NORMALISATION (not an author edit): drop-redundant-answer: removed the top-level \"answer\" (\"\"); an expression family's answer is marker.answer (\"{=p} + {=q}*i\"), unchanged."
 }

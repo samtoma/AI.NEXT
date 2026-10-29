@@ -1,0 +1,310 @@
+{
+ "mode": "grade",
+ "book": "egb-g11-math",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "b9798af638bddcadbec2fd546f462cf450106fe8e7abca420e9a14b5675aaf65",
+  "generated_sha256": "11a63947f6abbe9b5d2e41fc159ae5628851d006884969daea7d97390cd6451c",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:eb11c3-1-3:divide-conj",
+   "spec_sha": "b2b10f9dca1a918155c53e40c463bd8caf18154b39ba674f8bd6bcd268f9b666",
+   "answers": [
+    {
+     "instance_id": "q:eb11c3-1-3:g003-divide",
+     "stem_sha": "141e1fb901a761b3",
+     "answer": {
+      "plain": "6+5*i"
+     },
+     "working": "Multiply by conjugate 3+i: (69+23i+27i-9)/10 = (60+50i)/10"
+    },
+    {
+     "instance_id": "q:eb11c3-1-3:g007-divide",
+     "stem_sha": "bf56e9e8f33a6f65",
+     "answer": {
+      "plain": "1+6*i"
+     },
+     "working": "Multiply by 1+i: (7+7i+5i-5)/2 = (2+12i)/2"
+    },
+    {
+     "instance_id": "q:eb11c3-1-3:g010-divide",
+     "stem_sha": "c9e35999910f14b1",
+     "answer": {
+      "plain": "3+4*i"
+     },
+     "working": "Multiply by 5+4i: (155+124i+40i-32)/41 = (123+164i)/41"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": false,
+    "solution_ok": true,
+    "notes": "I checked all three instances by hand. The arithmetic and keys are correct, the conjugate method is the book's, and each key matches its answer_check. There are no options, so there are no distractors to judge. The family fails on context only: the template prints a coefficient of 1 as \"1i\", giving stems like \"3 - 1i\" and \"1 - 1i\" and steps like \"9 - 1i^2\" and \"1+1i\". Students would write \"3 - i\", so the notation is unnatural and could teach a bad habit. Fix the template so a coefficient of 1 is dropped, then re-run.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c3-2-2:imag-range",
+   "spec_sha": "d2c65c39c93bda3a077ba42f0a886fddc933f889ed42d2deec217497d8e0cc31",
+   "answers": [
+    {
+     "instance_id": "q:eb11c3-2-2:g002-imag-r",
+     "stem_sha": "b86effe99e9030fb",
+     "answer": {
+      "plain": "interval(-11, 1, false, false)"
+     },
+     "working": "D=(k+5)^2-36<0 => -6<k+5<6 => -11<k<1"
+    },
+    {
+     "instance_id": "q:eb11c3-2-2:g005-imag-r",
+     "stem_sha": "b91fb9750a1f5446",
+     "answer": {
+      "plain": "interval(-13, 3, false, false)"
+     },
+     "working": "D=(k+5)^2-64<0 => -8<k+5<8 => -13<k<3"
+    },
+    {
+     "instance_id": "q:eb11c3-2-2:g006-imag-r",
+     "stem_sha": "c2eb4397b30768bf",
+     "answer": {
+      "plain": "interval(-12, 8, false, false)"
+     },
+     "working": "D=(k+2)^2-100<0 => -10<k+2<10 => -12<k<8"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances. In each, D = (k+a)^2 − 4c < 0, and the solutions match the keys:\n- g002: (k+5)^2 < 36 gives −11 < k < 1.\n- g005: (k+5)^2 < 64 gives −13 < k < 3.\n- g006: (k+2)^2 < 100 gives −12 < k < 8.\n\nEach key is an open interval, which fits the strict inequality D < 0. Each answer_check matches its key. The stems ask for an interval, and the keys give one. No wrong options were provided, so there are no distractors to judge. \"Imaginary\" here means non-real complex roots, which is a reasonable reading for Grade 11."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c3-2-4:quartic-lead",
+   "spec_sha": "caf83b69ef4096980d0b283297872dd401c9c6e45b6dddbc4d36fe1fdc4e4f94",
+   "answers": [
+    {
+     "instance_id": "q:eb11c3-2-4:g003-quarti",
+     "stem_sha": "a54616466e619263",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c3-2-4:g007-quarti",
+     "stem_sha": "6e1b0ce79fd99f7f",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:eb11c3-2-4:g009-quarti",
+     "stem_sha": "273bf409c109ed93",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked all three instances by hand, with no files opened. Each key factors correctly over the complex numbers and matches its answer_check. The only flaw is cosmetic: steps 1 of g003 and g009 write \"1x^2\" instead of \"x^2\". The family has no wrong options."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c3-2-4:sum-squares",
+   "spec_sha": "bf02324a3a351263b74103d2382edba0c57ed5f222a7b5c0d120c4cbe7386fec",
+   "answers": [
+    {
+     "instance_id": "q:eb11c3-2-4:g003-sum-sq",
+     "stem_sha": "04361d31d59e9287",
+     "answer": {
+      "plain": "(x-8*i)*(x+8*i)"
+     },
+     "working": "x^2+64 = x^2-(8i)^2 since i^2=-1, so difference of squares: (x-8i)(x+8i)."
+    },
+    {
+     "instance_id": "q:eb11c3-2-4:g006-sum-sq",
+     "stem_sha": "9d41f855c8e8527e",
+     "answer": {
+      "plain": "(x-5*i)*(x+5*i)"
+     },
+     "working": "x^2+25 = x^2-(5i)^2, so (x-5i)(x+5i)."
+    },
+    {
+     "instance_id": "q:eb11c3-2-4:g008-sum-sq",
+     "stem_sha": "aa2799548ce86e34",
+     "answer": {
+      "plain": "(x-9*i)*(x+9*i)"
+     },
+     "working": "x^2+81 = x^2-(9i)^2, so (x-9i)(x+9i)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "No wrong options in these instances, so there are no distractors to judge. The task named no files, so I opened none. For all three instances, (x - ai)(x + ai) expands to x² - a²i² = x² + a², which matches the stem. The keys are fully factorised over the complex numbers. Each LaTeX key is the same expression as its answer_check. The worked solutions are correct: the roots are ±ai, the leading coefficient is 1, and the factorisation follows."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c3-2-5:integer-roots",
+   "spec_sha": "20a2fb687aaa6d2e158d0b4b3d340abbc5849539f07bcdf7f7202519f47cc327",
+   "answers": [
+    {
+     "instance_id": "q:eb11c3-2-5:g003-intege",
+     "stem_sha": "ef955280af8dd410",
+     "answer": {
+      "plain": "x^2+9*x+20=0"
+     },
+     "working": "(x+4)(x+5)=x^2+9x+20"
+    },
+    {
+     "instance_id": "q:eb11c3-2-5:g004-intege",
+     "stem_sha": "cd7280c01a27cdc2",
+     "answer": {
+      "plain": "x^2-8*x+12=0"
+     },
+     "working": "(x-6)(x-2)=x^2-8x+12"
+    },
+    {
+     "instance_id": "q:eb11c3-2-5:g009-intege",
+     "stem_sha": "476f348ffaf810ec",
+     "answer": {
+      "plain": "x^2+3*x-18=0"
+     },
+     "working": "(x+6)(x-3)=x^2+3x-18"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked each key by Vieta's formulas and all three are correct. The monic quadratic with the given roots is unique, so a typed answer has one correct form.\n- g003: roots -4 and -5 give sum -9 and product 20, so x^2+9x+20=0.\n- g004: roots 6 and 2 give sum 8 and product 12, so x^2-8x+12=0.\n- g009: roots -6 and 3 give sum -3 and product -18, so x^2+3x-18=0.\nEach key matches its answer_check. The worked steps follow x^2 - (sum)x + product = 0 and sign handling is correct. The only blemish is cosmetic: \"6+(2)\" has needless parentheses. The family has no wrong options, so distractors_ok is true by default."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c3-3-4:cubic-root-pm1",
+   "spec_sha": "0c1590454c9f77a581409292344b5494d5a9cbae54156dcaadd07a18ae1dda0a",
+   "answers": [
+    {
+     "instance_id": "q:eb11c3-3-4:g002-cubic-",
+     "stem_sha": "fd2bc42c84d5c3d9",
+     "answer": {
+      "plain": "(x-1)*(x-2)*(x-3)"
+     },
+     "working": "Roots 1,2,3 (sum 6, pair sums 11, product 6)."
+    },
+    {
+     "instance_id": "q:eb11c3-3-4:g005-cubic-",
+     "stem_sha": "a2aa3f80cb0e8b26",
+     "answer": {
+      "plain": "(x-1)*(x+3)*(x+4)"
+     },
+     "working": "x=1 is a root; divide to get x^2+7x+12=(x+3)(x+4)."
+    },
+    {
+     "instance_id": "q:eb11c3-3-4:g006-cubic-",
+     "stem_sha": "bf6d188ce8219df9",
+     "answer": {
+      "plain": "(x-1)*(x+2)*(x+3)"
+     },
+     "working": "x=1 is a root; divide to get x^2+5x+6=(x+2)(x+3)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I verified all three instances by hand. P(1)=0 holds in each, the synthetic-division quotients are correct, and the quadratics factor correctly. Each key is fully factorised and matches its answer_check. No wrong options were supplied, so there are no distractors to judge. The factor order in g002, (x-1)(x-3)(x-2), is unusual but still correct.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:eb11c3-4-1:common-x",
+   "spec_sha": "5cb1e4c7b32ec27ec95e71eaf732c10430a2f0bc96eb2fc99ea975b224ce3dd5",
+   "answers": [
+    {
+     "instance_id": "q:eb11c3-4-1:g003-common",
+     "stem_sha": "715b78eb2e90da19",
+     "answer": {
+      "plain": "[0, -5, -7]"
+     },
+     "working": "Factor x(x^2+12x+35)=x(x+5)(x+7)=0"
+    },
+    {
+     "instance_id": "q:eb11c3-4-1:g005-common",
+     "stem_sha": "bb1cb62d865f4769",
+     "answer": {
+      "plain": "[0, -3, -7]"
+     },
+     "working": "Factor x(x^2+10x+21)=x(x+3)(x+7)=0"
+    },
+    {
+     "instance_id": "q:eb11c3-4-1:g010-common",
+     "stem_sha": "3aba6dd1486af877",
+     "answer": {
+      "plain": "[0, -1, -2]"
+     },
+     "working": "Factor x(x^2+3x+2)=x(x+1)(x+2)=0"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "All three instances check out. Each cubic factors as x(x+a)(x+b) with a+b and ab matching the quadratic's coefficients (5,7; 3,7; 1,2). The roots 0, -a, -b match the keys and answer_check. The steps are correct and follow the book's method of taking out the common factor, then factorising and applying the zero-product property. There are no options, so there are no distractors to judge."
+   }
+  },
+  {
+   "family_id": "tpl:eb11c3-4-1:factor-qf",
+   "spec_sha": "1038369a741203b203caabf6d0abaf6d596c3b3391a1d97717302d81a8bdac45",
+   "answers": [
+    {
+     "instance_id": "q:eb11c3-4-1:g001-factor",
+     "stem_sha": "19844021389dea80",
+     "answer": {
+      "plain": "[-6, 1+sqrt(5), 1-sqrt(5)]"
+     },
+     "working": "x=-6 is a root (-216+144+96-24=0). Dividing gives (x+6)(x^2-2x-4)=0. Then x=1±sqrt(5)."
+    },
+    {
+     "instance_id": "q:eb11c3-4-1:g002-factor",
+     "stem_sha": "0a76f683288b0835",
+     "answer": {
+      "plain": "[-6, 1+sqrt(7), 1-sqrt(7)]"
+     },
+     "working": "x=-6 is a root (-216+144+108-36=0). Dividing gives (x+6)(x^2-2x-6)=0. Then x=1±sqrt(7)."
+    },
+    {
+     "instance_id": "q:eb11c3-4-1:g009-factor",
+     "stem_sha": "a43d816427c41743",
+     "answer": {
+      "plain": "[-6, 1+sqrt(11), 1-sqrt(11)]"
+     },
+     "working": "x=-6 is a root (-216+144+132-60=0). Dividing gives (x+6)(x^2-2x-10)=0. Then x=1±sqrt(11)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I expanded each factorisation (x+6)(x^2-2x-c) and each reproduces its cubic. The surd simplifications are correct (sqrt20=2sqrt5, sqrt28=2sqrt7, sqrt44=2sqrt11). Each key matches its answer_check, and the family has no options."
+   }
+  }
+ ]
+}

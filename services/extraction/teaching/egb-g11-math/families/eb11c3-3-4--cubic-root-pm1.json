@@ -91,7 +91,6 @@
  ],
  "constraints": [],
  "stem": "Factorise completely: $x^3 {=t2} {=t1} {=t0}$",
- "answer": "f1 + f2 + f3",
  "solution": [
   "Let $P(x)=x^3 {=t2} {=t1} {=t0}$. The constant term is {=C}; try its divisors in $P(a)$.",
   "$P({=r1})=0$, so $x {=\"- \" if r1 > 0 else \"+ \"}{=abs(r1)}$ is a factor.",
@@ -109,5 +108,5 @@
   "tolerance": null
  },
  "proposed_misconceptions": [],
- "notes": "Basic: cubic with three distinct nonzero integer roots, one of them 1 or -1 (the first value to test, as in book exercise 15). Roots in [-4,4]; all coefficients nonzero. Quotient always factorises over integers."
+ "notes": "Basic: cubic with three distinct nonzero integer roots, one of them 1 or -1 (the first value to test, as in book exercise 15). Roots in [-4,4]; all coefficients nonzero. Quotient always factorises over integers.\n\nPIPELINE NORMALISATION (not an author edit): drop-redundant-answer: removed the top-level \"answer\" (\"f1 + f2 + f3\"); an expression family's answer is marker.answer (\"{=f1}*{=f2}*{=f3}\"), unchanged."
 }

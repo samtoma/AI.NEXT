@@ -46,7 +46,6 @@
  ],
  "constraints": [],
  "stem": "Solve the equation $x^3 + {=a}x^2 - {=b}x - {=c} = 0$. Give all the solutions in exact form (using surds where needed).",
- "answer": "",
  "solution": [
   "Let $P(x) = x^3 + {=a}x^2 - {=b}x - {=c}$. Try $x = -{=k}$: $P(-{=k}) = 0$, so $(x + {=k})$ is a factor by the Factor Theorem.",
   "Divide: $P(x) = (x + {=k})(x^2 - 2x - {=d})$.",
@@ -64,5 +63,5 @@
   "tolerance": null
  },
  "proposed_misconceptions": [],
- "notes": "Cubic = (x+k)(x^2-2x-d), w=d+1 is squarefree non-square so roots are 1±sqrt(w). Check k=4,w=5: x^3+2x^2-12x-16, P(-4)=-64+32+48-16=0. The existing misconception (drops linear root) is the natural wrong answer; marker is values so no mcq."
+ "notes": "Cubic = (x+k)(x^2-2x-d), w=d+1 is squarefree non-square so roots are 1±sqrt(w). Check k=4,w=5: x^3+2x^2-12x-16, P(-4)=-64+32+48-16=0. The existing misconception (drops linear root) is the natural wrong answer; marker is values so no mcq.\n\nPIPELINE NORMALISATION (not an author edit): drop-redundant-answer: removed the top-level \"answer\" (\"\"); an expression family's answer is marker.answer (\"[-{=k}, 1 + sqrt({=w}), 1 - sqrt({=w})]\"), unchanged."
 }

@@ -51,7 +51,6 @@
   "q > p"
  ],
  "stem": "Factorise the following expression over the set of complex numbers. ${=a}x^4+{=b}x^2-{=c}$",
- "answer": "{=a}*(x - sqrt({=p}))*(x + sqrt({=p}))*(x - i*sqrt({=q}))*(x + i*sqrt({=q}))",
  "solution": [
   "Take out the leading coefficient: ${=a}x^4+{=b}x^2-{=c}={=a}(x^4+{=q-p}x^2-{=p*q})={=a}(x^2-{=p})(x^2+{=q})$.",
   "$x^2-{=p}=0$ gives $x=\\pm\\sqrt{{=p}}$, so $x^2-{=p}=(x-\\sqrt{{=p}})(x+\\sqrt{{=p}})$.",
@@ -69,5 +68,5 @@
   "tolerance": null
  },
  "proposed_misconceptions": [],
- "notes": "Quartic in x² with a leading coefficient a that must be kept (mc:forgets-leading-coefficient) and non-square p, q so roots are surds. Constraint q>p keeps the x² coefficient positive."
+ "notes": "Quartic in x² with a leading coefficient a that must be kept (mc:forgets-leading-coefficient) and non-square p, q so roots are surds. Constraint q>p keeps the x² coefficient positive.\n\nPIPELINE NORMALISATION (not an author edit): drop-redundant-answer: removed the top-level \"answer\" (\"{=a}*(x - sqrt({=p}))*(x + sqrt({=p}))*(x - i*sqrt({=q}))*(x + i*sqrt({=q}))\"); an expression family's answer is marker.answer (\"{=a}*(x - sqrt({=p}))*(x + sqrt({=p}))*(x - i*sqrt({=q}))*(x + i*sqrt({=q}))\"), unchanged."
 }

@@ -11,9 +11,9 @@
   "status": "RED",
   "summary": {
     "checks": 21,
-    "hold": 16,
+    "hold": 17,
     "excepted": 0,
-    "fail": 5
+    "fail": 4
   },
   "checks": [
     {
@@ -198,18 +198,9 @@
       "id": "items_typed_once",
       "title": "Book questions = distinct prompts asked once, each with one type",
       "want": 36,
-      "got": 34,
-      "state": "fails",
-      "failures": [
-        {
-          "scope": "pp3u8-1:think-and-discuss-2",
-          "detail": "asked 2 times: q:pp3u8-1-1:bk-think-and-discuss-2-p1, q:pp3u8-1-1:bk-think-and-discuss-2-p2"
-        },
-        {
-          "scope": "pp3u8-1:think-and-discuss-3",
-          "detail": "asked 2 times: q:pp3u8-1-1:bk-think-and-discuss-3-p1, q:pp3u8-1-1:bk-think-and-discuss-3-p2"
-        }
-      ],
+      "got": 36,
+      "state": "holds",
+      "failures": [],
       "excepted_scopes": []
     },
     {
@@ -282,31 +273,33 @@
   ],
   "inputs": {
     "book-records/prep3-parallel/lessons.json": "3ec28bee6f18b7fb0dd4b954ad9b87a2eff414881e028f0b0f569fe288c632d3",
-    "book-records/prep3-parallel/misprint-candidates.json": "d7dad9cedbc66bae0139a57ca52a911fd1ebf6791ebd61365f21346e77cdae1e",
+    "book-records/prep3-parallel/misprint-candidates.json": "04d4b41fb4a66ef6c963a2473ef6f8bdacb75671700ce210bf34a50d93f1b6df",
     "groundtruth/prep3-parallel/misprint-decisions.json": "3ba70b418fadac1697572210e76f1307d427f07a1e54c17f3ff26b447c88906e",
     "reviews/prep3-parallel/maths-reading.json": "603f009dcecc9a03cc7078dadfae28e6589f4fc473ef4f029d192f2a8d1ec40b",
-    "teaching/prep3-parallel/held.json": "4a612c1079952b9b06ec9ca619fc6c672bad8d48a6219f5e6704aaf79c76687f",
+    "teaching/prep3-parallel/held.json": "e1f2feae2bd0c956e902c7f9609c3e612178dc8442e84a297df03fc1d4d8bce3",
     "book-records/prep3-parallel/pp3u8-1.json": "30e1e6b7cbdebfe1a40ece414cc9a59ff73b8978b4b82aa356201ca143deeeb6",
     "book-records/prep3-parallel/pp3u8-2.json": "b96539f5f25288be6607035fe157e50fb4ec8ef69ea8fec716195d58138efeda",
     "book-records/prep3-parallel/maths-reading/pp3u8-1.json": "63f12f950733c64d8e5df0e23814b80617d3c5e63b912f5908d10459027fb987",
     "book-records/prep3-parallel/maths-reading/pp3u8-2.json": "a66e9359fd672ab6fc6a7e7269d0f58c913f94c57f236fbd2dc8e1120f32017c",
     "teaching/prep3-parallel/visuals/pp3u8-1.json": "5f6c12f2f2d7d1a358dfe0b1152cd341813f0cc6ed80fa5668b511be4f6c1624",
     "teaching/prep3-parallel/visuals/pp3u8-2.json": "3493bf9060c90a2145cd8384cecc303bf190df61393b958fc18aa13355b8f7e6",
-    "compiled/prep3-parallel/compile-report.json": "cc41ffdea5b7c22e956d07db23c592b7ec914414d6085984f6d95b570083acbf",
-    "compiled/prep3-parallel/generated-questions.json": "c61c5da5b7dd6a21c18ed42da9cbf2dd3726bb203b71542255ead67a303f78f6",
-    "compiled/prep3-parallel/misconceptions.json": "ff5ba4308044ad1e86cf462343e99ec43ef856e7f243ef74b8183a0d0f09802a",
-    "compiled/prep3-parallel/pp3u1.json": "15e4ebf44998f69320dd785363fc479c9403fe765769ab06120ca0e3935aaea0",
-    "compiled/prep3-parallel/pp3u10.json": "b555b9cb69db4018f9e374d972ceb8163eb85245ada11cbd8cd4c1b12d203266",
-    "compiled/prep3-parallel/pp3u2.json": "36cfb63c734f00918b813eaadb3b83b50eac3766db6a798f3ec569027a790de2",
-    "compiled/prep3-parallel/pp3u3.json": "918a287f6707e2a40813105bde203fabbf879726f5311667b559a65e5370c75c",
-    "compiled/prep3-parallel/pp3u4.json": "e704de14234d59af171c77455400fc9657e5ca5660bf11bfb6a6ac1921ae9b5c",
-    "compiled/prep3-parallel/pp3u5.json": "da8795faf4086ba4fd9d27c623d7fefcc8dc18a995ec69a2cdf263a6e310ed09",
-    "compiled/prep3-parallel/pp3u6.json": "7197420182e894b399c2e2b8505b69e6f9389c2d2f939c80e9f8ec6d1c32e1dd",
-    "compiled/prep3-parallel/pp3u7.json": "7d4934c58ea4dbf33d2f178c741b782abe45d269bdf53b0623fa7fd2e5ed9340",
-    "compiled/prep3-parallel/pp3u8.json": "4ae2235dfcfa3fe5201416d6d54663dc5b456239695a2e8f3da94f64034d5c64",
-    "compiled/prep3-parallel/pp3u9.json": "e45578daf965dc4539fc7905884f169b69bd9c116653c5c27e5741e83d64ba2e",
-    "compiled/prep3-parallel/review-stamps.json": "bb764df8cc0e1a354a86b9c854aaa8928b7ee4e0a12f1ad6135b8b2f4ee6d502",
-    "compiled/prep3-parallel/widget-questions.json": "83f2e19c7b4cc261a289c2cce3473d8477bf89dcb564ef9073a5905910f96d30",
+    "compiled/prep3-parallel/compile-report.json": "d28f0e216f3c44950fa5d121d3ab722b3360c2efa08912044976280f0993bfb3",
+    "compiled/prep3-parallel/generated-questions.json": "bb95b2a1a27aa2bd809ebc3481786021f80077d998f9df885a6533589f9179d0",
+    "compiled/prep3-parallel/generated-questions.review-queue.json": "c580fb2a83325488fa5d295b79ff50ccc5fb8b036ff988494a537196cb0b1bdc",
+    "compiled/prep3-parallel/misconceptions.json": "4dd8bd37261853bab110f256b8005bcf488e48abc50d7a2b90de6fcaafd8842d",
+    "compiled/prep3-parallel/pp3u1.json": "f1ad50cecaf2d74197381c497f6b551c40f51f7d0ce7cd3e67a46f562a3eab15",
+    "compiled/prep3-parallel/pp3u10.json": "92ea7c9352656abec49b1ae54e43beb8514169b4ef9f3bacdf9a7298eb3e3774",
+    "compiled/prep3-parallel/pp3u2.json": "b9c1cc2d4920c57b253f3456d2128e655b8ebe8ccfaee7ec15b42f4a05cb542f",
+    "compiled/prep3-parallel/pp3u3.json": "275377c056850c072476420ab99a7e34a0b1d35e3e2184467423f335630f6dbb",
+    "compiled/prep3-parallel/pp3u4.json": "af3c776eed5fdafd6153f40a38077cdc4cd5b7cc9169c67f0f6a47f785768e0f",
+    "compiled/prep3-parallel/pp3u5.json": "933effa6d4fd227a4539938529253ba8b2c478e692819b73ffd5ffd9811cd5d2",
+    "compiled/prep3-parallel/pp3u6.json": "c94fbc0bd2d153a4ea6f8c60dcee0da49180ea043d2ac2dbf9f7910f58a925ed",
+    "compiled/prep3-parallel/pp3u7.json": "7cc982e29a4ed78a7e3fe1c90d1cd05e13dd013541034fd9f86bbcdac6689861",
+    "compiled/prep3-parallel/pp3u8.json": "3c419d9b5d915589a7a5960ddad7dfe71f891e9a5b64a3523e79a3e032348e10",
+    "compiled/prep3-parallel/pp3u9.json": "f4ef94d32af28fa1e834664adcabe99accf2fcc94c3af56d4785b45868e00341",
+    "compiled/prep3-parallel/review-stamps.json": "587759308f52478954cedf803ab3165523728b878a82c198faa521df8909893d",
+    "compiled/prep3-parallel/widget-questions.json": "e30ea587aaa9f3379b5f08c8d9bf607093bea43dcdb39559fa19d38f398f3ae8",
+    "compiled/prep3-parallel/widget-questions.review-queue.json": "7182200b16dfe4e487a2210a9fd067bb77a6b16570ecb4708d19edae92639882",
     "compiled/prep3-parallel/content/pp3u8-1.json": "8e7989bb99223308512222e3dcbeffeeb3066d8887cb6a825782cea704739b90",
     "compiled/prep3-parallel/content/pp3u8-2.json": "9f105bd11ed87acbd0b17aa20cced79c548d394cd255301c605a3e1fa6d74841"
   },

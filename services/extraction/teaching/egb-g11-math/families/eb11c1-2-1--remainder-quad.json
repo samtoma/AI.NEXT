@@ -138,7 +138,6 @@
   }
  ],
  "stem": "Use long division to divide $x^3 {g2}x^2 {g1}x {g0}$ by $x^2 {ga}x {gb}$. Find the remainder.",
- "answer": "{=r1}x {gr0}",
  "solution": [
   "Divide the leading terms: $x^3 \\div x^2 = x$, so the first term of the quotient is $x$.",
   "Multiply: $x(x^2 {ga}x {gb}) = x^3 {ga}x^2 {gb}x$. Subtract it from the dividend to get ${=c}x^2 {ge1}x {g0}$.",
@@ -155,6 +154,6 @@
   ],
   "tolerance": null
  },
- "notes": "Cubic divided by monic quadratic with non-zero linear remainder; dividend built as (x^2+ax+b)(x+c)+r1x+r0. Two division steps, stop when degree of remainder < 2.",
+ "notes": "Cubic divided by monic quadratic with non-zero linear remainder; dividend built as (x^2+ax+b)(x+c)+r1x+r0. Two division steps, stop when degree of remainder < 2.\n\nPIPELINE NORMALISATION (not an author edit): drop-redundant-answer: removed the top-level \"answer\" (\"{=r1}x {gr0}\"); an expression family's answer is marker.answer (\"({=r1})*x + ({=r0})\"), unchanged.",
  "proposed_misconceptions": []
 }

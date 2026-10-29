@@ -13,10 +13,10 @@
   ],
   "status": "RED",
   "summary": {
-    "checks": 20,
+    "checks": 21,
     "hold": 13,
     "excepted": 0,
-    "fail": 7
+    "fail": 8
   },
   "checks": [
     {
@@ -118,37 +118,9 @@
       "id": "tier_floor",
       "title": "Objectives × 3 tiers = cells with a live question, book or generated",
       "want": 54,
-      "got": 33,
+      "got": 40,
       "state": "fails",
       "failures": [
-        {
-          "scope": "lo:eb11c1-1-2 basic",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:eb11c1-1-2 advanced",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:eb11c1-2-1 basic",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:eb11c1-2-1 standard",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:eb11c1-2-2 basic",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:eb11c1-3-3 basic",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:eb11c1-4-1 basic",
-          "detail": "no live question at this tier"
-        },
         {
           "scope": "lo:eb11c1-4-2 basic",
           "detail": "no live question at this tier"
@@ -262,13 +234,9 @@
       "id": "maths_reading",
       "title": "Formulas read twice = agreed + decided in the Maths reading task",
       "want": 710,
-      "got": 704,
+      "got": 705,
       "state": "fails",
       "failures": [
-        {
-          "scope": "eb11c1-1:example-5|solution[1]|0",
-          "detail": "disagreed: $= \\frac{6\\times5}{2\\times1}\\times x^4\\times(-2y)^2 = 15\\times x^4\\times4\\times y^2 = 60x^4y^2$ / ${}_6C_2 \\times x^4 \\times (-2y)^2 = \\frac{6 \\times 5}{2 \\times 1} \\times x^4 \\times (-2y)^2 = 15 \\times x^4 \\times 4 \\times y^2 = 60x^4y^2$"
-        },
         {
           "scope": "eb11c1-3:example-1|solution[0]|0",
           "detail": "disagreed: $\\frac{(x-1)(x-3)}{x(x-3)}=\\frac{(x-1)\\cancel{(x-3)}}{x\\cancel{(x-3)}}=\\frac{x-1}{x}$ / $\\frac{(x-1)(x-3)}{x(x-3)} = \\frac{x-1}{x}$"
@@ -307,6 +275,36 @@
       "excepted_scopes": []
     },
     {
+      "id": "misprints_applied",
+      "title": "Misprints a person confirmed or corrected = those applied to the record",
+      "want": 6,
+      "got": 1,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "eb11c1-1:example-5#solution[1]",
+          "detail": "decided, but not found in the record: give its exact text in the Misprints task"
+        },
+        {
+          "scope": "eb11c1-1:explanation-1#stem",
+          "detail": "decided, but not found in the record: give its exact text in the Misprints task"
+        },
+        {
+          "scope": "eb11c1-1:explanation-2#solution[0]",
+          "detail": "decided, but not found in the record: give its exact text in the Misprints task"
+        },
+        {
+          "scope": "eb11c1-1:explanation-3#solution[1]",
+          "detail": "decided, but not found in the record: give its exact text in the Misprints task"
+        },
+        {
+          "scope": "eb11c1-4:worked-example-2#solution[10]",
+          "detail": "decided, but not found in the record: give its exact text in the Misprints task"
+        }
+      ],
+      "excepted_scopes": []
+    },
+    {
       "id": "items_typed_once",
       "title": "Book questions = distinct prompts asked once, each with one type",
       "want": 131,
@@ -327,8 +325,8 @@
     {
       "id": "notation",
       "title": "Un-normalised decimal commas, `(x; y)` and display environments left in the unit = 0",
-      "want": 1886,
-      "got": 1886,
+      "want": 2822,
+      "got": 2822,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -359,61 +357,13 @@
     {
       "id": "held_decided",
       "title": "Held families and widget templates = those a person dropped + those sent back and written again",
-      "want": 18,
+      "want": 6,
       "got": 0,
       "state": "fails",
       "failures": [
         {
-          "scope": "family eb11c1-1-2--binom-diff.json",
-          "detail": "held, not decided: tpl:eb11c1-1-2:binom-plus and tpl:eb11c1-1-2:binom-diff share an objective and the first six letters of their slug, so their item ids would collide; rename one"
-        },
-        {
-          "scope": "family eb11c1-1-2--minus-five.json",
-          "detail": "held, not decided: eb11c1-1-2--minus-five.json: an expression family's answer is marker.answer; it has no 'answer' and no choices"
-        },
-        {
-          "scope": "family eb11c1-1-2--plus-four.json",
-          "detail": "held, not decided: eb11c1-1-2--plus-four.json: an expression family's answer is marker.answer; it has no 'answer' and no choices"
-        },
-        {
-          "scope": "family eb11c1-2-1--cubic-by-quad.json",
-          "detail": "held, not decided: eb11c1-2-1--cubic-by-quad.json: an expression family's answer is marker.answer; it has no 'answer' and no choices"
-        },
-        {
-          "scope": "family eb11c1-2-1--linear-divisor.json",
-          "detail": "held, not decided: eb11c1-2-1--linear-divisor.json: an expression family's answer is marker.answer; it has no 'answer' and no choices"
-        },
-        {
-          "scope": "family eb11c1-2-1--quad-by-linear.json",
-          "detail": "held, not decided: eb11c1-2-1--quad-by-linear.json: an expression family's answer is marker.answer; it has no 'answer' and no choices"
-        },
-        {
-          "scope": "family eb11c1-2-1--remainder-quad.json",
-          "detail": "held, not decided: eb11c1-2-1--remainder-quad.json: an expression family's answer is marker.answer; it has no 'answer' and no choices"
-        },
-        {
-          "scope": "family eb11c1-2-2--dividend-linear.json",
-          "detail": "held, not decided: eb11c1-2-2--dividend-linear.json: an expression family's answer is marker.answer; it has no 'answer' and no choices"
-        },
-        {
-          "scope": "family eb11c1-3-1--factor-twist.json",
-          "detail": "held, not decided: eb11c1-3-1--factor-twist.json: an expression family's answer is marker.answer; it has no 'answer' and no choices"
-        },
-        {
-          "scope": "family eb11c1-3-3--two-linear.json",
-          "detail": "held, not decided: eb11c1-3-3--two-linear.json: an expression family's answer is marker.answer; it has no 'answer' and no choices"
-        },
-        {
-          "scope": "family eb11c1-3-4--one-over-x.json",
-          "detail": "held, not decided: eb11c1-3-4--one-over-x.json: an expression family's answer is marker.answer; it has no 'answer' and no choices"
-        },
-        {
           "scope": "family eb11c1-4-1--compare.json",
           "detail": "held, not decided: rejected: tpl:eb11c1-4-1:compare: evaluation error: more than one '='; families that produced nothing: tpl:eb11c1-4-1:compare"
-        },
-        {
-          "scope": "family eb11c1-4-1--expand-compare.json",
-          "detail": "held, not decided: eb11c1-4-1--expand-compare.json: an expression family's answer is marker.answer; it has no 'answer' and no choices"
         },
         {
           "scope": "family eb11c1-4-4--linear-ratio.json",
@@ -441,10 +391,11 @@
   ],
   "inputs": {
     "book-records/egb-g11-math/lessons.json": "ac05aea8211e75b30a711e31682b2fd202325d9c8ebbaf5409a89063579b53ea",
-    "book-records/egb-g11-math/misprint-candidates.json": "862b946037d5c69b40b1f1f205f1637504f7e615d100b724b7ec051d5ddf01b9",
+    "book-records/egb-g11-math/misprint-candidates.json": "627866ce45a60f1fc764b447c814ae363c9bffc45d15a64e57b41dcbf9e0b0d0",
     "groundtruth/egb-g11-math/misprint-decisions.json": "4e15e4489cee3971b5047aaaeeb5c2aebca18d186a268db63da5b2adcbafffee",
-    "teaching/egb-g11-math/held.json": "efda67084b12ea79f7eb6f457af3fd479c57f00325ca8b5677dda1d0899e5d07",
-    "book-records/egb-g11-math/eb11c1-1.json": "f33f1fda8046b0aa201f4470b955b21cf0c1f8d978b34709ac94e74cf5cfc281",
+    "reviews/egb-g11-math/maths-reading.json": "c3b9f71dc10c2d1c4cef6e27ea8f472ece910dcee307fe5bc5fddcacdecf518e",
+    "teaching/egb-g11-math/held.json": "d0871785665e19bd9ebe18fb904551ff22463d578fc084c84d614d0bc2e3da34",
+    "book-records/egb-g11-math/eb11c1-1.json": "9c4169b1fd4a08eab0644602435846a1cdf97b5321476db708f0194022566211",
     "book-records/egb-g11-math/eb11c1-2.json": "a65be6cc299ec74a6190a274d59cabd20769cc32fad9e4461d42bb932823e3c0",
     "book-records/egb-g11-math/eb11c1-3.json": "e8336ded32c7be3292f3af478358456b66cf26f032a9e4c8394b0d68e62d9b19",
     "book-records/egb-g11-math/eb11c1-4.json": "a40594415cfac37392ff4f6273eec954ee7920a338b2ca1032e358022bd24fbe",
@@ -459,15 +410,17 @@
     "teaching/egb-g11-math/visuals/eb11c1-3.json": "aeaaece70caa2552b3990708435c1c48aa9d62a7c56e9b2229b916dcd09c036f",
     "teaching/egb-g11-math/visuals/eb11c1-4.json": "64c6314a16aa667fd45e3f095ac7df41051c6b6522e8ac39820c13894560bd6f",
     "teaching/egb-g11-math/visuals/eb11c1-5.json": "64b5222acf5f5de72afb443c2467c29fba7d9d6377ff5f3bebae0a6b74cc6008",
-    "compiled/egb-g11-math/compile-report.json": "56409011726047214395aa34e792227a266533819907b8aff599c173c40bb0cb",
-    "compiled/egb-g11-math/eb11c1.json": "785b653adfd81a45b4daee45b67f2ed442a101e3d83d3502e9e584b509acffeb",
-    "compiled/egb-g11-math/eb11c2.json": "da67f5a56137797a58c642c217bdeebfafd7b10ac1fc08843fd274a5df890ed8",
-    "compiled/egb-g11-math/eb11c3.json": "c5eae66e903489791f09b79e9509ca2bef7d5def0a5695b3cc944c03d8e5d178",
-    "compiled/egb-g11-math/eb11c4.json": "896921df3d4a9ca631839d100bcc3d6767bcecdff6cc5b5ca79688a251aa8a8b",
-    "compiled/egb-g11-math/generated-questions.json": "1fa977283b10bfe2b5423602441fbdb99952d8ed71918a5a1265e49e2bcc0d2e",
+    "compiled/egb-g11-math/compile-report.json": "33555dadebf36cc6265affd835b7b73dabf91f84795d3c08cd3611486140e6a0",
+    "compiled/egb-g11-math/eb11c1.json": "704b289b96c7faa652843f8de6d793794762fc6aa3d34ecc3e014d8b61e09366",
+    "compiled/egb-g11-math/eb11c2.json": "4d71de548b62fbf2a2ebe562f125408ae483ca15bb7adc25287c7d005afbfa95",
+    "compiled/egb-g11-math/eb11c3.json": "55bb60734e96ecf751f73862fa6b5e5bdf3f5d76d21bff03299351f414271927",
+    "compiled/egb-g11-math/eb11c4.json": "d04e5607970e50e7c8ac6b089322ed545a70ecf9509af451f0e1766429fadc54",
+    "compiled/egb-g11-math/generated-questions.json": "c39a0f1cf138ed50881f79ae2cb1c12ead51258bd7ecd8f18fa636b2319cfdc3",
+    "compiled/egb-g11-math/generated-questions.review-queue.json": "a871457e755e372313509ef81e288d38510d797b0161508636e1ddd8125dd60c",
     "compiled/egb-g11-math/misconceptions.json": "8a17a48d3975bc8cb588501aea8d42819cf95095d09edbb1367c07e2934c8ae5",
-    "compiled/egb-g11-math/review-stamps.json": "fea9e38bc0338b26aefa31adc193622578ef10bb675b09b9ae93275089b1a8d8",
+    "compiled/egb-g11-math/review-stamps.json": "fa991d10eb16fca7729d627e5c5559856100a69090a48aadc951aa42e414959b",
     "compiled/egb-g11-math/widget-questions.json": "18884dc9ebb4b513117be5b7735589478f11e230ffecd86433d66f1318c1d300",
+    "compiled/egb-g11-math/widget-questions.review-queue.json": "85e3f66db34dec00dadce6225567bfe66ce39ffd8b8e23796ae45b36d03e464d",
     "compiled/egb-g11-math/content/eb11c1-1.json": "12a9357c44efcf1e4050d509e1e7a6ddb0278c11fb35bc30852a6be888cf9a5c",
     "compiled/egb-g11-math/content/eb11c1-2.json": "6c65654e46b216d1cf1d4435e8a79f9ce9006f8d931f0d379d71daea5c417437",
     "compiled/egb-g11-math/content/eb11c1-3.json": "1084101b2c14298408e4dcf4c27763509e61ad72b8ade3fb61eda031ec624cec",
