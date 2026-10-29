@@ -1,0 +1,150 @@
+{
+ "format": "ainext.working-check/1",
+ "book": "prep3-parallel",
+ "chapter": 9,
+ "prompts_version": "sw-v3",
+ "rule": "Each flag is a backlog item for a human (answer 30; answer 37c). Nothing here was corrected: the content stays as the book and G2 have it until a human decides.",
+ "passes": [
+  "A"
+ ],
+ "single_pass_ids": [],
+ "solutions": 62,
+ "skipped": [],
+ "verdicts": {
+  "consistent": 59,
+  "flagged": 1,
+  "unclear": 2
+ },
+ "flags": [
+  {
+   "solution_id": "expl:pp3u9-1-1:bk-drill-1-3",
+   "lo": "lo:pp3u9-1-1",
+   "step": 3,
+   "kind": "other",
+   "where": "working",
+   "quote": "so it also lies on the surface of circle M",
+   "expected": "M is in the interior of the circle",
+   "why": "Contradicts step 1 and the question (M ∉ circle M); the centre is not on the circle, only in its interior.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "q:pp3u9-2-2:bk-think-2-first",
+   "lo": "lo:pp3u9-2-2",
+   "step": 3,
+   "kind": "final_answer",
+   "where": "working",
+   "quote": "Answer: one tangent.",
+   "expected": "",
+   "why": "the working shows no calculation and never states the key (the solution stops short of the answer)",
+   "sources": [
+    "stub"
+   ],
+   "passes": [],
+   "numeric": {
+    "why": "the working shows no calculation and never states the key (the solution stops short of the answer)"
+   }
+  },
+  {
+   "solution_id": "q:pp3u9-2-2:bk-think-2-second",
+   "lo": "lo:pp3u9-2-2",
+   "step": 2,
+   "kind": "final_answer",
+   "where": "working",
+   "quote": "Answer: two tangents.",
+   "expected": "",
+   "why": "the working shows no calculation and never states the key (the solution stops short of the answer)",
+   "sources": [
+    "stub"
+   ],
+   "passes": [],
+   "numeric": {
+    "why": "the working shows no calculation and never states the key (the solution stops short of the answer)"
+   }
+  }
+ ],
+ "flagged_solutions": 3,
+ "unclear": [
+  {
+   "id": "expl:pp3u9-2-1:bk-think-and-discuss-2",
+   "why": "The positions of A, B and C relative to the circle are not given in the question text and no figure is available."
+  },
+  {
+   "id": "expl:pp3u9-2-2:bk-think-1",
+   "why": "The cases refer to a figure (points C, D, A, line L) that is not provided, so the labels cannot be checked."
+  }
+ ],
+ "unchecked": [],
+ "problems": [],
+ "checked_ids": [
+  "expl:pp3u9-1-1:bk-drill-1-3",
+  "expl:pp3u9-1-1:bk-drill-4",
+  "expl:pp3u9-1-1:bk-drill-5",
+  "expl:pp3u9-1-1:bk-exercise-4",
+  "expl:pp3u9-1-2:bk-think-1",
+  "expl:pp3u9-1-3:bk-drill-10",
+  "expl:pp3u9-2-1:bk-drill-1-1",
+  "expl:pp3u9-2-1:bk-drill-1-2",
+  "expl:pp3u9-2-1:bk-drill-1-3",
+  "expl:pp3u9-2-1:bk-drill-1-4",
+  "expl:pp3u9-2-1:bk-think-and-discuss-2",
+  "expl:pp3u9-2-2:bk-drill-3-1",
+  "expl:pp3u9-2-2:bk-drill-3-3",
+  "expl:pp3u9-2-2:bk-think-1",
+  "expl:pp3u9-2-3:bk-drill-6-1",
+  "expl:pp3u9-3-1:bk-drill-1",
+  "expl:pp3u9-3-1:bk-think-1",
+  "expl:pp3u9-3-1:bk-think-2",
+  "expl:pp3u9-3-2:bk-drill-2-2",
+  "expl:pp3u9-3-2:bk-think-3",
+  "expl:pp3u9-3-2:bk-think-4",
+  "expl:pp3u9-4-1:bk-drill-1-1",
+  "expl:pp3u9-4-1:bk-drill-1-2",
+  "expl:pp3u9-4-1:bk-drill-1-3",
+  "q:pp3u9-1-1:bk-drill-1-1",
+  "q:pp3u9-1-1:bk-drill-1-2",
+  "q:pp3u9-1-1:bk-drill-3",
+  "q:pp3u9-1-1:bk-exercise-4-p1",
+  "q:pp3u9-1-1:bk-exercise-4-p2",
+  "q:pp3u9-1-3:bk-drill-7-a",
+  "q:pp3u9-1-3:bk-drill-7-b",
+  "q:pp3u9-1-3:bk-drill-7-c",
+  "q:pp3u9-1-3:bk-drill-7-d",
+  "q:pp3u9-1-3:bk-drill-7-e",
+  "q:pp3u9-1-3:bk-drill-8",
+  "q:pp3u9-2-1:bk-drill-1-1-p1",
+  "q:pp3u9-2-1:bk-drill-1-4-p1",
+  "q:pp3u9-2-2:bk-drill-3-5",
+  "q:pp3u9-2-2:bk-think-2-first",
+  "q:pp3u9-2-2:bk-think-2-second",
+  "q:pp3u9-2-3:bk-drill-6-2-p1",
+  "q:pp3u9-2-3:bk-drill-6-2-p2",
+  "q:pp3u9-2-4:bk-drill-9",
+  "q:pp3u9-3-2:bk-drill-2-1",
+  "q:pp3u9-3-2:bk-drill-2-3",
+  "q:pp3u9-3-3:bk-exercise-1",
+  "q:pp3u9-4-2:bk-drill-2-a-p1",
+  "q:pp3u9-4-2:bk-drill-2-a-p2",
+  "q:pp3u9-4-2:bk-drill-2-a-p3",
+  "q:pp3u9-4-2:bk-drill-2-b-p1",
+  "q:pp3u9-4-2:bk-drill-2-b-p2",
+  "q:pp3u9-4-2:bk-drill-2-c-p1",
+  "q:pp3u9-4-2:bk-drill-2-c-p2",
+  "q:pp3u9-4-2:bk-drill-2-d-p1",
+  "q:pp3u9-4-3:bk-drill-4-p1",
+  "q:pp3u9-4-3:bk-drill-4-p2",
+  "q:pp3u9-4-3:bk-exercise-3-p1",
+  "q:pp3u9-4-3:bk-exercise-3-p2",
+  "q:pp3u9-4-3:bk-exercise-3-p3",
+  "q:pp3u9-4-3:bk-exercise-3-p4",
+  "q:pp3u9-4-3:bk-exercise-5-circles",
+  "q:pp3u9-4-3:bk-think-1"
+ ],
+ "runs": [
+  "352c6ae11ecf288f6b52a2645edc0998444d2553003daf84ec96c2c0eea87530"
+ ]
+}

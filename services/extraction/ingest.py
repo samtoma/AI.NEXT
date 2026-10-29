@@ -312,6 +312,8 @@ def stages(name: str, unit: int, dsn: str | None, cap: float | None) -> tuple[li
     out.append(("finish", "finish" in did,   # Samuel's §4 finishing passes
                 [U("book_record_generation.py", "finish", bk, *slugs, *(["--dsn", dsn] if dsn else []))]))
     out.append(("C", False, [U("compile_book_records.py", bk, *slugs)]))
+    # the step check on what compile added after SW (split parts, answers agreed later): free when nothing is new
+    out.append(("SW new", False, [U("book_record_checks.py", "sw", bk, str(unit), *slugs, "--new-only", *c())]))
     out.append(("G3s", False, [U("book_record_sample.py", bk)]))
     s8 = HERE / "runs" / bk / "coverage" / "s8-summary.json"
     out.append(("S8", s8.exists() and all(x in json.loads(s8.read_text()) for x in slugs), [U("book_record_checks.py", "s8", bk, *slugs, *c())]))

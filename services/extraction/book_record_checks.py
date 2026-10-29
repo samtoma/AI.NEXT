@@ -115,6 +115,38 @@ def s8_args(book: str, slugs: list[str]) -> dict:
             "stage": "S2-S4,S8", "oracle_only": True, "lessons": lessons, "viz_kinds": [], "options": {}}
 
 
+def sw_new_only(a, view: Path, bundle_file: Path, ch: str, runs: Path, shards: Path, copy: Path, canonical: Path) -> int:
+    """SW on the solutions the chapter's check never covered — a book question compile added later (a split part, an
+    answer the readings now agree on), a library worked example — as working_check.py's delta: `args --only`, then
+    `collect --merge-into` the canonical flags file, which refuses any overlap. Nothing already checked is paid for
+    again, and nothing already flagged is lost."""
+    import working_check as WC  # noqa: PLC0415
+    base = json.loads(canonical.read_text())
+    seen = set(base.get("checked_ids") or []) | {u["id"] for u in base.get("unchecked") or []} | {x["id"] for x in base.get("skipped") or []}
+    new = sorted(s["id"] for s in WC.solutions_from_bundle(json.loads(bundle_file.read_text())) if s["id"] not in seen)
+    print(f"SW {ch}: {len(new)} solution(s) not checked before", file=sys.stderr)
+    if not new:
+        return 0
+    stamp = date.today().strftime("%Y%m%d")
+    work = shards.parent   # not the runs folder: `args --lesson-runs` reads every JSON file there as a lesson run
+    work.mkdir(parents=True, exist_ok=True)
+    only = work / f"sw-{ch}.delta-{stamp}.only.json"
+    only.write_text(json.dumps(new, indent=1) + "\n")
+    dargs = work / f"sw-{ch}.delta-{stamp}.args.json"
+    dshards = shards.with_name(shards.name + f"-delta-{stamp}")
+    dcopy = copy.with_name(copy.name.replace(".bookrecord.", f".delta-{stamp}.bookrecord."))
+    run("args", "--book", str(view), "--seed", str(bundle_file), "--chapter", str(a.chapter), "--by-ref", str(dshards),
+        "--out", str(dargs), "--lesson-runs", str(runs), "--only", str(only), "--embed", str(dcopy))
+    if a.args_only:
+        return 0
+    result, _res, _cost = WR.run_copy(dcopy, [dshards], a.cap, f"sw-{ch}-delta", a.book, "working-check", stage="SW")
+    run("collect", "--args", str(dargs), "--runs", str(result), "--out", str(runs / f"{ch}.delta-{stamp}.flags.json"),
+        "--merge-into", str(canonical))
+    n = export_candidates(a.book, a.chapter, canonical, json.loads(bundle_file.read_text()))
+    print(f"{n} flag(s) on the book's own working → book-records/{a.book}/misprint-candidates.json (the Misprints task)", file=sys.stderr)
+    return 0
+
+
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -124,6 +156,9 @@ def main(argv: list[str]) -> int:
     s.add_argument("lessons", nargs="+")
     s.add_argument("--cap", type=float, default=4.0)
     s.add_argument("--args-only", action="store_true")
+    s.add_argument("--new-only", action="store_true",
+                   help="check only the solutions the chapter's flags file has not covered (a delta, merged into it): "
+                        "what compile added since the last check (Tamer, 2026-10-29); ingest.py run ends each unit with it (SW new)")
     o = sub.add_parser("s8")
     o.add_argument("book")
     o.add_argument("lessons", nargs="+")
@@ -154,6 +189,9 @@ def main(argv: list[str]) -> int:
     runs.mkdir(parents=True, exist_ok=True)
     shards = HERE / "work" / a.book / "packets" / f"sw-{ch}"
     copy = HERE / "work" / a.book / "packets" / "embedded" / f"working-check.{ch}.bookrecord.workflow.js"
+    canonical = runs / f"{ch}.flags.json"
+    if a.new_only and canonical.exists():
+        return sw_new_only(a, view, bundle_file, ch, runs, shards, copy, canonical)
     run("args", "--book", str(view), "--seed", str(bundle_file), "--chapter", str(a.chapter), "--by-ref", str(shards),
         "--out", str(runs / f"{ch}.args.json"), "--lesson-runs", str(runs), "--embed", str(copy))
     if a.args_only:

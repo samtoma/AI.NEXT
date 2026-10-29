@@ -1,0 +1,93 @@
+{
+ "format": "ainext.working-check/1",
+ "book": "prep3-parallel",
+ "chapter": 4,
+ "prompts_version": "sw-v3",
+ "rule": "Each flag is a backlog item for a human (answer 30; answer 37c). Nothing here was corrected: the content stays as the book and G2 have it until a human decides.",
+ "passes": [
+  "A"
+ ],
+ "single_pass_ids": [],
+ "solutions": 24,
+ "skipped": [],
+ "verdicts": {
+  "consistent": 24,
+  "flagged": 0,
+  "unclear": 0
+ },
+ "flags": [
+  {
+   "solution_id": "expl:pp3u4-1-1:bk-drill-1-c",
+   "lo": "lo:pp3u4-1-1",
+   "step": 3,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "85 + 0.633333 + 0.002222 = 85.635556",
+   "expected": "",
+   "why": "85 + 0.633333 + 0.002222 = 85.635556 does not hold (85.6356 vs 85.6356)",
+   "sources": [
+    "numeric"
+   ],
+   "passes": [],
+   "numeric": {
+    "left": "85 + 0.633333 + 0.002222",
+    "relation": "=",
+    "right": "85.635556",
+    "why": "85 + 0.633333 + 0.002222 = 85.635556 does not hold (85.6356 vs 85.6356)"
+   }
+  },
+  {
+   "solution_id": "expl:pp3u4-1-1:bk-drill-1-d",
+   "lo": "lo:pp3u4-1-1",
+   "step": 3,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "65 + 0.433333 + 0.011944 = 65.445278",
+   "expected": "",
+   "why": "65 + 0.433333 + 0.011944 = 65.445278 does not hold (65.4453 vs 65.4453)",
+   "sources": [
+    "numeric"
+   ],
+   "passes": [],
+   "numeric": {
+    "left": "65 + 0.433333 + 0.011944",
+    "relation": "=",
+    "right": "65.445278",
+    "why": "65 + 0.433333 + 0.011944 = 65.445278 does not hold (65.4453 vs 65.4453)"
+   }
+  }
+ ],
+ "flagged_solutions": 2,
+ "unclear": [],
+ "unchecked": [],
+ "problems": [],
+ "checked_ids": [
+  "expl:pp3u4-1-1:bk-drill-1-a",
+  "expl:pp3u4-1-1:bk-drill-1-b",
+  "expl:pp3u4-1-1:bk-drill-1-c",
+  "expl:pp3u4-1-1:bk-drill-1-d",
+  "expl:pp3u4-1-3:bk-drill-3-first",
+  "expl:pp3u4-2-1:bk-drill-1",
+  "expl:pp3u4-2-1:bk-think-and-discuss-2-2",
+  "q:pp3u4-1-2:bk-think-and-discuss-1",
+  "q:pp3u4-1-2:bk-think-and-discuss-2",
+  "q:pp3u4-1-2:bk-think-and-discuss-3",
+  "q:pp3u4-1-2:bk-think-and-discuss-4",
+  "q:pp3u4-1-2:bk-think-and-discuss-5",
+  "q:pp3u4-1-2:bk-think-and-discuss-6",
+  "q:pp3u4-1-3:bk-drill-3-first-p1",
+  "q:pp3u4-1-3:bk-drill-3-first-p2",
+  "q:pp3u4-1-3:bk-drill-3-first-p3",
+  "q:pp3u4-2-1:bk-drill-1-p1",
+  "q:pp3u4-2-1:bk-think-and-discuss-1-3-p1",
+  "q:pp3u4-2-1:bk-think-and-discuss-1-3-p2",
+  "q:pp3u4-2-1:bk-think-and-discuss-2-2-p1",
+  "q:pp3u4-2-2:bk-drill-3-1",
+  "q:pp3u4-2-2:bk-drill-3-2",
+  "q:pp3u4-2-2:bk-drill-3-4",
+  "q:pp3u4-2-2:bk-drill-3-5"
+ ],
+ "runs": [
+  "6453475c3018382f10bc17f6749c99ee608551ec789c38b374458f1b2a6afa11"
+ ]
+}

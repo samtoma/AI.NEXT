@@ -67,6 +67,13 @@ class Pipeline(unittest.TestCase):
         src = (Path(ingest.__file__)).read_text()
         self.assertIn('"s6-topup"', src)
 
+    def test_each_unit_ends_with_the_step_check_on_what_is_new(self):
+        src = (Path(ingest.__file__)).read_text()
+        self.assertIn('("SW new", False, [U("book_record_checks.py", "sw", bk, str(unit), *slugs, "--new-only"', src)
+        checks = (Path(ingest.__file__).with_name("book_record_checks.py")).read_text()
+        self.assertIn("def sw_new_only", checks)
+        self.assertIn('"--merge-into", str(canonical)', checks)   # a delta never overwrites what was checked
+
 
 if __name__ == "__main__":
     unittest.main()

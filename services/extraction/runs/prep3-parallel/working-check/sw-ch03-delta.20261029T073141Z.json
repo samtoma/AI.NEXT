@@ -1,0 +1,53 @@
+{
+ "stage": "SW",
+ "workflow": "working-check",
+ "prompts_version": "sw-v3",
+ "book": "prep3-parallel",
+ "chapter": 3,
+ "part": 1,
+ "parts": 1,
+ "batch": 5,
+ "agents": 1,
+ "effort": "high",
+ "model": "sonnet",
+ "pass_id": "A",
+ "order": "bundle",
+ "by_ref": {
+  "dir": "/Users/tdeif/Developer/Noor/services/extraction/work/prep3-parallel/packets/sw-ch03-delta-20261029",
+  "stage": "SW",
+  "shards_sha256": "e8270ab681138467148d0057df814dcc587ba30d0a8f0e530cc313568f153133",
+  "files": 3
+ },
+ "embedded": {
+  "source": "runbook/working-check.workflow.js",
+  "source_sha256": "352a846920d85b4c224df7fb36d3f9a8ea598155cc2b4ee4ba9ef7e4791b6385",
+  "args_sha256": "41da06c1592b7fbe30682a3f1316676b77a94a8dca8e4cb6e64a8dc5bd8471a6",
+  "generated_sha256": "522b3e75f87c7439f7e8739ca27e22e9bbf60ef920de5353aa146086aa017a47",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "solution_id": "q:pp3u3-2-4:bk-exercise-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:pp3u3-2-3:bk-drill-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:pp3u3-2-3:bk-exercise-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  }
+ ],
+ "problems": [],
+ "meter": {
+  "stage": "SW",
+  "record": "uv run meter_run.py record --book prep3-parallel --stage SW --run <runId>"
+ }
+}
