@@ -250,7 +250,7 @@ def answer_type(ans: str, marker_kinds: bool = True):
     if pair:
         key = f"({pair.group(1)}, {pair.group(2)})"
         return "short", {"marker": {"kind": "coordinates", "key": key}}, key
-    body = re.sub(r"^[A-Za-z]\w*(?:\s*[×x]\s*[A-Za-z]\w*)?\s*=\s*", "", a)  # "X × Y = {…}" → "{…}"
+    body = re.sub(r"^[A-Za-z]\w*(?:\s*[×x]\s*[A-Za-z]\w*)?\s*(?:=|∈)\s*", "", a)  # "X × Y = {…}", "X ∈ {…}" → "{…}"
     if re.fullmatch(r"\{.*\}", body) and re.search(r"\d|\(", body):
         elems = re.findall(r"\([^()]*\)|[^{},()\s][^{},()]*", body[1:-1])
         letters = sorted({c for e in elems for c in re.findall(r"(?<![A-Za-z\\])[a-zA-Z](?![A-Za-z])", e)})
@@ -262,7 +262,32 @@ def answer_type(ans: str, marker_kinds: bool = True):
         return "short", None, yn.group(1).capitalize()
     if re.fullmatch(r"[A-Za-z][A-Za-z\- ]{0,40}", a) and len(a.split()) <= 4:
         return "short", None, a
-    return marker_type(a) if marker_kinds else None
+    if not marker_kinds:
+        return None
+    return measure_type(a) or marker_type(a)
+
+
+# A single measure, a count or a comparison sign (Tamer, 2026-10-29: "mark more answer forms"). Exercises only, like
+# the marker kinds. Each is a plain `numeric` key, which today's grade() reads from the start of what is typed, so
+# "40°", "40 degrees", "5 cm" and "2 circles" all mark against 40 / 5 / 2. Not taken: several values in one answer
+# ("," ";" "and" "or"), an approximation ("≈"), more than two decimal places (the precision asked is not known), an
+# angle in degrees, minutes and seconds, and a count followed by a working sentence.
+UNIT = r"(?:°|degrees?|cm²|cm\^?2|cm|mm|km|m)"
+
+
+def measure_type(a: str):
+    if re.fullmatch(r"[<>=]", a):                       # "complete with <, > or =": the sign is the answer
+        return "short", None, a
+    if re.search(r"[,;≈']|\b(?:and|or)\b", a):
+        return None
+    last = a.rsplit("=", 1)[-1].strip()                 # "m(arc BD) = 32°", "m(AB) = m(∠AMB) = 50°": the value
+    m = re.fullmatch(rf"({NUM})\s*{UNIT}", last)       # a unit always: "x - 3 = 0" is an equation, not the number 0
+    if m and "/" not in m.group(1) and len((m.group(1).split(".") + [""])[1]) <= 2:
+        return "numeric", None, m.group(1)
+    c = re.fullmatch(r"(\d+)\s+(?:[A-Za-z]+)?\s*(?:\([^()]*\))?", a)   # "2 circles", "1 (one tangent only)"
+    if c and c.group(0).strip() != c.group(1):
+        return "numeric", None, c.group(1)
+    return None
 
 
 # The app's marker reads more than the forms above (answer-marker.ts MARKER_KINDS): an expression, an equation, a surd,
