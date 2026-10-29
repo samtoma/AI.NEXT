@@ -10,6 +10,10 @@ all, and this module fixes them the same way every time:
                           IS marker.answer (spec.py); the extra field is dropped, the marker untouched. The same
                           for a multiple-choice family whose "answer" is word for word its choices.correct
                           (Prep-3 S6, 2026-10-29); an "answer" that differs is the author's, and left.
+  several-points-are-values  a `coordinates` marker whose answer is two or more points, "(1, 2), (3, 4)". The kind
+                          marks ONE point, so no answer, the key itself included, could ever agree (Prep-3 S6 rejected
+                          five such families, 2026-10-29). A set of points is the `values` kind, matched in any order;
+                          the kind changes, outer [ ] go, the points are untouched.
   rename-shadowing-param  a param is named like a built-in (num, frac, gcd …), which would hide it. The param
                           is renamed <name>_v in every expression and every {=…} hole — never where the name is
                           CALLED, which is the built-in — and nothing else changes.
@@ -110,6 +114,13 @@ def normalise(raw: dict) -> tuple[dict, list[str]]:
         done.append(f"drop-redundant-answer: removed the top-level \"answer\" ({json.dumps(out['answer'], ensure_ascii=False)}); "
                     "a multiple-choice family's answer is choices.correct, the same text, unchanged")
         del out["answer"]
+    ans = marker.get("answer") if isinstance(marker.get("answer"), str) else ""
+    body = ans.strip()
+    body = body[1:-1].strip() if body.startswith("[") and body.endswith("]") else body
+    if marker.get("kind") == "coordinates" and re.fullmatch(r"\(.*\)\s*,\s*\(.*\)", body):
+        done.append(f"several-points-are-values: marker.kind coordinates -> values; the answer {json.dumps(ans, ensure_ascii=False)} "
+                    "is several points, which the coordinates kind (one point) can never match")
+        out["marker"]["kind"], out["marker"]["answer"] = "values", body
     stem = out.get("stem")
     if (out.get("answer_type") == "mcq" and isinstance(stem, str) and not out.get("distinct_by_choices")
             and E.holes(stem) == []):

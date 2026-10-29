@@ -1,0 +1,51 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "9d58724b40bb2594a062fa70017f952b2c603bb34c3865dc5b183da87e8d1d00",
+  "generated_sha256": "43fe8fc2eaf85c7da5b1868efdd5a21d86d3fbf76cd5ea283e64746fce5c9bfa",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u10-2-3:chords-inside",
+   "spec_sha": "bfbe5af07133913c90f138f34a89154d35fd0ceb380ef66e8c27c24916cd9b12",
+   "answers": [
+    {
+     "instance_id": "q:pp3u10-2-3:g002-chords",
+     "stem_sha": "77e022c878dc139b",
+     "answer": {
+      "value": "105"
+     },
+     "working": "Angle = (110+100)/2 = 105"
+    },
+    {
+     "instance_id": "q:pp3u10-2-3:g007-chords",
+     "stem_sha": "c036053bf63f931a",
+     "answer": {
+      "value": "80"
+     },
+     "working": "Angle = (100+60)/2 = 80"
+    },
+    {
+     "instance_id": "q:pp3u10-2-3:g010-chords",
+     "stem_sha": "a7739cffccc6f8fa",
+     "answer": {
+      "value": "85"
+     },
+     "working": "Angle = (60+110)/2 = 85"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The task named no files, so I opened none. I checked the three instances by hand, and each key matches the chord-angle rule m(∠AEC) = ½[m(arc AC) + m(arc BD)]. The checks are ½(110+100) = 105, ½(100+60) = 80 and ½(60+110) = 85. Each solution applies that rule step by step. The stem says which two opposite arcs are intercepted, so it is unambiguous. The answers are plain numbers in degrees, as the question asks. The family has no options, so there are no distractors to check."
+   }
+  }
+ ]
+}

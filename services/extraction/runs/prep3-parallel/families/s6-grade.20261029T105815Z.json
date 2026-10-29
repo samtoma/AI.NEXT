@@ -1,0 +1,90 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "0bd5f97ed46d46c8232719d7221ec466105c3993c8c047893d0c586136fb0ce4",
+  "generated_sha256": "786c94e26f4b1fe415fa2d4837d887304817896bdc6837bf512891705fd8931a",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u4-2-3:degree-ratio",
+   "spec_sha": "7c74dfb1fc87b3ef0fab233182f36472711b71b74f74b8e3d015579ad374e9d2",
+   "answers": [
+    {
+     "instance_id": "q:pp3u4-2-3:g005-degree",
+     "stem_sha": "d63b6d27f8fb6a98",
+     "answer": {
+      "value": "0.9063"
+     },
+     "working": "sin 65° = 0.906308 → 0.9063"
+    },
+    {
+     "instance_id": "q:pp3u4-2-3:g006-degree",
+     "stem_sha": "7f166d453b8b0e1e",
+     "answer": {
+      "value": "0.6428"
+     },
+     "working": "cos 50° = 0.642788 → 0.6428"
+    },
+    {
+     "instance_id": "q:pp3u4-2-3:g009-degree",
+     "stem_sha": "948046dfd00fb91d",
+     "answer": {
+      "value": "1.1918"
+     },
+     "working": "tan 50° = 1.191754 → 1.1918"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked the three keys against the true values. sin 65° = 0.906308, which rounds to 0.9063. cos 50° = 0.642788, which rounds to 0.6428. tan 50° = 1.191754, which rounds to 1.1918. No wrong options were supplied, so the distractor list is empty. Each stem asks for a four-decimal-place value in degree mode, and the key matches that. The solutions give the calculator steps and the correctly rounded result. The task named no files, so I opened none.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u4-2-3:minutes-ratio",
+   "spec_sha": "84281135b4ec36e4d473cc29adb1f264e68958468c71aebe77fe77e258cbf2bf",
+   "answers": [
+    {
+     "instance_id": "q:pp3u4-2-3:g001-minute",
+     "stem_sha": "2710b452386e18b5",
+     "answer": {
+      "value": "0.9239"
+     },
+     "working": "22°30' = 22.5°; cos 22.5° = 0.92388"
+    },
+    {
+     "instance_id": "q:pp3u4-2-3:g004-minute",
+     "stem_sha": "b8bc031f9ed50780",
+     "answer": {
+      "value": "0.9239"
+     },
+     "working": "67°30' = 67.5°; sin 67.5° = 0.92388"
+    },
+    {
+     "instance_id": "q:pp3u4-2-3:g006-minute",
+     "stem_sha": "139d666054643368",
+     "answer": {
+      "value": "0.2672"
+     },
+     "working": "15°30' = 15.5°; sin 15.5° ≈ 0.26724"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The task named no files, so I judged from the message alone. I checked the keys by hand: cos 22.5° ≈ 0.92388, which rounds to 0.9239. sin 67.5° equals cos 22.5°, so it is also 0.9239. sin 15.5° ≈ 0.267238, which rounds to 0.2672. All three keys are correct to four decimal places. No wrong options were provided, so distractors_ok is true by default. The key-press steps are the standard calculator sequence and are fine for a prep-3 student.",
+    "distractors": []
+   }
+  }
+ ]
+}

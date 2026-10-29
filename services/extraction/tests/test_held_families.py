@@ -38,6 +38,20 @@ class Normalise(unittest.TestCase):
         self.assertEqual(out["answer"], "Class A")
 
 
+    def test_several_points_are_the_values_kind(self):
+        for ans, want in [("[({=p}, {=q}), (-{=q}, -{=p})]", "({=p}, {=q}), (-{=q}, -{=p})"),
+                          ("({=x1}, {=b1}), ({=x2}, {=b2})", "({=x1}, {=b1}), ({=x2}, {=b2})")]:
+            out, done = N.normalise({"answer_type": "expression", "stem": "s",
+                                     "marker": {"kind": "coordinates", "answer": ans, "form": None, "variables": [], "tolerance": None}})
+            self.assertEqual((out["marker"]["kind"], out["marker"]["answer"]), ("values", want))
+            self.assertTrue(done[0].startswith("several-points-are-values"))
+
+    def test_one_point_stays_coordinates(self):
+        out, done = N.normalise({"answer_type": "expression", "stem": "s",
+                                 "marker": {"kind": "coordinates", "answer": "({=p}, {=q})", "form": None, "variables": [], "tolerance": None}})
+        self.assertEqual((out["marker"]["kind"], done), ("coordinates", []))
+
+
 class Repoint(unittest.TestCase):
     def test_a_worked_example_that_became_a_question_is_the_parent_now(self):
         with tempfile.TemporaryDirectory() as t:

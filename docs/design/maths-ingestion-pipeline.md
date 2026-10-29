@@ -123,7 +123,8 @@ Nothing is asked from words outside these lists: "undefined", "inside", or a sen
 
 Before checking, S6 now does two mechanical repairs, the way Samuel's fan-out does:
 - It runs `families.normalise`. For multiple choice, that now also drops a top-level `answer` that repeats
-  `choices.correct`.
+  `choices.correct`. It also turns a `coordinates` key of several points into
+  `values`: the `coordinates` kind marks one point, so no answer could ever agree with it.
 - It re-points a family whose worked-example parent has since become a book question (`repoint_parents`).
 
 A blind solver call that never returned (`NO ANSWER`) is no verdict, rather than a wrong answer. A family

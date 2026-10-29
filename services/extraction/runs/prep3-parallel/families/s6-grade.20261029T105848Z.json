@@ -1,0 +1,83 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "100f469a0b3891a6e317b1e88dffa83fe8f948e641455f9034bb07a99eece03b",
+  "generated_sha256": "0d41dfa05a6433e69c336e2f96a8dade91e940d87afcc90e3c9660633ce0243e",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u6-3-1:circle-line",
+   "spec_sha": "8c69c6bad794fd38d18e446f978c825b1aabfb36f9a0faed39d06d529e296584",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-3-1:g007-circle",
+     "stem_sha": "a2c79b1dcc9d6fc5",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u6-3-1:g008-circle",
+     "stem_sha": "7f9f72b1b59cd296",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u6-3-1:g009-circle",
+     "stem_sha": "4fa0b94bb52b5e8a",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": false,
+    "notes": "The mathematics is correct in all three instances. Both pairs satisfy both equations, and the expansions and factorisations are right. The family has no wrong options. The only fault is g008 step 4, which prints \"y^2 + 1y - 72\"; the coefficient 1 should be dropped. A student could be confused by \"1y\", so I rejected the solution on presentation grounds. Fix the template to omit a coefficient of 1 (and render a coefficient of -1 as \"- y\")."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u6-3-1:product-line",
+   "spec_sha": "02cc0e947edd6cb731dd18ad1fd2316be800a9cd1c3f91ccd3edc0c5cf3c8979",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-3-1:g008-produc",
+     "stem_sha": "9911854acb4cfc8d",
+     "answer": {
+      "plain": "[(7, 16), (8, 14)]"
+     },
+     "working": "y=30-2x; x(30-2x)=112 → x^2-15x+56=0 → x=7 or 8; y=16 or 14"
+    },
+    {
+     "instance_id": "q:pp3u6-3-1:g009-produc",
+     "stem_sha": "7d5b52d8912c15d8",
+     "answer": {
+      "plain": "[(5, 12), (6, 10)]"
+     },
+     "working": "y=22-2x; x(22-2x)=60 → x^2-11x+30=0 → x=5 or 6; y=12 or 10"
+    },
+    {
+     "instance_id": "q:pp3u6-3-1:g010-produc",
+     "stem_sha": "1c5bb842ce54e2e4",
+     "answer": {
+      "plain": "[(2, 6), (3, 4)]"
+     },
+     "working": "y=10-2x; x(10-2x)=12 → x^2-5x+6=0 → x=2 or 3; y=6 or 4"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked all three instances by hand. Each substitution, factorisation and back-substitution is correct, and each pair satisfies both original equations. The family has no wrong options. Each key is the list of ordered pairs the stem asks for and matches its answer_check."
+   }
+  }
+ ]
+}
