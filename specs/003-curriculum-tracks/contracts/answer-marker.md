@@ -105,3 +105,36 @@ construction, and every number above: `marker-evaluation.md`.
 - Unreadable inputs → `unreadable`.
 - A replay of every recorded attempt of the existing courses through the route: results are identical
   (the marker path is never taken for them).
+
+## Amendment: the book's short forms (Tamer, 2026-10-29), Proposed, for Samuel
+
+The Prep-3 book records showed 83 agreed answers that the app could not mark. About 60 of them were short
+answers in notation the marker did not read. This amendment makes four additions. Each is deterministic,
+and none changes the result for an answer the marker already read; the Grade 10 fixture still passes in
+full.
+
+- **`form: "dms"`**, an angle in degrees, minutes and seconds. The marker reads `34° 36′ 0″`, `34°36'0''`
+  and `34^\circ 36'` as the number 34 + 36/60. It does this before `normalise`, because ′ is also the
+  recurring mark.
+  - With `form: "dms"`, the same angle written as a decimal (34.6) is `wrong_form: dms`, not wrong.
+  - With `form: "decimal"`, the angle typed back in minutes is `wrong_form: decimal`.
+  - The student reads: "That's the right angle, but the question asks for it in degrees, minutes and
+    seconds".
+- **`tolerance` on an `expression` with no variables**: a number, like σ ≈ 1.483 or an angle to the
+  second. `markExpression` already honoured a tolerance. The bundle schema now allows one on a number.
+  An expression with letters stays exact.
+- **The empty set** in the `values` kind: `∅`, `Ø`, `\emptyset`, `\varnothing`, `{}` and "the empty set"
+  all read as `{}`. `φ` and `ϕ` also read as `{}`, except where the question declares φ as a variable.
+- **`R − {a, b}`** in the `interval` kind (also `ℝ \ {…}` and `\mathbb{R} \setminus \{…\}`): this is the
+  book's notation for a domain, and it reads as `x ≠ a and x ≠ b`. The 12 live Prep-3 questions whose
+  key is a domain could not be answered in the book's own notation before this.
+
+On the compile side, `compile_book_records.short_form` types these answers. It also types the answers
+from a closed list of words as multiple choice, a path that is `grade()`'s and unchanged:
+- a relation between two lengths: <, =, >;
+- a straight line and a circle: secant, tangent, outside;
+- the number of solutions of a pair of equations: none, one, infinitely many;
+- "an infinite number" for a single "how many".
+
+A domain asked as a new part of an answer is numbered `-pd<k>`, so the parts asked before keep the ids
+their attempts are recorded against.

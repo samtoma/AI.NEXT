@@ -104,3 +104,18 @@ rejudge`, which `ingest.py refresh` runs (free). Prep 3: 31 answers agreed this 
 
 A changed correction reaches a generated answer only when that answer is made again (`answer_gen.py run … --only
 <ref> --force`), then compile.
+
+### Short forms the app can mark (2026-10-29)
+
+Compile also gives a question to a short answer in a form of its own (`short_form`):
+- an angle in degrees, minutes and seconds, or as a decimal of an angle the stem gives in minutes;
+- an approximate value, keyed to its exact value where the working is arithmetic only;
+- the empty set;
+- an answer from a closed list of words, asked as multiple choice. The lists are a relation between two
+  lengths, a straight line and a circle, the number of solutions, and "an infinite number".
+
+A domain `R − {…}` is now asked as a part of its answer. The app's marker reads each of these forms; the
+marker contract's amendment of the same date has the details, and it is Proposed until Samuel decides.
+When an answer fills several blanks, only its last blank is asked ("Answer only the last blank.").
+Nothing is asked from words outside these lists: "undefined", "inside", or a sentence.
+

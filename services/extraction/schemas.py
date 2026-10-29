@@ -832,7 +832,8 @@ class AnswerSpec(BaseModel):
     form is marked `wrong_form`, never correct (FR-4320). The forms are EXACTLY the
     ones the app's `readMarkerSpec` accepts (app/src/lib/answer-marker.ts FORM_NAMES,
     which throws on any other): factorised, expanded, simplest, `decimal` (the
-    per-question flag for "write it as a decimal": 7/33 is not 0.2̇1̇, backlog 31) and
+    per-question flag for "write it as a decimal": 7/33 is not 0.2̇1̇, backlog 31), `dms`
+    (an angle in degrees, minutes and seconds: 34.6 is not 34° 36′) and
     {subject} on an equation. A form the app does not know never reaches a spec: the
     book's "product of prime factors" (backlog 30) is carried as the item's
     `asked_form` and the item is HELD until the app's marker can check it.
@@ -841,7 +842,7 @@ class AnswerSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
     kind: MarkerKind
     key: str = Field(min_length=1)
-    form: Optional[Literal["factorised", "expanded", "simplest", "decimal"] | SubjectForm] = None
+    form: Optional[Literal["factorised", "expanded", "simplest", "decimal", "dms"] | SubjectForm] = None
     variables: list[str] = []
     tolerance: Optional[Tolerance] = None
 
@@ -855,7 +856,9 @@ class AnswerSpec(BaseModel):
                                  "letter or a LaTeX Greek name")
         if len(set(self.variables)) != len(self.variables):
             raise ValueError(f"marker variables repeat: {self.variables}")
-        if self.tolerance is not None and self.kind not in NUMERIC_MARKER_KINDS:
+        # a number with no letters may be approximate (σ ≈ 1.483, an angle to the second): the app's markExpression
+        # honours a tolerance there (Tamer, 2026-10-29)
+        if self.tolerance is not None and self.kind not in NUMERIC_MARKER_KINDS and not (self.kind == "expression" and not self.variables):
             raise ValueError(f"marker kind '{self.kind}' is exact; a tolerance belongs only to "
                              f"{sorted(NUMERIC_MARKER_KINDS)}")
         if isinstance(self.form, SubjectForm):
@@ -868,6 +871,8 @@ class AnswerSpec(BaseModel):
         if self.form in ("factorised", "expanded") and self.kind not in ("expression", "equation"):
             raise ValueError(f"form '{self.form}' applies to an expression or an equation, "
                              f"not to kind '{self.kind}'")
+        if self.form == "dms" and self.kind != "expression":
+            raise ValueError(f"form 'dms' (degrees, minutes and seconds) applies to an expression, not to kind '{self.kind}'")
         if self.form == "decimal" and self.kind not in ("expression", "recurring", "values"):
             raise ValueError(f"form 'decimal' applies to a number, a recurring decimal or values, "
                              f"not to kind '{self.kind}'")

@@ -87,9 +87,10 @@ class Parts(unittest.TestCase):
         self.assertEqual(self.asks("φ (empty set); impossible event; 0", stem),
                          [("Answer only the 2nd blank.", "impossible event"), ("Answer only the 3rd blank.", "0")])
 
-    def test_two_domains_name_their_function_but_are_not_asked_yet(self):
-        # the marker cannot read "R - {3}" in an answer yet, so no domain part is asked
-        self.assertEqual(self.asks("n(x) = 2, domain R - {-2}"), [("Answer only: n(x) = ?", "2")])
+    def test_a_domain_is_asked_now_the_marker_reads_it(self):
+        # the app's marker reads "R - {-2}" in an answer from 2026-10-29 (exceptValues); compile numbers the domain
+        # part apart (-pd1), so the parts asked before keep their ids
+        self.assertEqual(self.asks("n(x) = 2, domain R - {-2}"), [("Answer only: n(x) = ?", "2"), ("Answer only: the domain = ?", "x != -2")])
 
     def test_not_split(self):
         self.assertEqual(self.asks("f(3) = 0 and g(3) = 0, so f(3) = g(3) = 0", "If f(x)=x^2-3x, g(x)=x-3 Prove that f(3)=g(3)=0"), [])

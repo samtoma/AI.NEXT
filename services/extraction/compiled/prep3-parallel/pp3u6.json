@@ -365,6 +365,32 @@
       "verified": true
     },
     {
+      "id": "q:pp3u6-1-2:bk-drill-2-1",
+      "lo": "lo:pp3u6-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Graphically find the solution set for each pair in the following equations: $3x+y=5$ , $y+3x=8$",
+      "answer": "\\{\\}",
+      "solution": [
+        "Write $3x + y = 5$ as $y = 5 - 3x$. Put $x = 0$, then $y = 5$, giving $(0, 5)$. Put $x = 1$, then $y = 2$, giving $(1, 2)$. Draw line $L_1$ through these points.",
+        "Write $y + 3x = 8$ as $y = 8 - 3x$. Put $x = 0$, then $y = 8$, giving $(0, 8)$. Put $x = 2$, then $y = 2$, giving $(2, 2)$. Draw line $L_2$ through these points.",
+        "Both lines have slope $-3$, so $L_1 \\parallel L_2$.",
+        "The lines do not meet, so $L_1 \\cap L_2 = \\phi$.",
+        "There is no solution. The solution set is empty."
+      ],
+      "source_page": 7,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u6-1:drill-2:1, printed p.7); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\{\\}",
+          "variables": []
+        }
+      },
+      "verified": true
+    },
+    {
       "id": "q:pp3u6-1-3:bk-example-4",
       "lo": "lo:pp3u6-1-3",
       "tier": "standard",
@@ -449,6 +475,72 @@
           "variables": []
         }
       },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u6-1-3:bk-drill-4-a",
+      "lo": "lo:pp3u6-1-3",
+      "tier": "standard",
+      "type": "mcq",
+      "stem": "What is the number of solutions of each pair in the following equations: $7x+4y=6$, $5x-2y=14$",
+      "answer": "b",
+      "solution": [
+        "$7x + 4y = 6$ ... (1) and $5x - 2y = 14$ ... (2).",
+        "Multiply (2) by 2: $10x - 4y = 28$ ... (3).",
+        "Add (1) and (3): $17x = 34$, so $x = 2$.",
+        "Substitute in (1): $14 + 4y = 6$, so $y = -2$.",
+        "The equations have exactly one solution, $(2, -2)$."
+      ],
+      "source_page": 8,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u6-1:drill-4:A, printed p.8); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": [
+        {
+          "key": "a",
+          "text": "No solution"
+        },
+        {
+          "key": "b",
+          "text": "One solution"
+        },
+        {
+          "key": "c",
+          "text": "An infinite number of solutions"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "q:pp3u6-1-3:bk-drill-4-b",
+      "lo": "lo:pp3u6-1-3",
+      "tier": "standard",
+      "type": "mcq",
+      "stem": "What is the number of solutions of each pair in the following equations: $3x+4y=-4$, $5x-2y=15$",
+      "answer": "b",
+      "solution": [
+        "$3x + 4y = -4$ ... (1) and $5x - 2y = 15$ ... (2).",
+        "Multiply (2) by 2: $10x - 4y = 30$ ... (3).",
+        "Add (1) and (3): $13x = 26$, so $x = 2$.",
+        "Substitute in (1): $6 + 4y = -4$, so $y = -\\frac{5}{2}$.",
+        "The equations have exactly one solution, $(2, -\\frac{5}{2})$."
+      ],
+      "source_page": 8,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u6-1:drill-4:B, printed p.8); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": [
+        {
+          "key": "a",
+          "text": "No solution"
+        },
+        {
+          "key": "b",
+          "text": "One solution"
+        },
+        {
+          "key": "c",
+          "text": "An infinite number of solutions"
+        }
+      ],
       "verified": true
     },
     {
@@ -673,6 +765,33 @@
         "marker": {
           "kind": "values",
           "key": "\\{-1\\}",
+          "variables": []
+        }
+      },
+      "hold_reason": "figure_missing"
+    },
+    {
+      "id": "q:pp3u6-2-1:bk-drill-2",
+      "lo": "lo:pp3u6-2-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Draw the graphical form of the function f where $f(x) = -x^2 + 6x - 11$ in the interval $[0, 6]$ and from the drawing find the solution set of the equation: $x^2 - 6x + 11 = 0$",
+      "answer": "\\{\\}",
+      "solution": [
+        "Make a table for x in [0, 6]: f(0)=-11, f(1)=-6, f(2)=-3, f(3)=-2, f(4)=-3, f(5)=-6, f(6)=-11.",
+        "Plot the points (0, -11), (1, -6), (2, -3), (3, -2), (4, -3), (5, -6), (6, -11).",
+        "Draw a smooth curve through them; it opens downward with its highest point at (3, -2), below the x-axis.",
+        "The curve does not meet the x-axis.",
+        "$x^2-6x+11=0$ is the same equation as $-x^2+6x-11=0$, so it has no real roots.",
+        "The solution set is ∅."
+      ],
+      "source_page": 11,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u6-2:drill-2, printed p.11); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\{\\}",
           "variables": []
         }
       },
@@ -1164,39 +1283,6 @@
       "generated_by": "book (book_worked: pp3u6-1:example-3, printed p.7); compile_book_records.py compile-v3"
     },
     {
-      "id": "expl:pp3u6-1-2:bk-drill-2-1",
-      "lo": "lo:pp3u6-1-2",
-      "entry_type": "worked_example",
-      "content": [
-        {
-          "kind": "problem",
-          "text_md": "Graphically find the solution set for each pair in the following equations: $3x+y=5$ , $y+3x=8$"
-        },
-        {
-          "step": 1,
-          "text_md": "Write $3x + y = 5$ as $y = 5 - 3x$. Put $x = 0$, then $y = 5$, giving $(0, 5)$. Put $x = 1$, then $y = 2$, giving $(1, 2)$. Draw line $L_1$ through these points."
-        },
-        {
-          "step": 2,
-          "text_md": "Write $y + 3x = 8$ as $y = 8 - 3x$. Put $x = 0$, then $y = 8$, giving $(0, 8)$. Put $x = 2$, then $y = 2$, giving $(2, 2)$. Draw line $L_2$ through these points."
-        },
-        {
-          "step": 3,
-          "text_md": "Both lines have slope $-3$, so $L_1 \\parallel L_2$."
-        },
-        {
-          "step": 4,
-          "text_md": "The lines do not meet, so $L_1 \\cap L_2 = \\phi$."
-        },
-        {
-          "step": 5,
-          "text_md": "There is no solution. The solution set is empty."
-        }
-      ],
-      "source_page": 7,
-      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
-    },
-    {
       "id": "expl:pp3u6-1-2:bk-drill-2-2",
       "lo": "lo:pp3u6-1-2",
       "entry_type": "worked_example",
@@ -1223,109 +1309,6 @@
         }
       ],
       "source_page": 7,
-      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
-    },
-    {
-      "id": "expl:pp3u6-1-3:bk-drill-4-a",
-      "lo": "lo:pp3u6-1-3",
-      "entry_type": "worked_example",
-      "content": [
-        {
-          "kind": "problem",
-          "text_md": "What is the number of solutions of each pair in the following equations: $7x+4y=6$, $5x-2y=14$"
-        },
-        {
-          "step": 1,
-          "text_md": "$7x + 4y = 6$ ... (1) and $5x - 2y = 14$ ... (2)."
-        },
-        {
-          "step": 2,
-          "text_md": "Multiply (2) by 2: $10x - 4y = 28$ ... (3)."
-        },
-        {
-          "step": 3,
-          "text_md": "Add (1) and (3): $17x = 34$, so $x = 2$."
-        },
-        {
-          "step": 4,
-          "text_md": "Substitute in (1): $14 + 4y = 6$, so $y = -2$."
-        },
-        {
-          "step": 5,
-          "text_md": "The equations have exactly one solution, $(2, -2)$."
-        }
-      ],
-      "source_page": 8,
-      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
-    },
-    {
-      "id": "expl:pp3u6-1-3:bk-drill-4-b",
-      "lo": "lo:pp3u6-1-3",
-      "entry_type": "worked_example",
-      "content": [
-        {
-          "kind": "problem",
-          "text_md": "What is the number of solutions of each pair in the following equations: $3x+4y=-4$, $5x-2y=15$"
-        },
-        {
-          "step": 1,
-          "text_md": "$3x + 4y = -4$ ... (1) and $5x - 2y = 15$ ... (2)."
-        },
-        {
-          "step": 2,
-          "text_md": "Multiply (2) by 2: $10x - 4y = 30$ ... (3)."
-        },
-        {
-          "step": 3,
-          "text_md": "Add (1) and (3): $13x = 26$, so $x = 2$."
-        },
-        {
-          "step": 4,
-          "text_md": "Substitute in (1): $6 + 4y = -4$, so $y = -\\frac{5}{2}$."
-        },
-        {
-          "step": 5,
-          "text_md": "The equations have exactly one solution, $(2, -\\frac{5}{2})$."
-        }
-      ],
-      "source_page": 8,
-      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
-    },
-    {
-      "id": "expl:pp3u6-2-1:bk-drill-2",
-      "lo": "lo:pp3u6-2-1",
-      "entry_type": "worked_example",
-      "content": [
-        {
-          "kind": "problem",
-          "text_md": "Draw the graphical form of the function f where $f(x) = -x^2 + 6x - 11$ in the interval $[0, 6]$ and from the drawing find the solution set of the equation: $x^2 - 6x + 11 = 0$"
-        },
-        {
-          "step": 1,
-          "text_md": "Make a table for x in [0, 6]: f(0)=-11, f(1)=-6, f(2)=-3, f(3)=-2, f(4)=-3, f(5)=-6, f(6)=-11."
-        },
-        {
-          "step": 2,
-          "text_md": "Plot the points (0, -11), (1, -6), (2, -3), (3, -2), (4, -3), (5, -6), (6, -11)."
-        },
-        {
-          "step": 3,
-          "text_md": "Draw a smooth curve through them; it opens downward with its highest point at (3, -2), below the x-axis."
-        },
-        {
-          "step": 4,
-          "text_md": "The curve does not meet the x-axis."
-        },
-        {
-          "step": 5,
-          "text_md": "$x^2-6x+11=0$ is the same equation as $-x^2+6x-11=0$, so it has no real roots."
-        },
-        {
-          "step": 6,
-          "text_md": "The solution set is ∅."
-        }
-      ],
-      "source_page": 11,
       "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
     },
     {

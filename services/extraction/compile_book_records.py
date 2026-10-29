@@ -337,8 +337,6 @@ def _value_type(v: str):
     t = answer_type(v)
     if t and t[0] == "short" and not t[1] and len(t[2].split()) > 2:
         return None   # a phrase checked letter for letter ("the point M"): too easy to type right and be marked wrong
-    if t and (t[1] or {}).get("marker", {}).get("kind") == "interval" and "!=" in t[2]:
-        return None   # "R - {3}": the app's marker cannot read the book's notation in an answer yet (2026-10-29)
     return t
 
 
@@ -459,6 +457,71 @@ def marker_type(a: str):
             continue
         if _reads(spec):
             return "short", {"marker": spec}, spec["key"]
+    return None
+
+
+# a short answer in a form of its own (Tamer, 2026-10-29: "mark the short forms"): an angle in degrees, minutes and
+# seconds or as a decimal of degrees, an approximate value, the empty set, and the few answers that come from a
+# closed list of words (a relation, a line and a circle, the number of solutions). Deterministic: no model.
+_DMS = r"(\d+(?:[.,]\d+)?)\s*(?:°|º|\^\s*\{?\s*\\circ\s*\}?)\s*(?:(\d+(?:[.,]\d+)?)\s*(?:'|′|\\prime)(?!['′]))?\s*(?:(\d+(?:[.,]\d+)?)\s*(?:''|″|\"))?"
+_EMPTY = r"(?:\{\s*\}|∅|ϕ|φ|Ø|\\emptyset|\\varnothing)\s*(?:\((?:the\s+)?empty\s+set[^()]*\))?|(?:the\s+)?empty\s+set"
+_CHOICE_KEYS = "abcd"
+
+
+def _choices(texts: list[str], right: int):
+    return "mcq", [{"key": _CHOICE_KEYS[k], "text": t} for k, t in enumerate(texts)], _CHOICE_KEYS[right]
+
+
+def short_form(ans: str, stem: str):
+    """(type, choices, answer) for a short answer the plain rules leave unmarked, or None. `stem` is the question as
+    the student reads it: the angle a conversion starts from, the words that say which closed list an answer is from."""
+    a = str(ans or "").replace("$", "").strip().rstrip(".").strip()
+    q = str(stem or "").replace("$", "")
+    out = None
+    m = re.fullmatch(_DMS, a)
+    if m and (m.group(2) or m.group(3)):
+        # 34° 36′ 0″: the angle, to the second either way (a calculator's angle is rounded to one)
+        key = f"{m.group(1)}° {m.group(2) or 0}' {m.group(3) or 0}''"
+        out = {"kind": "expression", "key": key, "variables": [], "form": "dms", "tolerance": {"abs": 1.5 / 3600}}
+    elif re.fullmatch(r"\d+\.\d+\s*°", a) and re.search(r"\d\s*(?:°|º|\^?\s*\{?\s*\\circ\s*\}?)\s*\d+\s*(?:'|′|\\prime)", q):
+        # a decimal of degrees for an angle given in minutes: to two places or better
+        out = {"kind": "expression", "key": a.rstrip("° "), "variables": [], "form": "decimal", "tolerance": {"abs": 0.005}}
+    elif a.count("≈") == 1:
+        left, right = (x.strip() for x in a.split("≈"))
+        dec = re.fullmatch(r"(-?\d+(?:\.\d+)?)(?:\s+[A-Za-z]+(?:\s+[A-Za-z]+)?)?", right)
+        # "50/360 × 44 = 55/9 ≈ 6.11": the working is arithmetic only, so the exact value is the whole answer
+        exact = left.rsplit("=", 1)[1].strip() if re.fullmatch(r"[\d\s/×*+\-().]+=\s*-?\d+(?:\s*/\s*\d+)?", left) else None
+        named = "=" not in left and re.fullmatch(r"[A-Za-zσμ]\w{0,2}", left)
+        if dec and (named or (exact and re.fullmatch(r"-?\d+(?:\s*/\s*\d+)?", exact))):
+            places = len(dec.group(1).split(".")[1]) if "." in dec.group(1) else 0
+            out = {"kind": "expression", "key": re.sub(r"\s+", "", exact) if exact else dec.group(1), "variables": [],
+                   "tolerance": {"abs": max(0.5 * 10 ** -places, 0.005)}}
+    elif re.fullmatch(_EMPTY, a, re.I):
+        out = {"kind": "values", "key": "\\{\\}", "variables": []}
+    if out:
+        return ("short", {"marker": out}, out["key"]) if _reads(out) else None
+    # a relation between two lengths, from (>, <, =)
+    m = re.fullmatch(r"([A-Z][A-Z0-9]?)\s*([<>=])\s*([A-Z][A-Z0-9]?)", a)
+    if m and re.search(r"\(\s*[<>=]\s*,", q):
+        x, rel, y = m.groups()
+        return _choices([f"{x} < {y}", f"{x} = {y}", f"{x} > {y}"], "<=>".index(rel))
+    # a straight line and a circle
+    circle = re.search(r"circle\s+([A-Z])\b", a + " " + q)
+    m = re.fullmatch(r"(?:L\s+)?(?:is\s+)?(?:an?\s+)?(secant|tangent|outside)\b(?:\s+(?:to|of)\s+(?:the\s+)?circle(?:\s+[A-Z])?)?", a, re.I)
+    if m and circle and re.search(r"straight line", q, re.I):
+        c = circle.group(1)
+        return _choices([f"is a secant to circle {c}", f"is a tangent to circle {c}", f"lies outside circle {c}"],
+                        ["secant", "tangent", "outside"].index(m.group(1).lower()))
+    # how many solutions a pair of equations has
+    m = re.match(r"(?i)(no|one|a unique|an? infinite(?: \(unlimited\))?|infinite(?: \(unlimited\))?)\s+(?:number of\s+)?solutions?\b", a)
+    if m and re.search(r"number of solutions", q, re.I):
+        w = m.group(1).lower()
+        return _choices(["No solution", "One solution", "An infinite number of solutions"],
+                        0 if w == "no" else 1 if w in ("one", "a unique") else 2)
+    # how many, where the answer is "an infinite number"
+    if re.fullmatch(r"(?i)(?:an?\s+)?infinite(?:\s*\(unlimited\))?\s+number(?:\s+of\s+[a-z ]+)?", a) and re.search(r"(?i)\bnumber of\b|\bhow many\b", q) \
+            and len(re.findall(r"\?", q)) <= 1:
+        return _choices(["One", "Two", "An infinite number"], 2)
     return None
 
 
@@ -677,8 +740,11 @@ def carry_over(record: dict, out: list[dict], stems: dict[str, tuple[str, str, s
             stand_in = f"Ex{i + 1}-1:1{sub}"
             back[stand_in] = ref
             q = qs_by_ref.get(ref)
-            marker = ((q or {}).get("choices") or {}).get("marker") or {}
-            key = q["answer"] if q and q["type"] == "numeric" else marker.get("key")
+            ch = (q or {}).get("choices")
+            marker = (ch.get("marker") or {}) if isinstance(ch, dict) else {}
+            key = (q["answer"] if q and q["type"] == "numeric"
+                   else next((c["text"] for c in ch if c["key"] == q["answer"]), None) if q and q["type"] == "mcq" and isinstance(ch, list)
+                   else marker.get("key"))
             pre, own, working = stems.get(ref, ("", "", ""))
             closed = f"{pre} {PREAMBLE_END} {own}" if pre and not pre.rstrip().endswith((".", ":", "?", "!")) else f"{pre} {own}"
             parts.append(MP.Part(ref=stand_in, stem=closed.strip(), working=working,
@@ -740,9 +806,16 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
                 skipped.append({"ref": ref, "why": "no usable answer yet (none printed; the generated one is not approved or not agreed)"})
                 continue
             typed = answer_type(ans, marker_kinds=r["type"] != "worked_example") if ans else None
+            short = short_form(ans, stem) if not typed and ans and r["type"] != "worked_example" else None
+            last_blank = None
+            if short and len(BLANK.findall(stem)) >= 2:
+                short, last_blank = None, short   # "…… × …… = …… cm" answered by its result: asked as its last blank
+            typed = typed or short
             # an answer of several parts the app cannot mark whole: each part it can mark is asked on its own
             # (answer_parts; Tamer, 2026-10-29: "split multi-part answers"). The whole answer still teaches, below.
             parts = [] if typed or not ans or r["type"] == "worked_example" else answer_parts(ans, stem)
+            if not parts and last_blank:
+                parts = [("Answer only the last blank.", last_blank)]
             if not typed:
                 # a worked example the book solves, or an answer a person approved / two readings agreed on, that the
                 # app cannot mark: the tutor still teaches from it, as a worked example in the library
@@ -769,15 +842,20 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
                     skipped[:] = [x for x in skipped if x.get("ref") != ref]
                 else:
                     continue
-            variants = [("", "", typed)] if typed else [(f"-p{k}", f" {ask}", t) for k, (ask, t) in enumerate(parts, 1)]
+            # a domain ("R - {3}") is numbered apart: the app's marker read it from 2026-10-29, and the parts asked
+            # before then keep their ids, which attempts are recorded against
+            dom = [(t[1] or {}).get("marker", {}).get("kind") == "interval" and "!=" in t[2] for _, t in parts]
+            variants = [("", "", typed)] if typed else [
+                (f"-pd{dom[:i + 1].count(True)}" if d else f"-p{i + 1 - dom[:i].count(True)}", f" {ask}", t)
+                for i, ((ask, t), d) in enumerate(zip(parts, dom))]
             for suffix, ask, (qtype, choices, key) in variants:
                 tier, tier_from = (tiers or {}).get(ref, ("standard", "no tier yet"))
                 q = {"_item": r["id"], "_ref": ref, "_tier_from": tier_from, "id": f"q:{lo.removeprefix('lo:')}:bk-{local}{suffix}", "lo": lo, "tier": tier,
                      "type": qtype, "stem": stem + ask,
-                     "answer": key, "solution": [x for x in sol if x] or [f"The book's answer: {key}"],
+                     "answer": key, "solution": [x for x in sol if x] or [f"The book's answer: {next(c['text'] for c in choices if c['key'] == key) if qtype == 'mcq' else key}"],
                      "source_page": r["source_page"], "source": "seed",
                      "source_note": f"The book's own {r['type'].replace('_', ' ')} ({ref}, printed p.{r['source_page']}); answer {how}. "
-                                    + (f"Part {suffix[2:]} of {len(variants)} of its answer, asked on its own. " if suffix else "") +
+                                    + (f"Part {[v[0] for v in variants].index(suffix) + 1} of {len(variants)} of its answer, asked on its own. " if suffix else "") +
                                     "Compiled from the book record (compile_book_records.py)."}
                 if choices:
                     q["choices"] = choices

@@ -263,6 +263,32 @@
       "verified": true
     },
     {
+      "id": "q:pp3u7-1-2:bk-drill-1-e",
+      "lo": "lo:pp3u7-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find the set of zeroes of the following functions : $f(x)=x^2-x+1$",
+      "answer": "\\{\\}",
+      "solution": [
+        "Put $f(x)=0$: $x^2-x+1=0$.",
+        "It cannot be factorised, so use the quadratic rule with $a=1$, $b=-1$, $c=1$.",
+        "$b^2-4ac=1-4=-3$.",
+        "$x=\\frac{1\\pm\\sqrt{-3}}{2}\\notin\\mathbb{R}$.",
+        "There is no real solution, so $Z(f)=\\phi$."
+      ],
+      "source_page": 16,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-1:drill-1:e, printed p.16); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\{\\}",
+          "variables": []
+        }
+      },
+      "verified": true
+    },
+    {
       "id": "q:pp3u7-1-2:bk-drill-1-f",
       "lo": "lo:pp3u7-1-2",
       "tier": "basic",
@@ -406,6 +432,35 @@
       "verified": true
     },
     {
+      "id": "q:pp3u7-2-1:bk-drill-1-d-pd1",
+      "lo": "lo:pp3u7-2-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Identify the domain of each of the following algebraic fractional function then find n(0), n(2), n(-2): $n(x)=\\frac{x^2+9}{x^2-16}$ Answer only: the domain = ?",
+      "answer": "x != -4 and x != 4",
+      "solution": [
+        "Set the denominator equal to zero: $x^2-16 = 0$, so $x^2 = 16$, so x = 4 or x = -4.",
+        "The set of zeroes is {-4, 4}, so domain = R - {-4, 4}.",
+        "n(0) = (0+9)/(0-16) = -9/16.",
+        "n(2) = (4+9)/(4-16) = 13/(-12) = -13/12.",
+        "n(-2) = (4+9)/(4-16) = -13/12.",
+        "Answer: domain R - {-4, 4}; n(0) = -9/16, n(2) = -13/12, n(-2) = -13/12."
+      ],
+      "source_page": 18,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-2:drill-1:d, printed p.18); answer generated, both readings agree, not yet reviewed. Part 1 of 4 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != -4 and x != 4",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
       "id": "q:pp3u7-2-1:bk-drill-1-d-p1",
       "lo": "lo:pp3u7-2-1",
       "tier": "standard",
@@ -422,7 +477,7 @@
       ],
       "source_page": 18,
       "source": "seed",
-      "source_note": "The book's own exercise (pp3u7-2:drill-1:d, printed p.18); answer generated, both readings agree, not yet reviewed. Part 1 of 3 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "source_note": "The book's own exercise (pp3u7-2:drill-1:d, printed p.18); answer generated, both readings agree, not yet reviewed. Part 2 of 4 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
       "choices": {
         "marker": {
           "kind": "expression",
@@ -449,7 +504,7 @@
       ],
       "source_page": 18,
       "source": "seed",
-      "source_note": "The book's own exercise (pp3u7-2:drill-1:d, printed p.18); answer generated, both readings agree, not yet reviewed. Part 2 of 3 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "source_note": "The book's own exercise (pp3u7-2:drill-1:d, printed p.18); answer generated, both readings agree, not yet reviewed. Part 3 of 4 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
       "choices": {
         "marker": {
           "kind": "expression",
@@ -476,7 +531,7 @@
       ],
       "source_page": 18,
       "source": "seed",
-      "source_note": "The book's own exercise (pp3u7-2:drill-1:d, printed p.18); answer generated, both readings agree, not yet reviewed. Part 3 of 3 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "source_note": "The book's own exercise (pp3u7-2:drill-1:d, printed p.18); answer generated, both readings agree, not yet reviewed. Part 4 of 4 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
       "choices": {
         "marker": {
           "kind": "expression",
@@ -602,6 +657,126 @@
           "key": "a = 6",
           "variables": [
             "a"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-2-2:bk-drill-3-pd1",
+      "lo": "lo:pp3u7-2-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find the common domain for each of the following: Answer only part (1).",
+      "answer": "x != -1 and x != 0",
+      "solution": [
+        "Method: common domain = R minus the union of the zeroes of all the denominators.",
+        "1) Denominators x and x+1 have zeroes {0} and {-1}. Common domain = R - {-1, 0}.",
+        "2) $x^2-x = x(x-1)$ has zeroes {0, 1}. $x^2-1 = (x-1)(x+1)$ has zeroes {-1, 1}. Union = {-1, 0, 1}. Common domain = R - {-1, 0, 1}.",
+        "3) x-2 has zeroes {2}. x+2 has zeroes {-2}. $x^3-4x = x(x-2)(x+2)$ has zeroes {0, 2, -2}. Union = {-2, 0, 2}. Common domain = R - {-2, 0, 2}.",
+        "4) $x^2-5x+6 = (x-2)(x-3)$ has zeroes {2, 3}. $x^2-x = x(x-1)$ has zeroes {0, 1}. $x^2+x-2 = (x+2)(x-1)$ has zeroes {-2, 1}.",
+        "Union = {-2, 0, 1, 2, 3}. Common domain = R - {-2, 0, 1, 2, 3}.",
+        "Answers: 1) R - {-1, 0}; 2) R - {-1, 0, 1}; 3) R - {-2, 0, 2}; 4) R - {-2, 0, 1, 2, 3}."
+      ],
+      "source_page": 19,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-2:drill-3, printed p.19); answer generated, both readings agree, not yet reviewed. Part 1 of 4 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != -1 and x != 0",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-2-2:bk-drill-3-pd2",
+      "lo": "lo:pp3u7-2-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find the common domain for each of the following: Answer only part (2).",
+      "answer": "x != -1 and x != 0 and x != 1",
+      "solution": [
+        "Method: common domain = R minus the union of the zeroes of all the denominators.",
+        "1) Denominators x and x+1 have zeroes {0} and {-1}. Common domain = R - {-1, 0}.",
+        "2) $x^2-x = x(x-1)$ has zeroes {0, 1}. $x^2-1 = (x-1)(x+1)$ has zeroes {-1, 1}. Union = {-1, 0, 1}. Common domain = R - {-1, 0, 1}.",
+        "3) x-2 has zeroes {2}. x+2 has zeroes {-2}. $x^3-4x = x(x-2)(x+2)$ has zeroes {0, 2, -2}. Union = {-2, 0, 2}. Common domain = R - {-2, 0, 2}.",
+        "4) $x^2-5x+6 = (x-2)(x-3)$ has zeroes {2, 3}. $x^2-x = x(x-1)$ has zeroes {0, 1}. $x^2+x-2 = (x+2)(x-1)$ has zeroes {-2, 1}.",
+        "Union = {-2, 0, 1, 2, 3}. Common domain = R - {-2, 0, 1, 2, 3}.",
+        "Answers: 1) R - {-1, 0}; 2) R - {-1, 0, 1}; 3) R - {-2, 0, 2}; 4) R - {-2, 0, 1, 2, 3}."
+      ],
+      "source_page": 19,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-2:drill-3, printed p.19); answer generated, both readings agree, not yet reviewed. Part 2 of 4 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != -1 and x != 0 and x != 1",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-2-2:bk-drill-3-pd3",
+      "lo": "lo:pp3u7-2-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find the common domain for each of the following: Answer only part (3).",
+      "answer": "x != -2 and x != 0 and x != 2",
+      "solution": [
+        "Method: common domain = R minus the union of the zeroes of all the denominators.",
+        "1) Denominators x and x+1 have zeroes {0} and {-1}. Common domain = R - {-1, 0}.",
+        "2) $x^2-x = x(x-1)$ has zeroes {0, 1}. $x^2-1 = (x-1)(x+1)$ has zeroes {-1, 1}. Union = {-1, 0, 1}. Common domain = R - {-1, 0, 1}.",
+        "3) x-2 has zeroes {2}. x+2 has zeroes {-2}. $x^3-4x = x(x-2)(x+2)$ has zeroes {0, 2, -2}. Union = {-2, 0, 2}. Common domain = R - {-2, 0, 2}.",
+        "4) $x^2-5x+6 = (x-2)(x-3)$ has zeroes {2, 3}. $x^2-x = x(x-1)$ has zeroes {0, 1}. $x^2+x-2 = (x+2)(x-1)$ has zeroes {-2, 1}.",
+        "Union = {-2, 0, 1, 2, 3}. Common domain = R - {-2, 0, 1, 2, 3}.",
+        "Answers: 1) R - {-1, 0}; 2) R - {-1, 0, 1}; 3) R - {-2, 0, 2}; 4) R - {-2, 0, 1, 2, 3}."
+      ],
+      "source_page": 19,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-2:drill-3, printed p.19); answer generated, both readings agree, not yet reviewed. Part 3 of 4 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != -2 and x != 0 and x != 2",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-2-2:bk-drill-3-pd4",
+      "lo": "lo:pp3u7-2-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find the common domain for each of the following: Answer only part (4).",
+      "answer": "x != -2 and x != 0 and x != 1 and x != 2 and x != 3",
+      "solution": [
+        "Method: common domain = R minus the union of the zeroes of all the denominators.",
+        "1) Denominators x and x+1 have zeroes {0} and {-1}. Common domain = R - {-1, 0}.",
+        "2) $x^2-x = x(x-1)$ has zeroes {0, 1}. $x^2-1 = (x-1)(x+1)$ has zeroes {-1, 1}. Union = {-1, 0, 1}. Common domain = R - {-1, 0, 1}.",
+        "3) x-2 has zeroes {2}. x+2 has zeroes {-2}. $x^3-4x = x(x-2)(x+2)$ has zeroes {0, 2, -2}. Union = {-2, 0, 2}. Common domain = R - {-2, 0, 2}.",
+        "4) $x^2-5x+6 = (x-2)(x-3)$ has zeroes {2, 3}. $x^2-x = x(x-1)$ has zeroes {0, 1}. $x^2+x-2 = (x+2)(x-1)$ has zeroes {-2, 1}.",
+        "Union = {-2, 0, 1, 2, 3}. Common domain = R - {-2, 0, 1, 2, 3}.",
+        "Answers: 1) R - {-1, 0}; 2) R - {-1, 0, 1}; 3) R - {-2, 0, 2}; 4) R - {-2, 0, 1, 2, 3}."
+      ],
+      "source_page": 19,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-2:drill-3, printed p.19); answer generated, both readings agree, not yet reviewed. Part 4 of 4 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != -2 and x != 0 and x != 1 and x != 2 and x != 3",
+          "variables": [
+            "x"
           ]
         }
       },
@@ -944,6 +1119,114 @@
       "verified": true
     },
     {
+      "id": "q:pp3u7-3-1:bk-think-and-discuss-6-pd1",
+      "lo": "lo:pp3u7-3-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "$n_1(x)=\\frac{x+3}{x^2-9}$ , $n_2(x)=\\frac{2}{2x-6}$ Answer only: the domain of n1 = ?",
+      "answer": "x != -3 and x != 3",
+      "solution": [
+        "$n_1(x)=\\frac{x+3}{(x+3)(x-3)}$; the denominator is zero at $x=-3, 3$, so the domain is R - {-3, 3}.",
+        "Cancel $(x+3)$: $n_1(x)=\\frac{1}{x-3}$.",
+        "$n_2(x)=\\frac{2}{2(x-3)}$; the denominator is zero only at $x=3$, so the domain is R - {3}.",
+        "Cancel 2: $n_2(x)=\\frac{1}{x-3}$."
+      ],
+      "source_page": 21,
+      "source": "seed",
+      "source_note": "The book's own activity (pp3u7-3:think-and-discuss-6, printed p.21); answer generated, both readings agree, not yet reviewed. Part 1 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != -3 and x != 3",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-3-1:bk-think-and-discuss-6-pd2",
+      "lo": "lo:pp3u7-3-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "$n_1(x)=\\frac{x+3}{x^2-9}$ , $n_2(x)=\\frac{2}{2x-6}$ Answer only: the domain of n2 = ?",
+      "answer": "x != 3",
+      "solution": [
+        "$n_1(x)=\\frac{x+3}{(x+3)(x-3)}$; the denominator is zero at $x=-3, 3$, so the domain is R - {-3, 3}.",
+        "Cancel $(x+3)$: $n_1(x)=\\frac{1}{x-3}$.",
+        "$n_2(x)=\\frac{2}{2(x-3)}$; the denominator is zero only at $x=3$, so the domain is R - {3}.",
+        "Cancel 2: $n_2(x)=\\frac{1}{x-3}$."
+      ],
+      "source_page": 21,
+      "source": "seed",
+      "source_note": "The book's own activity (pp3u7-3:think-and-discuss-6, printed p.21); answer generated, both readings agree, not yet reviewed. Part 2 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != 3",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-3-1:bk-think-and-discuss-7-pd1",
+      "lo": "lo:pp3u7-3-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "$n_1(x)=\\frac{2x}{2x+4}$ , $n_2(x)=\\frac{x^2+2x}{x^2+4x+4}$ Answer only: the domain of n1 = ?",
+      "answer": "x != -2",
+      "solution": [
+        "$n_1(x)=\\frac{2x}{2(x+2)}$; the denominator is zero at $x=-2$, so the domain is R - {-2}.",
+        "Cancel 2: $n_1(x)=\\frac{x}{x+2}$.",
+        "$n_2(x)=\\frac{x(x+2)}{(x+2)^2}$; the domain is R - {-2}.",
+        "Cancel $(x+2)$: $n_2(x)=\\frac{x}{x+2}$."
+      ],
+      "source_page": 21,
+      "source": "seed",
+      "source_note": "The book's own activity (pp3u7-3:think-and-discuss-7, printed p.21); answer generated, both readings agree, not yet reviewed. Part 1 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != -2",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-3-1:bk-think-and-discuss-7-pd2",
+      "lo": "lo:pp3u7-3-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "$n_1(x)=\\frac{2x}{2x+4}$ , $n_2(x)=\\frac{x^2+2x}{x^2+4x+4}$ Answer only: the domain of n2 = ?",
+      "answer": "x != -2",
+      "solution": [
+        "$n_1(x)=\\frac{2x}{2(x+2)}$; the denominator is zero at $x=-2$, so the domain is R - {-2}.",
+        "Cancel 2: $n_1(x)=\\frac{x}{x+2}$.",
+        "$n_2(x)=\\frac{x(x+2)}{(x+2)^2}$; the domain is R - {-2}.",
+        "Cancel $(x+2)$: $n_2(x)=\\frac{x}{x+2}$."
+      ],
+      "source_page": 21,
+      "source": "seed",
+      "source_note": "The book's own activity (pp3u7-3:think-and-discuss-7, printed p.21); answer generated, both readings agree, not yet reviewed. Part 2 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != -2",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
       "id": "q:pp3u7-3-1:bk-drill-1-1",
       "lo": "lo:pp3u7-3-1",
       "tier": "basic",
@@ -1077,6 +1360,33 @@
       "verified": true
     },
     {
+      "id": "q:pp3u7-4-1:bk-drill-1-pd1",
+      "lo": "lo:pp3u7-4-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{x-2}{x}+\\frac{3+x}{2x}$ Answer only: the domain = ?",
+      "answer": "x != 0",
+      "solution": [
+        "Denominators x and 2x; domain R - {0}.",
+        "L.C.M. = 2x, so (x-2)/x = 2(x-2)/(2x).",
+        "Add: (2x-4+3+x)/(2x).",
+        "= (3x-1)/(2x)."
+      ],
+      "source_page": 26,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-4:drill-1, printed p.26); answer generated, both readings agree, not yet reviewed. Part 1 of 1 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != 0",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
       "id": "q:pp3u7-4-1:bk-drill-2-p1",
       "lo": "lo:pp3u7-4-1",
       "tier": "basic",
@@ -1091,7 +1401,34 @@
       ],
       "source_page": 26,
       "source": "seed",
-      "source_note": "The book's own exercise (pp3u7-4:drill-2, printed p.26); answer generated, both readings agree, not yet reviewed. Part 1 of 1 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "source_note": "The book's own exercise (pp3u7-4:drill-2, printed p.26); answer generated, both readings agree, not yet reviewed. Part 1 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-4-1:bk-drill-2-pd1",
+      "lo": "lo:pp3u7-4-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{2x}{x+2}+\\frac{4}{x+2}$ Answer only: the domain = ?",
+      "answer": "x != -2",
+      "solution": [
+        "Common denominator x+2; domain R - {-2}.",
+        "Add numerators: (2x+4)/(x+2).",
+        "Factorise: 2(x+2)/(x+2).",
+        "Cancel: n(x) = 2."
+      ],
+      "source_page": 26,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-4:drill-2, printed p.26); answer generated, both readings agree, not yet reviewed. Part 2 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != -2",
+          "variables": [
+            "x"
+          ]
+        }
+      },
       "verified": true
     },
     {
@@ -1110,11 +1447,119 @@
       ],
       "source_page": 26,
       "source": "seed",
-      "source_note": "The book's own exercise (pp3u7-4:drill-3, printed p.26); answer generated, both readings agree, not yet reviewed. Part 1 of 1 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "source_note": "The book's own exercise (pp3u7-4:drill-3, printed p.26); answer generated, both readings agree, not yet reviewed. Part 1 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
       "choices": {
         "marker": {
           "kind": "expression",
           "key": "3(x+1)/(x(x+3))",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-4-1:bk-drill-3-pd1",
+      "lo": "lo:pp3u7-4-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{2}{x+3}+\\frac{x+3}{x^2+3x}$ Answer only: the domain = ?",
+      "answer": "x != -3 and x != 0",
+      "solution": [
+        "Factorise: x^2+3x = x(x+3).",
+        "Domain R - {-3, 0}.",
+        "(x+3)/(x(x+3)) = 1/x.",
+        "L.C.M. = x(x+3): n(x) = 2x/(x(x+3)) + (x+3)/(x(x+3)).",
+        "= (3x+3)/(x(x+3)) = 3(x+1)/(x(x+3))."
+      ],
+      "source_page": 26,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-4:drill-3, printed p.26); answer generated, both readings agree, not yet reviewed. Part 2 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != -3 and x != 0",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-4-1:bk-drill-4-pd1",
+      "lo": "lo:pp3u7-4-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{x}{x-4}-\\frac{x+4}{x^2-16}$ Answer only: the domain = ?",
+      "answer": "x != -4 and x != 4",
+      "solution": [
+        "Factorise: x^2-16 = (x-4)(x+4).",
+        "Domain R - {-4, 4}.",
+        "(x+4)/((x-4)(x+4)) = 1/(x-4).",
+        "n(x) = x/(x-4) - 1/(x-4) = (x-1)/(x-4)."
+      ],
+      "source_page": 26,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-4:drill-4, printed p.26); answer generated, both readings agree, not yet reviewed. Part 1 of 1 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != -4 and x != 4",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-4-1:bk-drill-5-pd1",
+      "lo": "lo:pp3u7-4-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{3}{x-1}-\\frac{2}{x-1}$ Answer only: the domain = ?",
+      "answer": "x != 1",
+      "solution": [
+        "Common denominator x-1; domain R - {1}.",
+        "Subtract numerators: (3-2)/(x-1).",
+        "n(x) = 1/(x-1)."
+      ],
+      "source_page": 26,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-4:drill-5, printed p.26); answer generated, both readings agree, not yet reviewed. Part 1 of 1 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != 1",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-4-1:bk-drill-6-pd1",
+      "lo": "lo:pp3u7-4-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{5}{x-3}+\\frac{4}{3-x}$ Answer only: the domain = ?",
+      "answer": "x != 3",
+      "solution": [
+        "Domain R - {3}.",
+        "4/(3-x) = -4/(x-3).",
+        "n(x) = 5/(x-3) - 4/(x-3).",
+        "= 1/(x-3)."
+      ],
+      "source_page": 26,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-4:drill-6, printed p.26); answer generated, both readings agree, not yet reviewed. Part 1 of 1 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != 3",
           "variables": [
             "x"
           ]
@@ -1137,7 +1582,34 @@
       ],
       "source_page": 26,
       "source": "seed",
-      "source_note": "The book's own exercise (pp3u7-4:drill-7, printed p.26); answer generated, both readings agree, not yet reviewed. Part 1 of 1 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "source_note": "The book's own exercise (pp3u7-4:drill-7, printed p.26); answer generated, both readings agree, not yet reviewed. Part 1 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-4-1:bk-drill-7-pd1",
+      "lo": "lo:pp3u7-4-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{x^2}{x-1}+\\frac{x}{1-x}$ Answer only: the domain = ?",
+      "answer": "x != 1",
+      "solution": [
+        "Domain R - {1}.",
+        "x/(1-x) = -x/(x-1).",
+        "n(x) = (x^2-x)/(x-1) = x(x-1)/(x-1).",
+        "Cancel: n(x) = x."
+      ],
+      "source_page": 26,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-4:drill-7, printed p.26); answer generated, both readings agree, not yet reviewed. Part 2 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != 1",
+          "variables": [
+            "x"
+          ]
+        }
+      },
       "verified": true
     },
     {
@@ -1155,11 +1627,38 @@
       ],
       "source_page": 26,
       "source": "seed",
-      "source_note": "The book's own exercise (pp3u7-4:drill-8, printed p.26); answer generated, both readings agree, not yet reviewed. Part 1 of 1 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "source_note": "The book's own exercise (pp3u7-4:drill-8, printed p.26); answer generated, both readings agree, not yet reviewed. Part 1 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
       "choices": {
         "marker": {
           "kind": "expression",
           "key": "4x/((x-2)(x+2))",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-4-1:bk-drill-8-pd1",
+      "lo": "lo:pp3u7-4-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{x}{x-2}-\\frac{x}{x+2}$ Answer only: the domain = ?",
+      "answer": "x != -2 and x != 2",
+      "solution": [
+        "Domain R - {-2, 2}.",
+        "L.C.M. = (x-2)(x+2).",
+        "Numerator: x(x+2) - x(x-2) = x^2+2x-x^2+2x = 4x.",
+        "n(x) = 4x/((x-2)(x+2))."
+      ],
+      "source_page": 26,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-4:drill-8, printed p.26); answer generated, both readings agree, not yet reviewed. Part 2 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != -2 and x != 2",
           "variables": [
             "x"
           ]
@@ -1182,11 +1681,38 @@
       ],
       "source_page": 26,
       "source": "seed",
-      "source_note": "The book's own exercise (pp3u7-4:drill-9, printed p.26); answer generated, both readings agree, not yet reviewed. Part 1 of 1 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "source_note": "The book's own exercise (pp3u7-4:drill-9, printed p.26); answer generated, both readings agree, not yet reviewed. Part 1 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
       "choices": {
         "marker": {
           "kind": "expression",
           "key": "(5x-3)/(2x(2x-1))",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-4-1:bk-drill-9-pd1",
+      "lo": "lo:pp3u7-4-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{x+3}{2x}-\\frac{x}{2x-1}$ Answer only: the domain = ?",
+      "answer": "x != 0 and x != 1/2",
+      "solution": [
+        "Domain R - {0, 1/2}.",
+        "L.C.M. = 2x(2x-1).",
+        "Numerator: (x+3)(2x-1) - x(2x) = 2x^2+5x-3-2x^2 = 5x-3.",
+        "n(x) = (5x-3)/(2x(2x-1))."
+      ],
+      "source_page": 26,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-4:drill-9, printed p.26); answer generated, both readings agree, not yet reviewed. Part 2 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != 0 and x != 1/2",
           "variables": [
             "x"
           ]
@@ -1210,11 +1736,39 @@
       ],
       "source_page": 26,
       "source": "seed",
-      "source_note": "The book's own exercise (pp3u7-4:drill-10, printed p.26); answer generated, both readings agree, not yet reviewed. Part 1 of 1 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "source_note": "The book's own exercise (pp3u7-4:drill-10, printed p.26); answer generated, both readings agree, not yet reviewed. Part 1 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
       "choices": {
         "marker": {
           "kind": "expression",
           "key": "(x-4)/((x+1)(x-1))",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-4-1:bk-drill-10-pd1",
+      "lo": "lo:pp3u7-4-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Find $n(x)$ in the simplest form showing its domain where: $n(x)=\\frac{3}{x+1}+\\frac{2x+1}{1-x^2}$ Answer only: the domain = ?",
+      "answer": "x != -1 and x != 1",
+      "solution": [
+        "1-x^2 = -(x^2-1) = -(x-1)(x+1).",
+        "Domain R - {-1, 1}.",
+        "n(x) = 3/(x+1) - (2x+1)/((x-1)(x+1)).",
+        "L.C.M. = (x+1)(x-1): numerator 3(x-1) - (2x+1) = x-4.",
+        "n(x) = (x-4)/((x+1)(x-1))."
+      ],
+      "source_page": 26,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-4:drill-10, printed p.26); answer generated, both readings agree, not yet reviewed. Part 2 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != -1 and x != 1",
           "variables": [
             "x"
           ]
@@ -1239,7 +1793,36 @@
       ],
       "source_page": 28,
       "source": "seed",
-      "source_note": "The book's own exercise (pp3u7-4:drill-11, printed p.28); answer generated, both readings agree, not yet reviewed. Part 1 of 1 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "source_note": "The book's own exercise (pp3u7-4:drill-11, printed p.28); answer generated, both readings agree, not yet reviewed. Part 1 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-4-2:bk-drill-11-pd1",
+      "lo": "lo:pp3u7-4-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Third: Find n(x) in the simplest form identifying a domain in each of the following: $n(x)=\\frac{x^2+x+1}{x}\\times\\frac{x^2-x}{x^3-1}$ Answer only: the domain = ?",
+      "answer": "x != 0 and x != 1",
+      "solution": [
+        "Factorise $x^2-x=x(x-1)$ and $x^3-1=(x-1)(x^2+x+1)$.",
+        "$n(x)=\\frac{x^2+x+1}{x}\\times\\frac{x(x-1)}{(x-1)(x^2+x+1)}$.",
+        "The denominators are $x$ and $(x-1)(x^2+x+1)$. Set each factor to zero: $x=0$ and $x=1$. The factor $x^2+x+1$ has no real zero.",
+        "Domain = R - {0, 1}.",
+        "Multiply numerators and denominators, then cancel the common factors $x^2+x+1$, $x$ and $(x-1)$.",
+        "Answer: n(x) = 1, domain R - {0, 1}."
+      ],
+      "source_page": 28,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-4:drill-11, printed p.28); answer generated, both readings agree, not yet reviewed. Part 2 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != 0 and x != 1",
+          "variables": [
+            "x"
+          ]
+        }
+      },
       "verified": true
     },
     {
@@ -1259,11 +1842,40 @@
       ],
       "source_page": 28,
       "source": "seed",
-      "source_note": "The book's own exercise (pp3u7-4:drill-12, printed p.28); answer generated, both readings agree, not yet reviewed. Part 1 of 1 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "source_note": "The book's own exercise (pp3u7-4:drill-12, printed p.28); answer generated, both readings agree, not yet reviewed. Part 1 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
       "choices": {
         "marker": {
           "kind": "expression",
           "key": "(x+3)/x",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-4-2:bk-drill-12-pd1",
+      "lo": "lo:pp3u7-4-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Third: Find n(x) in the simplest form identifying a domain in each of the following: $n(x)=\\frac{x^3-1}{x^2-x}\\times\\frac{x+3}{x^2+x+1}$ Answer only: the domain = ?",
+      "answer": "x != 0 and x != 1",
+      "solution": [
+        "Factorise $x^3-1=(x-1)(x^2+x+1)$ and $x^2-x=x(x-1)$.",
+        "$n(x)=\\frac{(x-1)(x^2+x+1)}{x(x-1)}\\times\\frac{x+3}{x^2+x+1}$.",
+        "The denominators are $x(x-1)$ and $x^2+x+1$. The zeros are $x=0$ and $x=1$. The factor $x^2+x+1$ has no real zero.",
+        "Domain = R - {0, 1}.",
+        "Cancel the common factors $(x-1)$ and $(x^2+x+1)$.",
+        "Answer: $n(x)=\\frac{x+3}{x}$, domain R - {0, 1}."
+      ],
+      "source_page": 28,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-4:drill-12, printed p.28); answer generated, both readings agree, not yet reviewed. Part 2 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != 0 and x != 1",
           "variables": [
             "x"
           ]
@@ -1289,12 +1901,42 @@
       ],
       "source_page": 28,
       "source": "seed",
-      "source_note": "The book's own exercise (pp3u7-4:drill-13, printed p.28); answer generated, both readings agree, not yet reviewed. Part 1 of 1 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "source_note": "The book's own exercise (pp3u7-4:drill-13, printed p.28); answer generated, both readings agree, not yet reviewed. Part 1 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
       "choices": {
         "marker": {
           "kind": "expression",
           "key": "12/5",
           "variables": []
+        }
+      },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-4-2:bk-drill-13-pd1",
+      "lo": "lo:pp3u7-4-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Third: Find n(x) in the simplest form identifying a domain in each of the following: $n(x)=\\frac{3x-15}{x+3}\\div\\frac{5x-25}{4x+12}$ Answer only: the domain = ?",
+      "answer": "x != -3 and x != 5",
+      "solution": [
+        "Factorise: $3x-15=3(x-5)$, $5x-25=5(x-5)$, $4x+12=4(x+3)$.",
+        "$n(x)=\\frac{3(x-5)}{x+3}\\div\\frac{5(x-5)}{4(x+3)}$.",
+        "The zeros of the denominators and of the second numerator are $x=-3$ (from $x+3$ and $4x+12$) and $x=5$ (from $5x-25$).",
+        "Domain = R - {-3, 5}.",
+        "Multiply by the reciprocal of the second fraction: $\\frac{3(x-5)}{x+3}\\times\\frac{4(x+3)}{5(x-5)}$.",
+        "Cancel $(x-5)$ and $(x+3)$.",
+        "Answer: $n(x)=\\frac{12}{5}$, domain R - {-3, 5}."
+      ],
+      "source_page": 28,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-4:drill-13, printed p.28); answer generated, both readings agree, not yet reviewed. Part 2 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != -3 and x != 5",
+          "variables": [
+            "x"
+          ]
         }
       },
       "verified": true
@@ -1317,7 +1959,37 @@
       ],
       "source_page": 28,
       "source": "seed",
-      "source_note": "The book's own exercise (pp3u7-4:drill-14, printed p.28); answer generated, both readings agree, not yet reviewed. Part 1 of 1 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "source_note": "The book's own exercise (pp3u7-4:drill-14, printed p.28); answer generated, both readings agree, not yet reviewed. Part 1 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u7-4-2:bk-drill-14-pd1",
+      "lo": "lo:pp3u7-4-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Third: Find n(x) in the simplest form identifying a domain in each of the following: $n(x)=\\frac{x^2+2x-3}{x+3}\\div\\frac{x^2-1}{x+1}$ Answer only: the domain = ?",
+      "answer": "x != -3 and x != -1 and x != 1",
+      "solution": [
+        "Factorise: $x^2+2x-3=(x+3)(x-1)$ and $x^2-1=(x-1)(x+1)$.",
+        "$n(x)=\\frac{(x+3)(x-1)}{x+3}\\div\\frac{(x-1)(x+1)}{x+1}$.",
+        "The zeros of the denominators and of the second numerator are $x=-3$, $x=-1$ and $x=1$.",
+        "Domain = R - {-3, -1, 1}.",
+        "Multiply by the reciprocal of the second fraction: $\\frac{(x+3)(x-1)}{x+3}\\times\\frac{x+1}{(x-1)(x+1)}$.",
+        "Cancel $(x+3)$, $(x-1)$ and $(x+1)$.",
+        "Answer: n(x) = 1, domain R - {-3, -1, 1}."
+      ],
+      "source_page": 28,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u7-4:drill-14, printed p.28); answer generated, both readings agree, not yet reviewed. Part 2 of 2 of its answer, asked on its own. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "interval",
+          "key": "x != -3 and x != -1 and x != 1",
+          "variables": [
+            "x"
+          ]
+        }
+      },
       "verified": true
     }
   ],
@@ -1380,39 +2052,6 @@
       ],
       "source_page": 15,
       "generated_by": "book (book_worked: pp3u7-1:example-1, printed p.15); compile_book_records.py compile-v3"
-    },
-    {
-      "id": "expl:pp3u7-1-2:bk-drill-1-e",
-      "lo": "lo:pp3u7-1-2",
-      "entry_type": "worked_example",
-      "content": [
-        {
-          "kind": "problem",
-          "text_md": "Find the set of zeroes of the following functions : $f(x)=x^2-x+1$"
-        },
-        {
-          "step": 1,
-          "text_md": "Put $f(x)=0$: $x^2-x+1=0$."
-        },
-        {
-          "step": 2,
-          "text_md": "It cannot be factorised, so use the quadratic rule with $a=1$, $b=-1$, $c=1$."
-        },
-        {
-          "step": 3,
-          "text_md": "$b^2-4ac=1-4=-3$."
-        },
-        {
-          "step": 4,
-          "text_md": "$x=\\frac{1\\pm\\sqrt{-3}}{2}\\notin\\mathbb{R}$."
-        },
-        {
-          "step": 5,
-          "text_md": "There is no real solution, so $Z(f)=\\phi$."
-        }
-      ],
-      "source_page": 16,
-      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
     },
     {
       "id": "expl:pp3u7-2-1:bk-drill-1-a",

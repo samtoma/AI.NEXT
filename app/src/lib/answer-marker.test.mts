@@ -517,3 +517,42 @@ test("a set is marked as a set: its elements in any order, pairs typed with or w
   // the decimal comma still reads as a decimal where the key is one value
   assert.equal(mark("2,5", set("x = 2.5", ["x"])).result, "correct");
 });
+
+test("an angle in degrees, minutes and seconds, the empty set and R − {…} read as the book writes them (Prep-3, 2026-10-29)", () => {
+  // degrees, minutes and seconds: the `dms` form; the same angle as a decimal is the wrong form, not wrong
+  const dms = { kind: "expression" as const, key: "34° 36' 0''", variables: [], form: "dms" as const, tolerance: { abs: 1.5 / 3600 } };
+  assert.equal(validateKey(dms), null);
+  for (const typed of ["34° 36'", "34°36'0''", "34^\\circ 36'", "34° 36′ 0″"]) assert.equal(mark(typed, dms).result, "correct", typed);
+  assert.deepEqual(mark("34.6", dms), { result: "wrong_form", form: "dms" });
+  assert.deepEqual(mark("34.6°", dms), { result: "wrong_form", form: "dms" });
+  assert.equal(mark("34° 35'", dms).result, "incorrect");
+  // a calculator's angle, to the second
+  const slope = { ...dms, key: "45° 41' 46''" };
+  assert.equal(mark("45° 41' 47''", slope).result, "correct");
+  assert.equal(mark("45° 42'", slope).result, "incorrect");
+  // the decimal of an angle given in minutes: the minutes typed back are the wrong form
+  const decimal = { kind: "expression" as const, key: "76.2667", variables: [], form: "decimal" as const, tolerance: { abs: 0.005 } };
+  assert.equal(mark("76.27", decimal).result, "correct");
+  assert.equal(mark("76.2667°", decimal).result, "correct");
+  assert.deepEqual(mark("76° 16'", decimal), { result: "wrong_form", form: "decimal" });
+  assert.equal(mark("76.3", decimal).result, "incorrect");
+  // ′ is still the recurring mark where no degree sign comes first
+  assert.equal(mark("0.3'", { kind: "expression", key: "0.\\dot{3}", variables: [] }).result, "correct");
+
+  // the empty set, however it is written; φ is a variable when the question declares it
+  const empty = { kind: "values" as const, key: "\\{\\}", variables: [] };
+  for (const typed of ["{}", "∅", "Ø", "\\emptyset", "φ", "ϕ", "the empty set"]) assert.equal(mark(typed, empty).result, "correct", typed);
+  assert.equal(mark("{1}", empty).result, "incorrect");
+
+  // a domain in the book's notation is the interval kind's restrictions
+  const domain = { kind: "interval" as const, key: "x != 0 and x != 1", variables: ["x"] };
+  for (const typed of ["R - {0, 1}", "R − {1, 0}", "ℝ \\ {0,1}", "\\mathbb{R} \\setminus \\{0, 1\\}", "x ≠ 0, x ≠ 1"]) {
+    assert.equal(mark(typed, domain).result, "correct", typed);
+  }
+  assert.equal(mark("R - {0}", domain).result, "incorrect");
+  assert.equal(mark("R - {0, 1, 2}", domain).result, "incorrect");
+  assert.equal(mark("R − {−4, 4}", { ...domain, key: "x != -4 and x != 4" }).result, "correct");
+
+  assert.equal(readMarkerSpec({ marker: dms })?.form, "dms");
+  assert.match(reentryMessage({ result: "wrong_form", form: "dms" }), /degrees, minutes and seconds/);
+});

@@ -40,9 +40,10 @@
 export type MarkerKind = "expression" | "equation" | "values" | "interval" | "coordinates" | "surd" | "recurring";
 /**
  * The form the question asks for. `"decimal"` is the per-question flag for "write it as a decimal": without
- * it a fraction is a correct answer to a recurring-decimal question (Samuel, T413).
+ * it a fraction is a correct answer to a recurring-decimal question (Samuel, T413). `"dms"` is "write the angle in
+ * degrees, minutes and seconds" (34° 36′): the same angle as a decimal (34.6) is the wrong form, not wrong.
  */
-export type MarkerForm = null | "factorised" | "expanded" | "simplest" | "decimal" | { subject: string };
+export type MarkerForm = null | "factorised" | "expanded" | "simplest" | "decimal" | "dms" | { subject: string };
 
 export const MARKER_KINDS: readonly MarkerKind[] = ["expression", "equation", "values", "interval", "coordinates", "surd", "recurring"];
 
@@ -1413,7 +1414,7 @@ function sameMultiset<T>(a: T[], b: T[], eq: (x: T, y: T) => boolean): boolean {
   return true;
 }
 
-function markExpression(answer: string, spec: MarkerSpec, engine: MarkerEngine): MarkResult {
+function markExpression(answer: string, spec: MarkerSpec, engine: MarkerEngine, dms = false): MarkResult {
   const vars = spec.variables ?? [];
   const key = parseExpression(spec.key, vars);
   let ans: Expr;
@@ -1435,7 +1436,12 @@ function markExpression(answer: string, spec: MarkerSpec, engine: MarkerEngine):
     if (!exact && spec.tolerance) {
       const x = toF(evaluate(ans, {}));
       const y = toF(evaluate(key, {}));
-      if (Math.abs(x - y) <= spec.tolerance.abs) return CORRECT;
+      if (Math.abs(x - y) <= spec.tolerance.abs) {
+        // an angle in the other notation is the wrong form, not a near miss (34.6 for 34° 36′, 76° 16′ for 76.27)
+        if (spec.form === "dms" && !dms) return wrongForm("dms");
+        if (spec.form === "decimal" && dms) return wrongForm("decimal");
+        return CORRECT;
+      }
     }
     return INCORRECT;
   }
@@ -1446,6 +1452,7 @@ function markExpression(answer: string, spec: MarkerSpec, engine: MarkerEngine):
   if (form === "expanded" && isExpanded(key) && !isExpanded(ans)) return wrongForm("expanded");
   if (form === "simplest" && !isSimplest(ans, key)) return wrongForm("simplest");
   if (form === "decimal" && !isDecimalNumeral(ans)) return wrongForm("decimal");
+  if (form === "dms" && !dms) return wrongForm("dms");
   return CORRECT;
 }
 
@@ -1537,6 +1544,13 @@ function markValues(answer: string, spec: MarkerSpec, engine: MarkerEngine): Mar
     return matched && matched.flatMap(([a, b]) => a.v.map((x, k) => [x, b.v[k]] as [Expr, Expr]));
   };
   return partsVerdict(pairs, spec, vars, engine);
+}
+
+/** "∅", "φ", "the empty set": the set with no element, as the marker reads it ("{}"). φ only when it is no variable. */
+function emptySet(text: string, vars: string[]): string {
+  const phi = vars.some((v) => /^\\?(?:var)?phi$|^[φϕ]$/.test(v)) ? "" : "|[φϕ]|\\\\(?:var)?phi";
+  const re = new RegExp(`^\\s*(?:the\\s+)?(?:[∅⌀Ø]|\\\\emptyset|\\\\varnothing|\\{\\s*\\}|\\\\\\{\\s*\\\\\\}|empty\\s+set|null\\s+set${phi})\\s*$`, "i");
+  return re.test(text) ? "{}" : text;
 }
 
 /** Pair each of `a` with a distinct one of `b` under `eq` (greedy, like `sameMultiset`), or null. */
@@ -2000,18 +2014,53 @@ export function stripUnits(text: string, spec: Pick<MarkerSpec, "kind" | "variab
   );
 }
 
+const DMS_NUM = String.raw`(\d+(?:[.,]\d+)?)`;
+const DMS_DEG = String.raw`\s*(?:°|º|\^\s*\{?\s*\\circ\s*\}?|\\circ|\\degree)\s*`;
+const DMS_MIN = String.raw`\s*(?:′|'|\^\s*\{?\s*\\prime\s*\}?|\\prime)\s*`;
+const DMS_SEC = String.raw`\s*(?:″|''|"|′′|\^\s*\{?\s*\\prime\s*\\prime\s*\}?|\\prime\s*\\prime)\s*`;
+const DMS_RE = new RegExp(`^\\s*${DMS_NUM}${DMS_DEG}(?:${DMS_NUM}${DMS_MIN}(?!['′]))?(?:${DMS_NUM}${DMS_SEC})?$`);
+
+/**
+ * An angle in degrees, minutes and seconds (34° 36′, 83° 14′ 45.6″) as the number it is (34 + 36/60), or null when
+ * the text is not one. At least the minutes or the seconds must be written: "34°" alone is a number with a degree
+ * sign, which the marker already reads.
+ */
+export function readDms(text: string): string | null {
+  const m = DMS_RE.exec(text.normalize("NFC").replace(/\$/g, ""));
+  if (!m || (m[2] === undefined && m[3] === undefined)) return null;
+  const n = (x: string | undefined) => (x ?? "0").replace(",", ".");
+  return `${n(m[1])} + (${n(m[2])})/60 + (${n(m[3])})/3600`;
+}
+
+/**
+ * "R − {0, 1}" (the reals but some values, the book's notation for a domain) as the restrictions the interval kind
+ * reads: "x != 0 and x != 1". Anything else comes back unchanged.
+ */
+export function exceptValues(text: string, v: string): string {
+  const m = /^\s*(?:domain\s*(?:=|:|is)\s*)?(?:\\mathbb\s*\{\s*R\s*\}|\\R\b|R|ℝ)\s*(?:-|−|–|\\setminus|\\backslash|\\smallsetminus|\\)\s*(?:\\\{|\\left\\\{|\{)(.*?)(?:\\\}|\\right\\\}|\})\s*$/i.exec(text);
+  if (!m) return text;
+  const vals = m[1].split(m[1].includes(";") ? ";" : ",").map((x) => x.trim()).filter(Boolean);
+  return vals.length ? vals.map((x) => `${v} != ${x}`).join(" and ") : text;
+}
+
 /** ± multiplies the branches the marker compares; more than this many is not an answer anyone types. */
 const MAX_PLUS_MINUS = 8;
 
 function markInner(answer: string, raw: MarkerSpec, engine: MarkerEngine): MarkResult {
   try {
-    answer = stripUnits(answer, raw);
+    // read before the units and the degree sign go: ′ is also the recurring mark, so 34° 36′ must not reach normalise
+    const dms = raw.kind === "expression" ? readDms(answer) : null;
+    const keyDms = raw.kind === "expression" ? readDms(raw.key) : null;
+    const v = raw.variables?.[0] ?? "x";
+    const vars = raw.variables ?? [];
+    const read = (t: string) => (raw.kind === "interval" ? exceptValues(t, v) : raw.kind === "values" ? emptySet(t, vars) : t);
+    answer = dms ?? stripUnits(read(answer), raw);
     if ((normalise(answer).match(/\+-|-\+/g) ?? []).length > MAX_PLUS_MINUS) throw new Unreadable("too many ± signs");
-    const spec: MarkerSpec = { ...raw, key: stripUnits(raw.key, raw) };
+    const spec: MarkerSpec = { ...raw, key: keyDms ?? stripUnits(read(raw.key), raw) };
     switch (spec.kind) {
       case "expression":
       case "surd":
-        return markExpression(answer, spec, engine);
+        return markExpression(answer, spec, engine, dms !== null);
       case "recurring":
         return markRecurring(answer, spec, engine);
       case "values":
@@ -2033,7 +2082,7 @@ function markInner(answer: string, raw: MarkerSpec, engine: MarkerEngine): MarkR
 
 // ------------------------------------------------------------------ 9. the question's spec
 
-const FORM_NAMES = ["factorised", "expanded", "simplest", "decimal"] as const;
+const FORM_NAMES = ["factorised", "expanded", "simplest", "decimal", "dms"] as const;
 
 /**
  * The marker spec a question carries in `choices.marker` (contract, "Where the answer spec lives"), or null
@@ -2097,7 +2146,7 @@ export function markerInputOf(q: { questionType: string; choices: unknown }): Ma
 export function formLabel(form: string): string {
   if (form.startsWith("subject:")) return `with ${form.slice(8)} as the subject`;
   return (
-    { factorised: "factorised", expanded: "expanded", simplest: "in simplest form", exact: "exact", decimal: "as a decimal" }[form] ??
+    { factorised: "factorised", expanded: "expanded", simplest: "in simplest form", exact: "exact", decimal: "as a decimal", dms: "in degrees, minutes and seconds" }[form] ??
     form
   );
 }
@@ -2124,6 +2173,8 @@ export function reentryMessage(r: { result: "wrong_form"; form: string } | { res
         return "That's a rounded decimal. The question asks for the exact value: keep the √, π or fraction.";
       case "decimal":
         return "That's the right value, but the question asks for it as a decimal.";
+      case "dms":
+        return "That's the right angle, but the question asks for it in degrees, minutes and seconds, like 34° 36′ 0″.";
       default:
         return `That's equivalent, but the question asks for it ${formLabel(f)}.`;
     }
@@ -2156,8 +2207,15 @@ export interface Preview {
 export function previewLatex(text: string, spec: Pick<MarkerSpec, "kind" | "variables">): Preview {
   if (typeof text !== "string" || !text.trim()) return { latex: null, reason: null };
   if (text.length > 500) return { latex: null, reason: "too long" };
+  // the forms markInner reads before normalise: an angle in degrees and minutes, the empty set
+  const dms = spec.kind === "expression" ? DMS_RE.exec(text.normalize("NFC").replace(/\$/g, "")) : null;
+  if (dms && (dms[2] !== undefined || dms[3] !== undefined)) {
+    const parts = [`${dms[1]}^\\circ`, dms[2] !== undefined ? `${dms[2]}'` : "", dms[3] !== undefined ? `${dms[3]}''` : ""];
+    return { latex: parts.filter(Boolean).join("\\,"), reason: null };
+  }
+  if (spec.kind === "values" && emptySet(text, spec.variables ?? []) === "{}") return { latex: "\\varnothing", reason: null };
   try {
-    const toks = tokenize(normalise(stripUnits(text, spec)), spec.variables ?? []);
+    const toks = tokenize(normalise(stripUnits(spec.kind === "interval" ? exceptValues(text, spec.variables?.[0] ?? "x") : text, spec)), spec.variables ?? []);
     return { latex: tokensLatex(toks), reason: null };
   } catch (err) {
     if (err instanceof Unreadable) return { latex: null, reason: err.reason };

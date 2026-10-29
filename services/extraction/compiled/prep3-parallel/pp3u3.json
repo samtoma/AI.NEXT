@@ -137,6 +137,36 @@
   ],
   "questions": [
     {
+      "id": "q:pp3u3-2-3:bk-drill-1",
+      "lo": "lo:pp3u3-2-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "The following frequency distribution shows the goals scored in a number of football matches (table). Find the standard deviation for the numbers of goals.",
+      "answer": "1.483",
+      "solution": [
+        "Σk = 1+4+6+9+5+3+2 = 30.",
+        "Σxk = 0+4+12+27+20+15+12 = 90, so the mean = 90/30 = 3.",
+        "Deviations x − 3: −3, −2, −1, 0, 1, 2, 3. Squares: 9, 4, 1, 0, 1, 4, 9.",
+        "Multiply by k: 9, 16, 6, 0, 5, 12, 18. Σ(x−x̄)²k = 66.",
+        "σ = √(66/30) = √2.2 ≈ 1.483.",
+        "The standard deviation is about 1.483 goals."
+      ],
+      "source_page": 45,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u3-2:drill-1, printed p.45); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "1.483",
+          "variables": [],
+          "tolerance": {
+            "abs": 0.005
+          }
+        }
+      },
+      "verified": true
+    },
+    {
       "id": "q:pp3u3-2-4:bk-exercise-3",
       "lo": "lo:pp3u3-2-4",
       "tier": "advanced",
@@ -277,43 +307,6 @@
       ],
       "source_page": 44,
       "generated_by": "book (book_worked: pp3u3-2:example-2, printed p.44); compile_book_records.py compile-v3"
-    },
-    {
-      "id": "expl:pp3u3-2-3:bk-drill-1",
-      "lo": "lo:pp3u3-2-3",
-      "entry_type": "worked_example",
-      "content": [
-        {
-          "kind": "problem",
-          "text_md": "The following frequency distribution shows the goals scored in a number of football matches (table). Find the standard deviation for the numbers of goals."
-        },
-        {
-          "step": 1,
-          "text_md": "Σk = 1+4+6+9+5+3+2 = 30."
-        },
-        {
-          "step": 2,
-          "text_md": "Σxk = 0+4+12+27+20+15+12 = 90, so the mean = 90/30 = 3."
-        },
-        {
-          "step": 3,
-          "text_md": "Deviations x − 3: −3, −2, −1, 0, 1, 2, 3. Squares: 9, 4, 1, 0, 1, 4, 9."
-        },
-        {
-          "step": 4,
-          "text_md": "Multiply by k: 9, 16, 6, 0, 5, 12, 18. Σ(x−x̄)²k = 66."
-        },
-        {
-          "step": 5,
-          "text_md": "σ = √(66/30) = √2.2 ≈ 1.483."
-        },
-        {
-          "step": 6,
-          "text_md": "The standard deviation is about 1.483 goals."
-        }
-      ],
-      "source_page": 45,
-      "generated_by": "answer_gen.py (generated, both readings agree, not yet reviewed); compile_book_records.py compile-v3"
     },
     {
       "id": "expl:pp3u3-2-3:bk-example-3",
