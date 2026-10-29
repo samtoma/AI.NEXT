@@ -4,27 +4,7 @@
   "book": "/Users/tdeif/Developer/Noor/services/extraction/work/prep3-parallel/bookrecord/prep3-parallel.json",
   "course_id": "course:prep3-parallel-math-en",
   "templates": {
-    "wt:pp3u10-1-1:drill-1-2": "46059225ab75d13f45a102e060d452c0b915c614dc81c32ddac7f6fa29bc98d6",
-    "wt:pp3u10-1-1:drill-1-3": "d06fffe31f524e1b7de71a223dfe9c52ea00070d68a32183e23537e674b38511",
-    "wt:pp3u10-1-1:drill-1-4": "b6642093bc822d9cf6033145eec79ad484d3697d993dcdd02b9c9a0dc185b1c8",
-    "wt:pp3u10-1-1:drill-2-2": "eaf9772c9c53ba3e549b96b619c788469d1296a1baf998dc3c56f73cd0ac05b5",
-    "wt:pp3u10-1-1:drill-2-3": "c88660808a9d3aedc6a68a80e4ffa69eeda2005409d5f38fdfc103a3a554d15a",
-    "wt:pp3u10-1-1:drill-2-4": "af0c7edef30616cd69bcf7c95238d449544739a155689a5d0285bf168f199db4",
-    "wt:pp3u10-1-1:drill-2-5": "3740c82ae65f9ed363bd3b1e37e0c4ebc4b590a4f380d2121825991c92a4132a",
-    "wt:pp3u10-1-1:drill-2-6": "91e66708d8797f5421ca39eb7ba26a51292e9435ba2936a076290eb34619c717",
-    "wt:pp3u10-1-1:drill-2-7": "d1f9ffadbdf0567116b52c65f01cffb8aa0e32f3127f681ad7b626e18e36f516",
-    "wt:pp3u10-1-1:drill-2-8": "883a942c4091702ce829be47a02d15dbdc3468c42efdaa8967b71ccb7330571e",
-    "wt:pp3u10-2-1:activity-1-2": "c318e73c4465bc8b0ce5ec1b82ad528246102409a15ee2d1bbf4e4b9ce0a09ea",
-    "wt:pp3u10-2-1:activity-1-3": "752a5ffe23b80c3e7707d83917cfe9afc7fc7b8547cc30f5a2e1871718bdfbec",
-    "wt:pp3u10-2-2:drill-14-4": "8c9bd34efb4c9933809171c6a311cca0ad400b418423ea9799f3e4faa4a5a90c",
-    "wt:pp3u10-2-2:drill-14-6": "e9c0959e848fe1a03b242e1a70462c7b8dc2ef33a5868dddba5d3bd54f285ed2",
-    "wt:pp3u10-3-1:think-and-discuss-1-2": "d2f2527c221223889f8b0864fb3419dfd8101b42857e8451ac6744e594edf7b3",
-    "wt:pp3u10-5-1:think-and-discuss-1-1": "c6ef1cb44fe25a32a6986b31c67bdecd8e21b3ed4f0cb051559b8e2ec6991391",
-    "wt:pp3u10-5-1:think-and-discuss-1-2": "a0c74d2c4a0544952591383bbccd92affde6d6c478a5aca959d01b5b0afd0837",
-    "wt:pp3u10-5-1:think-and-discuss-1-3": "5a26bdc6bb6c090232974e4d50dfc31e50cb816cd5da1dc5c94e3ceaa95bbf93",
-    "wt:pp3u10-7-1:drill-1-1": "763d9df522f5252d4f4e2e89ca1e40160159a037854c49b7d60d2d3f848e7012",
-    "wt:pp3u10-7-1:drill-1-2": "2bc48514f097129f79c602dbfb51e133b5fda100e17b30674294c60cec11ea62",
-    "wt:pp3u10-7-1:drill-1-3": "23234a77901cafc72cab7343252e501aff7b927a9400670c9b7c95cddbcc5546"
+    "wt:pp3u2-3-2:exercise-2-b": "0988a90f6c56fa105e5146e94a0e29f4112ff7375b56be67844236fb6d69c1fa"
   },
   "rejected_templates": {},
   "questions": [
@@ -1655,58 +1635,6 @@
       "source_note": "The book's own exercise pp3u7-3:drill-1#2 on an instrument. Generated from template family wt:pp3u7-3-1:drill-1-2.",
       "family": "wt:pp3u7-3-1:drill-1-2",
       "template_sha": "ae576373351b1c814a5358e930c58656eeae6857f79a507d81d4b71ee36cca57"
-    },
-    {
-      "id": "q:pp3u2-3-2:w001",
-      "lo_id": "lo:pp3u2-3-2",
-      "tier": "basic",
-      "question_type": "widget",
-      "stem": "The area of a rectangle is constant and equal to $30$ cm², so $xy = 30$. When $x = 3$, $y = 10$. Find $y$ when $x = 5$. Drag the right pan until the balance is level.",
-      "choices": {
-        "kind": "ratio_balance",
-        "spec": {
-          "mode": "inverse",
-          "a": 3,
-          "b": 10,
-          "c": 5
-        },
-        "diagnostics": [
-          {
-            "predicate": "inverse-solved-as-direct",
-            "misconception_id": "mc:pp3u2-3-2:inverse-treated-as-direct"
-          }
-        ],
-        "hints": [
-          {
-            "predicate": "off-target",
-            "step": 2,
-            "text": "Find the constant product $x \\times y$ from the pair you are given, then make the new $x$ times the new $y$ equal that same constant."
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "The area is constant, so $y$ varies inversely as $x$: $y = \\frac{m}{x}$ with $xy = m$."
-        },
-        {
-          "step": 2,
-          "text_md": "From $x = 3$, $y = 10$: $m = 3 \\times 10 = 30$."
-        },
-        {
-          "step": 3,
-          "text_md": "For $x = 5$: $y = \\frac{30}{5}$."
-        },
-        {
-          "step": 4,
-          "text_md": "So $y = 6$, and $5 \\times 6 = 30$ matches the constant product."
-        }
-      ],
-      "parent_question_id": "q:pp3u2-3-2:bk-exercise-2-b",
-      "source_note": "The book's own exercise pp3u2-3:exercise-2#B on an instrument. Generated from template family wt:pp3u2-3-2:exercise-2-b.",
-      "family": "wt:pp3u2-3-2:exercise-2-b",
-      "template_sha": "0988a90f6c56fa105e5146e94a0e29f4112ff7375b56be67844236fb6d69c1fa"
     },
     {
       "id": "q:pp3u9-1-2:w001",
@@ -5753,6 +5681,58 @@
       "source_note": "The book's own exercise pp3u10-7:drill-1#3 on an instrument. Generated from template family wt:pp3u10-7-1:drill-1-3.",
       "family": "wt:pp3u10-7-1:drill-1-3",
       "template_sha": "23234a77901cafc72cab7343252e501aff7b927a9400670c9b7c95cddbcc5546"
+    },
+    {
+      "id": "q:pp3u2-3-2:w001",
+      "lo_id": "lo:pp3u2-3-2",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "The area of a rectangle is constant and equal to $30$ cm², so $xy = 30$. When $x = 3$, $y = 10$. Find $y$ when $x = 5$. Drag the right pan until the balance is level.",
+      "choices": {
+        "kind": "ratio_balance",
+        "spec": {
+          "mode": "inverse",
+          "a": 3,
+          "b": 10,
+          "c": 5
+        },
+        "diagnostics": [
+          {
+            "predicate": "inverse-solved-as-direct",
+            "misconception_id": "mc:pp3u2-3-2:inverse-treated-as-direct"
+          }
+        ],
+        "hints": [
+          {
+            "predicate": "off-target",
+            "step": 2,
+            "text": "Find the constant product $x \\times y$ from the pair you are given, then make the new $x$ times the new $y$ equal that same constant."
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The area is constant, so $y$ varies inversely as $x$: $y = \\frac{m}{x}$ with $xy = m$."
+        },
+        {
+          "step": 2,
+          "text_md": "From $x = 3$, $y = 10$: $m = 3 \\times 10 = 30$."
+        },
+        {
+          "step": 3,
+          "text_md": "For $x = 5$: $y = \\frac{30}{5}$."
+        },
+        {
+          "step": 4,
+          "text_md": "So $y = 6$, and $5 \\times 6 = 30$ matches the constant product."
+        }
+      ],
+      "parent_question_id": "q:pp3u2-3-2:bk-exercise-2-b",
+      "source_note": "The book's own exercise pp3u2-3:exercise-2#B on an instrument. Generated from template family wt:pp3u2-3-2:exercise-2-b.",
+      "family": "wt:pp3u2-3-2:exercise-2-b",
+      "template_sha": "0988a90f6c56fa105e5146e94a0e29f4112ff7375b56be67844236fb6d69c1fa"
     }
   ],
   "misconceptions": [
@@ -5767,12 +5747,6 @@
       "lo_id": "lo:pp3u7-2-1",
       "label": "Finds only the positive root of the denominator",
       "description": "When the denominator has the form $x^2=k$, the student gives only $x=\\sqrt{k}$ and loses the negative root."
-    },
-    {
-      "id": "mc:pp3u2-3-2:inverse-treated-as-direct",
-      "lo_id": "lo:pp3u2-3-2",
-      "label": "Treats inverse variation as direct (y = mx, or the ratio turned the wrong way)",
-      "description": "The student finds the constant by dividing y by x, or sets up y₁/y₂ = x₁/x₂, so y grows when x grows."
     },
     {
       "id": "mc:pp3u1-1-1:order-ignored-in-pair",
@@ -5797,6 +5771,12 @@
       "lo_id": "lo:pp3u5-4-1",
       "label": "Slope written as a/b, losing the minus",
       "description": "The student uses the slope rule on $ax + by + c = 0$ but writes $m = \\frac{a}{b}$ instead of $-\\frac{a}{b}$."
+    },
+    {
+      "id": "mc:pp3u2-3-2:inverse-treated-as-direct",
+      "lo_id": "lo:pp3u2-3-2",
+      "label": "Treats inverse variation as direct (y = mx, or the ratio turned the wrong way)",
+      "description": "The student finds the constant by dividing y by x, or sets up y₁/y₂ = x₁/x₂, so y grows when x grows."
     }
   ],
   "mapping_review": {
@@ -5818,18 +5798,18 @@
       "s7b-verify.20261021T093826Z"
     ],
     "counts": {
-      "active": 0,
+      "active": 1,
       "held": 0,
       "kept_by_review": 0,
       "dropped_by_review": 0,
-      "hints_active": 51,
-      "hints_held": 12
+      "hints_active": 1,
+      "hints_held": 0
     },
     "reviews": []
   },
   "s5_reconciled": {
     "runs": [
-      "s5-final.20261018T102128Z.json"
+      "s5-final.20261018T101823Z.json"
     ],
     "catalogue": "prep3-parallel-misconceptions",
     "refused_attachments_stripped": [],

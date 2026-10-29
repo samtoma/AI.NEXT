@@ -352,7 +352,8 @@ def topup_targets(objectives: dict, specs, below: int = TOPUP_BELOW) -> list[str
     return out
 
 
-def s6_topup(book: str, slugs: list[str], catalogue: Path, cap: float, args_only: bool = False) -> list[Path]:
+def s6_topup(book: str, slugs: list[str], catalogue: Path, cap: float, args_only: bool = False,
+             only: list[str] | None = None) -> list[Path]:
     """S6 again, only for the objectives it left thin (topup_targets), now that a family may be modelled on a worked
     example (answer 40; the S6 author shows them, generate_questions.teaching_parents): author, land (fanout.write_specs
     makes a teaching parent explicit), hold what --check refuses, then grade ONLY the new families, blind, as s6-grade
@@ -369,6 +370,8 @@ def s6_topup(book: str, slugs: list[str], catalogue: Path, cap: float, args_only
     specs, _problems = FS.load_dir(fam)
     objectives = GQ.book_objectives(bk)
     targets = topup_targets({lo: r for lo, r in objectives.items() if in_lessons(lo, slugs)}, specs)
+    if only:   # a person named the objectives (one whose book questions came later than S6): they need a parent only
+        targets = [lo for lo in only if lo in objectives and (objectives[lo].get("questions") or objectives[lo].get("teaching"))]
     print(f"S6 top-up: {len(targets)} thin objective(s) with no usable family: {', '.join(targets) or '-'}", file=sys.stderr)
     if not targets:
         return []
@@ -596,6 +599,7 @@ def main(argv: list[str]) -> int:
     s6t.add_argument("--catalogue", type=Path, required=True, help="the S5 draft run (or a catalogue)")
     s6t.add_argument("--cap", type=float, default=4.0)
     s6t.add_argument("--args-only", action="store_true")
+    s6t.add_argument("--objectives", nargs="+", help="these objectives (lo:…), whatever their count; each needs a book parent")
     for name in ("s7-author", "s7-verify"):
         c = sub.add_parser(name, help=f"S7 {name.split('-')[1]} (runbook/widgets.workflow.js) against the database's graph")
         c.add_argument("book")
@@ -673,7 +677,7 @@ def main(argv: list[str]) -> int:
             grade_only(a.book, a.lessons, view, files, a.cap, "regrade")
         return 0
     if a.cmd == "s6-topup":
-        s6_topup(a.book, a.lessons, a.catalogue, a.cap, a.args_only)
+        s6_topup(a.book, a.lessons, a.catalogue, a.cap, a.args_only, a.objectives)
         return 0
     if a.cmd == "s6-grade":
         view = book_view(a.book, a.lessons)

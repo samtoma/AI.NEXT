@@ -1,0 +1,67 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u2-3-3:missing",
+ "kind": "family",
+ "lo_id": "lo:pp3u2-3-3",
+ "parent_question_id": "expl:pp3u2-3-3:bk-drill-1",
+ "parent_kind": "teaching",
+ "source_page": 35,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "t",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "xs",
+   "let": "[m*i for i in [1,2,3,4]]"
+  },
+  {
+   "name": "ys",
+   "let": "[k*m*i for i in [1,2,3]] if t == 0 else [12*c//i for i in [1,2,3]]"
+  },
+  {
+   "name": "ans",
+   "let": "4*k*m if t == 0 else 3*c"
+  },
+  {
+   "name": "kind",
+   "let": "['direct', 'inverse'][t]"
+  }
+ ],
+ "constraints": [],
+ "stem": "The table shows values of $x$ and $y$ where $y$ varies either directly or inversely with $x$. Decide which, then find the missing value $a$: $\\begin{array}{c|cccc} x & {=xs[0]} & {=xs[1]} & {=xs[2]} & {=xs[3]} \\\\ \\hline y & {=ys[0]} & {=ys[1]} & {=ys[2]} & a \\end{array}$",
+ "answer": "ans",
+ "solution": [
+  "Test the first columns: y/x = ${=ys[0]/xs[0]}$ and ${=ys[1]/xs[1]}$; xy = ${=xs[0]*ys[0]}$ and ${=xs[1]*ys[1]}$.",
+  "The constant quantity is {=['y/x','xy'][t]} (also true for the third column), so the variation is {=kind}.",
+  "{=['y = '+str(k*m)+'... ','']}"
+ ],
+ "notes": "Placeholder fixed below.\n\nPIPELINE NORMALISATION (not an author edit): unwrap-numeric-answer: \"answer\" \"{=ans}\" -> \"ans\"; a numeric family's answer is an expression, not a template."
+}

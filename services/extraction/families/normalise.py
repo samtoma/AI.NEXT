@@ -14,6 +14,9 @@ all, and this module fixes them the same way every time:
                           marks ONE point, so no answer, the key itself included, could ever agree (Prep-3 S6 rejected
                           five such families, 2026-10-29). A set of points is the `values` kind, matched in any order;
                           the kind changes, outer [ ] go, the points are untouched.
+  unwrap-numeric-answer   a numeric family's "answer" written as one template hole, "{=ans}". Its answer is an
+                          expression (spec.py), so the braces go: "ans". Only a whole-answer hole; anything else is
+                          the author's.
   rename-shadowing-param  a param is named like a built-in (num, frac, gcd …), which would hide it. The param
                           is renamed <name>_v in every expression and every {=…} hole — never where the name is
                           CALLED, which is the built-in — and nothing else changes.
@@ -114,6 +117,11 @@ def normalise(raw: dict) -> tuple[dict, list[str]]:
         done.append(f"drop-redundant-answer: removed the top-level \"answer\" ({json.dumps(out['answer'], ensure_ascii=False)}); "
                     "a multiple-choice family's answer is choices.correct, the same text, unchanged")
         del out["answer"]
+    m = re.fullmatch(r"\s*\{=([^{}]+)\}\s*", out.get("answer") or "") if out.get("answer_type") == "numeric" and isinstance(out.get("answer"), str) else None
+    if m:
+        done.append(f"unwrap-numeric-answer: \"answer\" {json.dumps(out['answer'])} -> {json.dumps(m.group(1).strip())}; a numeric "
+                    "family's answer is an expression, not a template")
+        out["answer"] = m.group(1).strip()
     ans = marker.get("answer") if isinstance(marker.get("answer"), str) else ""
     body = ans.strip()
     body = body[1:-1].strip() if body.startswith("[") and body.endswith("]") else body

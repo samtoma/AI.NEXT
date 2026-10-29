@@ -52,6 +52,14 @@ class Normalise(unittest.TestCase):
         self.assertEqual((out["marker"]["kind"], done), ("coordinates", []))
 
 
+    def test_a_numeric_answer_written_as_one_hole_is_its_expression(self):
+        out, done = N.normalise({"answer_type": "numeric", "answer": "{=ans}", "stem": "s {=a}"})
+        self.assertEqual(out["answer"], "ans")
+        self.assertTrue(done[0].startswith("unwrap-numeric-answer"))
+        out, done = N.normalise({"answer_type": "numeric", "answer": "{=a} + 1", "stem": "s {=a}"})
+        self.assertEqual((out["answer"], done), ("{=a} + 1", []))
+
+
 class Repoint(unittest.TestCase):
     def test_a_worked_example_that_became_a_question_is_the_parent_now(self):
         with tempfile.TemporaryDirectory() as t:

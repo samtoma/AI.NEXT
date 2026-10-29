@@ -83,3 +83,39 @@ class ClosedLists(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ClosedListParts(unittest.TestCase):
+    ANS = ("First table: inverse variation (xy = 60 always); second table: direct variation (y/x = 4.5 always); "
+           "third table: direct variation (y/x = 1.8); fourth table: neither (y/x is not constant and xy is not constant).")
+    Q = "Show which of the following tables represents the direct variation and which represents the inverse variation"
+
+    def test_each_table_is_asked_from_the_list(self):
+        parts = C.closed_list_parts(self.ANS, self.Q)
+        self.assertEqual([p[0] for p in parts], [f"Answer only for the {o} table." for o in ("first", "second", "third", "fourth")])
+        self.assertEqual([p[1][2] for p in parts], ["b", "a", "a", "c"])
+        self.assertEqual([c["text"] for c in parts[0][1][1]], ["Direct variation", "Inverse variation", "Neither"])
+
+    def test_nothing_when_a_part_is_off_the_list(self):
+        self.assertEqual(C.closed_list_parts("First table: inverse; second table: it depends", self.Q), [])
+        self.assertEqual(C.closed_list_parts(self.ANS, "Find y when x = 3"), [])
+
+
+class Tables(unittest.TestCase):
+    XY = {"header": ["x", "y"], "rows": [["3", "6"], ["-2", "-9"]]}
+
+    def test_two_columns_are_written_across(self):
+        self.assertEqual(C.table_tex(self.XY), "$\\begin{array}{c|cc} x & 3 & -2 \\\\ \\hline y & 6 & -9 \\end{array}$")
+
+    def test_a_table_takes_the_place_of_the_placeholder(self):
+        out = C.with_tables("The distribution shows the goals (table). Find the mean.", [self.XY])
+        self.assertTrue(out.startswith("The distribution shows the goals $\\begin{array}"))
+        self.assertTrue(out.endswith("\\end{array}$. Find the mean."))
+
+    def test_several_are_named_by_position(self):
+        out = C.with_tables("Which is which?", [self.XY, self.XY])
+        self.assertIn("First table: $", out)
+        self.assertIn("Second table: $", out)
+
+    def test_words_are_text(self):
+        self.assertIn("\\text{Number of goals}", C.table_tex({"header": ["Number of goals", "1"], "rows": [["Matches", "4"]]}))

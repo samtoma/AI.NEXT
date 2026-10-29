@@ -525,6 +525,34 @@ def short_form(ans: str, stem: str):
     return None
 
 
+# answers of several labelled parts, each from a closed list: (words in the question that name the list, the list,
+# how a part's answer names its option). Asked part by part, as multiple choice (Tamer, 2026-10-29: "do 2-3-3")
+CLOSED_PART_LISTS = [
+    (("direct variation", "inverse variation"), ["Direct variation", "Inverse variation", "Neither"],
+     [r"direct(?:\s+variation)?", r"inverse(?:\s+variation)?", r"neither|none"]),
+]
+
+
+def closed_list_parts(ans: str, stem: str) -> list[tuple[str, tuple]]:
+    """"First table: inverse variation (xy = 60); second table: neither (…)" for a question naming direct and inverse
+    variation: one multiple-choice question per labelled part, "Answer only for the first table.". Every part must
+    name one option of the list, or nothing is asked."""
+    a, q = str(ans or "").replace("$", "").strip(), str(stem or "").lower()
+    for words, options, pats in CLOSED_PART_LISTS:
+        if not all(w in q for w in words):
+            continue
+        segs = _split_top(a, r";")
+        out = []
+        for seg in segs:
+            m = re.match(r"(?i)\s*((?:first|second|third|fourth|fifth|sixth)\s+\w+)\s*:\s*(.+)$", seg)
+            hit = m and next((k for k, pat in enumerate(pats) if re.match(rf"(?i)(?:{pat})\b", m.group(2).strip())), None)
+            if hit is None:
+                return []
+            out.append((f"Answer only for the {m.group(1).lower()}.", _choices(options, hit)))
+        return out if len(out) >= 2 else []
+    return []
+
+
 # ============================================================================ answers
 def _review_task(name: str):
     """groundtruth/review/<name>.py, a task of the review tool (answers: Generated answers; generated: Generated
@@ -765,6 +793,47 @@ def carry_over(record: dict, out: list[dict], stems: dict[str, tuple[str, str, s
                         "sources": [{**s, "ref": back.get(s.get("ref"), s.get("ref"))} for s in u.sources]} for u in unres]
 
 
+_ORDINALS = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth"]
+
+
+def _cell(v) -> str:
+    t = str(v if v is not None else "").replace("$", "").strip()
+    if re.fullmatch(r"[-−+]?\d+(?:[.,]\d+)?|[A-Za-z]|[-−]?\d+\s*/\s*\d+|\.{2,}|…", t):
+        return t.replace("−", "-").replace("…", "\\ldots").replace("...", "\\ldots")
+    return "\\text{" + re.sub(r"([{}%&#_])", r"\\\1", t) + "}" if t else ""
+
+
+def table_tex(it: dict) -> str:
+    """A book table as inline LaTeX the app's KaTeX renders: two columns (x and y) are written across, as the book
+    prints them side by side; any other shape keeps its header row."""
+    header, rows = it.get("header") or [], it.get("rows") or []
+    if len(header) == 2 and all(len(r) == 2 for r in rows):
+        cols = "c|" + "c" * len(rows)
+        lines = [" & ".join([_cell(header[k])] + [_cell(r[k]) for r in rows]) for k in (0, 1)]
+        body = " \\\\ \\hline ".join(lines)
+    else:
+        width = max([len(header)] + [len(r) for r in rows] or [1])
+        cols = "|".join("c" * width)
+        lines = [" & ".join(_cell(c) for c in r) for r in rows]
+        body = " \\\\ ".join(lines)
+        if header:
+            body = " & ".join(_cell(h) for h in header) + " \\\\ \\hline " + body
+    return f"$\\begin{{array}}{{{cols}}} {body} \\end{{array}}$"
+
+
+def with_tables(text: str, tables: list[dict]) -> str:
+    """The tables a prompt prints (`belongs_to`), in its words: in place of the "(table)" the extraction left, else
+    after them. Several are named "First table: …", as the book's drills ask about them by position (found
+    2026-10-29: no table had ever reached a student, so five exercises, one of them live, asked about data nobody
+    could see)."""
+    tex = [table_tex(t) for t in tables]
+    block = tex[0] if len(tex) == 1 else "  ".join(f"{_ORDINALS[k] if k < len(_ORDINALS) else k + 1} table: {t}"
+                                                  for k, t in enumerate(tex))
+    if re.search(r"\(\s*tables?\s*\)", text):
+        return re.sub(r"\(\s*tables?\s*\)", lambda _m: block, text, count=1)
+    return f"{text.rstrip()} {block}"
+
+
 def book_questions(slug: str, record: dict, answers: dict, skipped: list, entries: list, checks: dict | None = None,
                    tiers: dict | None = None, unresolved: list | None = None) -> list[dict]:
     """The book's prompts as questions; a worked example (or an answered prompt) the app cannot mark goes to the
@@ -773,6 +842,10 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
     stems: dict[str, tuple[str, str, str]] = {}   # every part's preamble, own words and working, for the carry-over
     checks = checks or {}
     lo_by_item = objectives_for_items(record)
+    tables: dict[str, list[dict]] = {}
+    for it in record.get("items") or []:
+        if it.get("type") == "table" and it.get("belongs_to"):
+            tables.setdefault(it["belongs_to"], []).append(it)
     for raw in record.get("items") or []:
         if raw["type"] not in QUESTION_SOURCES:
             continue
@@ -784,6 +857,8 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
             continue
         lo = lo_of(slug, lo_by_item[r["id"]])
         text = r.get("text") or r.get("stem") or ""
+        if tables.get(r["id"]):
+            text = with_tables(text, tables[r["id"]])
         holders = [(p, f"{r['id']}:{p['label']}") for p in r.get("parts") or []] or [(None, r["id"])]
         kept_as_entry = False
         for p, ref in holders:
@@ -816,6 +891,8 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
             parts = [] if typed or not ans or r["type"] == "worked_example" else answer_parts(ans, stem)
             if not parts and last_blank:
                 parts = [("Answer only the last blank.", last_blank)]
+            if not parts and ans and r["type"] != "worked_example":
+                parts = closed_list_parts(ans, stem)
             if not typed:
                 # a worked example the book solves, or an answer a person approved / two readings agreed on, that the
                 # app cannot mark: the tutor still teaches from it, as a worked example in the library
@@ -844,7 +921,7 @@ def book_questions(slug: str, record: dict, answers: dict, skipped: list, entrie
                     continue
             # a domain ("R - {3}") is numbered apart: the app's marker read it from 2026-10-29, and the parts asked
             # before then keep their ids, which attempts are recorded against
-            dom = [(t[1] or {}).get("marker", {}).get("kind") == "interval" and "!=" in t[2] for _, t in parts]
+            dom = [isinstance(t[1], dict) and t[1].get("marker", {}).get("kind") == "interval" and "!=" in t[2] for _, t in parts]
             variants = [("", "", typed)] if typed else [
                 (f"-pd{dom[:i + 1].count(True)}" if d else f"-p{i + 1 - dom[:i].count(True)}", f" {ask}", t)
                 for i, ((ask, t), d) in enumerate(zip(parts, dom))]

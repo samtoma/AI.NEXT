@@ -40,10 +40,9 @@
     "lesson_unit": null,
     "answer_rules": null,
     "lesson_titles": {
-      "pp3u9-1": "Basic Definitions and Concepts",
-      "pp3u9-2": "Positions of a point, a Straight Line and a Circle with Respect to a Circle",
-      "pp3u9-3": "Identifying the Circle",
-      "pp3u9-4": "The Relation Between the Chords of a Circle and its Center"
+      "pp3u2-1": "Ratio",
+      "pp3u2-2": "Proportion",
+      "pp3u2-3": "Direct Variation and Inverse Variation"
     },
     "lesson_titles_note": "A book of its own, ingested from its PDF by the book-record pipeline (Tamer, 2026-10-17: treated as a separate book, unrelated to any live course). Its course, course:prep3-parallel-math-en (app/src/lib/courses.ts), is hidden until an operator makes it live. Its lesson slugs carry the pp3 prefixes (pp3u1-1, …), so none of its ids can meet another course's. Lesson titles, page offsets and units come from its own S0 lesson map, approved at G0.",
     "paths": {
@@ -60,108 +59,204 @@
     "sample_per_family": 3,
     "families": [
       {
-        "family_id": "tpl:pp3u9-3-3:equal-radii",
-        "spec_sha": "7a185047454cbf7547c5f0ae976a8ab42ba14c711f778542fca8b97cd24fa9ef",
+        "family_id": "tpl:pp3u2-3-3:classify",
+        "spec_sha": "6a08eb2b9e9282b5908eba856b5aa07e9ec25004f336decd2365855c560a2d68",
         "kind": "family",
-        "lo_id": "lo:pp3u9-3-3",
+        "lo_id": "lo:pp3u2-3-3",
         "tier": "basic",
-        "answer_type": "numeric",
+        "answer_type": "mcq",
         "context": null,
-        "parent_question_id": "q:pp3u9-3-3:bk-exercise-1",
+        "parent_question_id": "q:pp3u2-3-3:bk-drill-1-p1",
         "instances_available": 10,
         "instances": [
           {
-            "instance_id": "q:pp3u9-3-3:g001-equal-",
+            "instance_id": "q:pp3u2-3-3:g001-classi",
             "blind": {
-              "instance_id": "q:pp3u9-3-3:g001-equal-",
-              "stem": "A, B and C are three points that are not on one straight line. The axis of $\\overline{AB}$ and the axis of $\\overline{BC}$ intersect at the point M, and $MA = 15$ cm. Find the length of $\\overline{MC}$ in cm.",
-              "stem_sha": "e7ceba371ec4caf7",
+              "instance_id": "q:pp3u2-3-3:g001-classi",
+              "stem": "Decide whether the table represents a direct variation, an inverse variation or neither: $\\begin{array}{c|cccc} x & 1 & 2 & 3 & 4 \\\\ \\hline y & 8 & 13 & 18 & 23 \\end{array}$",
+              "stem_sha": "25ba4935b6419e5d",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "Neither"
+                },
+                {
+                  "key": "B",
+                  "text": "Direct variation"
+                },
+                {
+                  "key": "C",
+                  "text": "None of these can be decided from a table"
+                },
+                {
+                  "key": "D",
+                  "text": "Inverse variation"
+                }
+              ],
               "answer_format": {
-                "type": "number"
+                "type": "choice"
               }
             },
             "sealed": {
-              "correct_answer": "15",
+              "correct_answer": "A",
               "canonical_solution": [
                 {
                   "step": 1,
-                  "text_md": "Since A, B and C are not collinear, the axes of $\\overline{AB}$ and $\\overline{BC}$ intersect at one point M."
+                  "text_md": "Find xy for each column: $1\\times 8 = 8$, $2\\times 13 = 26$, $3\\times 18 = 54$, $4\\times 23 = 92$."
                 },
                 {
                   "step": 2,
-                  "text_md": "M is on the axis of $\\overline{AB}$, so $MA = MB = 15$ cm."
+                  "text_md": "Find y/x for each column: $8$, $\\frac{13}{2}$, $6$, $\\frac{23}{4}$."
                 },
                 {
                   "step": 3,
-                  "text_md": "M is on the axis of $\\overline{BC}$, so $MB = MC$."
+                  "text_md": "Neither y/x nor xy is constant, so it is neither a direct nor an inverse variation."
+                }
+              ],
+              "choices": [
+                {
+                  "key": "A",
+                  "text": "Neither"
                 },
                 {
-                  "step": 4,
-                  "text_md": "So $MC = MB = MA = 15$ cm. M is the center of the circle through A, B and C."
+                  "key": "B",
+                  "text": "Direct variation"
+                },
+                {
+                  "key": "C",
+                  "text": "None of these can be decided from a table"
+                },
+                {
+                  "key": "D",
+                  "text": "Inverse variation"
                 }
               ]
             }
           },
           {
-            "instance_id": "q:pp3u9-3-3:g006-equal-",
+            "instance_id": "q:pp3u2-3-3:g008-classi",
             "blind": {
-              "instance_id": "q:pp3u9-3-3:g006-equal-",
-              "stem": "A, B and C are three points that are not on one straight line. The axis of $\\overline{AB}$ and the axis of $\\overline{BC}$ intersect at the point M, and $MA = 12$ cm. Find the length of $\\overline{MC}$ in cm.",
-              "stem_sha": "344c8a457ad90183",
+              "instance_id": "q:pp3u2-3-3:g008-classi",
+              "stem": "Decide whether the table represents a direct variation, an inverse variation or neither: $\\begin{array}{c|cccc} x & 5 & 10 & 15 & 20 \\\\ \\hline y & 15 & 30 & 45 & 60 \\end{array}$",
+              "stem_sha": "d61e4382073db983",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "Neither"
+                },
+                {
+                  "key": "B",
+                  "text": "None of these can be decided from a table"
+                },
+                {
+                  "key": "C",
+                  "text": "Inverse variation"
+                },
+                {
+                  "key": "D",
+                  "text": "Direct variation"
+                }
+              ],
               "answer_format": {
-                "type": "number"
+                "type": "choice"
               }
             },
             "sealed": {
-              "correct_answer": "12",
+              "correct_answer": "D",
               "canonical_solution": [
                 {
                   "step": 1,
-                  "text_md": "Since A, B and C are not collinear, the axes of $\\overline{AB}$ and $\\overline{BC}$ intersect at one point M."
+                  "text_md": "Find xy for each column: $5\\times 15 = 75$, $10\\times 30 = 300$, $15\\times 45 = 675$, $20\\times 60 = 1200$."
                 },
                 {
                   "step": 2,
-                  "text_md": "M is on the axis of $\\overline{AB}$, so $MA = MB = 12$ cm."
+                  "text_md": "Find y/x for each column: $3$, $3$, $3$, $3$."
                 },
                 {
                   "step": 3,
-                  "text_md": "M is on the axis of $\\overline{BC}$, so $MB = MC$."
+                  "text_md": "y/x is the same constant in every column, so it is a direct variation."
+                }
+              ],
+              "choices": [
+                {
+                  "key": "A",
+                  "text": "Neither"
                 },
                 {
-                  "step": 4,
-                  "text_md": "So $MC = MB = MA = 12$ cm. M is the center of the circle through A, B and C."
+                  "key": "B",
+                  "text": "None of these can be decided from a table"
+                },
+                {
+                  "key": "C",
+                  "text": "Inverse variation"
+                },
+                {
+                  "key": "D",
+                  "text": "Direct variation"
                 }
               ]
             }
           },
           {
-            "instance_id": "q:pp3u9-3-3:g007-equal-",
+            "instance_id": "q:pp3u2-3-3:g009-classi",
             "blind": {
-              "instance_id": "q:pp3u9-3-3:g007-equal-",
-              "stem": "A, B and C are three points that are not on one straight line. The axis of $\\overline{AB}$ and the axis of $\\overline{BC}$ intersect at the point M, and $MA = 9$ cm. Find the length of $\\overline{MC}$ in cm.",
-              "stem_sha": "c5dcd95423081de1",
+              "instance_id": "q:pp3u2-3-3:g009-classi",
+              "stem": "Decide whether the table represents a direct variation, an inverse variation or neither: $\\begin{array}{c|cccc} x & 5 & 10 & 15 & 20 \\\\ \\hline y & 20 & 40 & 60 & 80 \\end{array}$",
+              "stem_sha": "ce5870239fc3b46f",
+              "options": [
+                {
+                  "key": "A",
+                  "text": "Inverse variation"
+                },
+                {
+                  "key": "B",
+                  "text": "Neither"
+                },
+                {
+                  "key": "C",
+                  "text": "Direct variation"
+                },
+                {
+                  "key": "D",
+                  "text": "None of these can be decided from a table"
+                }
+              ],
               "answer_format": {
-                "type": "number"
+                "type": "choice"
               }
             },
             "sealed": {
-              "correct_answer": "9",
+              "correct_answer": "C",
               "canonical_solution": [
                 {
                   "step": 1,
-                  "text_md": "Since A, B and C are not collinear, the axes of $\\overline{AB}$ and $\\overline{BC}$ intersect at one point M."
+                  "text_md": "Find xy for each column: $5\\times 20 = 100$, $10\\times 40 = 400$, $15\\times 60 = 900$, $20\\times 80 = 1600$."
                 },
                 {
                   "step": 2,
-                  "text_md": "M is on the axis of $\\overline{AB}$, so $MA = MB = 9$ cm."
+                  "text_md": "Find y/x for each column: $4$, $4$, $4$, $4$."
                 },
                 {
                   "step": 3,
-                  "text_md": "M is on the axis of $\\overline{BC}$, so $MB = MC$."
+                  "text_md": "y/x is the same constant in every column, so it is a direct variation."
+                }
+              ],
+              "choices": [
+                {
+                  "key": "A",
+                  "text": "Inverse variation"
                 },
                 {
-                  "step": 4,
-                  "text_md": "So $MC = MB = MA = 9$ cm. M is the center of the circle through A, B and C."
+                  "key": "B",
+                  "text": "Neither"
+                },
+                {
+                  "key": "C",
+                  "text": "Direct variation"
+                },
+                {
+                  "key": "D",
+                  "text": "None of these can be decided from a table"
                 }
               ]
             }

@@ -1,0 +1,110 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "c7638c1a4df3b7c4ada51323fb18d8c9adeea3e38bc37596a9869ef319ac6a2f",
+  "generated_sha256": "58e296216a06f337cdf4b64c73cec193d969e53e8c7df0a04fbdfdd71cd9eb22",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u2-3-3:classify",
+   "spec_sha": "6a08eb2b9e9282b5908eba856b5aa07e9ec25004f336decd2365855c560a2d68",
+   "answers": [
+    {
+     "instance_id": "q:pp3u2-3-3:g001-classi",
+     "stem_sha": "25ba4935b6419e5d",
+     "answer": {
+      "choice": "A",
+      "choice_text": "Neither"
+     },
+     "working": "y/x: 8,6.5,6,5.75 not constant; xy: 8,26,54,92 not constant. y increases by 5 linearly but y≠kx. Neither."
+    },
+    {
+     "instance_id": "q:pp3u2-3-3:g008-classi",
+     "stem_sha": "d61e4382073db983",
+     "answer": {
+      "choice": "D",
+      "choice_text": "Direct variation"
+     },
+     "working": "y/x = 3 for all pairs, so y=3x: direct variation."
+    },
+    {
+     "instance_id": "q:pp3u2-3-3:g009-classi",
+     "stem_sha": "ce5870239fc3b46f",
+     "answer": {
+      "choice": "C",
+      "choice_text": "Direct variation"
+     },
+     "working": "y/x = 4 for all pairs, so y=4x: direct variation."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked the arithmetic myself. No files were named, so I read none. g001: xy = 8, 26, 54, 92 and y/x = 8, 6.5, 6, 5.75, so neither is constant and \"Neither\" is correct. g008: y/x = 3 in every column, and xy changes, so it is direct. g009: y/x = 4 in every column, so it is direct. The keys match the shown choice lists. The solutions are correct and use the book's constant-ratio and constant-product tests. No wrong option carries a misconception tag. Each wrong option is definitely wrong. \"None of these can be decided from a table\" is a filler option that is false, since a table can be tested.",
+    "distractors": [
+     {
+      "instance_id": "q:pp3u2-3-3:g001-classi",
+      "option": "B Direct variation",
+      "verdict": "UNTAGGED_OK",
+      "why": "y/x is not constant."
+     },
+     {
+      "instance_id": "q:pp3u2-3-3:g001-classi",
+      "option": "C None of these can be decided from a table",
+      "verdict": "UNTAGGED_OK",
+      "why": "It can be decided by testing y/x and xy."
+     },
+     {
+      "instance_id": "q:pp3u2-3-3:g001-classi",
+      "option": "D Inverse variation",
+      "verdict": "UNTAGGED_OK",
+      "why": "xy is not constant."
+     },
+     {
+      "instance_id": "q:pp3u2-3-3:g008-classi",
+      "option": "A Neither",
+      "verdict": "UNTAGGED_OK",
+      "why": "y/x = 3 in every column."
+     },
+     {
+      "instance_id": "q:pp3u2-3-3:g008-classi",
+      "option": "B None of these can be decided from a table",
+      "verdict": "UNTAGGED_OK",
+      "why": "It can be decided from the table."
+     },
+     {
+      "instance_id": "q:pp3u2-3-3:g008-classi",
+      "option": "C Inverse variation",
+      "verdict": "UNTAGGED_OK",
+      "why": "xy is not constant."
+     },
+     {
+      "instance_id": "q:pp3u2-3-3:g009-classi",
+      "option": "A Inverse variation",
+      "verdict": "UNTAGGED_OK",
+      "why": "xy is not constant."
+     },
+     {
+      "instance_id": "q:pp3u2-3-3:g009-classi",
+      "option": "B Neither",
+      "verdict": "UNTAGGED_OK",
+      "why": "y/x = 4 in every column."
+     },
+     {
+      "instance_id": "q:pp3u2-3-3:g009-classi",
+      "option": "D None of these can be decided from a table",
+      "verdict": "UNTAGGED_OK",
+      "why": "It can be decided from the table."
+     }
+    ]
+   }
+  }
+ ]
+}

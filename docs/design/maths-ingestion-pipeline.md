@@ -136,3 +136,16 @@ plain circle-geometry stems. A flagged call is asked again on Opus.
 named families: ones a person fixed or released from hold. The unit's accepted families are never graded
 again.
 
+### Tables in questions, and closed-list parts (2026-10-29)
+
+A table the book prints with a prompt (`belongs_to`) is now part of the question's stem, as an inline
+KaTeX array. It replaces the extraction's "(table)" placeholder, or follows the prompt's words. Several
+tables are named "First table: …", because the book's drills ask about them by position. Until now no
+table had reached a student, so five exercises asked about data nobody could see; one of them was a live
+question.
+
+An answer of several labelled parts, each from a closed list (`CLOSED_PART_LISTS`; so far direct variation,
+inverse variation or neither), is asked part by part as multiple choice: "Answer only for the first table.".
+`s6-topup --objectives lo:…` authors families for named objectives, whatever their count. The normaliser
+now also unwraps a numeric answer written as one template hole, `{=ans}`.
+
