@@ -120,18 +120,51 @@ def _has(value: str, text: str) -> bool:
     return text in value or (len(text.strip()) >= 3 and re.search(_flex_pattern(text), value, re.I) is not None)
 
 
-def apply_misprints(rec: dict) -> tuple[dict, list[dict]]:
-    """The record with every misprint it can place corrected, and the misprints it could not place (each with its
-    item, field, printed and intended text): a description rather than the printed words, or a field that differs
-    more than by notation. Those reach the tutor as printed; compile reports them."""
+def misprint_decisions() -> dict[str, dict]:
+    """The decision in force on each misprint, every book's (the review tool's Misprints task appends them to
+    groundtruth/<book>/misprint-decisions.json; the last one on a ref is the one in force), keyed by the task's ref:
+    "<item id>[:<part label>]#<field>". Read fresh each call: the review tool keeps running while people decide."""
+    out: dict[str, dict] = {}
+    for p in sorted((HERE / "groundtruth").glob("*/misprint-decisions.json")):
+        try:
+            for d in json.loads(p.read_text()).get("decisions") or []:
+                out[d["ref"]] = d
+        except (OSError, ValueError):
+            continue
+    return out
+
+
+def misprint_ref(rec: dict, label: str | None, field: str) -> str:
+    return f"{rec.get('id')}{':' + label if label else ''}#{field}"
+
+
+def apply_misprints(rec: dict, decisions: dict[str, dict] | None = None) -> tuple[dict, list[dict]]:
+    """The record with every misprint it can place corrected, following the review decisions, and the misprints it
+    could not place (each with its ref, field, printed and intended text, and the decision on it).
+
+    The review decides (2026-10-29; before, decisions on a book record never reached the pipeline):
+      * "not a misprint": the record's text stays as printed;
+      * "different correction": the reviewer's intended text, not the extractor's;
+      * a decision's `match`: the exact text in the record the reviewer says is the misprint, for one the page's
+        words do not find (the review tool asks for it when a confirmed misprint is not applied).
+    An undecided misprint is applied as the extractor proposed it, as before. What cannot be placed reaches the tutor
+    as printed: compile lists it, and the coverage audit fails a decided one (misprints_applied)."""
+    if decisions is None:
+        decisions = misprint_decisions()
     r = copy.deepcopy(rec)
     missed = []
-    for holder in [r] + list(r.get("parts") or []):
+    for label, holder in [(None, r)] + [(p.get("label"), p) for p in r.get("parts") or []]:
         for m in holder.get("misprints") or []:
             field = m.get("field", "")
             mm = re.match(r"^([a-z_]+)(?:\[(\d+)\])?$", field)
             if not mm or mm.group(1) == "quote" or mm.group(1) not in holder or not m.get("printed"):
                 continue
+            ref = misprint_ref(rec, label, field)
+            dec = decisions.get(ref)
+            if dec and dec.get("decision") == "not_a_misprint":
+                continue
+            m = {**m, "intended": dec["intended"] if dec and dec.get("decision") == "corrected" and dec.get("intended") else m.get("intended", ""),
+                 "printed": (dec or {}).get("match") or m["printed"]}
             if re.fullmatch(r"(?i)\s*(?:same|unchanged|no change|none|n/?a)\s*", m.get("intended") or ""):
                 continue   # a reader's "no error found", not a correction: it once replaced a worked step with "same"
             key, idx = mm.group(1), mm.group(2)
@@ -153,7 +186,8 @@ def apply_misprints(rec: dict) -> tuple[dict, list[dict]]:
                 if done is None and any(_has(str(x), m["intended"]) for x in holder[key]) and not any(_has(str(x), m["printed"]) for x in holder[key]):
                     done = ""   # already intended
             if done is None:
-                missed.append({"item": rec.get("id"), "field": field, "printed": m["printed"], "intended": m["intended"]})
+                missed.append({"item": rec.get("id"), "ref": ref, "field": field, "printed": m["printed"], "intended": m["intended"],
+                               "decision": (dec or {}).get("decision")})
     return r, missed
 
 

@@ -75,3 +75,23 @@ book-records/README.md first described, it runs before S1 and does not fold G2's
 
 Ground truth and scoring; misprints, decided by a person; generated answers for prompts the book leaves unanswered;
 figure crops for PDFs; two readings of every tier; the book's statements given to the tutor; the lesson smoke test.
+
+### Misprints: how a decision reaches students (2026-10-29)
+
+Every step reads a book record through `answer_gen.with_intended` / `apply_misprints`: answer generation,
+generation, objectives, and compile's questions, library entries and statements. That function applies the
+Misprints task's decisions (`groundtruth/<book>/misprint-decisions.json`, the last decision on a ref is in force):
+"not a misprint" keeps the printed text, "different correction" uses the reviewer's text, and a decision's `match`
+names the record's exact text when the page's words do not find it. Matching tolerates notation (`×`/`\times`,
+`∠`/`\angle`, `{`/`\{`, `°`, `√`), spacing and commas, and searches every step of a solution. Before this, the
+match was exact and decisions on extraction records reached nothing: 26 of Prep 3's 36 misprints never applied.
+
+Three places keep it true from now on:
+- **Coverage audit** `misprints_applied`: every confirmed or corrected misprint is applied to the record, or the
+  unit is RED and does not load;
+- **Compile** lists what it could not place (`compile-report.json` `misprints_unplaced`) and warns for decided ones;
+- **Review tool**, Misprints → "Decided, not applied": shows the record's own text; the reviewer copies the exact
+  words into "Text in the record", and the tool keeps the decision only if the pipeline then applies it.
+
+A changed correction reaches a generated answer only when that answer is made again (`answer_gen.py run … --only
+<ref> --force`), then compile.

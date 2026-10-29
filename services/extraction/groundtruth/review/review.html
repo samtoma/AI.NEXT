@@ -1172,14 +1172,14 @@ const DECISION_TEXT = { confirmed: "Misprint confirmed", corrected: "Misprint, d
 function mpVisible() {
   const b = $("#mbook").value, w = $("#mshow").value, src = $("#msrc").value;
   return mp.map((m, i) => ({ m, i })).filter(({ m }) => (b === "all" || m.book === b) && (src === "all" || m.source === src)
-    && (w === "all" || (w === "todo" ? !m.decision : !!m.decision)));
+    && (w === "all" || (w === "todo" ? !m.decision : w === "unapplied" ? m.applied === false && m.decision && m.decision.decision !== "not_a_misprint" : !!m.decision)));
 }
 async function openMisprints() {
   mp = await getJSON("/api/misprints");
   const books = [...new Set(mp.map((m) => m.book))], srcs = [...new Set(mp.map((m) => m.source))];
   $("#tools").innerHTML = `
     <label>Book <select id="mbook"><option value="all">All books</option>${books.map((b) => `<option>${esc(b)}</option>`).join("")}</select></label>
-    <label>Show <select id="mshow"><option value="todo">To decide</option><option value="done">Decided</option><option value="all">All</option></select></label>
+    <label>Show <select id="mshow"><option value="todo">To decide</option><option value="unapplied">Decided, not applied</option><option value="done">Decided</option><option value="all">All</option></select></label>
     <label>Found by <select id="msrc"><option value="all">Anyone</option>${srcs.map((x) => `<option>${esc(x)}</option>`).join("")}</select></label>
     <div class="progress"><div class="bar"><div id="mbar" style="width:0"></div></div><div id="mprog" class="muted"></div></div>
     <span class="grow"></span>
@@ -1202,7 +1202,8 @@ function renderMp(movePage) {
   for (const { m, i } of vis) {
     const head = `${m.book} · ${m.lesson}`;
     if (head !== last) { list += `<h3>${esc(head)}</h3>`; last = head; }
-    list += `<button class="rec${i === mi ? " sel" : ""}" data-i="${i}">${dot(m.decision)}<span class="t">${esc(m.where)} · ${esc(m.field)}</span></button>`;
+    const notApplied = m.applied === false && m.decision && m.decision.decision !== "not_a_misprint";
+    list += `<button class="rec${i === mi ? " sel" : ""}" data-i="${i}">${dot(m.decision)}<span class="t">${esc(m.where)} · ${esc(m.field)}${notApplied ? ' <b title="decided, but the pipeline cannot find it in the record">· not applied</b>' : ""}</span></button>`;
   }
   $("#list").innerHTML = list || '<p class="muted" style="padding:8px">Nothing here. Change the filters above.</p>';
   $("#list").querySelectorAll(".rec").forEach((b) => (b.onclick = () => { mi = Number(b.dataset.i); renderMp(true); }));
@@ -1219,6 +1220,8 @@ function renderMp(movePage) {
       <div class="meant"><span class="label">It should be</span><b>${m.intended ? esc(m.intended) : '<span class="muted" style="font-size:14px;font-weight:400">No correction proposed: give one with “Different correction”.</span>'}</b></div>
     </div>
     ${m.why ? `<div class="why"><span class="label">How we know</span><br>${esc(m.why)}</div>` : ""}
+    ${m.applied === false && m.decision && m.decision.decision !== "not_a_misprint" ? `<div class="warn"><b>Not applied.</b> The pipeline cannot find “${esc(m.decision.match || m.printed)}” in the record, so students still see the printed text, and the unit's coverage audit fails (misprints_applied). Copy the exact text from “What the record says” below into “Text in the record”, then record the correction.</div>` : ""}
+    ${m.record_text != null ? `<details ${m.applied === false ? "open" : ""}><summary>What the record says (${esc(m.field)})</summary><pre class="quote" style="white-space:pre-wrap;font-size:12px">${esc(m.record_text)}</pre><div class="muted">The record's own text, as the pipeline reads it (maths not drawn), so it can be copied exactly.</div></details>` : ""}
     ${m.in_bank ? `<dl><dt>question today</dt><dd>${esc(m.in_bank)}</dd></dl>` : ""}
     <div class="who">${d ? `<b>${esc(DECISION_TEXT[d.decision])}</b> by ${esc(d.by)} on ${esc(d.at)}${d.decision === "corrected" ? `: meant <b>${esc(d.intended)}</b>` : ""}${d.note ? ` · ${esc(d.note)}` : ""}. Deciding again records a new decision.` : "Not decided yet"}</div>
     <div class="actions">
@@ -1229,11 +1232,12 @@ function renderMp(movePage) {
     </div>
     ${!me ? '<div class="muted" style="margin-top:8px">Type your initials at the top to decide.</div>' : ""}
     <form class="flag-form" id="mdform">
-      <label>What the book means <input id="mdint" style="width:100%" value="${esc(m.intended || m.printed || "")}"></label>
+      <label>Text in the record <span class="muted">(only when it is not applied: the exact words the record has, copied from above)</span> <input id="mdmatch" style="width:100%" value="${esc(d && d.match || "")}"></label>
+      <label>What the book means <input id="mdint" style="width:100%" value="${esc((d && d.intended) || m.intended || m.printed || "")}"></label>
       <label>Note (optional) <input id="mdnote" style="width:100%"></label>
       <div class="actions"><button class="confirm" type="submit">Record correction</button><button type="button" id="mdcancel">Cancel</button></div>
     </form>
-    <div class="muted" style="margin-top:8px">Decisions are kept in groundtruth/${esc(m.book)}/misprint-decisions.json${m.source === "ground truth" ? "; on a ground-truth record, a correction or “not a misprint” also changes the record" : ""}. What a confirmed misprint does to the question students see is waiting on Samuel.</div>
+    <div class="muted" style="margin-top:8px">Decisions are kept in groundtruth/${esc(m.book)}/misprint-decisions.json${m.source === "ground truth" ? "; on a ground-truth record, a correction or “not a misprint” also changes the record" : ""}. Every pipeline step reads the record with these decisions applied (answer_gen.apply_misprints): confirmed or corrected text replaces the printed text; “Not a misprint” keeps it. One the pipeline cannot find in the record shows as “not applied”, and the unit's coverage audit fails until it is fixed here.</div>
   </div>`;
   renderMathInElement($("#detail"), { delimiters: [{ left: "$", right: "$", display: false }], throwOnError: false });
   $("#mc").onclick = () => decide("confirmed");
@@ -1241,7 +1245,7 @@ function renderMp(movePage) {
   $("#mn").onclick = () => decide("not_a_misprint");
   $("#mprev").onclick = () => mpMove(-1); $("#mnext").onclick = () => mpMove(1);
   $("#mdcancel").onclick = () => $("#mdform").classList.remove("open");
-  $("#mdform").onsubmit = (e) => { e.preventDefault(); decide("corrected", $("#mdint").value.trim(), $("#mdnote").value.trim()); };
+  $("#mdform").onsubmit = (e) => { e.preventDefault(); decide("corrected", $("#mdint").value.trim(), $("#mdnote").value.trim(), $("#mdmatch").value.trim()); };
   $("#list .rec.sel")?.scrollIntoView({ block: "nearest" });
   if (movePage && m.printed_page) {
     offset = m.pdf_page && m.printed_page ? m.pdf_page - m.printed_page : 0;
@@ -1254,16 +1258,17 @@ function mpMove(dir) {
   let p = vis.indexOf(mi); p = p < 0 ? 0 : Math.min(Math.max(p + dir, 0), vis.length - 1);
   mi = vis[p]; renderMp(true);
 }
-async function decide(decision, intended, note) {
+async function decide(decision, intended, note, match) {
   const m = mp[mi]; if (!m || !meNow()) return;
   $("#saved").textContent = "Saving…";
   const res = await fetch("/api/misprint-decision", { method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ book: m.book, ref: m.ref, decision, intended, note, by: meNow() }) });
+    body: JSON.stringify({ book: m.book, ref: m.ref, decision, intended, note, match, by: meNow() }) });
   const out = await res.json().catch(() => ({}));
   if (!res.ok) { $("#saved").textContent = "Save failed: " + (out.error || res.status); return; }
   $("#saved").textContent = `Saved ${new Date().toLocaleTimeString()}`;
   m.decision = out.decision;
   if (decision === "corrected") m.intended = out.decision.intended;
+  mp = await getJSON("/api/misprints");   // whether it now applies is the server's (the pipeline's own) answer
   const vis = mpVisible().map((x) => x.i);
   mi = vis.find((i) => i > mi) ?? vis[0] ?? mi; // the next one in this view
   renderMp(true);

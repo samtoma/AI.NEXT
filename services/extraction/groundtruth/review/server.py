@@ -67,6 +67,8 @@ import provenance  # noqa: E402
 import book_questions  # noqa: E402
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import score_book_record  # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))   # services/extraction/
+import answer_gen  # noqa: E402  (apply_misprints: what the pipeline does with each misprint, decisions included)
 import generated  # noqa: E402
 import held  # noqa: E402
 import context as context_task  # noqa: E402  (the Context task: the book's context per objective, S1C)
@@ -250,6 +252,24 @@ def misprints() -> list[dict]:
             latest[(book, dec["ref"])] = dec
     for m in out:
         m["decision"] = latest.get((m["book"], m["ref"]))
+    # whether the pipeline places it (answer_gen.apply_misprints, the one every step reads the record through): a
+    # decided misprint it cannot place reaches students as printed, and fails the coverage audit (misprints_applied)
+    decisions = answer_gen.misprint_decisions()
+    docs: dict[str, dict] = {}
+    for m in out:
+        if m.get("class") != "on a book record" or not m.get("file"):
+            continue
+        if m["file"] not in docs:
+            docs[m["file"]] = json.loads(resolve_key(m["file"]).read_text())
+        it = next((x for x in docs[m["file"]].get("items") or [] if x["id"] == m.get("record_id")), None)
+        if not it:
+            continue
+        missed = {x["ref"] for x in answer_gen.apply_misprints(it, decisions)[1]}
+        m["applied"] = m["ref"] not in missed
+        h = it if not m.get("part") else next((p for p in it.get("parts") or [] if p.get("label") == m["part"]), {})
+        key = re.match(r"[a-z_]+", m.get("field") or "")
+        val = h.get(key.group(0)) if key else None
+        m["record_text"] = val if isinstance(val, str) else "\n".join(f"[{i}] {x}" for i, x in enumerate(val or []) if isinstance(x, str))
     # a decision whose misprint is no longer on any record ("not a misprint" removes it) stays listed as decided
     have = {(m["book"], m["ref"]) for m in out}
     for (book, ref), dec in latest.items():
@@ -270,6 +290,7 @@ def decide_misprint(body: dict) -> dict:
     if not m:
         raise ValueError(f"no misprint {ref} in {book}")
     intended = (body.get("intended") or "").strip()
+    match = (body.get("match") or "").strip()
     if decision == "corrected" and not intended:
         raise ValueError("a different correction needs what the book means")
     entry = {"ref": ref, "decision": decision, "by": by, "at": date.today().isoformat()}
@@ -278,6 +299,14 @@ def decide_misprint(body: dict) -> dict:
     elif decision == "confirmed":
         entry["intended"] = m["intended"]
     entry["printed"] = m["printed"]
+    if match and decision != "not_a_misprint":
+        # the exact text in the record that is the misprint, for one the page's words do not find: kept only when
+        # the pipeline then places it, so a decision can never claim a fix that does not happen
+        rec = json.loads(resolve_key(m["file"]).read_text()) if m.get("file") else {}
+        it = next((x for x in rec.get("items") or [] if x["id"] == m.get("record_id")), None)
+        entry["match"] = match
+        if not it or ref in {x["ref"] for x in answer_gen.apply_misprints(it, {**answer_gen.misprint_decisions(), ref: entry})[1]}:
+            raise ValueError("that text is not in the record: copy it exactly from “What the record says”")
     if (body.get("note") or "").strip():
         entry["note"] = body["note"].strip()
     p = decisions_path(book)

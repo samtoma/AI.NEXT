@@ -1562,6 +1562,10 @@ def main(argv: list[str]) -> int:
     teaching = sum(1 for x in report["skipped"] if x.get("teaching"))
     print(f"not questions: {len(report['skipped'])} book prompt(s), {teaching} of them kept as library worked examples; "
           f"held: {len(report['held'])}; book pictures: {len(report['stand_ins'])}", file=sys.stderr)
+    decided_missed = [m for m in report["misprints_unplaced"] if m.get("decision") in ("confirmed", "corrected")]
+    if decided_missed:
+        print(f"WARNING: {len(decided_missed)} confirmed misprint(s) not applied: the coverage audit fails them "
+              "(misprints_applied); fix in the review tool's Misprints task, \"Decided, not applied\"", file=sys.stderr)
     if report["misprints_unplaced"]:
         print(f"misprints not placed (reach the tutor as printed): {len(report['misprints_unplaced'])} — see misprints_unplaced",
               file=sys.stderr)

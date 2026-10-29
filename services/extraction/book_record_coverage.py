@@ -366,6 +366,28 @@ def audit(book, unit: int, slugs: list[str], I: dict, public: Path) -> list[Chec
             c.fail(ref, "not decided in the Misprints task")
     checks.append(c)
 
+    # ---- misprints_applied ---------------------------------------------------------------------------------------
+    # A misprint a person confirmed (or corrected) must reach the record every step reads (answer_gen.apply_misprints).
+    # 2026-10-29: matched exactly, most of Prep 3's never did and nothing said so. One the pipeline cannot place goes
+    # back to the Misprints task ("Decided, not applied"), where the reviewer gives the record's exact text.
+    c = Check("misprints_applied", "Misprints a person confirmed or corrected = those applied to the record")
+    import answer_gen as AG  # noqa: PLC0415
+    decisions = AG.misprint_decisions()
+    for s, it in items:
+        missed = {x["ref"] for x in AG.apply_misprints(it, decisions)[1]}
+        for label, h in [(None, it)] + [(p.get("label"), p) for p in it.get("parts") or []]:
+            for m in h.get("misprints") or []:
+                ref = AG.misprint_ref(it, label, m.get("field", ""))
+                d = decisions.get(ref)
+                if m.get("field") == "quote" or not d or d.get("decision") not in ("confirmed", "corrected"):
+                    continue
+                c.want += 1
+                if ref in missed:
+                    c.fail(ref, "decided, but not found in the record: give its exact text in the Misprints task")
+                else:
+                    c.got += 1
+    checks.append(c)
+
     # ---- items_typed_once ----------------------------------------------------------------------------------------
     c = Check("items_typed_once", "Book questions = distinct prompts asked once, each with one type")
     ids = [q["id"] for q in I["questions"]]
