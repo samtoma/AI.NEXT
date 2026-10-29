@@ -1,0 +1,41 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-1-3:buttonholes",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-1-3",
+ "parent_question_id": "q:pp3u1-1-3:bk-example-5",
+ "source_page": 10,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    3,
+    6
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "last",
+   "let": "p + n - 1"
+  }
+ ],
+ "constraints": [],
+ "stem": "Let $X$ be the set of the integers from {=p} to {=last}, that is, $X$ has {=n} elements. The product $X\\times X$ is represented by an arrow diagram, where each ordered pair is an arrow and a pair whose first projection equals its second projection is drawn as a buttonhole (an arrow that starts and ends at the same point). How many of the arrows are NOT buttonholes?",
+ "answer": "n * n - n",
+ "solution": [
+  "$X\\times X$ has {=n}$\\times${=n}$={=n*n}$ ordered pairs, so the diagram has {=n*n} arrows.",
+  "The pairs with equal projections are $(x, x)$, one for each element of $X$, so there are {=n} buttonholes.",
+  "Arrows that are not buttonholes: {=n*n}$-${=n}$={=n*n-n}$."
+ ],
+ "notes": "Advanced: counting with the buttonhole idea from book example 5.",
+ "proposed_misconceptions": []
+}

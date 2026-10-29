@@ -1,0 +1,67 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u6-2-3:disk-landing",
+ "kind": "family",
+ "lo_id": "lo:pp3u6-2-3",
+ "parent_question_id": "expl:pp3u6-2-3:bk-example-3",
+ "parent_kind": "teaching",
+ "source_page": 12,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": "A disk is thrown in a race; its height y (m) above the floor at horizontal distance x (m) follows a quadratic relation.",
+ "params": [
+  {
+   "name": "ak",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "af",
+   "let": "float(ak/100)"
+  },
+  {
+   "name": "b",
+   "randint": [
+    3,
+    6
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    5,
+    20
+   ]
+  },
+  {
+   "name": "D",
+   "let": "b*b+4*af*c"
+  },
+  {
+   "name": "s",
+   "let": "float(sqrt(D))"
+  },
+  {
+   "name": "x1",
+   "let": "(-b+s)/(-2*af)"
+  },
+  {
+   "name": "x2",
+   "let": "(-b-s)/(-2*af)"
+  }
+ ],
+ "constraints": [],
+ "stem": "In a disk throwing race the path of the disk follows the relation $y=-{=fixed(af,2)}x^2+{=b}x+{=c}$, where $x$ is the horizontal distance in meters and $y$ is the height of the disk above the floor in meters. Find the horizontal distance at which the disk lands, to the nearest hundredth of a meter.",
+ "answer": "fixed(x2, 2)",
+ "solution": [
+  "The disk lands when $y=0$: $-{=fixed(af,2)}x^2+{=b}x+{=c}=0$, so $a=-{=fixed(af,2)}$, $b={=b}$, $c={=c}$.",
+  "$x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}$ with $b^2-4ac={=fixed(D,3)}$ and $\\sqrt{{=fixed(D,3)}}\\approx{=fixed(s,3)}$.",
+  "$x=\\frac{-{=b}+{=fixed(s,3)}}{-{=fixed(2*af,2)}}\\approx{=fixed(x1,2)}$ (rejected: a distance cannot be negative here).",
+  "$x=\\frac{-{=b}-{=fixed(s,3)}}{-{=fixed(2*af,2)}}\\approx{=fixed(x2,2)}$.",
+  "The disk lands at about ${=fixed(x2,2)}$ meters."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Modelled on the book example. Final value computed from unrounded root; the displayed 3-dp sqrt may differ from the key by 0.01 in rare cases."
+}

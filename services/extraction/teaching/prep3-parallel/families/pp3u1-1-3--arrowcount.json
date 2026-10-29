@@ -1,0 +1,61 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-1-3:arrowcount",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-1-3",
+ "parent_question_id": "expl:pp3u1-1-3:bk-example-4",
+ "parent_kind": "teaching",
+ "source_page": 9,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "xs",
+   "let": "str(p) + ', ' + str(p+1) + (', ' + str(p+2) if m == 3 else '')"
+  },
+  {
+   "name": "ys",
+   "let": "str(q) + ', ' + str(q+1) + (', ' + str(q+2) if n >= 3 else '') + (', ' + str(q+3) if n == 4 else '')"
+  }
+ ],
+ "constraints": [],
+ "stem": "Let $X=\\{{=xs}\\}$ and $Y=\\{{=ys}\\}$. The cartesian product $X\\times Y$ is represented by an arrow diagram, in which each ordered pair is an arrow from its first projection (an element of $X$) to its second projection (an element of $Y$). How many arrows are drawn in the diagram?",
+ "answer": "m * n",
+ "solution": [
+  "The set $X$ has {=m} elements and $Y$ has {=n} elements.",
+  "Each ordered pair of $X\\times Y$ is one arrow, from an element of $X$ to an element of $Y$.",
+  "Each of the {=m} elements of $X$ has an arrow to each of the {=n} elements of $Y$.",
+  "Number of arrows $={=m}\\times{=n}={=m*n}$."
+ ],
+ "notes": "Basic: count arrows of arrow diagram; builds on book example 4.",
+ "proposed_misconceptions": []
+}

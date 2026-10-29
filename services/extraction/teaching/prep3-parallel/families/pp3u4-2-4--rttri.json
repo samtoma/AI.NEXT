@@ -1,0 +1,62 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u4-2-4:rttri",
+ "kind": "family",
+ "lo_id": "lo:pp3u4-2-4",
+ "parent_question_id": "expl:pp3u4-2-4:bk-example-3",
+ "parent_kind": "teaching",
+ "source_page": 55,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "w",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "a",
+   "let": "3*k"
+  },
+  {
+   "name": "b",
+   "let": "4*k"
+  },
+  {
+   "name": "c",
+   "let": "5*k"
+  },
+  {
+   "name": "opp",
+   "let": "a if w == 0 else b"
+  },
+  {
+   "name": "adj",
+   "let": "b if w == 0 else a"
+  },
+  {
+   "name": "ans",
+   "let": "'36.87' if w == 0 else '53.13'"
+  }
+ ],
+ "constraints": [],
+ "stem": "$ABC$ is a triangle with $m(\\angle B) = 90^\\circ$, $AB = {=a}$ cm, $BC = {=b}$ cm and $AC = {=c}$ cm. Find $m(\\angle {=('C' if w == 0 else 'A')})$ in degrees, to two decimal places.",
+ "answer": "ans",
+ "solution": [
+  "For $\\angle {=('C' if w == 0 else 'A')}$ the opposite side is {=opp} cm and the adjacent side is {=adj} cm.",
+  "$\\tan {=('C' if w == 0 else 'A')} = \\frac{{=opp}}{{=adj}} = \\frac{{=opp//k}}{{=adj//k}}$.",
+  "Using the calculator: SHIFT, tan, then the ratio, =.",
+  "$m(\\angle {=('C' if w == 0 else 'A')}) = {=ans}^\\circ$."
+ ],
+ "notes": "3-4-5 triangles; tan C = 3/4 -> 36.8699, tan A = 4/3 -> 53.1301. Answer is a string; two decimal places."
+}

@@ -1,0 +1,46 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-7-3:parallel-xy",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-7-3",
+ "parent_question_id": "expl:pp3u10-7-3:bk-example-4",
+ "parent_kind": "teaching",
+ "source_page": 103,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    40,
+    80
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    40,
+    80
+   ]
+  },
+  {
+   "require": "a + b <= 140",
+   "why": "angle C at least 40"
+  },
+  {
+   "name": "C",
+   "let": "180 - a - b"
+  }
+ ],
+ "constraints": [],
+ "stem": "ABC is a triangle inscribed in a circle with $m(\\angle B) = {=b}^\\circ$ and $m(\\angle BAC) = {=a}^\\circ$. The line AD is a tangent to the circle at A, with D on the other side of AB from C. $X \\in AB$ and $Y \\in AC$ where $XY \\parallel BC$. To prove that AD is also a tangent to the circle passing through A, X and Y, we need $m(\\angle DAX) = m(\\angle AYX)$. Find the common value of these two angles in degrees.",
+ "answer": "C",
+ "solution": [
+  "In triangle ABC: $m(\\angle C) = 180^\\circ - {=b}^\\circ - {=a}^\\circ = {=C}^\\circ$.",
+  "AD is a tangent and AB is the chord of tangency, so $m(\\angle DAB) = m(\\angle C) = {=C}^\\circ$. Since X lies on AB, $m(\\angle DAX) = {=C}^\\circ$.",
+  "$XY \\parallel BC$ and AC is a transversal, so $m(\\angle AYX) = m(\\angle C) = {=C}^\\circ$.",
+  "Hence $m(\\angle DAX) = m(\\angle AYX) = {=C}^\\circ$, so AD is a tangent to the circle through A, X and Y."
+ ],
+ "notes": "Numeric version of the book's worked example 4."
+}

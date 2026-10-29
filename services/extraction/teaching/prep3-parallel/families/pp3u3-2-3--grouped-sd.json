@@ -1,0 +1,80 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u3-2-3:grouped-sd",
+ "kind": "family",
+ "lo_id": "lo:pp3u3-2-3",
+ "parent_question_id": "expl:pp3u3-2-3:bk-example-3",
+ "parent_kind": "teaching",
+ "source_page": 45,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "Marks of students in an exam, grouped in sets of equal width.",
+ "params": [
+  {
+   "name": "w",
+   "choice": [
+    4,
+    6,
+    10
+   ]
+  },
+  {
+   "name": "s0",
+   "choice": [
+    0,
+    10,
+    20
+   ]
+  },
+  {
+   "name": "a",
+   "choice": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "c",
+   "let": "6*a"
+  },
+  {
+   "name": "n",
+   "let": "8*a+2*b"
+  },
+  {
+   "name": "h",
+   "let": "w/2"
+  },
+  {
+   "name": "x1",
+   "let": "s0+h"
+  },
+  {
+   "name": "mu",
+   "let": "s0+5*h"
+  },
+  {
+   "name": "q",
+   "let": "w*w*n"
+  }
+ ],
+ "constraints": [],
+ "stem": "The frequency distribution shows the marks of {=n} students in an exam. Sets (marks): {=s0}–{=s0+w}, {=s0+w}–{=s0+2*w}, {=s0+2*w}–{=s0+3*w}, {=s0+3*w}–{=s0+4*w}, {=s0+4*w}–{=s0+5*w} with frequencies {=a}, {=b}, {=c}, {=b}, {=a} respectively. Using the centres of the sets, find the standard deviation of the marks.",
+ "answer": "w",
+ "solution": [
+  "Centres of the sets: {=x1}, {=x1+w}, {=x1+2*w}, {=x1+3*w}, {=x1+4*w}.",
+  "$\\sum k = {=n}$ and, by symmetry of the frequencies, the mean $\\bar{x}$ equals the middle centre {=mu}.",
+  "Deviations $x-\\bar{x}$: {=-2*w}, {=-w}, 0, {=w}, {=2*w}; squares: {=4*w*w}, {=w*w}, 0, {=w*w}, {=4*w*w}.",
+  "Multiply by $k$: {=4*w*w*a}, {=w*w*b}, 0, {=w*w*b}, {=4*w*w*a}; the sum is $\\sum (x-\\bar{x})^2k={=q}$.",
+  "$\\sigma=\\sqrt{\\dfrac{{=q}}{{=n}}}=\\sqrt{{=w*w}}={=w}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Frequencies (a,b,6a,b,a) make variance = w^2 exactly; sigma = w. Centres are integers since w even."
+}

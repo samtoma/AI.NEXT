@@ -458,7 +458,7 @@ def build_runs(inv: dict) -> list[dict]:
             agents=nobj, cost=[round(x * 0.45, 2) for x in _cost("s5_objective", nobj)], minutes=MINUTES["s5-draft"],
             priority=(3, i, 1), depends_on=lesson_ids, before=assemble,
             save_to=f"runs/g10-math/misconceptions/draft-{t}-<wf_id>.json", meter=_meter("S5"))
-        add(id=f"s6-author-{t}", stage="S6", chapter=ch, workflow="families.workflow.js (s6-v6, author)",
+        add(id=f"s6-author-{t}", stage="S6", chapter=ch, workflow="families.workflow.js (s6-v7, author)",
             what=f"S6 family authoring for chapter {ch}'s objectives below the tier floor",
             agents=round(0.8 * nobj), cost=[round(x * 0.45, 2) for x in _cost("s6_objective", nobj)],
             minutes=MINUTES["s6-author"], priority=(3, i, 1), depends_on=[f"s5-draft-{t}"],

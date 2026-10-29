@@ -1,0 +1,63 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u6-2-3:garden-length",
+ "kind": "family",
+ "lo_id": "lo:pp3u6-2-3",
+ "parent_question_id": "expl:pp3u6-2-3:bk-example-3",
+ "parent_kind": "teaching",
+ "source_page": 12,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "A rectangular garden whose length exceeds its width by a fixed number of meters and whose area is given.",
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "A",
+   "randint": [
+    20,
+    90
+   ]
+  },
+  {
+   "name": "D",
+   "let": "k*k+4*A"
+  },
+  {
+   "require": "not is_square(D)",
+   "why": "need rounding"
+  },
+  {
+   "name": "s",
+   "let": "float(sqrt(D))"
+  },
+  {
+   "name": "w1",
+   "let": "(-k+s)/2"
+  },
+  {
+   "name": "w2",
+   "let": "(-k-s)/2"
+  },
+  {
+   "name": "L",
+   "let": "w1+k"
+  }
+ ],
+ "constraints": [],
+ "stem": "The length of a rectangular garden is ${=k}$ m more than its width, and its area is ${=A}$ m$^2$. Use the general rule to find the length of the garden, to the nearest hundredth of a meter.",
+ "answer": "fixed(L, 2)",
+ "solution": [
+  "Let the width be $w$ m, so the length is $w+{=k}$ and $w(w+{=k})={=A}$, i.e. $w^2+{=k}w-{=A}=0$.",
+  "$a=1$, $b={=k}$, $c=-{=A}$: $w=\\frac{-{=k}\\pm\\sqrt{{=D}}}{2}$ with $\\sqrt{{=D}}\\approx{=fixed(s,3)}$.",
+  "$w\\approx{=fixed(w1,2)}$ or $w\\approx{=fixed(w2,2)}$; the negative value is rejected because a width cannot be negative.",
+  "Length $=w+{=k}$ (using the unrounded $w$) $\\approx{=fixed(L,2)}$ m."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Answer is the length, computed from the unrounded width to avoid double rounding."
+}

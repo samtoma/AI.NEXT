@@ -1,0 +1,57 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-6-2:tangent",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-6-2",
+ "parent_question_id": "expl:pp3u10-6-2:bk-example-3",
+ "parent_kind": "teaching",
+ "source_page": 97,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    2,
+    8
+   ]
+  },
+  {
+   "name": "y",
+   "randint": [
+    2,
+    8
+   ]
+  },
+  {
+   "name": "z",
+   "randint": [
+    2,
+    8
+   ]
+  },
+  {
+   "name": "p",
+   "let": "x + y"
+  },
+  {
+   "name": "q",
+   "let": "y + z"
+  },
+  {
+   "name": "s",
+   "let": "x + z"
+  }
+ ],
+ "stem": "A circle is inscribed in triangle $ABC$ and touches $BC$ at $D$, $AC$ at $E$ and $AB$ at $F$. $AB = {=p}$ cm, $BC = {=q}$ cm and $AC = {=s}$ cm. Find the length of $BD$ in cm.",
+ "answer": "y",
+ "solution": [
+  "Tangent segments from one point are equal: $AF = AE$, $BF = BD$, $CD = CE$.",
+  "Perimeter $= {=p} + {=q} + {=s} = {=p + q + s}$ cm, and the perimeter equals $2(AF + BD + CE)$, so $AF + BD + CE = {=x + y + z}$ cm.",
+  "Since $AF + AE = 2AF$ is not needed: $AF + BF = AB$ and $AF + CE = AC$ give $AF = {=x + y + z} - BC = {=x + y + z} - {=q} = {=x}$ cm.",
+  "So $BD = BF = AB - AF = {=p} - {=x} = {=y}$ cm."
+ ],
+ "constraints": [],
+ "notes": "Sides are sums of tangent lengths, so the triangle inequality holds and BD is a whole number. Step 3 wording: AF + BD + CE is the semi-perimeter, then AF = semi-perimeter - BC."
+}

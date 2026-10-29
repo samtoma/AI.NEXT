@@ -1,0 +1,58 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-4-4:vertex-shift",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-4-4",
+ "parent_question_id": "expl:pp3u1-4-4:bk-example-4",
+ "parent_kind": "teaching",
+ "source_page": 23,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    -5,
+    5
+   ],
+   "resample_while": "c == 0"
+  },
+  {
+   "name": "ct",
+   "let": "(\" + \" + str(c)) if c > 0 else (\" - \" + str(-c))"
+  },
+  {
+   "name": "fn",
+   "let": "(\"x^2\" if s == 1 else \"-x^2\") + ct"
+  },
+  {
+   "name": "kind",
+   "let": "\"minimum\" if s == 1 else \"maximum\""
+  }
+ ],
+ "constraints": [],
+ "stem": "The quadratic function $f(x)={=fn}$, $x\\in[-3,3]$, is represented graphically using a table of values. Write the coordinates of the vertex of the curve.",
+ "answer": "(0, c)",
+ "solution": [
+  "The curve is symmetrical about the y-axis, so the axis of symmetry is $x=0$.",
+  "$f(0)={=c}$, which is the {=kind} value of the function (other values of $x$ give {=\"greater\" if s == 1 else \"smaller\"} values).",
+  "So the vertex is $(0, {=c})$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "(0, {=c})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Extends the book's x^2 and -x^2 examples with a constant term; the table of values shows the vertex."
+}

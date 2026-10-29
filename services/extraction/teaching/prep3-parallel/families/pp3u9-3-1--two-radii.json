@@ -1,0 +1,39 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u9-3-1:two-radii",
+ "kind": "family",
+ "lo_id": "lo:pp3u9-3-1",
+ "parent_question_id": "expl:pp3u9-3-1:bk-think-1",
+ "parent_kind": "teaching",
+ "source_page": 55,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "r",
+   "randint": [
+    2,
+    8
+   ]
+  },
+  {
+   "name": "s",
+   "randint": [
+    2,
+    8
+   ],
+   "resample_while": "s == r"
+  }
+ ],
+ "stem": "A is a given point. Circle 1 has radius ${=r}$ cm and passes through A; circle 2 has radius ${=s}$ cm and passes through A. The center of each circle can be any point that keeps the circle through A. What is the greatest possible distance, in cm, between the two centers?",
+ "answer": "r + s",
+ "solution": [
+  "The center of circle 1 lies on the circle with center A and radius ${=r}$ cm.",
+  "The center of circle 2 lies on the circle with center A and radius ${=s}$ cm.",
+  "The two centers are farthest apart when they are on opposite sides of A, on one straight line through A.",
+  "The greatest distance is ${=r} + {=s} = {=r+s}$ cm."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: two different radii, centers on two concentric circles around A; max distance r+s."
+}

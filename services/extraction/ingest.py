@@ -185,6 +185,9 @@ def plan(name: str, unit: int) -> dict:
     add("S5", "misconceptions (draft)", f"{UV} book_record_generation.py s5 {bk} {L} --stage draft", "S5 draft" in ledger(bk, unit))
     add("S6", "question families and widgets", f"{UV} book_record_generation.py s6-author {bk} {L} --catalogue <S5 draft>  ·  s6-grade",
         "S6" in ledger(bk, unit))
+    add("S6T", "S6 top-up: families for objectives S6 left thin (< 3 live questions, no usable family), "
+               "modelled on a book question or a worked example (answer 40)",
+        f"{UV} book_record_generation.py s6-topup {bk} {L} --catalogue <S5 draft>", "S6 top-up" in ledger(bk, unit))
     # S7 is the book-widget author (book_widgets.py, runbook/widgets-book.workflow.js) in place of Samuel's
     # s7-author / s7-verify (runbook/widgets.workflow.js) — Tamer, 2026-10-21: today's changes are the default
     add("S7", "widget questions from the book's exercises, with method hints; blind verifier (book widgets)",
@@ -215,7 +218,7 @@ def latest(book: str, folder: str, prefix: str, slugs: list[str] | None = None) 
 
 # The generation stages' outputs are the book's (one families folder, one generated catalogue), so whether a unit has
 # been through one is recorded per unit, by the fan-out, when the stage succeeds.
-LEDGER = ("S5 draft", "S6", "S7", "S5 final", "finish")
+LEDGER = ("S5 draft", "S6", "S6 top-up", "S7", "S5 final", "finish")
 
 
 def ledger_path(book: str, unit: int) -> Path:
@@ -292,6 +295,9 @@ def stages(name: str, unit: int, dsn: str | None, cap: float | None) -> tuple[li
     out.append(("S6", "S6" in did,
                 lambda: [U("book_record_generation.py", "s6-author", bk, *slugs, "--catalogue", cat(), *c()),
                          U("book_record_generation.py", "s6-grade", bk, *slugs, *c())]))
+    # the objectives S6 left thin, again, with worked examples as parents (Tamer, 2026-10-29: every book)
+    out.append(("S6 top-up", "S6 top-up" in did,
+                lambda: [U("book_record_generation.py", "s6-topup", bk, *slugs, "--catalogue", cat(), *c())]))
     if dsn:
         out.append(("S7", "S7" in did,
                     lambda: [U("book_widgets.py", "author", bk, *slugs, "--catalogue", cat(), "--dsn", dsn, *c()),

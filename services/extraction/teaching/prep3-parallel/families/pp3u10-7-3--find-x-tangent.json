@@ -1,0 +1,46 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-7-3:find-x-tangent",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-7-3",
+ "parent_question_id": "expl:pp3u10-7-3:bk-example-4",
+ "parent_kind": "teaching",
+ "source_page": 103,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    10,
+    40
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    5,
+    30
+   ]
+  },
+  {
+   "name": "b",
+   "let": "x + a"
+  },
+  {
+   "name": "d",
+   "let": "2*x + a"
+  }
+ ],
+ "constraints": [],
+ "stem": "AB is a chord of a circle and C is a point on the circle on one side of AB. The ray AD lies on the other side of AB from C, with $m(\\angle DAB) = (2x + {=a})^\\circ$ and $m(\\angle ACB) = (x + {=b})^\\circ$. Find the value of $x$ for which the line AD is a tangent to the circle at A.",
+ "answer": "x",
+ "solution": [
+  "The line AD is a tangent at A if the angle between AD and the chord AB equals the inscribed angle in the alternate segment.",
+  "So $m(\\angle DAB) = m(\\angle ACB)$, i.e. $2x + {=a} = x + {=b}$.",
+  "$x = {=b} - {=a} = {=x}$.",
+  "Check: both angles equal ${=d}^\\circ$, so AD is a tangent."
+ ],
+ "notes": "Converse of theorem 5, direct equation. x is in the answer; no diagram needed as the sides are described in words."
+}

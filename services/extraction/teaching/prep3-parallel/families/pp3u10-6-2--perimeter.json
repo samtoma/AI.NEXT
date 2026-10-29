@@ -1,0 +1,38 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-6-2:perimeter",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-6-2",
+ "parent_question_id": "expl:pp3u10-6-2:bk-example-3",
+ "parent_kind": "teaching",
+ "source_page": 97,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    3,
+    12
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    3,
+    12
+   ]
+  }
+ ],
+ "stem": "A circle is inscribed in the quadrilateral $ABCD$, touching all four of its sides. $AB = {=a}$ cm and $CD = {=c}$ cm. Find the perimeter of $ABCD$ in cm.",
+ "answer": "2 * (a + c)",
+ "solution": [
+  "The circle touches all the sides of $ABCD$, so the two tangent segments from each vertex are equal.",
+  "Adding them up gives $AB + CD = BC + AD$.",
+  "So $BC + AD = {=a} + {=c} = {=a + c}$ cm.",
+  "Perimeter $= (AB + CD) + (BC + AD) = {=a + c} + {=a + c} = {=2 * (a + c)}$ cm."
+ ],
+ "constraints": [],
+ "notes": "Pitot property from equal tangent segments, as in book example 3. No figure needed."
+}

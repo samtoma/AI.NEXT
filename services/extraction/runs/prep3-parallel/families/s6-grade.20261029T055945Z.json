@@ -1,0 +1,128 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "ba0039fa9f32f586a59bdbb124a5941615c17536e85ffb238057e14dcbd0752d",
+  "generated_sha256": "814fa60647853246415d03d66c558284285ec4ba6de47b14592c3b4c3e7c1a19",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u2-2-3:find-third",
+   "spec_sha": "800268e13913ecfba30f69f523d5fbc182c1379ab5d39185afcce6fd608f1907",
+   "answers": [
+    {
+     "instance_id": "q:pp3u2-2-3:g003-find-t",
+     "stem_sha": "5fa59e5f5861df8a",
+     "answer": {
+      "value": "80"
+     },
+     "working": "c = 60²/45 = 3600/45 = 80"
+    },
+    {
+     "instance_id": "q:pp3u2-2-3:g004-find-t",
+     "stem_sha": "5e6ae0932c9e1b4b",
+     "answer": {
+      "value": "8"
+     },
+     "working": "c = 12²/18 = 144/18 = 8"
+    },
+    {
+     "instance_id": "q:pp3u2-2-3:g006-find-t",
+     "stem_sha": "69bc8bf708de0410",
+     "answer": {
+      "value": "36"
+     },
+     "working": "c = 30²/25 = 900/25 = 36"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three keys check out: 60²/45=80, 12²/18=8, 30²/25=36. Each solution uses b²=ac correctly. The family has no options, so there are no distractors to judge. The stem is unambiguous. Each of the three instances gives an integer answer.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u2-2-3:identity-ratio",
+   "spec_sha": "8d5b583e4701bb4687888fa1c1cbfc2d2fda26c513e00961b04e1ae968faeef7",
+   "answers": [
+    {
+     "instance_id": "q:pp3u2-2-3:g002-identi",
+     "stem_sha": "3a62310707f01ff8",
+     "answer": {
+      "plain": "8/7"
+     },
+     "working": "b^2=ac=2016; (2304+2016)/(2016+1764)=4320/3780=8/7 (equals a/c)"
+    },
+    {
+     "instance_id": "q:pp3u2-2-3:g009-identi",
+     "stem_sha": "33bb77860d722b59",
+     "answer": {
+      "plain": "4/5"
+     },
+     "working": "b^2=320; (256+320)/(320+400)=576/720=4/5"
+    },
+    {
+     "instance_id": "q:pp3u2-2-3:g010-identi",
+     "stem_sha": "343f0e6e74769a60",
+     "answer": {
+      "plain": "9/4"
+     },
+     "working": "b^2=324; (729+324)/(324+144)=1053/468=9/4"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The identity (a²+b²)/(b²+c²) = a/c holds when b² = ac. The keys 8/7, 4/5 and 9/4 are correct, simplified, and match answer_check. The solution steps are valid. The family has no options. In two instances b is irrational (ac = 2016 and 320), but b is never asked for, so this is acceptable."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u2-2-3:middle-prop",
+   "spec_sha": "5cd2e41a2892a6c26cad913d8c457bdfa83fbb3abfe6c90e8b87adb6e298f966",
+   "answers": [
+    {
+     "instance_id": "q:pp3u2-2-3:g001-middle",
+     "stem_sha": "b6e89ea796fd8be3",
+     "answer": {
+      "plain": "[30, -30]"
+     },
+     "working": "x^2 = 6*150 = 900, x = ±30"
+    },
+    {
+     "instance_id": "q:pp3u2-2-3:g002-middle",
+     "stem_sha": "653fc6bb083ee154",
+     "answer": {
+      "plain": "[18, -18]"
+     },
+     "working": "x^2 = 6*54 = 324, x = ±18"
+    },
+    {
+     "instance_id": "q:pp3u2-2-3:g007-middle",
+     "stem_sha": "c9a3f7d132ad3701",
+     "answer": {
+      "plain": "[15, -15]"
+     },
+     "working": "x^2 = 3*75 = 225, x = ±15"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three instances compute correctly (900→±30, 324→±18, 225→±15). The keys list both values as the stem asks, and they match answer_check. No options are listed, so there are no distractors to judge.",
+    "distractors": []
+   }
+  }
+ ]
+}

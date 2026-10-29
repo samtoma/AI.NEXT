@@ -1,0 +1,55 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u2-2-3:middle-prop",
+ "kind": "family",
+ "lo_id": "lo:pp3u2-2-3",
+ "parent_question_id": "expl:pp3u2-2-3:bk-example-5",
+ "parent_kind": "teaching",
+ "source_page": 30,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "a",
+   "let": "x"
+  },
+  {
+   "name": "c",
+   "let": "x*m*m"
+  },
+  {
+   "name": "b",
+   "let": "x*m"
+  }
+ ],
+ "stem": "Find the middle proportional between ${=a}$ and ${=c}$. Give both possible values.",
+ "solution": [
+  "The middle proportional $b$ between $a$ and $c$ satisfies $b^2=ac$.",
+  "$b^2={=a}\\times{=c}={=a*c}$",
+  "$b=\\pm\\sqrt{{=a*c}}=\\pm{=b}$"
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=b}, -{=b}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Book example 5 gives ±. a*c is always a perfect square."
+}

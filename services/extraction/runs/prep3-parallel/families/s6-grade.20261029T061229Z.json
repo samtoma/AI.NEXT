@@ -1,0 +1,298 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "12530bf6ed0f2709ce1e10ed70d943aa36bef4778c0791153aa79dc800921b53",
+  "generated_sha256": "b0987ef61dbde28898e33f338133466524fec10501bff841c09aa2f0c139a0e1",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u7-1-1:evaluate-f",
+   "spec_sha": "18c49963b532bbc23970b59325e7a76b2ea9420a3ab98b79e7da9a975a8cb87e",
+   "answers": [
+    {
+     "instance_id": "q:pp3u7-1-1:g002-evalua",
+     "stem_sha": "38ff4e50ec3eb4b6",
+     "answer": {
+      "value": "5"
+     },
+     "working": "9-9+5=5"
+    },
+    {
+     "instance_id": "q:pp3u7-1-1:g003-evalua",
+     "stem_sha": "fbb242a30ed63120",
+     "answer": {
+      "value": "-1"
+     },
+     "working": "36-42+5=-1"
+    },
+    {
+     "instance_id": "q:pp3u7-1-1:g010-evalua",
+     "stem_sha": "33e63d43cdd09c46",
+     "answer": {
+      "value": "27"
+     },
+     "working": "36-18+9=27"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three keys check by direct substitution: f(3)=5, f(6)=-1, f(6)=27. The prompt lists no wrong options, so there are no distractors to judge. The solutions substitute and simplify correctly.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u7-1-1:unknown-coeff",
+   "spec_sha": "e4d06bc63a826536b3168398377c0bfca347580e044eb80fd57699a7a42e2438",
+   "answers": [
+    {
+     "instance_id": "q:pp3u7-1-1:g001-unknow",
+     "stem_sha": "2b74063d29521388",
+     "answer": {
+      "value": "2"
+     },
+     "working": "f(5)=25+5k-35=0 → 5k=10 → k=2"
+    },
+    {
+     "instance_id": "q:pp3u7-1-1:g002-unknow",
+     "stem_sha": "26c9646a6489a37d",
+     "answer": {
+      "value": "1"
+     },
+     "working": "f(3)=9+3k-12=0 → 3k=3 → k=1"
+    },
+    {
+     "instance_id": "q:pp3u7-1-1:g004-unknow",
+     "stem_sha": "26ddd4baaec096ee",
+     "answer": {
+      "value": "6"
+     },
+     "working": "f(5)=25+5k-55=0 → 5k=30 → k=6"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by substituting the given zero and solving for k. g001 gives k=2, g002 gives k=1 and g004 gives k=6, so every key is correct. The worked steps are valid. The family has no wrong options. The Z(f) notation is assumed to match the book's.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u7-1-1:zeroes-from-list",
+   "spec_sha": "38461bee34cd728b28b93546aa3b566f7d651bad9e176c768b3dfd2aca507b92",
+   "answers": [
+    {
+     "instance_id": "q:pp3u7-1-1:g003-zeroes",
+     "stem_sha": "3f9be66279b7d871",
+     "answer": {
+      "plain": "[0, 1, 2]"
+     },
+     "working": "f=x(x-1)(x-2). f(0..6)=0,0,0,6,24,60,120. Zeros at 0,1,2."
+    },
+    {
+     "instance_id": "q:pp3u7-1-1:g006-zeroes",
+     "stem_sha": "5ad4bd415885a1d4",
+     "answer": {
+      "plain": "[0, 4, 5]"
+     },
+     "working": "f=x(x-4)(x-5). f(0..6)=0,12,12,6,0,0,6. Zeros at 0,4,5."
+    },
+    {
+     "instance_id": "q:pp3u7-1-1:g007-zeroes",
+     "stem_sha": "c5589fb30bcc5cd0",
+     "answer": {
+      "plain": "[0, 4, 6]"
+     },
+     "working": "f=x(x-4)(x-6). f(0..6)=0,15,16,9,0,-5,0. Zeros at 0,4,6."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed every f-value in all three instances and each is correct. Keys 0,1,2 / 0,4,5 / 0,4,6 match the factorised roots (x(x-1)(x-2), x(x-4)(x-5), x(x-4)(x-6)), are in increasing order, and match answer_check. No options, so no distractors to judge.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u7-3-2:common",
+   "spec_sha": "4f4b7fbb40d7bc9f54aa0b8a9a478d5d4ad4b6dce41001be64e86e81daa5d210",
+   "answers": [
+    {
+     "instance_id": "q:pp3u7-3-2:g004-common",
+     "stem_sha": "d22f204fdca47f72",
+     "answer": {
+      "plain": "[0, 3, 5]"
+     },
+     "working": "Denominators: (x-3)(x-5) and x(x-5). Excluded: 0,3,5."
+    },
+    {
+     "instance_id": "q:pp3u7-3-2:g008-common",
+     "stem_sha": "be33bea8616d3b5a",
+     "answer": {
+      "plain": "[0, 2, 5]"
+     },
+     "working": "Denominators: (x-2)(x-5) and x(x-5). Excluded: 0,2,5."
+    },
+    {
+     "instance_id": "q:pp3u7-3-2:g010-common",
+     "stem_sha": "b4b6b29db3579b54",
+     "answer": {
+      "plain": "[0, 5, 6]"
+     },
+     "working": "Denominators: (x-5)(x-6) and x(x-5). Excluded: 0,5,6."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked the factorisations in all three instances. g004 has x²-8x+15=(x-3)(x-5), g008 has x²-7x+10=(x-2)(x-5), and g010 has x²-11x+30=(x-5)(x-6). In each, n₂ has denominator x(x-5). The excluded sets {0,3,5}, {0,2,5} and {0,5,6} are correct and in ascending order. The solutions are correct step by step. The keys are written as \"x = a or x = b or x = c\", while the stem says \"as a list\". The key and answer_check give the same set, so I let this pass. The family has no options, so there are no distractors to check."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u7-3-2:extrafa",
+   "spec_sha": "255675270fb40f988f7d17cd53b888962872fda4c216531384a4c701e6fa2f5d",
+   "answers": [
+    {
+     "instance_id": "q:pp3u7-3-2:g004-extraf",
+     "stem_sha": "047179fc391621f7",
+     "answer": {
+      "value": "1"
+     },
+     "working": "n1 undefined at 0,3,-2; n2 denominator x(x-3)(x^2+3x+9) undefined at 0,3. Union {0,3,-2}, sum 1."
+    },
+    {
+     "instance_id": "q:pp3u7-3-2:g009-extraf",
+     "stem_sha": "5240ac34e84b205d",
+     "answer": {
+      "value": "2"
+     },
+     "working": "n1 undefined at 0,3,-1; n2 at 0,3. Union {0,3,-1}, sum 2."
+    },
+    {
+     "instance_id": "q:pp3u7-3-2:g010-extraf",
+     "stem_sha": "aeaa2ae9b9959b57",
+     "answer": {
+      "value": "-1"
+     },
+     "working": "n1 undefined at 0,2,-3; n2 denominator x(x-2)(x^2+2x+4) undefined at 0,2. Union {0,2,-3}, sum -1."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by hand. The family has no options, so there are no distractors to judge.\n\n- g004: n1 excludes 0, 3 and -2. n2 = x(x²+3x+9) / (x(x−3)(x²+3x+9)) excludes only 0 and 3, because x²+3x+9 has a negative discriminant. The common domain excludes 0, 3 and -2, which sum to 1. This matches the key.\n- g009: the excluded values are 0, 3 and -1, which sum to 2. This matches the key.\n- g010: the excluded values are 0, 2 and -3, which sum to -1. This matches the key.\n\nEach worked solution follows the same correct steps: simplify, factorise n2, compare domains, then sum the excluded values. The stem is clear and unambiguous."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u7-3-2:samefo",
+   "spec_sha": "8d468cff333b319122b68e18045ced9e6b682bedcb5e8d61a54724ade8424d17",
+   "answers": [
+    {
+     "instance_id": "q:pp3u7-3-2:g003-samefo",
+     "stem_sha": "660818e9fa7f7762",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$n_1\\neq n_2$: both simplify to $\\frac{1}{x-2}$, but their domains are different"
+     },
+     "working": "n1 excludes x=-4 and 2; n2 excludes x=-3 and 2. Both simplify to 1/(x-2) but domains differ, so not equal."
+    },
+    {
+     "instance_id": "q:pp3u7-3-2:g006-samefo",
+     "stem_sha": "07edd1143e9ab6d6",
+     "answer": {
+      "choice": "B",
+      "choice_text": "$n_1\\neq n_2$: both simplify to $\\frac{1}{x-3}$, but their domains are different"
+     },
+     "working": "n1 excludes -3 and 3; n2 excludes -4 and 3. Same simplified form 1/(x-3), different domains, so not equal."
+    },
+    {
+     "instance_id": "q:pp3u7-3-2:g008-samefo",
+     "stem_sha": "cd16bb9823d8d3f3",
+     "answer": {
+      "choice": "D",
+      "choice_text": "$n_1\\neq n_2$: both simplify to $\\frac{1}{x-2}$, but their domains are different"
+     },
+     "working": "n1 excludes -3 and 2; n2 excludes -1 and 2. Same simplified form 1/(x-2), different domains, so not equal."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances and found no problems. In each one the key is the only correct statement. Both functions simplify to the same fraction, and the domains differ because the cancelled factors differ. The tagged distractor (\"same simplest form means equal\") is worded the way a student with that error would put it. The untagged options are definitely wrong: \"different fractions\" is false, and \"same domain R-{2}\" is false because the original denominators also exclude -4, -3 or -1. The worked solutions are correct and follow the book's method of simplifying, then finding each domain, then comparing.",
+    "distractors": [
+     {
+      "instance_id": "q:pp3u7-3-2:g003-samefo",
+      "option": "B",
+      "verdict": "UNTAGGED_OK",
+      "why": "Wrong: the domains are not R-{2}, and they differ from each other."
+     },
+     {
+      "instance_id": "q:pp3u7-3-2:g003-samefo",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Same simplest form taken to mean equal functions."
+     },
+     {
+      "instance_id": "q:pp3u7-3-2:g003-samefo",
+      "option": "D",
+      "verdict": "UNTAGGED_OK",
+      "why": "Wrong: both simplify to 1/(x-2)."
+     },
+     {
+      "instance_id": "q:pp3u7-3-2:g006-samefo",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Same simplest form taken to mean equal functions."
+     },
+     {
+      "instance_id": "q:pp3u7-3-2:g006-samefo",
+      "option": "C",
+      "verdict": "UNTAGGED_OK",
+      "why": "Wrong: both simplify to 1/(x-3)."
+     },
+     {
+      "instance_id": "q:pp3u7-3-2:g006-samefo",
+      "option": "D",
+      "verdict": "UNTAGGED_OK",
+      "why": "Wrong: the domains are not R-{3}, and they differ from each other."
+     },
+     {
+      "instance_id": "q:pp3u7-3-2:g008-samefo",
+      "option": "A",
+      "verdict": "UNTAGGED_OK",
+      "why": "Wrong: both simplify to 1/(x-2)."
+     },
+     {
+      "instance_id": "q:pp3u7-3-2:g008-samefo",
+      "option": "B",
+      "verdict": "UNTAGGED_OK",
+      "why": "Wrong: the domains are not R-{2}, and they differ from each other."
+     },
+     {
+      "instance_id": "q:pp3u7-3-2:g008-samefo",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Same simplest form taken to mean equal functions."
+     }
+    ]
+   }
+  }
+ ]
+}

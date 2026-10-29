@@ -1,0 +1,60 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u3-2-2:advanced-sd",
+ "kind": "family",
+ "lo_id": "lo:pp3u3-2-2",
+ "parent_question_id": "expl:pp3u3-2-2:bk-example-1",
+ "parent_kind": "teaching",
+ "source_page": 43,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    12,
+    30
+   ]
+  },
+  {
+   "name": "k",
+   "sample": {
+    "from": "range(m - 8, m + 9)",
+    "k": 4
+   }
+  },
+  {
+   "name": "sk",
+   "let": "sum(k)"
+  },
+  {
+   "name": "x5",
+   "let": "5 * m - sk"
+  },
+  {
+   "require": "x5 >= 1 and x5 <= 60 and x5 not in k",
+   "why": "missing value must be positive and new"
+  },
+  {
+   "name": "all",
+   "let": "sorted(k + [x5])"
+  },
+  {
+   "name": "ss",
+   "let": "sum([(x - m) ** 2 for x in all])"
+  }
+ ],
+ "constraints": [],
+ "stem": "Four of five values are ${=k[0]}, {=k[1]}, {=k[2]}, {=k[3]}$ and the fifth value is unknown. The mean of the five values is ${=m}$. Find the fifth value, then calculate the standard deviation of the five values. Round the standard deviation to 2 decimal places and give only the standard deviation.",
+ "answer": "fixed(sqrt(ss / 5), 2)",
+ "solution": [
+  "Since $\\bar{x}=\\dfrac{\\sum x}{n}$, the total of the five values is $5\\times {=m}={=5*m}$",
+  "The four known values total ${=sk}$, so the fifth value is ${=5*m}-{=sk}={=x5}$",
+  "The values are ${=all[0]}, {=all[1]}, {=all[2]}, {=all[3]}, {=all[4]}$ with squared deviations from ${=m}$: ${=(all[0]-m)**2}, {=(all[1]-m)**2}, {=(all[2]-m)**2}, {=(all[3]-m)**2}, {=(all[4]-m)**2}$",
+  "$\\sum (x-\\bar{x})^2={=ss}$",
+  "$\\sigma=\\sqrt{\\dfrac{{=ss}}{5}}\\simeq {=fixed(sqrt(ss / 5), 2)}$"
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Twist: find the missing value from the given mean, then compute sigma (population formula)."
+}

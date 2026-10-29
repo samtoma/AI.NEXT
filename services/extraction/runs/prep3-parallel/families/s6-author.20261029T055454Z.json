@@ -1,0 +1,891 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "1c22968f2a3c041fca223eebe2d37a1b6467d3463e30301842fc7deb24bdc292",
+  "generated_sha256": "7b9e260a4d66bbcd55751cfdb475e912423a1b3f2b799deee98a160606752206",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u1-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-1-3:arrowcount",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-1-3",
+     "parent_question_id": "q:pp3u1-1-3:bk-example-4",
+     "source_page": 9,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "n",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "xs",
+       "let": "str(p) + ', ' + str(p+1) + (', ' + str(p+2) if m == 3 else '')"
+      },
+      {
+       "name": "ys",
+       "let": "str(q) + ', ' + str(q+1) + (', ' + str(q+2) if n >= 3 else '') + (', ' + str(q+3) if n == 4 else '')"
+      }
+     ],
+     "constraints": [],
+     "stem": "Let $X=\\{{=xs}\\}$ and $Y=\\{{=ys}\\}$. The cartesian product $X\\times Y$ is represented by an arrow diagram, in which each ordered pair is an arrow from its first projection (an element of $X$) to its second projection (an element of $Y$). How many arrows are drawn in the diagram?",
+     "answer": "m * n",
+     "solution": [
+      "The set $X$ has {=m} elements and $Y$ has {=n} elements.",
+      "Each ordered pair of $X\\times Y$ is one arrow, from an element of $X$ to an element of $Y$.",
+      "Each of the {=m} elements of $X$ has an arrow to each of the {=n} elements of $Y$.",
+      "Number of arrows $={=m}\\times{=n}={=m*n}$."
+     ],
+     "notes": "Basic: count arrows of arrow diagram; builds on book example 4.",
+     "proposed_misconceptions": []
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-1-3:buttonholes",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-1-3",
+     "parent_question_id": "q:pp3u1-1-3:bk-example-5",
+     "source_page": 10,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "randint": [
+        3,
+        6
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "last",
+       "let": "p + n - 1"
+      }
+     ],
+     "constraints": [],
+     "stem": "Let $X$ be the set of the integers from {=p} to {=last}, that is, $X$ has {=n} elements. The product $X\\times X$ is represented by an arrow diagram, where each ordered pair is an arrow and a pair whose first projection equals its second projection is drawn as a buttonhole (an arrow that starts and ends at the same point). How many of the arrows are NOT buttonholes?",
+     "answer": "n * n - n",
+     "solution": [
+      "$X\\times X$ has {=n}$\\times${=n}$={=n*n}$ ordered pairs, so the diagram has {=n*n} arrows.",
+      "The pairs with equal projections are $(x, x)$, one for each element of $X$, so there are {=n} buttonholes.",
+      "Arrows that are not buttonholes: {=n*n}$-${=n}$={=n*n-n}$."
+     ],
+     "notes": "Advanced: counting with the buttonhole idea from book example 5.",
+     "proposed_misconceptions": []
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u1-2-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-2-1:plusk",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-2-1",
+     "parent_question_id": "q:pp3u1-2-1:bk-example-1",
+     "source_page": 13,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "x1",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "d",
+       "choice": [
+        1,
+        2
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "x2",
+       "let": "x1 + d"
+      },
+      {
+       "name": "x3",
+       "let": "x1 + 2 * d"
+      },
+      {
+       "name": "b1",
+       "let": "x1 + k"
+      },
+      {
+       "name": "b2",
+       "let": "x2 + k"
+      },
+      {
+       "name": "b3",
+       "let": "x3 + k"
+      },
+      {
+       "name": "e",
+       "let": "b3 + 1"
+      }
+     ],
+     "stem": "If $X=\\{ {=x1}, {=x2}, {=x3} \\}$, $Y=\\{ {=b1}, {=b2}, {=b3}, {=e} \\}$, and R is a relation from X to Y where a R b means: «b = a + {=k}», for each $a\\in X$, $b\\in Y$. Write R as a set of ordered pairs, listing the pairs in order of a, as (a, b), (a, b), …",
+     "solution": [
+      "When a = {=x1}: b = {=x1} + {=k} = {=b1}, so the pair is ({=x1}, {=b1}).",
+      "When a = {=x2}: b = {=x2} + {=k} = {=b2}, so the pair is ({=x2}, {=b2}).",
+      "When a = {=x3}: b = {=x3} + {=k} = {=b3}, so the pair is ({=x3}, {=b3}).",
+      "Each b is in Y, so R = \\{({=x1}, {=b1}), ({=x2}, {=b2}), ({=x3}, {=b3})\\}."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=x1}, {=b1}), ({=x2}, {=b2}), ({=x3}, {=b3})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic entry: one-step rule, every image lies in Y (Y has one extra element 'e' that is never an image). Answer is the list of pairs in increasing a."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-2-1:missing",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-2-1",
+     "parent_question_id": "q:pp3u1-2-1:bk-example-1",
+     "source_page": 13,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "s",
+       "sample": {
+        "from": "range(-2, 5)",
+        "k": 4
+       }
+      },
+      {
+       "name": "xs",
+       "let": "sorted(s)"
+      },
+      {
+       "name": "m",
+       "choice": [
+        2,
+        3
+       ]
+      },
+      {
+       "name": "c",
+       "choice": [
+        1,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "i0",
+       "let": "m * xs[0] + c"
+      },
+      {
+       "name": "i1",
+       "let": "m * xs[1] + c"
+      },
+      {
+       "name": "i2",
+       "let": "m * xs[2] + c"
+      },
+      {
+       "name": "i3",
+       "let": "m * xs[3] + c"
+      },
+      {
+       "name": "ys",
+       "let": "sorted([i0, i1, i3, i2 + 1, i3 + 2])"
+      },
+      {
+       "name": "x0",
+       "let": "xs[0]"
+      },
+      {
+       "name": "x1",
+       "let": "xs[1]"
+      },
+      {
+       "name": "x2",
+       "let": "xs[2]"
+      },
+      {
+       "name": "x3",
+       "let": "xs[3]"
+      },
+      {
+       "name": "y0",
+       "let": "ys[0]"
+      },
+      {
+       "name": "y1",
+       "let": "ys[1]"
+      },
+      {
+       "name": "y2",
+       "let": "ys[2]"
+      },
+      {
+       "name": "y3",
+       "let": "ys[3]"
+      },
+      {
+       "name": "y4",
+       "let": "ys[4]"
+      },
+      {
+       "name": "j2",
+       "let": "i2"
+      }
+     ],
+     "stem": "If $X=\\{ {=x0}, {=x1}, {=x2}, {=x3} \\}$, $Y=\\{ {=y0}, {=y1}, {=y2}, {=y3}, {=y4} \\}$, and R is a relation from X to Y where a R b means: «b = {=m}a + {=c}», for each $a\\in X$, $b\\in Y$. Write R as a set of ordered pairs. Only pairs whose second element belongs to Y are in R. List the pairs in order of a, as (a, b), (a, b), …",
+     "solution": [
+      "When a = {=x0}: b = {=m} × ({=x0}) + {=c} = {=i0}, which is in Y, so ({=x0}, {=i0}) is in R.",
+      "When a = {=x1}: b = {=m} × ({=x1}) + {=c} = {=i1}, which is in Y, so ({=x1}, {=i1}) is in R.",
+      "When a = {=x2}: b = {=m} × ({=x2}) + {=c} = {=j2}, which is not in Y, so a = {=x2} is in no pair.",
+      "When a = {=x3}: b = {=m} × ({=x3}) + {=c} = {=i3}, which is in Y, so ({=x3}, {=i3}) is in R.",
+      "R = \\{({=x0}, {=i0}), ({=x1}, {=i1}), ({=x3}, {=i3})\\}."
+     ],
+     "constraints": [
+      "(i2 not in [y0, y1, y2, y3, y4])"
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=x0}, {=i0}), ({=x1}, {=i1}), ({=x3}, {=i3})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced twist like the book's think-and-discuss: one element of X has no partner in Y, so it appears in no pair. Y is built from three true images plus i2+1 and i3+2, neither of which can equal i2 (m>=2). Constraint checks i2 not in Y."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u1-2-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-2-3:shift-pairs",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-2-3",
+     "parent_question_id": "q:pp3u1-2-3:bk-think-1",
+     "source_page": 13,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "X",
+       "let": "sorted(sample_x)"
+      },
+      {
+       "name": "d",
+       "randint": [
+        1,
+        4
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "Let $X = \\{1, 2, 3, 4\\}$ and $Y = \\{2, 3, 4, 5, 6, 7\\}$. The relation $R$ from $X$ to $Y$ is defined by $R = \\{(x, y) : x \\in X,\\ y \\in Y,\\ y = x + {=d}\\}$. How many ordered pairs does $R$ have? (Remember that $R \\subset X \\times Y$.)",
+     "answer": "len([x for x in [1,2,3,4] if x + d in [2,3,4,5,6,7]])",
+     "solution": [
+      "R consists of the pairs of X × Y whose second element equals the first element plus {=d}.",
+      "Check each x in X = {1, 2, 3, 4}: the second element is x + {=d}.",
+      "Keep the pair only if x + {=d} belongs to Y = {2, 3, 4, 5, 6, 7}.",
+      "The number of x in X that work is {=len([x for x in [1,2,3,4] if x + d in [2,3,4,5,6,7]])}.",
+      "So R has {=len([x for x in [1,2,3,4] if x + d in [2,3,4,5,6,7]])} ordered pairs."
+     ],
+     "notes": "Fixed X, Y; d in 1..4. d=1: 4 pairs, d=2: 4, d=3: 4 (4,7 ok), d=4: x=1..2 give 5,6; 3->7; 4->8 no: 3 pairs. All answers >=3, none empty. Parameter X is unused (placeholder removed in practice)."
+    }
+   ],
+   "infeasible": [
+    {
+     "tier": "advanced",
+     "reason": "Not completed in this pass."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u1-3-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-3-2:pairs-set",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-3-2",
+     "parent_question_id": "expl:pp3u1-3-2:bk-example-1",
+     "source_page": 17,
+     "tier": "basic",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "good",
+       "let": "'(' + str(a) + ', ' + str(a+k) + '), (' + str(a+1) + ', ' + str(a+1+k) + '), (' + str(a+2) + ', ' + str(a+2+k) + ')'"
+      },
+      {
+       "name": "rev",
+       "let": "'(' + str(a+k) + ', ' + str(a) + '), (' + str(a+1+k) + ', ' + str(a+1) + '), (' + str(a+2+k) + ', ' + str(a+2) + ')'"
+      },
+      {
+       "name": "img",
+       "let": "str(a+k) + ', ' + str(a+1+k) + ', ' + str(a+2+k)"
+      },
+      {
+       "name": "bad",
+       "let": "'(' + str(a) + ', ' + str(a+k+1) + '), (' + str(a+1) + ', ' + str(a+2+k) + '), (' + str(a+2) + ', ' + str(a+3+k) + ')'"
+      }
+     ],
+     "stem": "Let $X=\\{ {=a}, {=a+1}, {=a+2} \\}$ and let $f : X \\to \\mathbb{Z}$ be defined by $f(x)=x+{=k}$. Which of the following writes $f$ as a set of ordered pairs?",
+     "solution": [
+      "Each ordered pair is $(x, f(x))$: the element of $X$ first, its image second.",
+      "$f({=a})={=a+k}$, $f({=a+1})={=a+1+k}$, $f({=a+2})={=a+2+k}$.",
+      "So $f=\\{ {=good} \\}$."
+     ],
+     "choices": {
+      "correct": "$\\{ {=good} \\}$",
+      "distractors": [
+       {
+        "text": "$\\{ {=rev} \\}$",
+        "misconception_id": "mc:pp3u1-3-2:reversed-pairs"
+       },
+       {
+        "text": "$\\{ {=img} \\}$",
+        "misconception_id": "mc:pp3u1-3-2:images-only"
+       },
+       {
+        "text": "$\\{ {=bad} \\}$",
+        "misconception_id": null
+       }
+      ]
+     },
+     "proposed_misconceptions": [
+      {
+       "id": "mc:pp3u1-3-2:reversed-pairs",
+       "label": "Writes pairs as (image, element)",
+       "description": "Puts f(x) first and x second in the ordered pair."
+      },
+      {
+       "id": "mc:pp3u1-3-2:images-only",
+       "label": "Lists only the images",
+       "description": "Writes the set of images instead of ordered pairs (x, f(x))."
+      }
+     ],
+     "notes": "Basic: rule to set of ordered pairs. All four options differ for every a, k."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-3-2:square-sum",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-3-2",
+     "parent_question_id": "expl:pp3u1-3-2:bk-example-1",
+     "source_page": 17,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        1,
+        4
+       ],
+       "resample_while": "b == a"
+      },
+      {
+       "name": "c",
+       "randint": [
+        1,
+        3
+       ]
+      }
+     ],
+     "stem": "Let $X=\\{-{=a}, 0, {=a}, {=b}\\}$ and let $f : X \\to Y$ be the function $f(x)=x^2+{=c}$. Write $f$ as a set of ordered pairs $(x, f(x))$. What is the sum of the second coordinates of all four pairs?",
+     "answer": "2*a*a + b*b + 4*c",
+     "solution": [
+      "$f(-{=a})={=a*a+c}$, $f(0)={=c}$, $f({=a})={=a*a+c}$, $f({=b})={=b*b+c}$.",
+      "$f=\\{(-{=a}, {=a*a+c}), (0, {=c}), ({=a}, {=a*a+c}), ({=b}, {=b*b+c})\\}$.",
+      "Sum of second coordinates: ${=a*a+c}+{=c}+{=a*a+c}+{=b*b+c}={=2*a*a+b*b+4*c}$."
+     ],
+     "notes": "Standard: rule to ordered pairs; two arrows end at the same image, which is allowed."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-3-2:find-rule",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-3-2",
+     "parent_question_id": "expl:pp3u1-3-2:bk-example-1",
+     "source_page": 17,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        5
+       ]
+      }
+     ],
+     "stem": "Let $X=\\{1, 2, 3, 4\\}$ and let $f : X \\to \\mathbb{Z}$ be a function with $f(x)=px+q$, where $p$ and $q$ are constants. Its set of ordered pairs contains $(1, {=p+q})$ and $(3, {=3*p+q})$. Find the second coordinate of the pair whose first coordinate is $4$.",
+     "answer": "4*p + q",
+     "solution": [
+      "$f(1)=p+q={=p+q}$ and $f(3)=3p+q={=3*p+q}$.",
+      "Subtracting: $2p={=2*p}$, so $p={=p}$, and then $q={=q}$.",
+      "So $f(x)={=p}x+{=q}$ and $f(4)={=4*p+q}$, giving the pair $(4, {=4*p+q})$."
+     ],
+     "notes": "Advanced: recover the rule from two ordered pairs, then give another pair."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u1-4-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-4-3:table-pair",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-4-3",
+     "parent_question_id": "q:pp3u1-4-3:bk-example-2",
+     "source_page": 20,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        -6,
+        6
+       ],
+       "resample_while": "b == 0"
+      },
+      {
+       "name": "k",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "m",
+       "let": "a * k + b"
+      },
+      {
+       "name": "bs",
+       "let": "('+ ' + str(b)) if b > 0 else ('- ' + str(-b))"
+      }
+     ],
+     "stem": "To graph the function $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)={=a}x {=bs}$, we find ordered pairs. The pair $({=k}, y)$ lies on the graph. Find $y$.",
+     "answer": "m",
+     "solution": [
+      "$f({=k}) = {=a}\\times {=k} {=bs} = {=m}$",
+      "So the ordered pair is $({=k}, {=m})$ and $y={=m}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic: one ordered pair for a linear function, as in the book's table."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-4-3:point-on-line",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-4-3",
+     "parent_question_id": "q:pp3u1-4-3:bk-example-2",
+     "source_page": 20,
+     "tier": "standard",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        -6,
+        6
+       ],
+       "resample_while": "b == 0"
+      },
+      {
+       "name": "k",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "bs",
+       "let": "('+ ' + str(b)) if b > 0 else ('- ' + str(-b))"
+      }
+     ],
+     "stem": "Which of these points lies on the straight line that represents $f(x)={=a}x {=bs}$, $f:\\mathbb{R}\\to\\mathbb{R}$?",
+     "choices": {
+      "correct": "$({=k}, {=a*k+b})$",
+      "distractors": [
+       {
+        "text": "$({=k}, {=a*k})$",
+        "misconception_id": "mc:pp3u1-4-3:line-always-through-origin"
+       },
+       {
+        "text": "$({=k}, {=a*k-b})$",
+        "misconception_id": null
+       },
+       {
+        "text": "$({=k}, {=a*k+a*b})$",
+        "misconception_id": null
+       }
+      ]
+     },
+     "solution": [
+      "Find $f({=k}) = {=a}\\times {=k} {=bs} = {=a*k+b}$.",
+      "So the ordered pair $({=k}, {=a*k+b})$ lies on the line.",
+      "$({=k}, {=a*k})$ ignores the constant term, as if the line passed through $(0,0)$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Distractors are distinct since b != 0 and a >= 2."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-4-3:meet-const",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-4-3",
+     "parent_question_id": "q:pp3u1-4-3:bk-example-2",
+     "source_page": 20,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        -6,
+        6
+       ],
+       "resample_while": "b == 0"
+      },
+      {
+       "name": "t",
+       "randint": [
+        -3,
+        4
+       ],
+       "resample_while": "t == 0"
+      },
+      {
+       "name": "c",
+       "let": "a * t + b"
+      },
+      {
+       "name": "bs",
+       "let": "('+ ' + str(b)) if b > 0 else ('- ' + str(-b))"
+      }
+     ],
+     "stem": "On the same square net, the functions $f(x)={=a}x {=bs}$ and $g(x)={=c}$ (a constant function), both from $\\mathbb{R}$ to $\\mathbb{R}$, are represented graphically. Find the coordinates of the point where the two lines meet. Write your answer as (x, y).",
+     "answer": "",
+     "solution": [
+      "The graph of $g$ is a horizontal line: every ordered pair has $y={=c}$.",
+      "The meeting point needs $f(x)={=c}$, so ${=a}x {=bs} = {=c}$.",
+      "${=a}x = {=c-b}$, so $x={=t}$.",
+      "Check: $f({=t}) = {=a}\\times({=t}) {=bs} = {=c}$.",
+      "The lines meet at $({=t}, {=c})$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=t}, {=c})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Combines a constant function and a linear function; intersection is built from t so it is a whole number."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u1-4-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-4-4:table-value",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-4-4",
+     "parent_question_id": "q:pp3u1-4-4:bk-example-3",
+     "source_page": 22,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "s",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        -4,
+        4
+       ],
+       "resample_while": "p == 0"
+      },
+      {
+       "name": "fn",
+       "let": "\"x^2\" if s == 1 else \"-x^2\""
+      },
+      {
+       "name": "v",
+       "let": "s * p * p"
+      }
+     ],
+     "constraints": [],
+     "stem": "To represent the quadratic function $f(x)={=fn}$, $x\\in\\mathbb{R}$, graphically, we first make a table of ordered pairs $(x, f(x))$. Find $f({=p})$.",
+     "answer": "v",
+     "solution": [
+      "Substitute $x={=p}$ in $f(x)={=fn}$.",
+      "$({=p})^2={=p*p}$.",
+      "So $f({=p})={=v}$, and the point $({=p}, {=v})$ is put in the table."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Table-of-values step of the book's graphing method."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-4-4:vertex-shift",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-4-4",
+     "parent_question_id": "q:pp3u1-4-4:bk-example-4",
+     "source_page": 23,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "s",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        -5,
+        5
+       ],
+       "resample_while": "c == 0"
+      },
+      {
+       "name": "ct",
+       "let": "(\" + \" + str(c)) if c > 0 else (\" - \" + str(-c))"
+      },
+      {
+       "name": "fn",
+       "let": "(\"x^2\" if s == 1 else \"-x^2\") + ct"
+      },
+      {
+       "name": "kind",
+       "let": "\"minimum\" if s == 1 else \"maximum\""
+      }
+     ],
+     "constraints": [],
+     "stem": "The quadratic function $f(x)={=fn}$, $x\\in[-3,3]$, is represented graphically using a table of values. Write the coordinates of the vertex of the curve.",
+     "answer": "(0, c)",
+     "solution": [
+      "The curve is symmetrical about the y-axis, so the axis of symmetry is $x=0$.",
+      "$f(0)={=c}$, which is the {=kind} value of the function (other values of $x$ give {=\"greater\" if s == 1 else \"smaller\"} values).",
+      "So the vertex is $(0, {=c})$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "(0, {=c})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Extends the book's x^2 and -x^2 examples with a constant term; the table of values shows the vertex."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u1-4-4:greatest-val",
+     "kind": "family",
+     "lo_id": "lo:pp3u1-4-4",
+     "parent_question_id": "q:pp3u1-4-4:bk-example-4",
+     "source_page": 23,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "s",
+       "choice": [
+        1,
+        -1
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        -5,
+        5
+       ],
+       "resample_while": "c == 0"
+      },
+      {
+       "name": "n",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "ct",
+       "let": "(\" + \" + str(c)) if c > 0 else (\" - \" + str(-c))"
+      },
+      {
+       "name": "fn",
+       "let": "(\"x^2\" if s == 1 else \"-x^2\") + ct"
+      },
+      {
+       "name": "v",
+       "let": "n * n + c if s == 1 else c"
+      },
+      {
+       "name": "step",
+       "let": "(\"The curve opens upwards, so the minimum value is at the vertex $(0, \" + str(c) + \")$; the greatest value is at an end of the interval: $f(\" + str(n) + \")=f(-\" + str(n) + \")=\" + str(n*n+c) + \"$.\") if s == 1 else (\"The curve opens downwards, so the vertex $(0, \" + str(c) + \")$ is the highest point, and the maximum value is \" + str(c) + \".\")"
+      }
+     ],
+     "constraints": [],
+     "stem": "The quadratic function $f(x)={=fn}$ is represented graphically for $x\\in[-{=n}, {=n}]$. Find the greatest value of $f(x)$ on this interval.",
+     "answer": "v",
+     "solution": [
+      "The curve is symmetrical about the y-axis; the axis of symmetry is $x=0$ and the vertex is $(0, {=c})$.",
+      "{=step}",
+      "So the greatest value is {=v}."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Twist: for upward curve the greatest value is at the interval's ends, not the vertex."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  }
+ ],
+ "revised": []
+}

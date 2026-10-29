@@ -1,0 +1,47 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-5-3:exterior-eq",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-5-3",
+ "parent_question_id": "expl:pp3u10-5-3:bk-example-3",
+ "parent_kind": "teaching",
+ "source_page": 92,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x0",
+   "randint": [
+    15,
+    60
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    5,
+    30
+   ]
+  },
+  {
+   "name": "q",
+   "let": "x0 + p"
+  },
+  {
+   "name": "e",
+   "let": "2*x0 + p"
+  }
+ ],
+ "stem": "In the quadrilateral $ABCD$, the side $\\overline{BC}$ is extended to $E$. $m(\\angle DCE) = (2x + {=p})^\\circ$ and $m(\\angle A) = (x + {=q})^\\circ$. Find the value of $x$ that makes $ABCD$ a cyclic quadrilateral.",
+ "answer": "x0",
+ "solution": [
+  "$\\angle DCE$ is an exterior angle at $C$, and the interior angle opposite to it is $\\angle A$.",
+  "$ABCD$ is cyclic when the exterior angle equals the interior opposite angle: $m(\\angle DCE) = m(\\angle A)$.",
+  "$2x + {=p} = x + {=q}$.",
+  "$x = {=q} - {=p} = {=x0}$.",
+  "Check: both angles equal ${=e}^\\circ$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Exterior angle equals interior opposite angle."
+}

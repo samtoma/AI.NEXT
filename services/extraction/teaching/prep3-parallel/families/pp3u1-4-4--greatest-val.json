@@ -1,0 +1,63 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-4-4:greatest-val",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-4-4",
+ "parent_question_id": "expl:pp3u1-4-4:bk-example-4",
+ "parent_kind": "teaching",
+ "source_page": 23,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    -5,
+    5
+   ],
+   "resample_while": "c == 0"
+  },
+  {
+   "name": "n",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "ct",
+   "let": "(\" + \" + str(c)) if c > 0 else (\" - \" + str(-c))"
+  },
+  {
+   "name": "fn",
+   "let": "(\"x^2\" if s == 1 else \"-x^2\") + ct"
+  },
+  {
+   "name": "v",
+   "let": "n * n + c if s == 1 else c"
+  },
+  {
+   "name": "step",
+   "let": "(\"The curve opens upwards, so the minimum value is at the vertex $(0, \" + str(c) + \")$; the greatest value is at an end of the interval: $f(\" + str(n) + \")=f(-\" + str(n) + \")=\" + str(n*n+c) + \"$.\") if s == 1 else (\"The curve opens downwards, so the vertex $(0, \" + str(c) + \")$ is the highest point, and the maximum value is \" + str(c) + \".\")"
+  }
+ ],
+ "constraints": [],
+ "stem": "The quadratic function $f(x)={=fn}$ is represented graphically for $x\\in[-{=n}, {=n}]$. Find the greatest value of $f(x)$ on this interval.",
+ "answer": "v",
+ "solution": [
+  "The curve is symmetrical about the y-axis; the axis of symmetry is $x=0$ and the vertex is $(0, {=c})$.",
+  "{=step}",
+  "So the greatest value is {=v}."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Twist: for upward curve the greatest value is at the interval's ends, not the vertex."
+}

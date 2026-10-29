@@ -337,6 +337,73 @@ def author_again(book: str, slugs: list[str], objectives: list[str], notes: dict
     return run
 
 
+TOPUP_BELOW = 3   # an objective with fewer live book questions than this, and no usable family, is topped up
+
+
+def topup_targets(objectives: dict, specs, below: int = TOPUP_BELOW) -> list[str]:
+    """The objectives S6 left thin: fewer than `below` live (verified) book questions, no family that is not held, and
+    something to model one on (a book question or a teaching item). Pure: tests/test_s6_topup.py."""
+    have = {s.lo_id for s in specs}
+    out = []
+    for lo, rec in sorted(objectives.items()):
+        live = sum(1 for q in rec.get("questions") or [] if q.get("verified", True))
+        if live < below and lo not in have and (rec.get("questions") or rec.get("teaching")):
+            out.append(lo)
+    return out
+
+
+def s6_topup(book: str, slugs: list[str], catalogue: Path, cap: float, args_only: bool = False) -> list[Path]:
+    """S6 again, only for the objectives it left thin (topup_targets), now that a family may be modelled on a worked
+    example (answer 40; the S6 author shows them, generate_questions.teaching_parents): author, land (fanout.write_specs
+    makes a teaching parent explicit), hold what --check refuses, then grade ONLY the new families, blind, as s6-grade
+    does. `finish` reads every s6-grade run, so their grades join the unit's. ingest.py runs it as "S6 top-up" after S6,
+    for every book: Prep 3 found 43 of 104 objectives with two live questions or fewer, none with a generated one,
+    because a family needed a book QUESTION as its parent (Tamer, 2026-10-29)."""
+    import fanout  # noqa: PLC0415
+    import generate_questions as GQ  # noqa: PLC0415
+    from families import spec as FS  # noqa: PLC0415
+    view = book_view(book, slugs)
+    bk = book_config.load_book(view)
+    fam = families_dir(book)
+    fam.mkdir(parents=True, exist_ok=True)
+    specs, _problems = FS.load_dir(fam)
+    objectives = GQ.book_objectives(bk)
+    targets = topup_targets({lo: r for lo, r in objectives.items() if in_lessons(lo, slugs)}, specs)
+    print(f"S6 top-up: {len(targets)} thin objective(s) with no usable family: {', '.join(targets) or '-'}", file=sys.stderr)
+    if not targets:
+        return []
+    entries, _alias = GQ.load_catalogue(catalogue)
+    args = GQ.author_args(bk, specs, objectives, entries, True, [], question_figures(book, unit_bundles(book, slugs)))
+    floor = GQ.tier_floor(objectives, [])
+    gaps = {b["lo_id"]: b["missing"] for b in floor["below_floor"]}
+    args["objectives"] = [{**o, "tier_gaps": gaps.get(o["lo_id"]) or ["basic", "standard"]}
+                          for o in args["objectives"] if o["lo_id"] in targets]
+    copy = EW.default_out(book, "families", "s6-topup.bookrecord")
+    print(EW.summary(EW.write(HERE / "runbook" / "families.workflow.js", args, copy)), file=sys.stderr)
+    if args_only:
+        return []
+    run, _res, _cost = WR.run_copy(copy, [CF.figures_dir(book)], cap, "s6-author", book, "families", stage="S6")
+    written = fanout.write_specs(run, fam, view)
+    print(f"wrote {len(written)} spec(s) to {fam.relative_to(HERE)}", file=sys.stderr)
+    hold_malformed(book, slugs, view)
+    new = [p for p in written if p.exists()]   # a held one was renamed _held--…
+    if not new:
+        return []
+    d = HERE / "work" / book / "unit-view" / slugs[0] / "families-topup"
+    d.mkdir(parents=True, exist_ok=True)
+    for f in d.iterdir():
+        f.unlink()
+    for p in new:
+        (d / p.name).symlink_to(p.resolve())
+    runs = HERE / "runs" / book / "families"
+    gargs = runs / "s6-topup-grade.args.json"
+    gq("--families", str(d), "--book", str(view), "--grading-set", str(runs / "grading-set.topup.json"), "--grade-args", str(gargs))
+    gcopy = EW.default_out(book, "families", "s6-grade.topup.bookrecord")
+    print(EW.summary(EW.write(HERE / "runbook" / "families.workflow.js", json.loads(gargs.read_text()), gcopy)), file=sys.stderr)
+    WR.run_copy(gcopy, [CF.figures_dir(book)], cap, "s6-grade", book, "families", stage="S6")
+    return new
+
+
 def hold_malformed(book: str, slugs: list[str], view: Path) -> list[str]:
     """generate_questions.py --check on the unit's families; a family it refuses is held, `_held--<file>` (Samuel's
     convention, FR-1101: nothing is instantiated from a malformed spec), so one bad family never stops the unit (nor
@@ -357,15 +424,17 @@ def hold_malformed(book: str, slugs: list[str], view: Path) -> list[str]:
         # families whose instances fail to evaluate ("rejected: tpl:<obj>:<slug>: evaluation error: …" — a spec bug,
         # e.g. a numeric answer written as '28/29'): held, or the unit's --check fails on them every round
         bad |= {f"{o}--{b}.json" for o, b in re.findall(r"^\s*x rejected: tpl:([a-z0-9-]+):([a-z0-9-]+): evaluation error", out, re.M)}
-        # a family whose parent is not a book question of the unit (FR-1101: an anchor book question; S6 has
-        # written "q:<objective>:none" for an objective with none)
-        cfg = json.loads(view.read_text())
-        qids = {q["id"] for b in cfg.get("bundles") or [] for q in json.loads((book_config.REPO_ROOT / b).read_text()).get("questions") or []}
+        # a family whose parent is neither a book question nor a book teaching item (a worked example) of the unit
+        # (FR-1101 as amended by answer 40: S6 used to write "q:<objective>:none" for an objective with no question)
+        import generate_questions as GQ  # noqa: PLC0415
+        qids, teaching = GQ.book_parents(book_config.load_book(view))
         for f in unit_dir(book, fam, slugs, "families").glob("*.json"):
-            parent = json.loads(f.read_text()).get("parent_question_id")
-            if parent not in qids:
+            spec = json.loads(f.read_text())
+            parent, kind = spec.get("parent_question_id"), spec.get("parent_kind", "question")
+            if not (parent in qids if kind == "question" else kind == "teaching" and parent in teaching):
                 bad.add(f.name)
-                out += f"\n  x {f.name}: its parent {parent!r} is not a book question of the unit (FR-1101)"
+                out += (f"\n  x {f.name}: its parent {parent!r} is not a book {'teaching item' if kind == 'teaching' else 'question'}"
+                        " of the unit (FR-1101)")
         bad = sorted(n for n in bad if (fam / n).exists())
         if not bad:
             break
@@ -476,6 +545,12 @@ def main(argv: list[str]) -> int:
     s6g.add_argument("lessons", nargs="+")
     s6g.add_argument("--cap", type=float, default=6.0)
     s6g.add_argument("--args-only", action="store_true")
+    s6t = sub.add_parser("s6-topup", help="S6 author + grade again for the objectives S6 left thin, worked examples as parents")
+    s6t.add_argument("book")
+    s6t.add_argument("lessons", nargs="+")
+    s6t.add_argument("--catalogue", type=Path, required=True, help="the S5 draft run (or a catalogue)")
+    s6t.add_argument("--cap", type=float, default=4.0)
+    s6t.add_argument("--args-only", action="store_true")
     for name in ("s7-author", "s7-verify"):
         c = sub.add_parser(name, help=f"S7 {name.split('-')[1]} (runbook/widgets.workflow.js) against the database's graph")
         c.add_argument("book")
@@ -542,6 +617,9 @@ def main(argv: list[str]) -> int:
         written = fanout.write_specs(run, fam, view)
         print(f"wrote {len(written)} spec(s) to {fam.relative_to(HERE)}", file=sys.stderr)
         hold_malformed(a.book, a.lessons, view)
+        return 0
+    if a.cmd == "s6-topup":
+        s6_topup(a.book, a.lessons, a.catalogue, a.cap, a.args_only)
         return 0
     if a.cmd == "s6-grade":
         view = book_view(a.book, a.lessons)

@@ -1,0 +1,122 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-4-2:midpoint",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-4-2",
+ "parent_question_id": "expl:pp3u5-4-2:bk-example-4",
+ "parent_kind": "teaching",
+ "source_page": 72,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    -3,
+    -2,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "dx",
+   "choice": [
+    -2,
+    -1,
+    1,
+    2
+   ]
+  },
+  {
+   "name": "ax",
+   "randint": [
+    -4,
+    4
+   ]
+  },
+  {
+   "name": "ay",
+   "randint": [
+    -4,
+    4
+   ]
+  },
+  {
+   "name": "mx",
+   "let": "ax + dx"
+  },
+  {
+   "name": "my",
+   "let": "ay + m * dx"
+  },
+  {
+   "name": "e",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "f",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "require": "e != 0 or f != 0",
+   "why": "B and C must differ"
+  },
+  {
+   "name": "bx",
+   "let": "mx + e"
+  },
+  {
+   "name": "by",
+   "let": "my + f"
+  },
+  {
+   "name": "cx",
+   "let": "mx - e"
+  },
+  {
+   "name": "cy",
+   "let": "my - f"
+  },
+  {
+   "name": "b",
+   "let": "ay - m * ax"
+  },
+  {
+   "require": "b != 0",
+   "why": "keep a visible intercept"
+  },
+  {
+   "name": "sg",
+   "let": "'+' if b > 0 else '-'"
+  }
+ ],
+ "constraints": [],
+ "stem": "If $A({=ax}, {=ay})$, $B({=bx}, {=by})$ and $C({=cx}, {=cy})$, find the equation of the straight line passing through the vertex $A$ and bisecting $\\overline{BC}$. Write it in the form $y = mx + b$.",
+ "solution": [
+  "The midpoint of $\\overline{BC}$ is $\\left(\\frac{{=bx} + ({=cx})}{2}, \\frac{{=by} + ({=cy})}{2}\\right) = ({=mx}, {=my})$.",
+  "The slope of the line through $A({=ax}, {=ay})$ and $({=mx}, {=my})$ is $\\frac{{=my} - ({=ay})}{{=mx} - ({=ax})} = \\frac{{=my - ay}}{{=dx}} = {=m}$.",
+  "So the equation has the form $y = {=m}x + b$.",
+  "The point $A({=ax}, {=ay})$ lies on the line: ${=ay} = {=m} \\times ({=ax}) + b$.",
+  "$b = {=ay} - ({=m * ax}) = {=b}$.",
+  "The equation of the line is $y = {=m}x {=sg} {=abs(b)}$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "y = ({=m})*x + ({=b})",
+  "form": null,
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Midpoint is built to have integer coordinates and the slope from A to it is the integer m. Follows book example 4, with the answer in y = mx + b form."
+}

@@ -1,0 +1,47 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u6-1-1:find-k",
+ "kind": "family",
+ "lo_id": "lo:pp3u6-1-1",
+ "parent_question_id": "expl:pp3u6-1-1:bk-example-1",
+ "parent_kind": "teaching",
+ "source_page": 5,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "t",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "s",
+   "let": "a * t - c"
+  }
+ ],
+ "stem": "The ordered pair $({=t}, {=s})$ is a solution of the equation $kx - y = {=c}$. Find the value of $k$.",
+ "answer": "a",
+ "solution": [
+  "Substitute $x = {=t}$ and $y = {=s}$ into the equation: ${=t}k - ({=s}) = {=c}$.",
+  "So ${=t}k = {=c} + ({=s}) + 0 = {=a * t}$.",
+  "Divide by ${=t}$: $k = {=a}$."
+ ],
+ "notes": "Advanced: reverse use of substitution, solving for a coefficient."
+}

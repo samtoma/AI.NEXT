@@ -1,0 +1,66 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u7-3-2:common",
+ "kind": "family",
+ "lo_id": "lo:pp3u7-3-2",
+ "parent_question_id": "expl:pp3u7-3-2:bk-example-3",
+ "parent_kind": "teaching",
+ "source_page": 22,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    6
+   ],
+   "resample_while": "q == p"
+  },
+  {
+   "name": "s",
+   "let": "p + q"
+  },
+  {
+   "name": "t",
+   "let": "p * q"
+  },
+  {
+   "name": "lo",
+   "let": "min(p, q)"
+  },
+  {
+   "name": "hi",
+   "let": "max(p, q)"
+  }
+ ],
+ "constraints": [],
+ "stem": "Let $n_1(x)=\\frac{x^2-{=p*p}}{x^2-{=s}x+{=t}}$ and $n_2(x)=\\frac{x^2+{=p}x}{x^2-{=q}x}$. The two fractions have the same simplest form but are not equal, because their domains differ. $n_1(x)=n_2(x)$ only on the common domain. Write the values of $x$ that are excluded from the common domain, in ascending order, as a list.",
+ "solution": [
+  "Factorise $n_1$: $\\frac{(x-{=p})(x+{=p})}{(x-{=p})(x-{=q})}=\\frac{x+{=p}}{x-{=q}}$.",
+  "The domain of $n_1$ is $\\mathbb{R}-\\{{=lo}, {=hi}\\}$ (the denominator is zero at $x={=p}$ and $x={=q}$).",
+  "Factorise $n_2$: $\\frac{x(x+{=p})}{x(x-{=q})}=\\frac{x+{=p}}{x-{=q}}$.",
+  "The domain of $n_2$ is $\\mathbb{R}-\\{0, {=q}\\}$.",
+  "The common domain excludes the values from both: $\\mathbb{R}-\\{0, {=lo}, {=hi}\\}$.",
+  "The excluded values are $0, {=lo}, {=hi}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[0, {=lo}, {=hi}]",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "p!=q so the denominator of n1 has two distinct roots; both simplify to (x+p)/(x-q). Excluded values: 0, p, q."
+}

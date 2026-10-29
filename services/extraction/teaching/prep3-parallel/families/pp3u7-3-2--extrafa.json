@@ -1,0 +1,49 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u7-3-2:extrafa",
+ "kind": "family",
+ "lo_id": "lo:pp3u7-3-2",
+ "parent_question_id": "expl:pp3u7-3-2:bk-example-2",
+ "parent_kind": "teaching",
+ "source_page": 22,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    4
+   ],
+   "resample_while": "q == p"
+  },
+  {
+   "name": "c2",
+   "let": "p * p"
+  },
+  {
+   "name": "c3",
+   "let": "p * p * p"
+  }
+ ],
+ "constraints": [],
+ "stem": "Let $n_1(x)=\\frac{x^2(x+{=q})}{x^2(x-{=p})(x+{=q})}$ and $n_2(x)=\\frac{x^3+{=p}x^2+{=c2}x}{x^4-{=c3}x}$, where $x\\in\\mathbb{R}$. Both fractions have the same simplest form, but $n_1\\neq n_2$. Find the sum of the real values of $x$ that are excluded from the common domain of $n_1$ and $n_2$.",
+ "solution": [
+  "Simplify $n_1$: cancelling $x^2(x+{=q})$ gives $n_1(x)=\\frac{1}{x-{=p}}$. Its domain is $\\mathbb{R}-\\{0, {=p}, -{=q}\\}$.",
+  "Factorise $n_2$: numerator $x(x^2+{=p}x+{=c2})$, denominator $x(x^3-{=c3})=x(x-{=p})(x^2+{=p}x+{=c2})$.",
+  "So $n_2(x)=\\frac{1}{x-{=p}}$. The factor $x^2+{=p}x+{=c2}$ is never zero for real $x$, so the domain of $n_2$ is $\\mathbb{R}-\\{0, {=p}\\}$.",
+  "The domains differ, so $n_1\\neq n_2$. The common domain is $\\mathbb{R}-\\{0, {=p}, -{=q}\\}$.",
+  "The excluded values are $0$, ${=p}$ and $-{=q}$; their sum is ${=p-q}$."
+ ],
+ "answer": "p - q",
+ "proposed_misconceptions": [],
+ "notes": "x^2+px+p^2 has negative discriminant (-3p^2) so no real roots. p!=q gives nonzero sum; sum may be negative."
+}

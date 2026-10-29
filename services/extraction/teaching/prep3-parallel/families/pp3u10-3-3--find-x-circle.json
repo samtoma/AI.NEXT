@@ -1,0 +1,57 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-3-3:find-x-circle",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-3-3",
+ "parent_question_id": "expl:pp3u10-3-3:bk-example-4",
+ "parent_kind": "teaching",
+ "source_page": 84,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    5,
+    15
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    1,
+    20
+   ]
+  },
+  {
+   "name": "t",
+   "let": "k * x + m"
+  },
+  {
+   "require": "t >= 35 and t <= 75",
+   "why": "keep angles sensible"
+  },
+  {
+   "name": "p",
+   "let": "180 - 2 * t"
+  }
+ ],
+ "stem": "$ABCD$ is a quadrilateral in which $AB = AD$ and $m(\\angle BAD) = {=p}^\\circ$. The points $C$ and $D$ lie on the same side of $\\overline{AB}$ and $m(\\angle ACB) = ({=k}x + {=m})^\\circ$. If the points $A$, $B$, $C$ and $D$ lie on one circle, find the value of $x$.",
+ "answer": "x",
+ "solution": [
+  "In $\\triangle ABD$: $AB = AD$, so $m(\\angle ADB) = \\frac{180^\\circ - {=p}^\\circ}{2} = {=t}^\\circ$.",
+  "The points are on one circle, so the angles $\\angle ACB$ and $\\angle ADB$, drawn on the same base $\\overline{AB}$ and on the same side of it, are equal.",
+  "${=k}x + {=m} = {=t}$",
+  "${=k}x = {=t - m}$, so $x = {=x}$"
+ ],
+ "notes": "Two steps: isosceles base angle, then equate to algebraic angle."
+}

@@ -1,0 +1,318 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "e38f1c7e31ee764f9fbe8dcf00e52ad0f4601c9e0840251882ce0a2a66baf4c5",
+  "generated_sha256": "3faa5ef4f5dc292474cbb19693281132c4e08e72c3a236fbbc43380acb4464ca",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u4-1-1:deg-to-dms",
+   "spec_sha": "94ca44d7165cdaf1f0e8ef6deb935e1f325f5408df449398a830c1a381d509e8",
+   "answers": [
+    {
+     "instance_id": "q:pp3u4-1-1:g001-deg-to",
+     "stem_sha": "fac27bd3f807c517",
+     "answer": {
+      "value": "18"
+     },
+     "working": "0.6050*60=36.3', so m=36; 0.3'*60=18''."
+    },
+    {
+     "instance_id": "q:pp3u4-1-1:g006-deg-to",
+     "stem_sha": "6d947a241ccfa0cc",
+     "answer": {
+      "value": "36"
+     },
+     "working": "0.2100*60=12.6', so m=12; 0.6'*60=36''."
+    },
+    {
+     "instance_id": "q:pp3u4-1-1:g008-deg-to",
+     "stem_sha": "8fdd84c08aa3deb2",
+     "answer": {
+      "value": "18"
+     },
+     "working": "0.3050*60=18.3', so m=18; 0.3'*60=18''."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The task named no files, so I read none. I checked the arithmetic in all three instances and each key is correct. 0.6050×60 = 36.3, then 0.3×60 = 18, so s = 18. 0.2100×60 = 12.6, then 0.6×60 = 36, so s = 36. 0.3050×60 = 18.3, then 0.3×60 = 18, so s = 18. The solutions follow the standard method, multiplying the decimal part by 60 once for minutes and again for seconds. The stem asks for s and the key gives s. No wrong options were listed, so distractors is empty.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u4-1-1:dm-to-deg",
+   "spec_sha": "18e61f43b741259de023efbcf9ae11c4d4053139257829d2d992cac310412340",
+   "answers": [
+    {
+     "instance_id": "q:pp3u4-1-1:g001-dm-to-",
+     "stem_sha": "b92da0905685f95e",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u4-1-1:g002-dm-to-",
+     "stem_sha": "e3c7246c5844de74",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u4-1-1:g004-dm-to-",
+     "stem_sha": "b6721c2a01454e13",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The instances list no wrong options, so distractors_ok is true by default. I checked all three keys and they are correct. 24/60 = 0.4 gives 79.4000. 50/60 = 0.8333… gives 48.8333. 10/60 = 0.16667 gives 80.1667. Each answer is in the 4 decimal places the stem asks for. The worked solutions use the book's method (1' = 1/60 degree, then add to the degrees) and round correctly. There is no word problem, so the context is fine.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u4-1-1:dms-to-deg",
+   "spec_sha": "0c72f6978ff1832a121343481d7634adcc56abb5545ff7b48037c00b301d5bc7",
+   "answers": [
+    {
+     "instance_id": "q:pp3u4-1-1:g003-dms-to",
+     "stem_sha": "96044d8fe0511027",
+     "answer": {
+      "value": "54.5261"
+     },
+     "working": "54 + 31/60 + 34/3600 = 54.526111"
+    },
+    {
+     "instance_id": "q:pp3u4-1-1:g004-dms-to",
+     "stem_sha": "4651f94a1369a386",
+     "answer": {
+      "value": "84.0878"
+     },
+     "working": "84 + 5/60 + 16/3600 = 84.087778"
+    },
+    {
+     "instance_id": "q:pp3u4-1-1:g007-dms-to",
+     "stem_sha": "fcb88eac8aa613ca",
+     "answer": {
+      "value": "32.5342"
+     },
+     "working": "32 + 32/60 + 3/3600 = 32.534167"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked all three keys by hand: 54.5261, 84.0878 and 32.5342 are correct to 4 decimal places. The family has no options, so there are no distractors to judge. The worked solutions are correct and follow the minutes-to-degrees, seconds-to-minutes-to-degrees method. Step 1 writes \"31' = 31/60 = 0.516667°\", which is a minor notation shortcut but not an error."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u4-2-3:degree-ratio",
+   "spec_sha": "7c74dfb1fc87b3ef0fab233182f36472711b71b74f74b8e3d015579ad374e9d2",
+   "answers": [
+    {
+     "instance_id": "q:pp3u4-2-3:g005-degree",
+     "stem_sha": "d63b6d27f8fb6a98",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u4-2-3:g006-degree",
+     "stem_sha": "7f166d453b8b0e1e",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u4-2-3:g009-degree",
+     "stem_sha": "948046dfd00fb91d",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The three instances show no wrong options, so there are no distractors to judge. I checked the keys by hand: sin 65° = 0.906308, which rounds to 0.9063. cos 50° = 0.642788, which rounds to 0.6428. tan 50° = 1.191754, which rounds to 1.1918. Each worked solution is a calculator procedure and ends on its key. The stems ask for four decimal places, and the keys are in that form.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u4-2-3:minutes-ratio",
+   "spec_sha": "84281135b4ec36e4d473cc29adb1f264e68958468c71aebe77fe77e258cbf2bf",
+   "answers": [
+    {
+     "instance_id": "q:pp3u4-2-3:g001-minute",
+     "stem_sha": "2710b452386e18b5",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u4-2-3:g004-minute",
+     "stem_sha": "b8bc031f9ed50780",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u4-2-3:g006-minute",
+     "stem_sha": "139d666054643368",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No options were provided. I checked the keys by hand: cos 22.5° = sin 67.5° = 0.92388, which rounds to 0.9239. sin 15.5° ≈ 0.26724, which rounds to 0.2672. The solutions give the standard calculator key sequence in degree mode and reach the keys."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u4-2-3:seconds-tan",
+   "spec_sha": "1d58d81620d7cc71584684cf0c794b70443c7239409784bb182138256596940a",
+   "answers": [
+    {
+     "instance_id": "q:pp3u4-2-3:a001-second",
+     "stem_sha": "370ab676af58f4ca",
+     "answer": {
+      "value": "2.1089"
+     },
+     "working": "Angle = 64 + 37/60 + 49/3600 ≈ 64.630278°. Evaluated tan via Taylor expansion about 65° (tan 65°≈2.144507): ≈2.10887. Rounded to 4 d.p.: 2.1089."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked the key by hand. 64°37'49'' is 64.6303°. A Taylor expansion about tan 65° ≈ 2.14451 gives about 2.10887, which rounds to 2.1089. No wrong options were given, so there are no distractors to judge. The solution steps are the standard calculator keying in degree mode."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u4-2-4:isosce",
+   "spec_sha": "221d75eac8522afd7486354ecba24615270ff1f851d8b38d51336813f6737a26",
+   "answers": [
+    {
+     "instance_id": "q:pp3u4-2-4:g002-isosce",
+     "stem_sha": "f861d26955b69f06",
+     "answer": {
+      "value": "73.74"
+     },
+     "working": "Drop the altitude from A to BC. It bisects angle A, so sin(A/2)=6/10=0.6. A/2=36.8699°, so A=73.7398°."
+    },
+    {
+     "instance_id": "q:pp3u4-2-4:g003-isosce",
+     "stem_sha": "016993c7ca022ceb",
+     "answer": {
+      "value": "45.24"
+     },
+     "working": "sin(A/2)=5/13, so A/2=22.6199° and A=45.2397°."
+    },
+    {
+     "instance_id": "q:pp3u4-2-4:g008-isosce",
+     "stem_sha": "088e42f316001779",
+     "answer": {
+      "value": "73.74"
+     },
+     "working": "sin(A/2)=9/15=0.6, so A/2=36.8699° and A=73.7398°."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three keys: g002 gives 73.74, g003 gives 45.24 and g008 gives 73.74. Each worked solution reaches its key, and using the rounded base angles gives the same result. The instances have no options, so there are no distractors to judge. Minor points: g003 step 2 shows the redundant \"5/13 = 5/13\", and g002 and g008 share the same answer (both reduce to cos B = 3/5).",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u4-2-4:rttri",
+   "spec_sha": "5bdfc1a176f72007b03466984d213d21ecdf47de8755b96515ecb90521fc9135",
+   "answers": [
+    {
+     "instance_id": "q:pp3u4-2-4:g002-rttri",
+     "stem_sha": "5bbc3b0f49f1f74e",
+     "answer": {
+      "value": "53.13"
+     },
+     "working": "Right angle at B, so tan A = BC/AB = 16/12 = 4/3. A = arctan(4/3) ≈ 53.13°."
+    },
+    {
+     "instance_id": "q:pp3u4-2-4:g003-rttri",
+     "stem_sha": "22a084075773dace",
+     "answer": {
+      "value": "53.13"
+     },
+     "working": "tan A = BC/AB = 4/3, so A = arctan(4/3) ≈ 53.13°."
+    },
+    {
+     "instance_id": "q:pp3u4-2-4:g007-rttri",
+     "stem_sha": "4fe05d3a7cdab20e",
+     "answer": {
+      "value": "53.13"
+     },
+     "working": "tan A = BC/AB = 8/6 = 4/3, so A = arctan(4/3) ≈ 53.13°."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No options were provided, so there are no distractors to check. I did not open any files, because none were named. The key is correct: arctan(4/3) = 53.130…° rounds to 53.13, and the stem asks for degrees to two decimal places. All three instances are the same 3-4-5 triangle at different scales (×1, ×2, ×4), so they give the same answer and the same tan A = 4/3. That is repetitive but not wrong. In g003 step 2 reads \"4/3 = 4/3\", which is a cosmetic tautology. The side lengths satisfy Pythagoras (12-16-20, 3-4-5, 6-8-10). The tan method is valid, since the opposite and adjacent sides are identified correctly."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u4-2-4:special",
+   "spec_sha": "07471cfac7ce4450cc9ef5fb87e61f6e986f27a1464a1dedebee61d5a570a154",
+   "answers": [
+    {
+     "instance_id": "q:pp3u4-2-4:g003-specia",
+     "stem_sha": "d93468b80ae6f52b",
+     "answer": {
+      "value": "45"
+     },
+     "working": "cos 45° = √2/2, E acute, so E = 45°."
+    },
+    {
+     "instance_id": "q:pp3u4-2-4:g008-specia",
+     "stem_sha": "6ba5f833be1faf56",
+     "answer": {
+      "value": "60"
+     },
+     "working": "sin 60° = √3/2, E acute, so E = 60°."
+    },
+    {
+     "instance_id": "q:pp3u4-2-4:g009-specia",
+     "stem_sha": "3d735923db937b66",
+     "answer": {
+      "value": "45"
+     },
+     "working": "sin 45° = √2/2, E acute, so E = 45°."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No options are given, so there are no distractors to judge. All three keys are correct special-angle values: cos E = √2/2 gives 45, sin E = √3/2 gives 60, and sin E = √2/2 gives 45. The stems write √ as plain text outside LaTeX, which is a cosmetic formatting issue only. I did not open any files because none were named."
+   }
+  }
+ ]
+}

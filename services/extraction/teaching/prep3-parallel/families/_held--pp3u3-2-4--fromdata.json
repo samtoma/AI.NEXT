@@ -1,0 +1,101 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u3-2-4:fromdata",
+ "kind": "family",
+ "lo_id": "lo:pp3u3-2-4",
+ "parent_question_id": "q:pp3u3-2-4:bk-exercise-3",
+ "source_page": 47,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": "Two classes each have four students' marks with the same mean.",
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    20,
+    40
+   ]
+  },
+  {
+   "name": "pats",
+   "let": "[[-1,-1,1,1],[-2,-1,1,2],[-3,-1,1,3],[-2,-2,2,2],[-3,0,0,3],[-3,-2,2,3],[-4,-1,1,4]]"
+  },
+  {
+   "name": "ix",
+   "sample": {
+    "from": "range(0, 7)",
+    "k": 2
+   }
+  },
+  {
+   "name": "pa",
+   "let": "pats[ix[0]]"
+  },
+  {
+   "name": "pb",
+   "let": "pats[ix[1]]"
+  },
+  {
+   "name": "ssa",
+   "let": "sum([d * d for d in pa])"
+  },
+  {
+   "name": "ssb",
+   "let": "sum([d * d for d in pb])"
+  },
+  {
+   "name": "w",
+   "let": "\"A\" if ssa < ssb else \"B\""
+  },
+  {
+   "name": "l",
+   "let": "\"B\" if w == \"A\" else \"A\""
+  },
+  {
+   "name": "sga",
+   "let": "fixed(sqrt(ssa) / 2, 2)"
+  },
+  {
+   "name": "sgb",
+   "let": "fixed(sqrt(ssb) / 2, 2)"
+  }
+ ],
+ "constraints": [
+  "ssa != ssb"
+ ],
+ "stem": "The marks of four students in Class A are ${=m+pa[0]}, {=m+pa[1]}, {=m+pa[2]}, {=m+pa[3]}$ and the marks of four students in Class B are ${=m+pb[0]}, {=m+pb[1]}, {=m+pb[2]}, {=m+pb[3]}$. Both sets have the same mean. By calculating the standard deviations, decide which class is more homogeneous in its marks.",
+ "answer": "Class {=w}",
+ "solution": [
+  "The sum of Class A marks is {=4*m}, so its mean is {=m}; likewise the mean of Class B is {=m}.",
+  "Class A deviations from the mean: {=pa[0]}, {=pa[1]}, {=pa[2]}, {=pa[3]}. The sum of their squares is {=ssa}, so $\\sigma_A^2 = \\frac{{=ssa}}{4}$ and $\\sigma_A \\approx {=sga}$.",
+  "Class B deviations from the mean: {=pb[0]}, {=pb[1]}, {=pb[2]}, {=pb[3]}. The sum of their squares is {=ssb}, so $\\sigma_B^2 = \\frac{{=ssb}}{4}$ and $\\sigma_B \\approx {=sgb}$.",
+  "The set with the larger standard deviation is more dispersed.",
+  "Class {=w} has the smaller standard deviation, so it is more homogeneous.",
+  "Answer: Class {=w}."
+ ],
+ "choices": {
+  "correct": "Class {=w}",
+  "distractors": [
+   {
+    "text": "Class {=l}",
+    "misconception_id": "mc:pp3u3-2-4:larger-sd-homogeneous"
+   },
+   {
+    "text": "Both classes are equally homogeneous",
+    "misconception_id": null
+   },
+   {
+    "text": "It cannot be decided",
+    "misconception_id": null
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:pp3u3-2-4:larger-sd-homogeneous",
+   "label": "Larger standard deviation taken as more homogeneous",
+   "description": "Student picks the set with the larger standard deviation, forgetting that larger standard deviation means more dispersed and so less homogeneous."
+  }
+ ],
+ "notes": "Deviation patterns are symmetric with distinct sums of squares (4,10,20,16,18,26,34), so sets are sorted, means equal m, and the comparison is never a tie. The population standard deviation is used, as in the book's solution."
+}

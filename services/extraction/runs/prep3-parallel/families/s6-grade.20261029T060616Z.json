@@ -1,0 +1,267 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "90ddd7539929286f731e0b02e30c1377e3148816e23587625d06e75e6940fc1d",
+  "generated_sha256": "e6ce95e2265182c4a8d4fa0111b1a9bce9d601d313f22762a167f7846965d121",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u5-2-3:diagsum",
+   "spec_sha": "b188cd67016f8b727ea9b30566f49d69c6775fcb3a78f471aadb22ccbee141e2",
+   "answers": [
+    {
+     "instance_id": "q:pp3u5-2-3:g006-diagsu",
+     "stem_sha": "ee3e10625fbf6e09",
+     "answer": {
+      "value": "-3"
+     },
+     "working": "M=midpoint AC=(-2,-2.5). D=A+C-B=(1,-4). Sum=-3"
+    },
+    {
+     "instance_id": "q:pp3u5-2-3:g007-diagsu",
+     "stem_sha": "d5cc14db22bcd9b6",
+     "answer": {
+      "value": "-12"
+     },
+     "working": "M=midpoint AC=(-4.5,-1). D=A+C-B=(-6,-6). Sum=-12"
+    },
+    {
+     "instance_id": "q:pp3u5-2-3:g010-diagsu",
+     "stem_sha": "76368d81dcfe248c",
+     "answer": {
+      "value": "8"
+     },
+     "working": "M=midpoint AC=(2,4). D=A+C-B=(-1,9). Sum=8"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Checked D = A + C − B for all three instances: g006 gives D(1,−4), sum −3; g007 gives D(−6,−6), sum −12; g010 gives D(−1,9), sum 8. All keys match and each worked solution is correct step by step. No options were provided, so there are no distractors to grade."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u5-2-3:endpoint",
+   "spec_sha": "0be7c6a5efe497bbcf3bd021702a9594488dc94f0fde8bc9e291dc3db20f1f8e",
+   "answers": [
+    {
+     "instance_id": "q:pp3u5-2-3:g002-endpoi",
+     "stem_sha": "e4212ea5ecdb731d",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u5-2-3:g007-endpoi",
+     "stem_sha": "1ec8bb48fe922c94",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u5-2-3:g010-endpoi",
+     "stem_sha": "f396d339ab83c995",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances and each key is correct: (9, 8), (14, -7) and (-5, 5). Each solution applies the midpoint formula correctly. The key matches answer_check in the asked (x, y) form. There are no options, so there are no distractors to check.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u5-2-3:parallelo",
+   "spec_sha": "a7e68bc84ce35b3c52344d04bcb246a8691189fdf1624f81e0c305d5234ec67a",
+   "answers": [
+    {
+     "instance_id": "q:pp3u5-2-3:g002-parall",
+     "stem_sha": "98feb313ed2a6cb4",
+     "answer": {
+      "plain": "(1, 3)"
+     },
+     "working": "D = A + C - B = (0+4-3, 3-5+5)"
+    },
+    {
+     "instance_id": "q:pp3u5-2-3:g006-parall",
+     "stem_sha": "806d88cf323f1426",
+     "answer": {
+      "plain": "(-3, -3)"
+     },
+     "working": "D = A + C - B = (5-11+3, 2+0-5)"
+    },
+    {
+     "instance_id": "q:pp3u5-2-3:g010-parall",
+     "stem_sha": "6906687e720da2ef",
+     "answer": {
+      "plain": "(-6, -1)"
+     },
+     "working": "D = A + C - B = (2-4-4, 5-7+1)"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three keys check out with D = A + C − B. The midpoints and steps are correct. No options are present, so there are no distractors to judge."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u5-3-3:perp-slope",
+   "spec_sha": "145d8a9b76e33312936238022eb3f19648a445c5a94e2f311d310ad021f0f33f",
+   "answers": [
+    {
+     "instance_id": "q:pp3u5-3-3:g002-perp-s",
+     "stem_sha": "18a82f9a8bbe01bc",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u5-3-3:g003-perp-s",
+     "stem_sha": "b32a8bf5d793fdca",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u5-3-3:g006-perp-s",
+     "stem_sha": "f13ab1e9445795d8",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "No options are present. Keys are correct negative reciprocals and match answer_check. Solutions are valid. Step 3 to step 4 skips the explicit division, but it is acceptable."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u5-4-2:midpoint",
+   "spec_sha": "97ab9b038fc2d0abf45a57e7117a73f7de271004e033651348e3092463770445",
+   "answers": [
+    {
+     "instance_id": "q:pp3u5-4-2:g001-midpoi",
+     "stem_sha": "60bff1809b7266ba",
+     "answer": {
+      "plain": "y = -3*x - 5"
+     },
+     "working": "Midpoint of BC = (-3,4). Slope from A = 6/(-2) = -3. y+2 = -3(x+1) → y = -3x - 5."
+    },
+    {
+     "instance_id": "q:pp3u5-4-2:g005-midpoi",
+     "stem_sha": "6e0f75f5aa3b876b",
+     "answer": {
+      "plain": "y = -3*x + 6"
+     },
+     "working": "Midpoint of BC = (2,0). Slope from A = 3/(-1) = -3. y+3 = -3(x-3) → y = -3x + 6."
+    },
+    {
+     "instance_id": "q:pp3u5-4-2:g009-midpoi",
+     "stem_sha": "cb167f1105b8eb3a",
+     "answer": {
+      "plain": "y = 3*x + 7"
+     },
+     "working": "Midpoint of BC = (-5,-8). Slope from A = -6/-2 = 3. y+2 = 3(x+3) → y = 3x + 7."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I recomputed the midpoint, slope and intercept for all three instances. Each worked solution reaches its key (y=-3x-5, y=-3x+6, y=3x+7). The family has no wrong options. The displayed keys \"(-3)x\" keep brackets around the negative slope, which is cosmetic only and equivalent to the answer_check."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u5-4-2:perpendicular",
+   "spec_sha": "579c48a734a6a21bdac371868cab5b2e1edf6d7c5f7fa6903ad82a7676b53a1b",
+   "answers": [
+    {
+     "instance_id": "q:pp3u5-4-2:g001-perpen",
+     "stem_sha": "a8ebe7f7a9a5a702",
+     "answer": {
+      "plain": "y = -2*x + 5"
+     },
+     "working": "slope AB=(-3+1)/(-7+3)=1/2; perpendicular slope -2; through (3,-1): b=-1+6=5"
+    },
+    {
+     "instance_id": "q:pp3u5-4-2:g005-perpen",
+     "stem_sha": "2330a7175f76fa8d",
+     "answer": {
+      "plain": "y = -3*x - 1"
+     },
+     "working": "slope AB=(-2+1)/(-7+4)=1/3; perpendicular slope -3; through (-1,2): b=2-3=-1"
+    },
+    {
+     "instance_id": "q:pp3u5-4-2:g006-perpen",
+     "stem_sha": "e4004a3fdbff0634",
+     "answer": {
+      "plain": "y = 2*x + 1"
+     },
+     "working": "slope AB=(-4+2)/(0+4)=-1/2; perpendicular slope 2; through (-2,-3): b=-3+4=1"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances.\n\n- g001: the slope of AB is 1/2, so the perpendicular slope is -2. Then -1 = -6 + b gives b = 5, so y = -2x + 5.\n- g005: the slope of AB is 1/3, so the perpendicular slope is -3. Then 2 = 3 + b gives b = -1, so y = -3x - 1.\n- g006: the slope of AB is -1/2, so the perpendicular slope is 2. Then -3 = -4 + b gives b = 1, so y = 2x + 1.\n\nEach key matches its answer_check and is in the y = mx + b form the stem asks for. The keys for g001 and g005 show the negative slope as \"(-2)x\" and \"(-3)x\", which looks slightly awkward but is the same expression. No options with wrong-answer claims were provided, so there are no distractors to judge.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u5-4-2:twopoints",
+   "spec_sha": "3c29b1e6a31a83dbadfb5a97375ab71e7dd463cd0201e0e031be417b8af76e84",
+   "answers": [
+    {
+     "instance_id": "q:pp3u5-4-2:g003-twopoi",
+     "stem_sha": "92e51daab1a1e974",
+     "answer": {
+      "plain": "y = 3*x + 5"
+     },
+     "working": "m=(-1+4)/(-2+3)=3; b=-1-3(-2)=5"
+    },
+    {
+     "instance_id": "q:pp3u5-4-2:g007-twopoi",
+     "stem_sha": "ed60ebfff95b1fda",
+     "answer": {
+      "plain": "y = -2*x - 2"
+     },
+     "working": "m=(-6+4)/(2-1)=-2; b=-4+2=-2"
+    },
+    {
+     "instance_id": "q:pp3u5-4-2:g010-twopoi",
+     "stem_sha": "d59c933c740a4181",
+     "answer": {
+      "plain": "y = -3*x + 5"
+     },
+     "working": "m=(-7+4)/(4-3)=-3; b=-4+9=5"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "All three instances compute correctly (slopes 3, -2, -3; intercepts 5, -2, 5). No options, so no distractors to judge. The keys for g007 and g010 write the slope as \"(-2)x\" and \"(-3)x\", which is slightly awkward but equivalent to the answer_check expressions.",
+    "distractors": []
+   }
+  }
+ ]
+}

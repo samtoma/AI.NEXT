@@ -1,0 +1,57 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-7-3:triangle-angles",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-7-3",
+ "parent_question_id": "expl:pp3u10-7-3:bk-example-4",
+ "parent_kind": "teaching",
+ "source_page": 103,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    10,
+    40
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    5,
+    30
+   ]
+  },
+  {
+   "name": "C",
+   "let": "2*x + k"
+  },
+  {
+   "name": "a",
+   "randint": [
+    30,
+    45
+   ]
+  },
+  {
+   "name": "b",
+   "let": "180 - C - a"
+  },
+  {
+   "require": "b >= 25",
+   "why": "keep angle B reasonable"
+  }
+ ],
+ "constraints": [],
+ "stem": "ABC is a triangle inscribed in a circle with $m(\\angle B) = {=b}^\\circ$ and $m(\\angle BAC) = {=a}^\\circ$. The ray AD lies on the other side of AB from C, with $m(\\angle DAB) = (2x + {=k})^\\circ$. Find the value of $x$ for which the line AD is a tangent to the circle at A.",
+ "answer": "x",
+ "solution": [
+  "In triangle ABC: $m(\\angle C) = 180^\\circ - {=b}^\\circ - {=a}^\\circ = {=C}^\\circ$.",
+  "AD is a tangent at A if $m(\\angle DAB) = m(\\angle C)$, the inscribed angle in the alternate segment.",
+  "$2x + {=k} = {=C}$, so $2x = {=C - k}$.",
+  "$x = {=x}$."
+ ],
+ "notes": "Needs the angle sum of a triangle first, then the converse of theorem 5."
+}

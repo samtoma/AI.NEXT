@@ -1,0 +1,52 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u3-2-2:standard-sd",
+ "kind": "family",
+ "lo_id": "lo:pp3u3-2-2",
+ "parent_question_id": "expl:pp3u3-2-2:bk-example-1",
+ "parent_kind": "teaching",
+ "source_page": 43,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "v",
+   "sample": {
+    "from": "range(5, 40)",
+    "k": 5
+   }
+  },
+  {
+   "name": "s",
+   "let": "sum(v)"
+  },
+  {
+   "require": "s % 5 == 0",
+   "why": "mean must be a whole number"
+  },
+  {
+   "name": "vs",
+   "let": "sorted(v)"
+  },
+  {
+   "name": "m",
+   "let": "s // 5"
+  },
+  {
+   "name": "ss",
+   "let": "sum([(x - m) ** 2 for x in vs])"
+  }
+ ],
+ "constraints": [],
+ "stem": "Calculate the standard deviation of the values: ${=vs[0]}, {=vs[1]}, {=vs[2]}, {=vs[3]}, {=vs[4]}$. Round your answer to 2 decimal places.",
+ "answer": "fixed(sqrt(ss / 5), 2)",
+ "solution": [
+  "The mean is $\\bar{x}=\\dfrac{\\sum x}{n}=\\dfrac{{=vs[0]}+{=vs[1]}+{=vs[2]}+{=vs[3]}+{=vs[4]}}{5}=\\dfrac{{=s}}{5}={=m}$",
+  "Squared deviations: $({=vs[0]}-{=m})^2={=(vs[0]-m)**2}$, $({=vs[1]}-{=m})^2={=(vs[1]-m)**2}$, $({=vs[2]}-{=m})^2={=(vs[2]-m)**2}$, $({=vs[3]}-{=m})^2={=(vs[3]-m)**2}$, $({=vs[4]}-{=m})^2={=(vs[4]-m)**2}$",
+  "$\\sum (x-\\bar{x})^2={=ss}$",
+  "$\\sigma=\\sqrt{\\dfrac{\\sum (x-\\bar{x})^2}{n}}=\\sqrt{\\dfrac{{=ss}}{5}}\\simeq {=fixed(sqrt(ss / 5), 2)}$"
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Mirrors the book example: five distinct values with whole-number mean, answer rounded to 2 d.p."
+}

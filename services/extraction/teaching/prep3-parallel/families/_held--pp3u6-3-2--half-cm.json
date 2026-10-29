@@ -1,0 +1,84 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u6-3-2:half-cm",
+ "kind": "family",
+ "lo_id": "lo:pp3u6-3-2",
+ "parent_question_id": "expl:pp3u6-3-2:bk-example-2",
+ "parent_kind": "teaching",
+ "source_page": 13,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": "A rectangle whose perimeter and area are given, with dimensions that are not whole numbers.",
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    3,
+    5,
+    7,
+    9,
+    11
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "W",
+   "let": "m / 2"
+  },
+  {
+   "name": "L",
+   "let": "W + d"
+  },
+  {
+   "name": "s",
+   "let": "m + d"
+  },
+  {
+   "name": "p",
+   "let": "2 * s"
+  },
+  {
+   "name": "a",
+   "let": "L * W"
+  },
+  {
+   "name": "As",
+   "let": "fixed(a, 2)"
+  },
+  {
+   "name": "Ws",
+   "let": "fixed(W, 1)"
+  },
+  {
+   "name": "Ls",
+   "let": "fixed(L, 1)"
+  }
+ ],
+ "constraints": [],
+ "stem": "A rectangle has perimeter ${=p}$ cm and area ${=As}$ cm$^2$. Form a first-degree and a second-degree equation and find its two dimensions in cm. Give the two values as decimals separated by a comma.",
+ "answer": "",
+ "solution": [
+  "Let the length be $x$ and the width be $y$.",
+  "Perimeter: $2(x+y) = {=p}$, so $x + y = {=s}$.",
+  "Area: $xy = {=As}$.",
+  "Substitute $y = {=s} - x$: $x({=s}-x) = {=As}$, so $x^2 - {=s}x + {=As} = 0$.",
+  "Solve (by factorising or the quadratic formula): $x = {=Ws}$ or $x = {=Ls}$.",
+  "Check: ${=Ws} + {=Ls} = {=s}$ and ${=Ws} \\times {=Ls} = {=As}$.",
+  "The dimensions are ${=Ws}$ cm and ${=Ls}$ cm."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=Ws}, {=Ls}]",
+  "form": "decimal",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Dimensions are half-integers (m odd), so the quadratic has non-integer roots; area ends in .25 or .75. Check: (m/2)(m/2+d) = m(m+2d)/4."
+}

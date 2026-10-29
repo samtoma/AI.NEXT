@@ -1,0 +1,403 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "b29f2d654d2b3c38f5ec28fc974eb92fa3811fef259bbfc53b90a72a3eb5aaf7",
+  "generated_sha256": "28076b15e26d566ef724ed11ea39a81015c4474957fae4560c3333a681ea6e3b",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u9-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-1-2:through-centre",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-1-2",
+     "parent_question_id": "expl:pp3u9-1-2:bk-think-1",
+     "source_page": 42,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "n",
+       "randint": [
+        3,
+        12
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "$O$ is the centre of a circle. {=n} different straight lines are drawn, and each one passes through $O$. How many of these lines are axes of symmetry of the circle?",
+     "answer": "n",
+     "solution": [
+      "Any straight line passing through the centre of a circle is an axis of symmetry.",
+      "All {=n} lines pass through $O$, so every one of them is an axis of symmetry.",
+      "The answer is {=n}."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic: apply the rule that every line through the centre is an axis."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-1-2:some-lines",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-1-2",
+     "parent_question_id": "expl:pp3u9-1-2:bk-think-1",
+     "source_page": 42,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "t",
+       "randint": [
+        6,
+        12
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        2,
+        "t - 2"
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "$O$ is the centre of a circle. {=t} straight lines are drawn across the circle. Exactly {=k} of them pass through $O$ and the other lines do not. How many of the {=t} lines are axes of symmetry of the circle?",
+     "answer": "k",
+     "solution": [
+      "A straight line is an axis of symmetry of a circle only if it passes through the centre.",
+      "{=k} of the lines pass through $O$, so these are axes of symmetry.",
+      "The other {=t - k} lines do not pass through $O$, so they are not axes of symmetry.",
+      "The answer is {=k}."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Standard: separate lines through the centre from other lines."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-1-2:axis-length",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-1-2",
+     "parent_question_id": "expl:pp3u9-1-2:bk-think-1",
+     "source_page": 42,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "r",
+       "randint": [
+        3,
+        15
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "A circle has radius {=r} cm. A straight line is an axis of symmetry of the circle and cuts the circle at two points $A$ and $B$. Find the length of $AB$ in cm.",
+     "answer": "2 * r",
+     "solution": [
+      "An axis of symmetry of a circle is a straight line through the centre $O$.",
+      "So $A$, $O$ and $B$ lie on one straight line, and $AB$ is a diameter.",
+      "$AB = 2 \\times {=r} = {=2 * r}$ cm."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: uses the rule to deduce the line cuts the circle in a diameter, any axis gives the same length."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u9-3-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-3-1:center-locus",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-3-1",
+     "parent_question_id": "expl:pp3u9-3-1:bk-think-2",
+     "source_page": 55,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "r",
+       "randint": [
+        2,
+        9
+       ]
+      }
+     ],
+     "stem": "A is a given point. Many circles, each with radius ${=r}$ cm, are drawn through A. Their centers all lie on one circle whose center is A. What is the radius of that circle, in cm?",
+     "answer": "r",
+     "solution": [
+      "Each center is at distance ${=r}$ cm from A, because A lies on a circle of radius ${=r}$ cm.",
+      "So the centers lie on a circle with center A and the same radius.",
+      "The radius is ${=r}$ cm."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic: equal radii give centers on a congruent circle centered at A."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-3-1:farthest-pt",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-3-1",
+     "parent_question_id": "expl:pp3u9-3-1:bk-drill-1",
+     "source_page": 55,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "r",
+       "randint": [
+        2,
+        9
+       ]
+      }
+     ],
+     "stem": "A is a point on a line L. A circle with radius ${=r}$ cm is drawn through A. What is the greatest possible distance, in cm, between A and another point on this circle?",
+     "answer": "2 * r",
+     "solution": [
+      "The circle passes through A, so A is on the circle and its center M is ${=r}$ cm from A.",
+      "The farthest point from A on the circle is the end of the diameter through A.",
+      "The diameter is $2 \\times {=r} = {=2*r}$ cm."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Standard: uses center M at distance r from A; answer is the diameter."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-3-1:two-radii",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-3-1",
+     "parent_question_id": "expl:pp3u9-3-1:bk-think-1",
+     "source_page": 55,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "r",
+       "randint": [
+        2,
+        8
+       ]
+      },
+      {
+       "name": "s",
+       "randint": [
+        2,
+        8
+       ],
+       "resample_while": "s == r"
+      }
+     ],
+     "stem": "A is a given point. Circle 1 has radius ${=r}$ cm and passes through A; circle 2 has radius ${=s}$ cm and passes through A. The center of each circle can be any point that keeps the circle through A. What is the greatest possible distance, in cm, between the two centers?",
+     "answer": "r + s",
+     "solution": [
+      "The center of circle 1 lies on the circle with center A and radius ${=r}$ cm.",
+      "The center of circle 2 lies on the circle with center A and radius ${=s}$ cm.",
+      "The two centers are farthest apart when they are on opposite sides of A, on one straight line through A.",
+      "The greatest distance is ${=r} + {=s} = {=r+s}$ cm."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: two different radii, centers on two concentric circles around A; max distance r+s."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u9-4-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-4-1:dist-compare",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-4-1",
+     "parent_question_id": "q:pp3u9-4-1:bk-drill-1-1",
+     "source_page": 58,
+     "tier": "basic",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        2,
+        9
+       ],
+       "resample_while": "q == p"
+      },
+      {
+       "name": "sym",
+       "let": "'>' if p < q else '<'"
+      },
+      {
+       "name": "rev",
+       "let": "'<' if p < q else '>'"
+      }
+     ],
+     "stem": "In a circle with center $M$, $AB$ and $CD$ are two chords. The distance from $M$ to $AB$ is {=p} cm and the distance from $M$ to $CD$ is {=q} cm. Complete using $>$, $<$ or $=$: $AB$ ......... $CD$",
+     "solution": [
+      "The distance from $M$ to $AB$ is {=p} cm and to $CD$ is {=q} cm.",
+      "{=p} {=('<' if p < q else '>')} {=q}, so $AB$ is {=('closer to' if p < q else 'farther from')} the center than $CD$.",
+      "The closer the chord is to the center, the longer it is.",
+      "So $AB$ {=sym} $CD$."
+     ],
+     "choices": {
+      "correct": "$AB {=sym} CD$",
+      "distractors": [
+       {
+        "text": "$AB {=rev} CD$",
+        "misconception_id": "mc:pp3u9-4-1:farther-longer"
+       },
+       {
+        "text": "$AB = CD$",
+        "misconception_id": null
+       },
+       {
+        "text": "It cannot be compared",
+        "misconception_id": null
+       }
+      ]
+     },
+     "distinct_by_choices": false,
+     "proposed_misconceptions": [
+      {
+       "id": "mc:pp3u9-4-1:farther-longer",
+       "label": "Farther chord is longer",
+       "description": "Thinks the chord farther from the center is the longer one, reversing the relation."
+      }
+     ],
+     "notes": "Mirrors book drill 1-1 with distances given."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-4-1:least-x",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-4-1",
+     "parent_question_id": "q:pp3u9-4-1:bk-exercise-1",
+     "source_page": 59,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "L",
+       "randint": [
+        5,
+        12
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "lo",
+       "let": "L - k"
+      }
+     ],
+     "stem": "In a circle with center $M$, chord $AB = {=L}$ cm and chord $CD = X + {=k}$ cm. Given that $CD$ is closer to the center than $AB$, find the least whole number value of $X$.",
+     "answer": "lo + 1",
+     "solution": [
+      "$CD$ is closer to the center than $AB$, so $CD$ is longer: $X + {=k} > {=L}$.",
+      "$X > {=L} - {=k}$, so $X > {=lo}$.",
+      "The least whole number greater than {=lo} is {=lo + 1}.",
+      "So $X = {=lo + 1}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Lower-bound half of book exercise 1."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-4-1:range-x",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-4-1",
+     "parent_question_id": "q:pp3u9-4-1:bk-exercise-1",
+     "source_page": 59,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "r",
+       "randint": [
+        4,
+        8
+       ]
+      },
+      {
+       "name": "L",
+       "randint": [
+        4,
+        "2*r - 3"
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        1,
+        3
+       ]
+      },
+      {
+       "name": "lo",
+       "let": "L - k"
+      },
+      {
+       "name": "hi",
+       "let": "2*r - k"
+      },
+      {
+       "require": "lo >= 1 and hi > lo",
+       "why": "positive, nonempty range"
+      }
+     ],
+     "stem": "In a circle $M$ of radius {=r} cm, chord $AB = {=L}$ cm and chord $CD = X + {=k}$ cm. Given that $MF < ME$, where $ME$ is the distance from $M$ to $AB$ and $MF$ the distance from $M$ to $CD$, find the range of $X$. Write your answer as an interval such as $(a, b]$.",
+     "solution": [
+      "$MF < ME$, so $CD$ is closer to the center than $AB$, so $CD > AB$: $X + {=k} > {=L}$, i.e. $X > {=lo}$.",
+      "$CD$ is a chord, so it is at most the diameter {=2*r} cm: $X + {=k} \\le {=2*r}$, i.e. $X \\le {=hi}$.",
+      "So $X \\in ({=lo}, {=hi}]$, i.e. ${=lo} < X \\le {=hi}$."
+     ],
+     "marker": {
+      "kind": "interval",
+      "answer": "interval({=lo}, {=hi}, false, true)",
+      "form": null,
+      "variables": [
+       "X"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Follows book exercise 1: lower bound from comparison, upper bound from diameter."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  }
+ ],
+ "revised": []
+}

@@ -1,0 +1,80 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-2-3:diagsum",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-2-3",
+ "parent_question_id": "expl:pp3u5-2-3:bk-example-3",
+ "parent_kind": "teaching",
+ "source_page": 64,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a1",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "a2",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "b1",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "b2",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "c1",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "c2",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "d1",
+   "let": "a1 + c1 - b1"
+  },
+  {
+   "name": "d2",
+   "let": "a2 + c2 - b2"
+  },
+  {
+   "require": "(b1-a1)*(c2-a2) - (b2-a2)*(c1-a1) != 0",
+   "why": "A, B, C must not be collinear"
+  }
+ ],
+ "constraints": [],
+ "stem": "$ABCD$ is a parallelogram where $A({=a1}, {=a2})$, $B({=b1}, {=b2})$ and $C({=c1}, {=c2})$. Its diagonals meet at the point $M$. Find the coordinates of $M$ and then of $D$. What is the value of $x+y$ for the point $D(x, y)$?",
+ "solution": [
+  "$M$ is the midpoint of $\\overline{AC}$: $M\\left(\\frac{({=a1})+({=c1})}{2}, \\frac{({=a2})+({=c2})}{2}\\right)=M\\left({=(a1+c1)/2}, {=(a2+c2)/2}\\right)$.",
+  "$M$ is also the midpoint of $\\overline{BD}$. Let $D(x_1, y_1)$.",
+  "${=(a1+c1)/2}=\\frac{({=b1})+x_1}{2}$, so $({=b1})+x_1={=a1+c1}$, hence $x_1={=d1}$.",
+  "${=(a2+c2)/2}=\\frac{({=b2})+y_1}{2}$, so $({=b2})+y_1={=a2+c2}$, hence $y_1={=d2}$.",
+  "So $D({=d1}, {=d2})$ and $x+y={=d1}+({=d2})={=d1+d2}$."
+ ],
+ "answer": "d1 + d2",
+ "proposed_misconceptions": [],
+ "notes": "Book example 3 twist: M may be fractional. Final answer is x+y of D so it is numeric."
+}

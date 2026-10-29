@@ -1,0 +1,87 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u3-2-4:givensd",
+ "kind": "family",
+ "lo_id": "lo:pp3u3-2-4",
+ "parent_question_id": "q:pp3u3-2-4:bk-exercise-3",
+ "source_page": 47,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": "Two classes sat the same test and both have the same mean mark; only their standard deviations are given.",
+ "params": [
+  {
+   "name": "w",
+   "choice": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "name": "l",
+   "let": "\"B\" if w == \"A\" else \"A\""
+  },
+  {
+   "name": "small",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "gap",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "big",
+   "let": "small + gap"
+  },
+  {
+   "name": "sa",
+   "let": "small if w == \"A\" else big"
+  },
+  {
+   "name": "sb",
+   "let": "big if w == \"A\" else small"
+  }
+ ],
+ "constraints": [
+  "sa != sb"
+ ],
+ "stem": "Class A and Class B sat the same test and both classes have the same mean mark. The standard deviation of the marks of Class A is $\\sigma_A = {=sa}$ and that of Class B is $\\sigma_B = {=sb}$. Which class is more homogeneous in its marks?",
+ "answer": "Class {=w}",
+ "solution": [
+  "Both classes have the same mean, so we compare their standard deviations.",
+  "The set with the larger standard deviation is more dispersed; the set with the smaller standard deviation is more homogeneous.",
+  "$\\sigma_A = {=sa}$ and $\\sigma_B = {=sb}$, and {=small} is the smaller value.",
+  "Class {=w} has the smaller standard deviation, so it is more homogeneous.",
+  "Answer: Class {=w}."
+ ],
+ "choices": {
+  "correct": "Class {=w}",
+  "distractors": [
+   {
+    "text": "Class {=l}",
+    "misconception_id": "mc:pp3u3-2-4:larger-sd-homogeneous"
+   },
+   {
+    "text": "Both classes are equally homogeneous",
+    "misconception_id": null
+   },
+   {
+    "text": "It cannot be decided",
+    "misconception_id": null
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:pp3u3-2-4:larger-sd-homogeneous",
+   "label": "Larger standard deviation taken as more homogeneous",
+   "description": "Student picks the set with the larger standard deviation, forgetting that larger standard deviation means more dispersed and so less homogeneous."
+  }
+ ],
+ "notes": "Pure comparison of two given standard deviations; options shuffled by the app. Stem differs per instance via sa, sb."
+}

@@ -1,0 +1,1037 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "874f29a28efa573672f851c09d3015b922ac67aa7b14cbb025afadcf165615ce",
+  "generated_sha256": "24060b66a93ae33e03794373d1880597e44b09d75d2fe08a05cd4b43aff8a211",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u10-2-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-2-3:chords-inside",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-2-3",
+     "parent_question_id": "q:pp3u10-2-3:bk-example-3",
+     "source_page": 76,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "choice": [
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100,
+        110,
+        120
+       ]
+      },
+      {
+       "name": "b",
+       "choice": [
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100,
+        110
+       ]
+      },
+      {
+       "require": "a + b < 360",
+       "why": "arcs fit in a circle"
+      }
+     ],
+     "stem": "In a circle, the chords $\\overline{AB}$ and $\\overline{CD}$ intersect at the point $E$ inside the circle. $m(\\widehat{AC}) = {=a}^\\circ$ and $m(\\widehat{BD}) = {=b}^\\circ$, where $\\widehat{AC}$ and $\\widehat{BD}$ are the two opposite arcs intercepted by $\\angle AEC$ and its vertical angle. Find $m(\\angle AEC)$ in degrees.",
+     "answer": "(a + b) / 2",
+     "solution": [
+      "Two chords intersect inside the circle, so $m(\\angle AEC) = \\frac{1}{2}[m(\\widehat{AC}) + m(\\widehat{BD})]$.",
+      "$m(\\angle AEC) = \\frac{1}{2}[{=a} + {=b}]$.",
+      "$= \\frac{1}{2} \\times {=a + b} = {=(a + b) / 2}^\\circ$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Basic: direct use of half the sum of opposite arcs (book Well known problem 1). No figure needed; the stem names arcs. a and b multiples of 10 so the sum is even and the answer is a whole number."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-3-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-3-3:equal-angles",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-3-3",
+     "parent_question_id": "q:pp3u10-3-3:bk-example-4",
+     "source_page": 84,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        30,
+        80
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        5,
+        25
+       ]
+      },
+      {
+       "name": "x",
+       "let": "a - b"
+      },
+      {
+       "name": "r",
+       "let": "x + b"
+      }
+     ],
+     "stem": "$A$, $B$, $C$ and $D$ are four points, where $C$ and $D$ lie on the same side of $\\overline{AB}$. Given $m(\\angle ACB) = {=a}^\\circ$ and $m(\\angle ADB) = (x + {=b})^\\circ$, find the value of $x$ for which the four points $A$, $B$, $C$ and $D$ lie on one circle.",
+     "answer": "x",
+     "solution": [
+      "The angles $\\angle ACB$ and $\\angle ADB$ are drawn on the same base $\\overline{AB}$ and on the same side of it.",
+      "The four points lie on one circle only if these two angles are equal.",
+      "$x + {=b} = {=a}$",
+      "$x = {=a} - {=b} = {=x}$"
+     ],
+     "notes": "Entry point: equal angles on same base, same side. Answer is x."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-3-3:isosceles-base",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-3-3",
+     "parent_question_id": "q:pp3u10-3-3:bk-example-4",
+     "source_page": 84,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "t",
+       "randint": [
+        35,
+        70
+       ]
+      },
+      {
+       "name": "p",
+       "let": "180 - 2 * t"
+      }
+     ],
+     "stem": "$ABCD$ is a quadrilateral in which $AB = AD$ and $m(\\angle A) = {=p}^\\circ$. The points $C$ and $D$ lie on the same side of $\\overline{AB}$. Find $m(\\angle ACB)$ so that the points $A$, $B$, $C$ and $D$ lie on one circle.",
+     "answer": "t",
+     "solution": [
+      "In $\\triangle ABD$: $AB = AD$, so $m(\\angle ADB) = m(\\angle ABD) = \\frac{180^\\circ - {=p}^\\circ}{2} = {=t}^\\circ$.",
+      "$\\angle ADB$ and $\\angle ACB$ are drawn on the same base $\\overline{AB}$ and on the same side of it.",
+      "The four points lie on one circle only if the two angles are equal.",
+      "$m(\\angle ACB) = {=t}^\\circ$"
+     ],
+     "notes": "Direct variant of book example 4, asking for the angle instead of proving."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-3-3:find-x-circle",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-3-3",
+     "parent_question_id": "q:pp3u10-3-3:bk-example-4",
+     "source_page": 84,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x",
+       "randint": [
+        5,
+        15
+       ]
+      },
+      {
+       "name": "k",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        1,
+        20
+       ]
+      },
+      {
+       "name": "t",
+       "let": "k * x + m"
+      },
+      {
+       "require": "t >= 35 and t <= 75",
+       "why": "keep angles sensible"
+      },
+      {
+       "name": "p",
+       "let": "180 - 2 * t"
+      }
+     ],
+     "stem": "$ABCD$ is a quadrilateral in which $AB = AD$ and $m(\\angle BAD) = {=p}^\\circ$. The points $C$ and $D$ lie on the same side of $\\overline{AB}$ and $m(\\angle ACB) = ({=k}x + {=m})^\\circ$. If the points $A$, $B$, $C$ and $D$ lie on one circle, find the value of $x$.",
+     "answer": "x",
+     "solution": [
+      "In $\\triangle ABD$: $AB = AD$, so $m(\\angle ADB) = \\frac{180^\\circ - {=p}^\\circ}{2} = {=t}^\\circ$.",
+      "The points are on one circle, so the angles $\\angle ACB$ and $\\angle ADB$, drawn on the same base $\\overline{AB}$ and on the same side of it, are equal.",
+      "${=k}x + {=m} = {=t}$",
+      "${=k}x = {=t - m}$, so $x = {=x}$"
+     ],
+     "notes": "Two steps: isosceles base angle, then equate to algebraic angle."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-4-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-4-2:right-angles",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-4-2",
+     "parent_question_id": "q:pp3u10-4-2:bk-example-1",
+     "source_page": 86,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "r",
+       "randint": [
+        3,
+        15
+       ]
+      },
+      {
+       "name": "d",
+       "let": "2 * r"
+      }
+     ],
+     "stem": "In quadrilateral $AXBY$, $m(\\angle AXY) = m(\\angle ABY) = 90^\\circ$, and $X$ and $B$ lie on the same side of $\\overline{AY}$. If $AY = {=d}$ cm, prove that $AXBY$ is a cyclic quadrilateral and find, in cm, the length of the radius of the circle passing through its vertices.",
+     "answer": "r",
+     "solution": [
+      "The angles $\\angle AXY$ and $\\angle ABY$ are both $90^\\circ$, so they are equal.",
+      "They are two angles drawn on the base $\\overline{AY}$ and in one direction of it, so $AXBY$ is a cyclic quadrilateral.",
+      "Since the inscribed angle on $\\overline{AY}$ is $90^\\circ$, $\\overline{AY}$ is a diameter of the circle.",
+      "The diameter is ${=d}$ cm, so the radius is ${=d} \\div 2 = {=r}$ cm."
+     ],
+     "notes": "Basic: two right angles on one base. Radius = AY/2. No figure needed."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-4-2:parallel-lines",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-4-2",
+     "parent_question_id": "q:pp3u10-4-2:bk-example-2",
+     "source_page": 87,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        25,
+        50
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        "a + 10",
+        "a + 40"
+       ]
+      }
+     ],
+     "stem": "$ABCD$ is a cyclic quadrilateral whose diagonals intersect at $F$. $X \\in \\overline{AF}$ and $Y \\in \\overline{DF}$ such that $\\overline{XY} \\parallel \\overline{AD}$. Given $m(\\angle CAD) = {=a}^\\circ$ and $m(\\angle XBC) = {=b}^\\circ$, prove that $BXYC$ is a cyclic quadrilateral and find $m(\\angle XCY)$ in degrees.",
+     "answer": "b - a",
+     "solution": [
+      "Since $\\overline{XY} \\parallel \\overline{AD}$, $m(\\angle CXY) = m(\\angle CAD) = {=a}^\\circ$ (corresponding angles).",
+      "$m(\\angle CBD) = m(\\angle CAD) = {=a}^\\circ$ (inscribed angles on the same arc $CD$).",
+      "So $m(\\angle CXY) = m(\\angle CBY) = {=a}^\\circ$, two angles on the base $\\overline{CY}$ and in one direction of it, hence $BXYC$ is cyclic.",
+      "$m(\\angle XBY) = m(\\angle XBC) - m(\\angle CBD) = {=b} - {=a} = {=b - a}^\\circ$.",
+      "In the cyclic quadrilateral $BXYC$, $m(\\angle XCY) = m(\\angle XBY)$ (inscribed on the same arc $XY$), so it equals ${=b - a}^\\circ$."
+     ],
+     "notes": "Standard: parallel lines give equal angles, then cyclic, then equal inscribed angles. b>a keeps the configuration valid (diagonal BY lies inside angle XBC)."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-4-2:diameter-tangent",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-4-2",
+     "parent_question_id": "q:pp3u10-4-2:bk-example-1",
+     "source_page": 86,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "i",
+       "randint": [
+        0,
+        5
+       ]
+      },
+      {
+       "name": "T",
+       "let": "[[6,8,10],[8,6,10],[10,24,26],[12,16,20],[16,12,20],[24,10,26]][i]"
+      },
+      {
+       "name": "ab",
+       "let": "T[0]"
+      },
+      {
+       "name": "by",
+       "let": "T[1]"
+      },
+      {
+       "name": "ay",
+       "let": "T[2]"
+      }
+     ],
+     "stem": "$\\overline{AB}$ is a diameter of circle $M$, $X$ is the midpoint of chord $\\overline{AC}$, and ray $MX$ meets the tangent to the circle at $B$ in the point $Y$. Given $AB = {=ab}$ cm and $BY = {=by}$ cm, prove that $AXBY$ is a cyclic quadrilateral and find, in cm, the diameter of the circle passing through $A$, $X$, $B$ and $Y$.",
+     "answer": "ay",
+     "solution": [
+      "$X$ is the midpoint of $\\overline{AC}$, so $\\overline{MX} \\perp \\overline{AC}$ and $m(\\angle AXY) = 90^\\circ$.",
+      "$\\overline{BY}$ is a tangent and $\\overline{AB}$ a diameter, so $\\overline{BY} \\perp \\overline{AB}$ and $m(\\angle ABY) = 90^\\circ$.",
+      "The two equal angles $\\angle AXY$ and $\\angle ABY$ are drawn on the base $\\overline{AY}$ and in one direction of it, so $AXBY$ is cyclic.",
+      "Since the inscribed angle on $\\overline{AY}$ is $90^\\circ$, $\\overline{AY}$ is a diameter of this circle.",
+      "In the right triangle $ABY$: $AY^2 = {=ab}^2 + {=by}^2 = {=ab**2 + by**2}$.",
+      "So $AY = {=ay}$ cm, the diameter of the circle."
+     ],
+     "notes": "Advanced: book example 1 with numbers; Pythagorean triples give integer AY."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-5-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-5-2:exterior",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-5-2",
+     "parent_question_id": "q:pp3u10-5-2:bk-example-2",
+     "source_page": 90,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "d",
+       "randint": [
+        50,
+        120
+       ]
+      }
+     ],
+     "stem": "$ABCD$ is a cyclic quadrilateral. The point $E$ lies on ray $AB$ with $E \\notin \\overline{AB}$ (so $E$ is beyond $B$), and $m(\\angle ADC) = {=d}^\\circ$. Find $m(\\angle CBE)$.",
+     "answer": "d",
+     "solution": [
+      "$\\angle CBE$ is an exterior angle at vertex $B$ of the cyclic quadrilateral $ABCD$.",
+      "The exterior angle at a vertex equals the interior angle at the opposite vertex (Corollary), and the opposite vertex of $B$ is $D$.",
+      "$\\therefore m(\\angle CBE) = m(\\angle ADC) = {=d}^\\circ$."
+     ],
+     "notes": "Basic direct use of the corollary; answer in degrees.",
+     "proposed_misconceptions": []
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-5-2:arcangle",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-5-2",
+     "parent_question_id": "q:pp3u10-5-2:bk-example-2",
+     "source_page": 90,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "h",
+       "randint": [
+        20,
+        50
+       ]
+      },
+      {
+       "name": "r",
+       "randint": [
+        20,
+        50
+       ]
+      },
+      {
+       "name": "p",
+       "let": "2*h"
+      },
+      {
+       "name": "e",
+       "let": "h + r"
+      }
+     ],
+     "stem": "$ABCD$ is a cyclic quadrilateral. The point $E$ lies on ray $AB$ with $E \\notin \\overline{AB}$, $m(\\text{arc } AB) = {=p}^\\circ$ and $m(\\angle CBE) = {=e}^\\circ$. Find $m(\\angle BDC)$.",
+     "answer": "r",
+     "solution": [
+      "$\\angle ADB$ is an inscribed angle subtending arc $AB$, so $m(\\angle ADB) = \\frac{1}{2} \\times {=p}^\\circ = {=h}^\\circ$.",
+      "$\\angle CBE$ is an exterior angle at vertex $B$ of the cyclic quadrilateral, so $m(\\angle CDA) = m(\\angle CBE) = {=e}^\\circ$ (Corollary).",
+      "$\\therefore m(\\angle BDC) = {=e}^\\circ - {=h}^\\circ = {=r}^\\circ$."
+     ],
+     "notes": "Mirrors book example 2 with new numbers; D lies so that ray DB is inside angle ADC.",
+     "proposed_misconceptions": []
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-5-2:algebra",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-5-2",
+     "parent_question_id": "q:pp3u10-5-2:bk-example-2",
+     "source_page": 90,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x",
+       "randint": [
+        10,
+        30
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        5,
+        20
+       ]
+      },
+      {
+       "name": "k",
+       "let": "2*x + c"
+      },
+      {
+       "name": "e",
+       "let": "3*x + c"
+      },
+      {
+       "name": "ans",
+       "let": "180 - e"
+      }
+     ],
+     "stem": "$ABCD$ is a cyclic quadrilateral. The point $E$ lies on ray $AB$ with $E \\notin \\overline{AB}$. Given $m(\\angle CBE) = (3x + {=c})^\\circ$ and $m(\\angle ADC) = (x + {=k})^\\circ$, find $m(\\angle ABC)$.",
+     "answer": "ans",
+     "solution": [
+      "$\\angle CBE$ is an exterior angle at $B$, so it equals the interior angle at the opposite vertex $D$ (Corollary): $3x + {=c} = x + {=k}$.",
+      "$2x = {=k} - {=c} = {=2*x}$, so $x = {=x}$.",
+      "$m(\\angle CBE) = 3({=x}) + {=c} = {=e}^\\circ$.",
+      "$\\angle ABC$ and $\\angle CBE$ are a linear pair, so $m(\\angle ABC) = 180^\\circ - {=e}^\\circ = {=ans}^\\circ$."
+     ],
+     "notes": "x and angles are clean; max exterior angle 110.",
+     "proposed_misconceptions": []
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-5-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-5-3:opposite-supp",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-5-3",
+     "parent_question_id": "q:pp3u10-5-3:bk-drill-10-cyclic-quadrilaterals",
+     "source_page": 92,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        50,
+        130
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        50,
+        130
+       ]
+      },
+      {
+       "name": "c",
+       "let": "180 - a"
+      },
+      {
+       "name": "d",
+       "let": "180 - b"
+      }
+     ],
+     "stem": "In the quadrilateral $ABCD$, $m(\\angle A) = {=a}^\\circ$, $m(\\angle B) = {=b}^\\circ$ and $m(\\angle C) = {=c}^\\circ$. Given that $ABCD$ is a cyclic quadrilateral, find $m(\\angle D)$ in degrees.",
+     "answer": "d",
+     "solution": [
+      "The quadrilateral is cyclic, so its opposite angles are supplementary.",
+      "$\\angle B$ and $\\angle D$ are opposite, so $m(\\angle B) + m(\\angle D) = 180^\\circ$.",
+      "$m(\\angle D) = 180 - {=b} = {=d}^\\circ$.",
+      "Check: $\\angle A + \\angle C = {=a} + {=c} = 180^\\circ$, which agrees."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Converse of the cyclic quadrilateral property; opposite angles supplementary. Text-only, no figure."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-5-3:exterior-eq",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-5-3",
+     "parent_question_id": "q:pp3u10-5-3:bk-example-3",
+     "source_page": 92,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x0",
+       "randint": [
+        15,
+        60
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        5,
+        30
+       ]
+      },
+      {
+       "name": "q",
+       "let": "x0 + p"
+      },
+      {
+       "name": "e",
+       "let": "2*x0 + p"
+      }
+     ],
+     "stem": "In the quadrilateral $ABCD$, the side $\\overline{BC}$ is extended to $E$. $m(\\angle DCE) = (2x + {=p})^\\circ$ and $m(\\angle A) = (x + {=q})^\\circ$. Find the value of $x$ that makes $ABCD$ a cyclic quadrilateral.",
+     "answer": "x0",
+     "solution": [
+      "$\\angle DCE$ is an exterior angle at $C$, and the interior angle opposite to it is $\\angle A$.",
+      "$ABCD$ is cyclic when the exterior angle equals the interior opposite angle: $m(\\angle DCE) = m(\\angle A)$.",
+      "$2x + {=p} = x + {=q}$.",
+      "$x = {=q} - {=p} = {=x0}$.",
+      "Check: both angles equal ${=e}^\\circ$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Exterior angle equals interior opposite angle."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-5-3:algebra-ang",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-5-3",
+     "parent_question_id": "q:pp3u10-5-3:bk-drill-10-cyclic-quadrilaterals",
+     "source_page": 92,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x0",
+       "randint": [
+        10,
+        20
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        10,
+        30
+       ]
+      },
+      {
+       "name": "c",
+       "let": "180 - 5*x0 - a"
+      },
+      {
+       "name": "A",
+       "let": "2*x0 + a"
+      },
+      {
+       "name": "C",
+       "let": "3*x0 + c"
+      }
+     ],
+     "stem": "In the quadrilateral $ABCD$, $m(\\angle A) = (2x + {=a})^\\circ$ and $m(\\angle C) = (3x + {=c})^\\circ$. If $ABCD$ is a cyclic quadrilateral, find $m(\\angle C)$ in degrees.",
+     "answer": "C",
+     "solution": [
+      "$\\angle A$ and $\\angle C$ are opposite angles of a cyclic quadrilateral, so they are supplementary.",
+      "$(2x + {=a}) + (3x + {=c}) = 180$.",
+      "$5x + {=a + c} = 180$, so $5x = {=180 - a - c}$ and $x = {=x0}$.",
+      "$m(\\angle C) = 3({=x0}) + {=c} = {=C}^\\circ$.",
+      "Check: $\\angle A = {=A}^\\circ$ and ${=A} + {=C} = 180$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Set up and solve the supplementary-angles equation, then substitute."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-6-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-6-2:perimeter",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-6-2",
+     "parent_question_id": "q:pp3u10-6-2:bk-example-3",
+     "source_page": 97,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        3,
+        12
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        3,
+        12
+       ]
+      }
+     ],
+     "stem": "A circle is inscribed in the quadrilateral $ABCD$, touching all four of its sides. $AB = {=a}$ cm and $CD = {=c}$ cm. Find the perimeter of $ABCD$ in cm.",
+     "answer": "2 * (a + c)",
+     "solution": [
+      "The circle touches all the sides of $ABCD$, so the two tangent segments from each vertex are equal.",
+      "Adding them up gives $AB + CD = BC + AD$.",
+      "So $BC + AD = {=a} + {=c} = {=a + c}$ cm.",
+      "Perimeter $= (AB + CD) + (BC + AD) = {=a + c} + {=a + c} = {=2 * (a + c)}$ cm."
+     ],
+     "constraints": [],
+     "notes": "Pitot property from equal tangent segments, as in book example 3. No figure needed."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-6-2:area",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-6-2",
+     "parent_question_id": "q:pp3u10-6-2:bk-example-3",
+     "source_page": 97,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "r",
+       "randint": [
+        2,
+        8
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        3,
+        12
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        3,
+        12
+       ]
+      }
+     ],
+     "stem": "$M$ is a circle inscribed in the quadrilateral $ABCD$ (it touches all four sides) with radius {=r} cm. $AB = {=a}$ cm and $CD = {=c}$ cm. Find the area of $ABCD$ in cm$^2$.",
+     "answer": "r * (a + c)",
+     "solution": [
+      "Equal tangent segments from each vertex give $AB + CD = BC + AD = {=a} + {=c} = {=a + c}$ cm.",
+      "Perimeter $= 2 \\times {=a + c} = {=2 * (a + c)}$ cm.",
+      "The radius to each point of contact is perpendicular to the side, so the area is the sum of four triangles with height $r$: area $= \\frac{1}{2} \\times$ perimeter $\\times r$.",
+      "Area $= \\frac{1}{2} \\times {=2 * (a + c)} \\times {=r} = {=r * (a + c)}$ cm$^2$."
+     ],
+     "constraints": [],
+     "notes": "Mirrors book example 3 (perimeter then area)."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-6-2:tangent",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-6-2",
+     "parent_question_id": "q:pp3u10-6-2:bk-example-3",
+     "source_page": 97,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x",
+       "randint": [
+        2,
+        8
+       ]
+      },
+      {
+       "name": "y",
+       "randint": [
+        2,
+        8
+       ]
+      },
+      {
+       "name": "z",
+       "randint": [
+        2,
+        8
+       ]
+      },
+      {
+       "name": "p",
+       "let": "x + y"
+      },
+      {
+       "name": "q",
+       "let": "y + z"
+      },
+      {
+       "name": "s",
+       "let": "x + z"
+      }
+     ],
+     "stem": "A circle is inscribed in triangle $ABC$ and touches $BC$ at $D$, $AC$ at $E$ and $AB$ at $F$. $AB = {=p}$ cm, $BC = {=q}$ cm and $AC = {=s}$ cm. Find the length of $BD$ in cm.",
+     "answer": "y",
+     "solution": [
+      "Tangent segments from one point are equal: $AF = AE$, $BF = BD$, $CD = CE$.",
+      "Perimeter $= {=p} + {=q} + {=s} = {=p + q + s}$ cm, and the perimeter equals $2(AF + BD + CE)$, so $AF + BD + CE = {=x + y + z}$ cm.",
+      "Since $AF + AE = 2AF$ is not needed: $AF + BF = AB$ and $AF + CE = AC$ give $AF = {=x + y + z} - BC = {=x + y + z} - {=q} = {=x}$ cm.",
+      "So $BD = BF = AB - AF = {=p} - {=x} = {=y}$ cm."
+     ],
+     "constraints": [],
+     "notes": "Sides are sums of tangent lengths, so the triangle inequality holds and BD is a whole number. Step 3 wording: AF + BD + CE is the semi-perimeter, then AF = semi-perimeter - BC."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-7-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-7-2:tangent-exterior",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-7-2",
+     "parent_question_id": "q:pp3u10-7-2:bk-example-1",
+     "source_page": 102,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "c",
+       "randint": [
+        35,
+        85
+       ]
+      }
+     ],
+     "stem": "$ABC$ is a triangle inscribed in a circle, and $\\overleftrightarrow{BD}$ is a tangent to the circle at $B$. $X \\in \\overline{AB}$ and $Y \\in \\overline{BC}$ where $\\overline{XY} \\parallel \\overleftrightarrow{BD}$. If $m(\\angle C) = {=c}^\\circ$, find $m(\\angle BXY)$ in degrees.",
+     "answer": "c",
+     "solution": [
+      "$\\overleftrightarrow{BD}$ is tangent at $B$ and $AB$ is a chord, so the angle of tangency equals the inscribed angle: $m(\\angle DBA) = m(\\angle C) = {=c}^\\circ$.",
+      "$\\overline{XY} \\parallel \\overleftrightarrow{BD}$ with transversal $AB$, so $m(\\angle BXY) = m(\\angle DBA)$ (corresponding angles).",
+      "Therefore $m(\\angle BXY) = {=c}^\\circ$, which equals $m(\\angle C)$, so $XYCA$ is cyclic."
+     ],
+     "notes": "Numeric; the key step of the book's proof."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-7-2:opposite-angle",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-7-2",
+     "parent_question_id": "q:pp3u10-7-2:bk-example-1",
+     "source_page": 102,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        35,
+        85
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        40,
+        85
+       ]
+      },
+      {
+       "name": "r",
+       "let": "180 - p"
+      }
+     ],
+     "stem": "$ABC$ is a triangle inscribed in a circle, and $\\overleftrightarrow{BD}$ is a tangent to the circle at $B$. $X \\in \\overline{AB}$ and $Y \\in \\overline{BC}$ where $\\overline{XY} \\parallel \\overleftrightarrow{BD}$. If $m(\\angle DBA) = {=a}^\\circ$ and $m(\\angle A) = {=p}^\\circ$, prove that $XYCA$ is cyclic and find $m(\\angle XYC)$ in degrees.",
+     "answer": "r",
+     "solution": [
+      "The angle of tangency equals the inscribed angle: $m(\\angle C) = m(\\angle DBA) = {=a}^\\circ$.",
+      "$\\overline{XY} \\parallel \\overleftrightarrow{BD}$ with transversal $AB$, so $m(\\angle BXY) = m(\\angle DBA) = {=a}^\\circ$.",
+      "$\\angle BXY$ is exterior to $XYCA$ and equals the interior opposite angle $\\angle C$, so $XYCA$ is cyclic.",
+      "In a cyclic quadrilateral opposite angles are supplementary: $m(\\angle XYC) = 180^\\circ - m(\\angle A) = 180^\\circ - {=p}^\\circ = {=r}^\\circ$."
+     ],
+     "notes": "Opposite angles at Y and A."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-7-2:two-step-angle",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-7-2",
+     "parent_question_id": "q:pp3u10-7-2:bk-example-1",
+     "source_page": 102,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        30,
+        80
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        30,
+        80
+       ]
+      },
+      {
+       "name": "s",
+       "let": "a + b"
+      },
+      {
+       "name": "A",
+       "let": "180 - a - b"
+      },
+      {
+       "require": "a + b < 150",
+       "why": "keeps angle A at least 30"
+      }
+     ],
+     "stem": "$ABC$ is a triangle inscribed in a circle, and $\\overleftrightarrow{BD}$ is a tangent to the circle at $B$. $X \\in \\overline{AB}$ and $Y \\in \\overline{BC}$ where $\\overline{XY} \\parallel \\overleftrightarrow{BD}$. If $m(\\angle DBA) = {=a}^\\circ$ and $m(\\angle ABC) = {=b}^\\circ$, prove that $XYCA$ is cyclic and find $m(\\angle XYC)$ in degrees.",
+     "answer": "s",
+     "solution": [
+      "The angle of tangency equals the inscribed angle: $m(\\angle C) = m(\\angle DBA) = {=a}^\\circ$.",
+      "$\\overline{XY} \\parallel \\overleftrightarrow{BD}$, so $m(\\angle BXY) = m(\\angle DBA) = {=a}^\\circ = m(\\angle C)$. The exterior angle $\\angle BXY$ equals the interior opposite angle $\\angle C$, so $XYCA$ is cyclic.",
+      "In triangle $ABC$: $m(\\angle A) = 180^\\circ - {=a}^\\circ - {=b}^\\circ = {=A}^\\circ$.",
+      "In the cyclic quadrilateral $XYCA$, $m(\\angle XYC) = 180^\\circ - m(\\angle A) = 180^\\circ - {=A}^\\circ = {=s}^\\circ$."
+     ],
+     "notes": "Angle sum of triangle then opposite angles of cyclic quadrilateral."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u10-7-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-7-3:find-x-tangent",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-7-3",
+     "parent_question_id": "expl:pp3u10-7-3:bk-example-4",
+     "source_page": 103,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x",
+       "randint": [
+        10,
+        40
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        5,
+        30
+       ]
+      },
+      {
+       "name": "b",
+       "let": "x + a"
+      },
+      {
+       "name": "d",
+       "let": "2*x + a"
+      }
+     ],
+     "constraints": [],
+     "stem": "AB is a chord of a circle and C is a point on the circle on one side of AB. The ray AD lies on the other side of AB from C, with $m(\\angle DAB) = (2x + {=a})^\\circ$ and $m(\\angle ACB) = (x + {=b})^\\circ$. Find the value of $x$ for which the line AD is a tangent to the circle at A.",
+     "answer": "x",
+     "solution": [
+      "The line AD is a tangent at A if the angle between AD and the chord AB equals the inscribed angle in the alternate segment.",
+      "So $m(\\angle DAB) = m(\\angle ACB)$, i.e. $2x + {=a} = x + {=b}$.",
+      "$x = {=b} - {=a} = {=x}$.",
+      "Check: both angles equal ${=d}^\\circ$, so AD is a tangent."
+     ],
+     "notes": "Converse of theorem 5, direct equation. x is in the answer; no diagram needed as the sides are described in words."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-7-3:triangle-angles",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-7-3",
+     "parent_question_id": "expl:pp3u10-7-3:bk-example-4",
+     "source_page": 103,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "x",
+       "randint": [
+        10,
+        40
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        5,
+        30
+       ]
+      },
+      {
+       "name": "C",
+       "let": "2*x + k"
+      },
+      {
+       "name": "a",
+       "randint": [
+        30,
+        45
+       ]
+      },
+      {
+       "name": "b",
+       "let": "180 - C - a"
+      },
+      {
+       "require": "b >= 25",
+       "why": "keep angle B reasonable"
+      }
+     ],
+     "constraints": [],
+     "stem": "ABC is a triangle inscribed in a circle with $m(\\angle B) = {=b}^\\circ$ and $m(\\angle BAC) = {=a}^\\circ$. The ray AD lies on the other side of AB from C, with $m(\\angle DAB) = (2x + {=k})^\\circ$. Find the value of $x$ for which the line AD is a tangent to the circle at A.",
+     "answer": "x",
+     "solution": [
+      "In triangle ABC: $m(\\angle C) = 180^\\circ - {=b}^\\circ - {=a}^\\circ = {=C}^\\circ$.",
+      "AD is a tangent at A if $m(\\angle DAB) = m(\\angle C)$, the inscribed angle in the alternate segment.",
+      "$2x + {=k} = {=C}$, so $2x = {=C - k}$.",
+      "$x = {=x}$."
+     ],
+     "notes": "Needs the angle sum of a triangle first, then the converse of theorem 5."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u10-7-3:parallel-xy",
+     "kind": "family",
+     "lo_id": "lo:pp3u10-7-3",
+     "parent_question_id": "expl:pp3u10-7-3:bk-example-4",
+     "source_page": 103,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        40,
+        80
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        40,
+        80
+       ]
+      },
+      {
+       "require": "a + b <= 140",
+       "why": "angle C at least 40"
+      },
+      {
+       "name": "C",
+       "let": "180 - a - b"
+      }
+     ],
+     "constraints": [],
+     "stem": "ABC is a triangle inscribed in a circle with $m(\\angle B) = {=b}^\\circ$ and $m(\\angle BAC) = {=a}^\\circ$. The line AD is a tangent to the circle at A, with D on the other side of AB from C. $X \\in AB$ and $Y \\in AC$ where $XY \\parallel BC$. To prove that AD is also a tangent to the circle passing through A, X and Y, we need $m(\\angle DAX) = m(\\angle AYX)$. Find the common value of these two angles in degrees.",
+     "answer": "C",
+     "solution": [
+      "In triangle ABC: $m(\\angle C) = 180^\\circ - {=b}^\\circ - {=a}^\\circ = {=C}^\\circ$.",
+      "AD is a tangent and AB is the chord of tangency, so $m(\\angle DAB) = m(\\angle C) = {=C}^\\circ$. Since X lies on AB, $m(\\angle DAX) = {=C}^\\circ$.",
+      "$XY \\parallel BC$ and AC is a transversal, so $m(\\angle AYX) = m(\\angle C) = {=C}^\\circ$.",
+      "Hence $m(\\angle DAX) = m(\\angle AYX) = {=C}^\\circ$, so AD is a tangent to the circle through A, X and Y."
+     ],
+     "notes": "Numeric version of the book's worked example 4."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  }
+ ],
+ "revised": []
+}

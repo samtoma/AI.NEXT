@@ -1,0 +1,62 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u6-1-1:pair",
+ "kind": "family",
+ "lo_id": "lo:pp3u6-1-1",
+ "parent_question_id": "expl:pp3u6-1-1:bk-open-prompt-2",
+ "parent_kind": "teaching",
+ "source_page": 6,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "t",
+   "randint": [
+    -2,
+    4
+   ]
+  },
+  {
+   "name": "s",
+   "randint": [
+    -3,
+    5
+   ]
+  },
+  {
+   "name": "c",
+   "let": "a * t + b * s"
+  }
+ ],
+ "stem": "Find the solution of the equation ${=a}x + {=b}y = {=c}$ whose $x$-coordinate is ${=t}$. Write it as an ordered pair $(x, y)$.",
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=t}, {=s})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "solution": [
+  "Put $x = {=t}$ in the equation: ${=a} \\times ({=t}) + {=b}y = {=c}$.",
+  "So ${=b}y = {=c} - ({=a * t}) = {=b * s}$.",
+  "Divide by ${=b}$: $y = {=s}$.",
+  "The solution is $({=t}, {=s})$."
+ ],
+ "notes": "Standard: coefficient of y not 1; y always an integer by construction.",
+ "proposed_misconceptions": []
+}

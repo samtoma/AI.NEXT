@@ -1,0 +1,36 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-3-2:find-rule",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-3-2",
+ "parent_question_id": "expl:pp3u1-3-2:bk-example-1",
+ "parent_kind": "teaching",
+ "source_page": 17,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    4
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    5
+   ]
+  }
+ ],
+ "stem": "Let $X=\\{1, 2, 3, 4\\}$ and let $f : X \\to \\mathbb{Z}$ be a function with $f(x)=px+q$, where $p$ and $q$ are constants. Its set of ordered pairs contains $(1, {=p+q})$ and $(3, {=3*p+q})$. Find the second coordinate of the pair whose first coordinate is $4$.",
+ "answer": "4*p + q",
+ "solution": [
+  "$f(1)=p+q={=p+q}$ and $f(3)=3p+q={=3*p+q}$.",
+  "Subtracting: $2p={=2*p}$, so $p={=p}$, and then $q={=q}$.",
+  "So $f(x)={=p}x+{=q}$ and $f(4)={=4*p+q}$, giving the pair $(4, {=4*p+q})$."
+ ],
+ "notes": "Advanced: recover the rule from two ordered pairs, then give another pair."
+}

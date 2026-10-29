@@ -1,0 +1,34 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-3-3:isosceles-base",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-3-3",
+ "parent_question_id": "expl:pp3u10-3-3:bk-example-4",
+ "parent_kind": "teaching",
+ "source_page": 84,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "t",
+   "randint": [
+    35,
+    70
+   ]
+  },
+  {
+   "name": "p",
+   "let": "180 - 2 * t"
+  }
+ ],
+ "stem": "$ABCD$ is a quadrilateral in which $AB = AD$ and $m(\\angle A) = {=p}^\\circ$. The points $C$ and $D$ lie on the same side of $\\overline{AB}$. Find $m(\\angle ACB)$ so that the points $A$, $B$, $C$ and $D$ lie on one circle.",
+ "answer": "t",
+ "solution": [
+  "In $\\triangle ABD$: $AB = AD$, so $m(\\angle ADB) = m(\\angle ABD) = \\frac{180^\\circ - {=p}^\\circ}{2} = {=t}^\\circ$.",
+  "$\\angle ADB$ and $\\angle ACB$ are drawn on the same base $\\overline{AB}$ and on the same side of it.",
+  "The four points lie on one circle only if the two angles are equal.",
+  "$m(\\angle ACB) = {=t}^\\circ$"
+ ],
+ "notes": "Direct variant of book example 4, asking for the angle instead of proving."
+}

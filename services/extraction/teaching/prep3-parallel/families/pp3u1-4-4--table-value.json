@@ -1,0 +1,47 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-4-4:table-value",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-4-4",
+ "parent_question_id": "expl:pp3u1-4-4:bk-example-3",
+ "parent_kind": "teaching",
+ "source_page": 22,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    -4,
+    4
+   ],
+   "resample_while": "p == 0"
+  },
+  {
+   "name": "fn",
+   "let": "\"x^2\" if s == 1 else \"-x^2\""
+  },
+  {
+   "name": "v",
+   "let": "s * p * p"
+  }
+ ],
+ "constraints": [],
+ "stem": "To represent the quadratic function $f(x)={=fn}$, $x\\in\\mathbb{R}$, graphically, we first make a table of ordered pairs $(x, f(x))$. Find $f({=p})$.",
+ "answer": "v",
+ "solution": [
+  "Substitute $x={=p}$ in $f(x)={=fn}$.",
+  "$({=p})^2={=p*p}$.",
+  "So $f({=p})={=v}$, and the point $({=p}, {=v})$ is put in the table."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Table-of-values step of the book's graphing method."
+}

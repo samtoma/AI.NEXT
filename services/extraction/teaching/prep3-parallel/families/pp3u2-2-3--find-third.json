@@ -1,0 +1,60 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u2-2-3:find-third",
+ "kind": "family",
+ "lo_id": "lo:pp3u2-2-3",
+ "parent_question_id": "expl:pp3u2-2-3:bk-example-5",
+ "parent_kind": "teaching",
+ "source_page": 30,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    7
+   ],
+   "resample_while": "q == p"
+  },
+  {
+   "name": "a",
+   "let": "q*q*s"
+  },
+  {
+   "name": "b",
+   "let": "p*q*s"
+  },
+  {
+   "name": "c",
+   "let": "p*p*s"
+  }
+ ],
+ "constraints": [
+  "gcd(p, q) == 1"
+ ],
+ "stem": "The numbers ${=a}$, ${=b}$ and $c$ are in continued proportion. Find the value of $c$.",
+ "answer": "c",
+ "solution": [
+  "Since $a$, $b$, $c$ are in continued proportion, $b^2=ac$.",
+  "${=b}^2={=a}\\times c$, so ${=b*b}={=a}\\,c$.",
+  "$c=\\frac{{=b*b}}{{=a}}={=c}$"
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Ratio p/q in lowest terms so c is a whole number."
+}

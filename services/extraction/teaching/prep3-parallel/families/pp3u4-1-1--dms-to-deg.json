@@ -1,0 +1,53 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u4-1-1:dms-to-deg",
+ "kind": "family",
+ "lo_id": "lo:pp3u4-1-1",
+ "parent_question_id": "expl:pp3u4-1-1:bk-drill-1-d",
+ "parent_kind": "teaching",
+ "source_page": 50,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "d",
+   "randint": [
+    20,
+    89
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    1,
+    59
+   ]
+  },
+  {
+   "name": "s",
+   "randint": [
+    1,
+    59
+   ]
+  },
+  {
+   "name": "t",
+   "let": "d + m/60 + s/3600"
+  },
+  {
+   "require": "abs((t*10000) % 1 - 1/2) > 1/20",
+   "why": "keep the 4 d.p. rounding unambiguous even if intermediates are rounded"
+  }
+ ],
+ "stem": "Write the angle ${=d}^\\circ {=m}' {=s}''$ in degrees. Give your answer to 4 decimal places.",
+ "answer": "fixed(t, 4)",
+ "solution": [
+  "${=m}' = \\frac{{=m}}{60} = {=fixed(m/60, 6)}^\\circ$",
+  "${=s}'' = \\frac{{=s}}{60}' = {=fixed(s/60, 6)}'$, and ${=fixed(s/60, 6)}' = \\frac{{=fixed(s/60, 6)}}{60} = {=fixed(s/3600, 6)}^\\circ$",
+  "Add: ${=d} + {=fixed(m/60, 6)} + {=fixed(s/3600, 6)} = {=fixed(t, 6)}$",
+  "The angle is ${=fixed(t, 4)}^\\circ$ (to 4 decimal places)"
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Models bk-drill-1-b/c/d. Intermediate rounding guarded by require."
+}

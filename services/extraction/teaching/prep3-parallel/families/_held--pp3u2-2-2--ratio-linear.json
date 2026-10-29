@@ -1,0 +1,77 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u2-2-2:ratio-linear",
+ "kind": "family",
+ "lo_id": "lo:pp3u2-2-2",
+ "parent_question_id": "q:pp3u2-2-2:bk-drill-2",
+ "source_page": 29,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    9
+   ],
+   "resample_while": "gcd(p, q) != 1"
+  },
+  {
+   "name": "u",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "v",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "n0",
+   "let": "u*p + v*q"
+  },
+  {
+   "name": "g",
+   "let": "gcd(n0, q)"
+  },
+  {
+   "name": "n",
+   "let": "n0 // g"
+  },
+  {
+   "name": "d",
+   "let": "q // g"
+  }
+ ],
+ "constraints": [
+  "gcd(p, q) == 1"
+ ],
+ "stem": "If $\\frac{a}{b}=\\frac{{=p}}{{=q}}$, find the value of $\\frac{{=u}a+{=v}b}{b}$. Give the answer as a fraction in its simplest form (a whole number if it is one).",
+ "answer": "{=n}/{=d}",
+ "solution": [
+  "Since $\\frac{a}{b}=\\frac{{=p}}{{=q}}$, let $a={=p}m$ and $b={=q}m$ with $m\\neq 0$.",
+  "$\\frac{{=u}a+{=v}b}{b}=\\frac{{=u}\\times {=p}m+{=v}\\times {=q}m}{{=q}m}=\\frac{{=n0}m}{{=q}m}$.",
+  "$=\\frac{{=n0}}{{=q}}$, which in simplest form is {=n}/{=d}."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=n}/{=d}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic: one substitution a=pm, b=qm, m cancels. gcd(p,q)=1 so a/b is in lowest terms; the final fraction is reduced by gcd(n0,q)."
+}

@@ -1,0 +1,48 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-4-2:diameter-tangent",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-4-2",
+ "parent_question_id": "expl:pp3u10-4-2:bk-example-1",
+ "parent_kind": "teaching",
+ "source_page": 86,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "i",
+   "randint": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "T",
+   "let": "[[6,8,10],[8,6,10],[10,24,26],[12,16,20],[16,12,20],[24,10,26]][i]"
+  },
+  {
+   "name": "ab",
+   "let": "T[0]"
+  },
+  {
+   "name": "by",
+   "let": "T[1]"
+  },
+  {
+   "name": "ay",
+   "let": "T[2]"
+  }
+ ],
+ "stem": "$\\overline{AB}$ is a diameter of circle $M$, $X$ is the midpoint of chord $\\overline{AC}$, and ray $MX$ meets the tangent to the circle at $B$ in the point $Y$. Given $AB = {=ab}$ cm and $BY = {=by}$ cm, prove that $AXBY$ is a cyclic quadrilateral and find, in cm, the diameter of the circle passing through $A$, $X$, $B$ and $Y$.",
+ "answer": "ay",
+ "solution": [
+  "$X$ is the midpoint of $\\overline{AC}$, so $\\overline{MX} \\perp \\overline{AC}$ and $m(\\angle AXY) = 90^\\circ$.",
+  "$\\overline{BY}$ is a tangent and $\\overline{AB}$ a diameter, so $\\overline{BY} \\perp \\overline{AB}$ and $m(\\angle ABY) = 90^\\circ$.",
+  "The two equal angles $\\angle AXY$ and $\\angle ABY$ are drawn on the base $\\overline{AY}$ and in one direction of it, so $AXBY$ is cyclic.",
+  "Since the inscribed angle on $\\overline{AY}$ is $90^\\circ$, $\\overline{AY}$ is a diameter of this circle.",
+  "In the right triangle $ABY$: $AY^2 = {=ab}^2 + {=by}^2 = {=ab**2 + by**2}$.",
+  "So $AY = {=ay}$ cm, the diameter of the circle."
+ ],
+ "notes": "Advanced: book example 1 with numbers; Pythagorean triples give integer AY."
+}

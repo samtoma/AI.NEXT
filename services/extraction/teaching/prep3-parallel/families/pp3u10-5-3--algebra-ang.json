@@ -1,0 +1,51 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-5-3:algebra-ang",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-5-3",
+ "parent_question_id": "expl:pp3u10-5-3:bk-drill-10-cyclic-quadrilaterals",
+ "parent_kind": "teaching",
+ "source_page": 92,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x0",
+   "randint": [
+    10,
+    20
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    10,
+    30
+   ]
+  },
+  {
+   "name": "c",
+   "let": "180 - 5*x0 - a"
+  },
+  {
+   "name": "A",
+   "let": "2*x0 + a"
+  },
+  {
+   "name": "C",
+   "let": "3*x0 + c"
+  }
+ ],
+ "stem": "In the quadrilateral $ABCD$, $m(\\angle A) = (2x + {=a})^\\circ$ and $m(\\angle C) = (3x + {=c})^\\circ$. If $ABCD$ is a cyclic quadrilateral, find $m(\\angle C)$ in degrees.",
+ "answer": "C",
+ "solution": [
+  "$\\angle A$ and $\\angle C$ are opposite angles of a cyclic quadrilateral, so they are supplementary.",
+  "$(2x + {=a}) + (3x + {=c}) = 180$.",
+  "$5x + {=a + c} = 180$, so $5x = {=180 - a - c}$ and $x = {=x0}$.",
+  "$m(\\angle C) = 3({=x0}) + {=c} = {=C}^\\circ$.",
+  "Check: $\\angle A = {=A}^\\circ$ and ${=A} + {=C} = 180$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Set up and solve the supplementary-angles equation, then substitute."
+}

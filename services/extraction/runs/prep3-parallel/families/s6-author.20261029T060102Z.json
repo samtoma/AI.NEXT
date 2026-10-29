@@ -1,0 +1,828 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "cc02fdaeba7ed190e3afd50e75e0c37b01570e1a2d135636af2e6fdd2f501cb1",
+  "generated_sha256": "0c55089c3ba0e3134d191260adff00e4052009868615f153c20a778023000cfb",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u3-2-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-1:basic-range",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-1",
+     "parent_question_id": "expl:pp3u3-2-1:bk-worked-example-1",
+     "source_page": 42,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "v",
+       "sample": {
+        "from": "range(10, 95)",
+        "k": 6
+       }
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the range of the set of values: ${=v[0]}, {=v[1]}, {=v[2]}, {=v[3]}, {=v[4]}, {=v[5]}$.",
+     "answer": "max(v) - min(v)",
+     "solution": [
+      "Range = greatest value $-$ smallest value.",
+      "The greatest value is ${=max(v)}$ and the smallest value is ${=min(v)}$.",
+      "Range $= {=max(v)} - {=min(v)} = {=max(v) - min(v)}$."
+     ],
+     "notes": "Modelled on the worked example (range = greatest - smallest). Values are distinct, unordered."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-1:wages-compare",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-1",
+     "parent_question_id": "expl:pp3u3-2-1:bk-think-and-discuss-1",
+     "source_page": 41,
+     "tier": "standard",
+     "answer_type": "mcq",
+     "context": "Two sets A and B of five wages, in LE, are given.",
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        100,
+        300
+       ]
+      },
+      {
+       "name": "a",
+       "randint": [
+        20,
+        50
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        1,
+        "a - 5"
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        "a + 20",
+        "a + 70"
+       ]
+      },
+      {
+       "name": "e",
+       "randint": [
+        1,
+        "c - 5"
+       ]
+      },
+      {
+       "name": "s",
+       "choice": [
+        0,
+        1
+       ]
+      },
+      {
+       "name": "a1",
+       "let": "a if s == 0 else c"
+      },
+      {
+       "name": "b1",
+       "let": "b if s == 0 else e"
+      },
+      {
+       "name": "a2",
+       "let": "c if s == 0 else a"
+      },
+      {
+       "name": "b2",
+       "let": "e if s == 0 else b"
+      },
+      {
+       "name": "big",
+       "let": "\"B\" if s == 0 else \"A\""
+      },
+      {
+       "name": "small",
+       "let": "\"A\" if s == 0 else \"B\""
+      }
+     ],
+     "constraints": [],
+     "stem": "The wages (in LE) of five workers in two sets are: Set A: ${=m - a1}, {=m - b1}, {=m}, {=m + b1}, {=m + a1}$; Set B: ${=m - a2}, {=m - b2}, {=m}, {=m + b2}, {=m + a2}$. Both sets have mean ${=m}$. Which statement is correct?",
+     "answer": "",
+     "solution": [
+      "Set A: range $= {=m + a1} - {=m - a1} = {=2*a1}$.",
+      "Set B: range $= {=m + a2} - {=m - a2} = {=2*a2}$.",
+      "The means are equal, so we compare the ranges: the larger range means the more dispersed set.",
+      "Set {=big} has the greater range, so it is more dispersed."
+     ],
+     "choices": {
+      "correct": "Set {=big} is more dispersed, because its range is greater",
+      "distractors": [
+       {
+        "text": "Set {=small} is more dispersed, because its range is greater",
+        "misconception_id": null
+       },
+       {
+        "text": "The sets are equally spread, because their means are equal",
+        "misconception_id": "mc:pp3u3-2-1:equal-means-same-dispersion"
+       },
+       {
+        "text": "Set {=big} is less dispersed, because its range is greater",
+        "misconception_id": null
+       }
+      ]
+     },
+     "notes": "Equal means by symmetric construction. The last distractor is contradictory in logic but names a plausible reversed reading; ranges are never equal because c >= a+20.",
+     "proposed_misconceptions": []
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-1:missing-value",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-1",
+     "parent_question_id": "expl:pp3u3-2-1:bk-think-and-discuss-1",
+     "source_page": 41,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "v",
+       "sample": {
+        "from": "range(20, 80)",
+        "k": 4
+       }
+      },
+      {
+       "name": "M",
+       "randint": [
+        30,
+        70
+       ]
+      },
+      {
+       "name": "x",
+       "let": "5*M - sum(v)"
+      },
+      {
+       "require": "x >= 1 and x <= 120 and x not in v",
+       "why": "fifth value positive, reasonable and distinct"
+      },
+      {
+       "name": "w",
+       "let": "v + [x]"
+      }
+     ],
+     "constraints": [],
+     "stem": "A set of five values has mean ${=M}$. Four of the values are ${=v[0]}, {=v[1]}, {=v[2]}, {=v[3]}$. Find the range of the set.",
+     "answer": "max(w) - min(w)",
+     "solution": [
+      "Total of the five values $= 5 \\times {=M} = {=5*M}$.",
+      "Total of the four known values $= {=sum(v)}$.",
+      "Fifth value $= {=5*M} - {=sum(v)} = {=x}$.",
+      "Greatest value $= {=max(w)}$, smallest value $= {=min(w)}$.",
+      "Range $= {=max(w)} - {=min(w)} = {=max(w) - min(w)}$."
+     ],
+     "notes": "Uses mean = total / number, then range."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u3-2-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-2:basic-sd",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-2",
+     "parent_question_id": "expl:pp3u3-2-2:bk-example-1",
+     "source_page": 43,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        10,
+        30
+       ]
+      },
+      {
+       "name": "d",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "pat",
+       "choice": [
+        [
+         -1,
+         1,
+         1,
+         -1
+        ],
+        [
+         1,
+         -1,
+         -1,
+         1
+        ],
+        [
+         -1,
+         -1,
+         1,
+         1
+        ],
+        [
+         1,
+         1,
+         -1,
+         -1
+        ]
+       ]
+      },
+      {
+       "name": "vals",
+       "let": "[m + d * t for t in pat]"
+      }
+     ],
+     "constraints": [],
+     "stem": "Calculate the standard deviation of the values: ${=vals[0]}, {=vals[1]}, {=vals[2]}, {=vals[3]}$",
+     "answer": "d",
+     "solution": [
+      "The mean is $\\bar{x}=\\dfrac{\\sum x}{n}=\\dfrac{{=vals[0]}+{=vals[1]}+{=vals[2]}+{=vals[3]}}{4}=\\dfrac{{=4*m}}{4}={=m}$",
+      "The deviations $x-\\bar{x}$ are ${=vals[0]-m}, {=vals[1]-m}, {=vals[2]-m}, {=vals[3]-m}$, and their squares are ${=d*d}, {=d*d}, {=d*d}, {=d*d}$, so $\\sum (x-\\bar{x})^2={=4*d*d}$",
+      "$\\sigma=\\sqrt{\\dfrac{\\sum (x-\\bar{x})^2}{n}}=\\sqrt{\\dfrac{{=4*d*d}}{4}}=\\sqrt{{=d*d}}={=d}$"
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Symmetric data, integer mean and integer answer. Population formula (divide by n) as in the book."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-2:standard-sd",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-2",
+     "parent_question_id": "expl:pp3u3-2-2:bk-example-1",
+     "source_page": 43,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "v",
+       "sample": {
+        "from": "range(5, 40)",
+        "k": 5
+       }
+      },
+      {
+       "name": "s",
+       "let": "sum(v)"
+      },
+      {
+       "require": "s % 5 == 0",
+       "why": "mean must be a whole number"
+      },
+      {
+       "name": "vs",
+       "let": "sorted(v)"
+      },
+      {
+       "name": "m",
+       "let": "s // 5"
+      },
+      {
+       "name": "ss",
+       "let": "sum([(x - m) ** 2 for x in vs])"
+      }
+     ],
+     "constraints": [],
+     "stem": "Calculate the standard deviation of the values: ${=vs[0]}, {=vs[1]}, {=vs[2]}, {=vs[3]}, {=vs[4]}$. Round your answer to 2 decimal places.",
+     "answer": "fixed(sqrt(ss / 5), 2)",
+     "solution": [
+      "The mean is $\\bar{x}=\\dfrac{\\sum x}{n}=\\dfrac{{=vs[0]}+{=vs[1]}+{=vs[2]}+{=vs[3]}+{=vs[4]}}{5}=\\dfrac{{=s}}{5}={=m}$",
+      "Squared deviations: $({=vs[0]}-{=m})^2={=(vs[0]-m)**2}$, $({=vs[1]}-{=m})^2={=(vs[1]-m)**2}$, $({=vs[2]}-{=m})^2={=(vs[2]-m)**2}$, $({=vs[3]}-{=m})^2={=(vs[3]-m)**2}$, $({=vs[4]}-{=m})^2={=(vs[4]-m)**2}$",
+      "$\\sum (x-\\bar{x})^2={=ss}$",
+      "$\\sigma=\\sqrt{\\dfrac{\\sum (x-\\bar{x})^2}{n}}=\\sqrt{\\dfrac{{=ss}}{5}}\\simeq {=fixed(sqrt(ss / 5), 2)}$"
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Mirrors the book example: five distinct values with whole-number mean, answer rounded to 2 d.p."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-2:advanced-sd",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-2",
+     "parent_question_id": "expl:pp3u3-2-2:bk-example-1",
+     "source_page": 43,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        12,
+        30
+       ]
+      },
+      {
+       "name": "k",
+       "sample": {
+        "from": "range(m - 8, m + 9)",
+        "k": 4
+       }
+      },
+      {
+       "name": "sk",
+       "let": "sum(k)"
+      },
+      {
+       "name": "x5",
+       "let": "5 * m - sk"
+      },
+      {
+       "require": "x5 >= 1 and x5 <= 60 and x5 not in k",
+       "why": "missing value must be positive and new"
+      },
+      {
+       "name": "all",
+       "let": "sorted(k + [x5])"
+      },
+      {
+       "name": "ss",
+       "let": "sum([(x - m) ** 2 for x in all])"
+      }
+     ],
+     "constraints": [],
+     "stem": "Four of five values are ${=k[0]}, {=k[1]}, {=k[2]}, {=k[3]}$ and the fifth value is unknown. The mean of the five values is ${=m}$. Find the fifth value, then calculate the standard deviation of the five values. Round the standard deviation to 2 decimal places and give only the standard deviation.",
+     "answer": "fixed(sqrt(ss / 5), 2)",
+     "solution": [
+      "Since $\\bar{x}=\\dfrac{\\sum x}{n}$, the total of the five values is $5\\times {=m}={=5*m}$",
+      "The four known values total ${=sk}$, so the fifth value is ${=5*m}-{=sk}={=x5}$",
+      "The values are ${=all[0]}, {=all[1]}, {=all[2]}, {=all[3]}, {=all[4]}$ with squared deviations from ${=m}$: ${=(all[0]-m)**2}, {=(all[1]-m)**2}, {=(all[2]-m)**2}, {=(all[3]-m)**2}, {=(all[4]-m)**2}$",
+      "$\\sum (x-\\bar{x})^2={=ss}$",
+      "$\\sigma=\\sqrt{\\dfrac{{=ss}}{5}}\\simeq {=fixed(sqrt(ss / 5), 2)}$"
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Twist: find the missing value from the given mean, then compute sigma (population formula)."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u3-2-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-3:mean-of-freq",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-3",
+     "parent_question_id": "q:pp3u3-2-3:bk-drill-1",
+     "source_page": 45,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "c",
+       "choice": [
+        1,
+        2,
+        5,
+        10
+       ]
+      },
+      {
+       "name": "f",
+       "choice": [
+        [
+         2,
+         3,
+         4,
+         5,
+         1
+        ],
+        [
+         3,
+         1,
+         6,
+         3,
+         2
+        ],
+        [
+         4,
+         3,
+         5,
+         3,
+         4
+        ]
+       ]
+      },
+      {
+       "name": "n",
+       "let": "sum(f)"
+      },
+      {
+       "name": "t",
+       "let": "c*(f[0]+2*f[1]+3*f[2]+4*f[3]+5*f[4])"
+      }
+     ],
+     "constraints": [],
+     "stem": "A frequency distribution has the values $x$ = {=c}, {=2*c}, {=3*c}, {=4*c}, {=5*c}, which occur with frequencies $k$ = {=f[0]}, {=f[1]}, {=f[2]}, {=f[3]}, {=f[4]} respectively. Find the mean $\\bar{x}$ of this distribution.",
+     "answer": "t/n",
+     "solution": [
+      "Add the frequencies: $\\sum k = {=f[0]}+{=f[1]}+{=f[2]}+{=f[3]}+{=f[4]} = {=n}$.",
+      "Find each product $x\\times k$: {=c*f[0]}, {=2*c*f[1]}, {=3*c*f[2]}, {=4*c*f[3]}, {=5*c*f[4]}.",
+      "Add them: $\\sum xk = {=t}$.",
+      "The mean $\\bar{x}=\\dfrac{\\sum xk}{\\sum k}=\\dfrac{{=t}}{{=n}}={=t/n}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "All datasets have mean 3c (integer). Answer is whole number."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-3:discrete-sd",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-3",
+     "parent_question_id": "q:pp3u3-2-3:bk-example-2",
+     "source_page": 44,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": "Defective units found in boxes of manufactured units.",
+     "params": [
+      {
+       "name": "P",
+       "choice": [
+        [
+         2,
+         1,
+         6,
+         1
+        ],
+        [
+         3,
+         2,
+         5,
+         2
+        ],
+        [
+         4,
+         1,
+         6,
+         2
+        ],
+        [
+         6,
+         1,
+         6,
+         3
+        ]
+       ]
+      },
+      {
+       "name": "d",
+       "let": "P[0]"
+      },
+      {
+       "name": "a",
+       "let": "P[1]"
+      },
+      {
+       "name": "b",
+       "let": "P[2]"
+      },
+      {
+       "name": "s",
+       "let": "P[3]"
+      },
+      {
+       "name": "m",
+       "randint": [
+        7,
+        12
+       ]
+      },
+      {
+       "name": "n",
+       "let": "2*a+b"
+      },
+      {
+       "name": "q",
+       "let": "2*a*d*d"
+      }
+     ],
+     "constraints": [],
+     "stem": "The frequency distribution shows the number of defective units ($x$) found in some boxes of manufactured units and the number of boxes ($k$): $x$ = {=m-d}, {=m}, {=m+d} with $k$ = {=a}, {=b}, {=a} boxes respectively. Find the standard deviation of the number of defective units.",
+     "answer": "s",
+     "solution": [
+      "$\\sum k = {=a}+{=b}+{=a} = {=n}$.",
+      "$\\sum xk = {=(m-d)*a}+{=m*b}+{=(m+d)*a} = {=m*n}$, so the mean $\\bar{x}={=m*n}\\div {=n}={=m}$.",
+      "Deviations $x-\\bar{x}$: {=-d}, 0, {=d}. Squares: {=d*d}, 0, {=d*d}.",
+      "Multiply by $k$: {=a*d*d}, 0, {=a*d*d}. So $\\sum (x-\\bar{x})^2k={=q}$.",
+      "$\\sigma=\\sqrt{\\dfrac{{=q}}{{=n}}}=\\sqrt{{=s*s}}={=s}$ units."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Datasets chosen so variance is a perfect square; sigma whole number."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-3:grouped-sd",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-3",
+     "parent_question_id": "q:pp3u3-2-3:bk-example-3",
+     "source_page": 45,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "Marks of students in an exam, grouped in sets of equal width.",
+     "params": [
+      {
+       "name": "w",
+       "choice": [
+        4,
+        6,
+        10
+       ]
+      },
+      {
+       "name": "s0",
+       "choice": [
+        0,
+        10,
+        20
+       ]
+      },
+      {
+       "name": "a",
+       "choice": [
+        1,
+        2
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "c",
+       "let": "6*a"
+      },
+      {
+       "name": "n",
+       "let": "8*a+2*b"
+      },
+      {
+       "name": "h",
+       "let": "w/2"
+      },
+      {
+       "name": "x1",
+       "let": "s0+h"
+      },
+      {
+       "name": "mu",
+       "let": "s0+5*h"
+      },
+      {
+       "name": "q",
+       "let": "w*w*n"
+      }
+     ],
+     "constraints": [],
+     "stem": "The frequency distribution shows the marks of {=n} students in an exam. Sets (marks): {=s0}–{=s0+w}, {=s0+w}–{=s0+2*w}, {=s0+2*w}–{=s0+3*w}, {=s0+3*w}–{=s0+4*w}, {=s0+4*w}–{=s0+5*w} with frequencies {=a}, {=b}, {=c}, {=b}, {=a} respectively. Using the centres of the sets, find the standard deviation of the marks.",
+     "answer": "w",
+     "solution": [
+      "Centres of the sets: {=x1}, {=x1+w}, {=x1+2*w}, {=x1+3*w}, {=x1+4*w}.",
+      "$\\sum k = {=n}$ and, by symmetry of the frequencies, the mean $\\bar{x}$ equals the middle centre {=mu}.",
+      "Deviations $x-\\bar{x}$: {=-2*w}, {=-w}, 0, {=w}, {=2*w}; squares: {=4*w*w}, {=w*w}, 0, {=w*w}, {=4*w*w}.",
+      "Multiply by $k$: {=4*w*w*a}, {=w*w*b}, 0, {=w*w*b}, {=4*w*w*a}; the sum is $\\sum (x-\\bar{x})^2k={=q}$.",
+      "$\\sigma=\\sqrt{\\dfrac{{=q}}{{=n}}}=\\sqrt{{=w*w}}={=w}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Frequencies (a,b,6a,b,a) make variance = w^2 exactly; sigma = w. Centres are integers since w even."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u3-2-4",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-4:givensd",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-4",
+     "parent_question_id": "q:pp3u3-2-4:bk-exercise-3",
+     "source_page": 47,
+     "tier": "basic",
+     "answer_type": "mcq",
+     "context": "Two classes sat the same test and both have the same mean mark; only their standard deviations are given.",
+     "params": [
+      {
+       "name": "w",
+       "choice": [
+        "A",
+        "B"
+       ]
+      },
+      {
+       "name": "l",
+       "let": "\"B\" if w == \"A\" else \"A\""
+      },
+      {
+       "name": "small",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "gap",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "big",
+       "let": "small + gap"
+      },
+      {
+       "name": "sa",
+       "let": "small if w == \"A\" else big"
+      },
+      {
+       "name": "sb",
+       "let": "big if w == \"A\" else small"
+      }
+     ],
+     "constraints": [
+      "sa != sb"
+     ],
+     "stem": "Class A and Class B sat the same test and both classes have the same mean mark. The standard deviation of the marks of Class A is $\\sigma_A = {=sa}$ and that of Class B is $\\sigma_B = {=sb}$. Which class is more homogeneous in its marks?",
+     "answer": "Class {=w}",
+     "solution": [
+      "Both classes have the same mean, so we compare their standard deviations.",
+      "The set with the larger standard deviation is more dispersed; the set with the smaller standard deviation is more homogeneous.",
+      "$\\sigma_A = {=sa}$ and $\\sigma_B = {=sb}$, and {=small} is the smaller value.",
+      "Class {=w} has the smaller standard deviation, so it is more homogeneous.",
+      "Answer: Class {=w}."
+     ],
+     "choices": {
+      "correct": "Class {=w}",
+      "distractors": [
+       {
+        "text": "Class {=l}",
+        "misconception_id": "mc:pp3u3-2-4:larger-sd-homogeneous"
+       },
+       {
+        "text": "Both classes are equally homogeneous",
+        "misconception_id": null
+       },
+       {
+        "text": "It cannot be decided",
+        "misconception_id": null
+       }
+      ]
+     },
+     "proposed_misconceptions": [
+      {
+       "id": "mc:pp3u3-2-4:larger-sd-homogeneous",
+       "label": "Larger standard deviation taken as more homogeneous",
+       "description": "Student picks the set with the larger standard deviation, forgetting that larger standard deviation means more dispersed and so less homogeneous."
+      }
+     ],
+     "notes": "Pure comparison of two given standard deviations; options shuffled by the app. Stem differs per instance via sa, sb."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u3-2-4:fromdata",
+     "kind": "family",
+     "lo_id": "lo:pp3u3-2-4",
+     "parent_question_id": "q:pp3u3-2-4:bk-exercise-3",
+     "source_page": 47,
+     "tier": "standard",
+     "answer_type": "mcq",
+     "context": "Two classes each have four students' marks with the same mean.",
+     "params": [
+      {
+       "name": "m",
+       "randint": [
+        20,
+        40
+       ]
+      },
+      {
+       "name": "pats",
+       "let": "[[-1,-1,1,1],[-2,-1,1,2],[-3,-1,1,3],[-2,-2,2,2],[-3,0,0,3],[-3,-2,2,3],[-4,-1,1,4]]"
+      },
+      {
+       "name": "ix",
+       "sample": {
+        "from": "range(0, 7)",
+        "k": 2
+       }
+      },
+      {
+       "name": "pa",
+       "let": "pats[ix[0]]"
+      },
+      {
+       "name": "pb",
+       "let": "pats[ix[1]]"
+      },
+      {
+       "name": "ssa",
+       "let": "sum([d * d for d in pa])"
+      },
+      {
+       "name": "ssb",
+       "let": "sum([d * d for d in pb])"
+      },
+      {
+       "name": "w",
+       "let": "\"A\" if ssa < ssb else \"B\""
+      },
+      {
+       "name": "l",
+       "let": "\"B\" if w == \"A\" else \"A\""
+      },
+      {
+       "name": "sga",
+       "let": "fixed(sqrt(ssa) / 2, 2)"
+      },
+      {
+       "name": "sgb",
+       "let": "fixed(sqrt(ssb) / 2, 2)"
+      }
+     ],
+     "constraints": [
+      "ssa != ssb"
+     ],
+     "stem": "The marks of four students in Class A are ${=m+pa[0]}, {=m+pa[1]}, {=m+pa[2]}, {=m+pa[3]}$ and the marks of four students in Class B are ${=m+pb[0]}, {=m+pb[1]}, {=m+pb[2]}, {=m+pb[3]}$. Both sets have the same mean. By calculating the standard deviations, decide which class is more homogeneous in its marks.",
+     "answer": "Class {=w}",
+     "solution": [
+      "The sum of Class A marks is {=4*m}, so its mean is {=m}; likewise the mean of Class B is {=m}.",
+      "Class A deviations from the mean: {=pa[0]}, {=pa[1]}, {=pa[2]}, {=pa[3]}. The sum of their squares is {=ssa}, so $\\sigma_A^2 = \\frac{{=ssa}}{4}$ and $\\sigma_A \\approx {=sga}$.",
+      "Class B deviations from the mean: {=pb[0]}, {=pb[1]}, {=pb[2]}, {=pb[3]}. The sum of their squares is {=ssb}, so $\\sigma_B^2 = \\frac{{=ssb}}{4}$ and $\\sigma_B \\approx {=sgb}$.",
+      "The set with the larger standard deviation is more dispersed.",
+      "Class {=w} has the smaller standard deviation, so it is more homogeneous.",
+      "Answer: Class {=w}."
+     ],
+     "choices": {
+      "correct": "Class {=w}",
+      "distractors": [
+       {
+        "text": "Class {=l}",
+        "misconception_id": "mc:pp3u3-2-4:larger-sd-homogeneous"
+       },
+       {
+        "text": "Both classes are equally homogeneous",
+        "misconception_id": null
+       },
+       {
+        "text": "It cannot be decided",
+        "misconception_id": null
+       }
+      ]
+     },
+     "proposed_misconceptions": [
+      {
+       "id": "mc:pp3u3-2-4:larger-sd-homogeneous",
+       "label": "Larger standard deviation taken as more homogeneous",
+       "description": "Student picks the set with the larger standard deviation, forgetting that larger standard deviation means more dispersed and so less homogeneous."
+      }
+     ],
+     "notes": "Deviation patterns are symmetric with distinct sums of squares (4,10,20,16,18,26,34), so sets are sorted, means equal m, and the comparison is never a tie. The population standard deviation is used, as in the book's solution."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  }
+ ],
+ "revised": []
+}

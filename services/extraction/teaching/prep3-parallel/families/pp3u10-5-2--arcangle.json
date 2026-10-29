@@ -1,0 +1,45 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-5-2:arcangle",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-5-2",
+ "parent_question_id": "expl:pp3u10-5-2:bk-example-2",
+ "parent_kind": "teaching",
+ "source_page": 90,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "h",
+   "randint": [
+    20,
+    50
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    20,
+    50
+   ]
+  },
+  {
+   "name": "p",
+   "let": "2*h"
+  },
+  {
+   "name": "e",
+   "let": "h + r"
+  }
+ ],
+ "stem": "$ABCD$ is a cyclic quadrilateral. The point $E$ lies on ray $AB$ with $E \\notin \\overline{AB}$, $m(\\text{arc } AB) = {=p}^\\circ$ and $m(\\angle CBE) = {=e}^\\circ$. Find $m(\\angle BDC)$.",
+ "answer": "r",
+ "solution": [
+  "$\\angle ADB$ is an inscribed angle subtending arc $AB$, so $m(\\angle ADB) = \\frac{1}{2} \\times {=p}^\\circ = {=h}^\\circ$.",
+  "$\\angle CBE$ is an exterior angle at vertex $B$ of the cyclic quadrilateral, so $m(\\angle CDA) = m(\\angle CBE) = {=e}^\\circ$ (Corollary).",
+  "$\\therefore m(\\angle BDC) = {=e}^\\circ - {=h}^\\circ = {=r}^\\circ$."
+ ],
+ "notes": "Mirrors book example 2 with new numbers; D lies so that ray DB is inside angle ADC.",
+ "proposed_misconceptions": []
+}

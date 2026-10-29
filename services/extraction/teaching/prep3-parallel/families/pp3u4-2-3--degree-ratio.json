@@ -1,0 +1,50 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u4-2-3:degree-ratio",
+ "kind": "family",
+ "lo_id": "lo:pp3u4-2-3",
+ "parent_question_id": "expl:pp3u4-2-3:bk-example-2",
+ "parent_kind": "teaching",
+ "source_page": 54,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "i",
+   "choice": [
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "name": "j",
+   "randint": [
+    0,
+    7
+   ]
+  },
+  {
+   "name": "W",
+   "let": "['sine','cosine','tangent']"
+  },
+  {
+   "name": "A",
+   "let": "[20,25,35,40,50,55,65,70]"
+  },
+  {
+   "name": "T",
+   "let": "[['0.3420','0.4226','0.5736','0.6428','0.7660','0.8192','0.9063','0.9397'],['0.9397','0.9063','0.8192','0.7660','0.6428','0.5736','0.4226','0.3420'],['0.3640','0.4663','0.7002','0.8391','1.1918','1.4281','2.1445','2.7475']]"
+  }
+ ],
+ "stem": "Use a calculator (in degree mode) to find the {=W[i]} of ${=A[j]}^\\circ$. Round the result to four decimal places.",
+ "answer": "T[i][j]",
+ "solution": [
+  "Make sure the calculator is in degree mode.",
+  "Press the {=W[i]} key, then enter {=A[j]}, then press =.",
+  "Rounded to four decimal places, the {=W[i]} of ${=A[j]}^\\circ$ is {=T[i][j]}."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Values precomputed (standard 4 d.p. table values) for angles 20,25,35,40,50,55,65,70."
+}

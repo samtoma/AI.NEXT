@@ -1,0 +1,61 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u4-1-1:deg-to-dms",
+ "kind": "family",
+ "lo_id": "lo:pp3u4-1-1",
+ "parent_question_id": "expl:pp3u4-1-1:bk-drill-1-d",
+ "parent_kind": "teaching",
+ "source_page": 50,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "d",
+   "randint": [
+    10,
+    80
+   ]
+  },
+  {
+   "name": "j",
+   "randint": [
+    1,
+    18
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "x",
+   "let": "d + (20*j + k)/400"
+  },
+  {
+   "name": "mins",
+   "let": "3*j + 15*k/100"
+  },
+  {
+   "name": "mw",
+   "let": "3*j"
+  },
+  {
+   "name": "s",
+   "let": "9*k"
+  }
+ ],
+ "stem": "The angle ${=fixed(x, 4)}^\\circ$ is written in the form $d^\\circ\\, m'\\, s''$ with $m$ and $s$ whole numbers. Find the value of $s$.",
+ "answer": "s",
+ "solution": [
+  "The whole degrees are ${=d}$. The decimal part is ${=fixed(x, 4)} - {=d} = {=fixed(x - d, 4)}^\\circ$",
+  "Multiply by 60 to get minutes: ${=fixed(x - d, 4)} \\times 60 = {=fixed(mins, 2)}'$, so $m = {=mw}$",
+  "The decimal part of the minutes is ${=fixed(mins - mw, 2)}'$. Multiply by 60 to get seconds: ${=fixed(mins - mw, 2)} \\times 60 = {=s}''$",
+  "So the angle is ${=d}^\\circ {=mw}' {=s}''$ and $s = {=s}$"
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Reverse conversion; values chosen so decimals terminate exactly (4 d.p. exact). Asks only for s to keep a single numeric answer; the method needs both steps."
+}

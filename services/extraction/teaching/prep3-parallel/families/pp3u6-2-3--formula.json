@@ -1,0 +1,59 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u6-2-3:formula",
+ "kind": "family",
+ "lo_id": "lo:pp3u6-2-3",
+ "parent_question_id": "expl:pp3u6-2-3:bk-example-3",
+ "parent_kind": "teaching",
+ "source_page": 12,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "b",
+   "randint": [
+    1,
+    8
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    -9,
+    -1
+   ]
+  },
+  {
+   "name": "D",
+   "let": "b*b-4*c"
+  },
+  {
+   "require": "not is_square(D)",
+   "why": "keep an irrational root so rounding is needed"
+  },
+  {
+   "name": "s",
+   "let": "float(sqrt(D))"
+  },
+  {
+   "name": "x1",
+   "let": "(-b+s)/2"
+  },
+  {
+   "name": "x2",
+   "let": "(-b-s)/2"
+  }
+ ],
+ "constraints": [],
+ "stem": "Use the general rule to solve $x^2 + {=b}x - {=-c} = 0$. Give the positive solution, rounded to the nearest hundredth.",
+ "answer": "fixed(x1, 2)",
+ "solution": [
+  "Here $a=1$, $b={=b}$, $c={=c}$.",
+  "$x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}=\\frac{-{=b}\\pm\\sqrt{{=D}}}{2}$, and $\\sqrt{{=D}}\\approx{=fixed(s,3)}$.",
+  "$x=\\frac{-{=b}+{=fixed(s,3)}}{2}\\approx{=fixed(x1,2)}$ or $x=\\frac{-{=b}-{=fixed(s,3)}}{2}\\approx{=fixed(x2,2)}$.",
+  "The positive solution is ${=fixed(x1,2)}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "c is negative so the equation is written with minus sign; roots always opposite sign, exactly one positive."
+}

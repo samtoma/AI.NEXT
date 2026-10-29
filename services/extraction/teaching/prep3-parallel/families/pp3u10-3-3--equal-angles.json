@@ -1,0 +1,45 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-3-3:equal-angles",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-3-3",
+ "parent_question_id": "expl:pp3u10-3-3:bk-example-4",
+ "parent_kind": "teaching",
+ "source_page": 84,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    30,
+    80
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    5,
+    25
+   ]
+  },
+  {
+   "name": "x",
+   "let": "a - b"
+  },
+  {
+   "name": "r",
+   "let": "x + b"
+  }
+ ],
+ "stem": "$A$, $B$, $C$ and $D$ are four points, where $C$ and $D$ lie on the same side of $\\overline{AB}$. Given $m(\\angle ACB) = {=a}^\\circ$ and $m(\\angle ADB) = (x + {=b})^\\circ$, find the value of $x$ for which the four points $A$, $B$, $C$ and $D$ lie on one circle.",
+ "answer": "x",
+ "solution": [
+  "The angles $\\angle ACB$ and $\\angle ADB$ are drawn on the same base $\\overline{AB}$ and on the same side of it.",
+  "The four points lie on one circle only if these two angles are equal.",
+  "$x + {=b} = {=a}$",
+  "$x = {=a} - {=b} = {=x}$"
+ ],
+ "notes": "Entry point: equal angles on same base, same side. Answer is x."
+}

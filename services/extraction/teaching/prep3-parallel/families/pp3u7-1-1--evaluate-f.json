@@ -1,0 +1,44 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u7-1-1:evaluate-f",
+ "kind": "family",
+ "lo_id": "lo:pp3u7-1-1",
+ "parent_question_id": "expl:pp3u7-1-1:bk-think-and-discuss-1",
+ "parent_kind": "teaching",
+ "source_page": 15,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    2,
+    6
+   ]
+  }
+ ],
+ "stem": "If $f(x) = x^2 - {=p}x + {=q}$ is a polynomial function, calculate $f({=k})$.",
+ "answer": "k*k - p*k + q",
+ "solution": [
+  "Write $f(x) = x^2 - {=p}x + {=q}$ and replace $x$ by ${=k}$.",
+  "$f({=k}) = ({=k})^2 - {=p}({=k}) + {=q}$.",
+  "$f({=k}) = {=k*k} - {=p*k} + {=q} = {=k*k - p*k + q}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point: substitute and evaluate. Answer may be negative or zero, which is fine."
+}

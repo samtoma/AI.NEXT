@@ -1,0 +1,50 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-5-2:algebra",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-5-2",
+ "parent_question_id": "expl:pp3u10-5-2:bk-example-2",
+ "parent_kind": "teaching",
+ "source_page": 90,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x",
+   "randint": [
+    10,
+    30
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    5,
+    20
+   ]
+  },
+  {
+   "name": "k",
+   "let": "2*x + c"
+  },
+  {
+   "name": "e",
+   "let": "3*x + c"
+  },
+  {
+   "name": "ans",
+   "let": "180 - e"
+  }
+ ],
+ "stem": "$ABCD$ is a cyclic quadrilateral. The point $E$ lies on ray $AB$ with $E \\notin \\overline{AB}$. Given $m(\\angle CBE) = (3x + {=c})^\\circ$ and $m(\\angle ADC) = (x + {=k})^\\circ$, find $m(\\angle ABC)$.",
+ "answer": "ans",
+ "solution": [
+  "$\\angle CBE$ is an exterior angle at $B$, so it equals the interior angle at the opposite vertex $D$ (Corollary): $3x + {=c} = x + {=k}$.",
+  "$2x = {=k} - {=c} = {=2*x}$, so $x = {=x}$.",
+  "$m(\\angle CBE) = 3({=x}) + {=c} = {=e}^\\circ$.",
+  "$\\angle ABC$ and $\\angle CBE$ are a linear pair, so $m(\\angle ABC) = 180^\\circ - {=e}^\\circ = {=ans}^\\circ$."
+ ],
+ "notes": "x and angles are clean; max exterior angle 110.",
+ "proposed_misconceptions": []
+}

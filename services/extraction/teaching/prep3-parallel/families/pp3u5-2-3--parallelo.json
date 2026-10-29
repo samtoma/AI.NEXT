@@ -1,0 +1,99 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-2-3:parallelo",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-2-3",
+ "parent_question_id": "expl:pp3u5-2-3:bk-example-3",
+ "parent_kind": "teaching",
+ "source_page": 64,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "m1",
+   "randint": [
+    -3,
+    4
+   ]
+  },
+  {
+   "name": "m2",
+   "randint": [
+    -3,
+    4
+   ]
+  },
+  {
+   "name": "a1",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "a2",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "b1",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "b2",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "c1",
+   "let": "2*m1 - a1"
+  },
+  {
+   "name": "c2",
+   "let": "2*m2 - a2"
+  },
+  {
+   "name": "d1",
+   "let": "2*m1 - b1"
+  },
+  {
+   "name": "d2",
+   "let": "2*m2 - b2"
+  },
+  {
+   "require": "(b1-a1)*(c2-a2) - (b2-a2)*(c1-a1) != 0",
+   "why": "A, B, C must not be collinear"
+  },
+  {
+   "require": "a1 != c1 or a2 != c2",
+   "why": "A and C distinct"
+  }
+ ],
+ "constraints": [],
+ "stem": "$ABCD$ is a parallelogram where $A({=a1}, {=a2})$, $B({=b1}, {=b2})$ and $C({=c1}, {=c2})$. Find the coordinates of the point $D$. Write your answer as $(x, y)$.",
+ "solution": [
+  "The diagonals of a parallelogram bisect each other, so the intersection point $M$ is the midpoint of $\\overline{AC}$.",
+  "$M\\left(\\frac{({=a1})+({=c1})}{2}, \\frac{({=a2})+({=c2})}{2}\\right)=M({=m1}, {=m2})$.",
+  "$M$ is also the midpoint of $\\overline{BD}$. Let $D(x_1, y_1)$.",
+  "${=m1}=\\frac{({=b1})+x_1}{2}$, so $({=b1})+x_1={=2*m1}$, hence $x_1={=d1}$.",
+  "${=m2}=\\frac{({=b2})+y_1}{2}$, so $({=b2})+y_1={=2*m2}$, hence $y_1={=d2}$.",
+  "Therefore $D({=d1}, {=d2})$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=d1}, {=d2})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Modelled on book example 3. M is an integer point here; D = A + C - B."
+}

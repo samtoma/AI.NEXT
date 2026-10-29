@@ -1,0 +1,71 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-2-3:endpoint",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-2-3",
+ "parent_question_id": "expl:pp3u5-2-3:bk-example-2",
+ "parent_kind": "teaching",
+ "source_page": 63,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a1",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "a2",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "m1",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "m2",
+   "randint": [
+    -5,
+    5
+   ]
+  },
+  {
+   "name": "b1",
+   "let": "2*m1 - a1"
+  },
+  {
+   "name": "b2",
+   "let": "2*m2 - a2"
+  },
+  {
+   "require": "b1 != a1 or b2 != a2",
+   "why": "midpoint must differ from A so the segment is real"
+  }
+ ],
+ "constraints": [],
+ "stem": "If $C({=m1}, {=m2})$ is the midpoint of $\\overline{AB}$ where $A({=a1}, {=a2})$, find the coordinates of the point $B$. Write your answer as $(x, y)$.",
+ "solution": [
+  "Let $B(x_2, y_2)$. Then $A({=a1}, {=a2})$ and the midpoint is $C({=m1}, {=m2})$.",
+  "Use $x=\\frac{x_1+x_2}{2}$: ${=m1}=\\frac{({=a1})+x_2}{2}$, so $({=a1})+x_2={=2*m1}$, hence $x_2={=b1}$.",
+  "Use $y=\\frac{y_1+y_2}{2}$: ${=m2}=\\frac{({=a2})+y_2}{2}$, so $({=a2})+y_2={=2*m2}$, hence $y_2={=b2}$.",
+  "Therefore $B({=b1}, {=b2})$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=b1}, {=b2})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Modelled on book example 2. Integer answers only."
+}

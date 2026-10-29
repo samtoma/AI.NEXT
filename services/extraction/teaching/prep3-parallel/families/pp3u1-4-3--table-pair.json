@@ -1,0 +1,52 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-4-3:table-pair",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-4-3",
+ "parent_question_id": "expl:pp3u1-4-3:bk-example-2",
+ "parent_kind": "teaching",
+ "source_page": 20,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "b == 0"
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "m",
+   "let": "a * k + b"
+  },
+  {
+   "name": "bs",
+   "let": "('+ ' + str(b)) if b > 0 else ('- ' + str(-b))"
+  }
+ ],
+ "stem": "To graph the function $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)={=a}x {=bs}$, we find ordered pairs. The pair $({=k}, y)$ lies on the graph. Find $y$.",
+ "answer": "m",
+ "solution": [
+  "$f({=k}) = {=a}\\times {=k} {=bs} = {=m}$",
+  "So the ordered pair is $({=k}, {=m})$ and $y={=m}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Basic: one ordered pair for a linear function, as in the book's table."
+}

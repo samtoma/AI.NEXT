@@ -1,0 +1,108 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u3-2-1:wages-compare",
+ "kind": "family",
+ "lo_id": "lo:pp3u3-2-1",
+ "parent_question_id": "expl:pp3u3-2-1:bk-think-and-discuss-1",
+ "parent_kind": "teaching",
+ "source_page": 41,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": "Two sets A and B of five wages, in LE, are given.",
+ "params": [
+  {
+   "name": "m",
+   "randint": [
+    100,
+    300
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    20,
+    50
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    "a - 5"
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    "a + 20",
+    "a + 70"
+   ]
+  },
+  {
+   "name": "e",
+   "randint": [
+    1,
+    "c - 5"
+   ]
+  },
+  {
+   "name": "s",
+   "choice": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "a1",
+   "let": "a if s == 0 else c"
+  },
+  {
+   "name": "b1",
+   "let": "b if s == 0 else e"
+  },
+  {
+   "name": "a2",
+   "let": "c if s == 0 else a"
+  },
+  {
+   "name": "b2",
+   "let": "e if s == 0 else b"
+  },
+  {
+   "name": "big",
+   "let": "\"B\" if s == 0 else \"A\""
+  },
+  {
+   "name": "small",
+   "let": "\"A\" if s == 0 else \"B\""
+  }
+ ],
+ "constraints": [],
+ "stem": "The wages (in LE) of five workers in two sets are: Set A: ${=m - a1}, {=m - b1}, {=m}, {=m + b1}, {=m + a1}$; Set B: ${=m - a2}, {=m - b2}, {=m}, {=m + b2}, {=m + a2}$. Both sets have mean ${=m}$. Which statement is correct?",
+ "answer": "",
+ "solution": [
+  "Set A: range $= {=m + a1} - {=m - a1} = {=2*a1}$.",
+  "Set B: range $= {=m + a2} - {=m - a2} = {=2*a2}$.",
+  "The means are equal, so we compare the ranges: the larger range means the more dispersed set.",
+  "Set {=big} has the greater range, so it is more dispersed."
+ ],
+ "choices": {
+  "correct": "Set {=big} is more dispersed, because its range is greater",
+  "distractors": [
+   {
+    "text": "Set {=small} is more dispersed, because its range is greater",
+    "misconception_id": null
+   },
+   {
+    "text": "The sets are equally spread, because their means are equal",
+    "misconception_id": "mc:pp3u3-2-1:equal-means-same-dispersion"
+   },
+   {
+    "text": "Set {=big} is less dispersed, because its range is greater",
+    "misconception_id": null
+   }
+  ]
+ },
+ "notes": "Equal means by symmetric construction. The last distractor is contradictory in logic but names a plausible reversed reading; ranges are never equal because c >= a+20.",
+ "proposed_misconceptions": []
+}

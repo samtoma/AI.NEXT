@@ -1,0 +1,63 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u2-2-3:identity-ratio",
+ "kind": "family",
+ "lo_id": "lo:pp3u2-2-3",
+ "parent_question_id": "expl:pp3u2-2-3:bk-example-6",
+ "parent_kind": "teaching",
+ "source_page": 31,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    9
+   ],
+   "resample_while": "q == p"
+  },
+  {
+   "name": "a",
+   "let": "s*p"
+  },
+  {
+   "name": "c",
+   "let": "s*q"
+  }
+ ],
+ "constraints": [
+  "gcd(p, q) == 1"
+ ],
+ "stem": "$b$ is a middle proportional between $a={=a}$ and $c={=c}$. Find the value of $\\frac{a^2+b^2}{b^2+c^2}$ in simplest form.",
+ "solution": [
+  "Since $b$ is the middle proportional, $\\frac{a}{b}=\\frac{b}{c}=m$, so $b=cm$ and $a=cm^2$.",
+  "$\\frac{a^2+b^2}{b^2+c^2}=\\frac{c^2m^4+c^2m^2}{c^2m^2+c^2}=\\frac{c^2m^2(m^2+1)}{c^2(m^2+1)}=m^2$",
+  "Also $\\frac{a}{c}=\\frac{cm^2}{c}=m^2$, so $\\frac{a^2+b^2}{b^2+c^2}=\\frac{a}{c}$.",
+  "$\\frac{a}{c}=\\frac{{=a}}{{=c}}=\\frac{{=p}}{{=q}}$"
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=p}/{=q}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "b is generally irrational, so the identity must be used rather than computing b."
+}

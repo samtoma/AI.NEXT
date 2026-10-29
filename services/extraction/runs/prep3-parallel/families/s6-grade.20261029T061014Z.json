@@ -1,0 +1,268 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "6100932887b83ad65cf228e0d18b4176d1d31f47e45862e494b81dc7943e12b2",
+  "generated_sha256": "fe139a6901467279f16366872dae5b871de03391f0e458e263f3cfa860004817",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u6-1-1:find-k",
+   "spec_sha": "94087aa62e7bebf80e128c75c969fdad28af153210e11fad5a837d76d92ddb62",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-1-1:g005-find-k",
+     "stem_sha": "f8b64acd165748d3",
+     "answer": {
+      "value": "3"
+     },
+     "working": "Substitute x=1,y=-3: k+3=6, so k=3."
+    },
+    {
+     "instance_id": "q:pp3u6-1-1:g007-find-k",
+     "stem_sha": "6d11d1862b38c2c2",
+     "answer": {
+      "value": "5"
+     },
+     "working": "Substitute x=1,y=1: k-1=4, so k=5."
+    },
+    {
+     "instance_id": "q:pp3u6-1-1:g008-find-k",
+     "stem_sha": "654c8de1bb24b52d",
+     "answer": {
+      "value": "5"
+     },
+     "working": "Substitute x=3,y=14: 3k-14=1, 3k=15, k=5."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three by substitution. g005: k+3=6, so k=3. g007: k−1=4, so k=5. g008: 3k−14=1, so k=5. Each key is correct, and no options are given. The solutions are correct but have two oddities. They write \"1k\" instead of \"k\" when x=1. They also include a pointless \"+ 0\" term. Both are cosmetic.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u6-1-1:find-y",
+   "spec_sha": "32f3aaac9832c7da83955ec91957de43a45ad8477a467410aafcad048a023a19",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-1-1:g001-find-y",
+     "stem_sha": "73023dc864fd8c6d",
+     "answer": {
+      "value": "4"
+     },
+     "working": "y = 2(3) - 2 = 4"
+    },
+    {
+     "instance_id": "q:pp3u6-1-1:g004-find-y",
+     "stem_sha": "17244916ef45e84b",
+     "answer": {
+      "value": "4"
+     },
+     "working": "y = 5(2) - 6 = 4"
+    },
+    {
+     "instance_id": "q:pp3u6-1-1:g009-find-y",
+     "stem_sha": "78551fbd24794d81",
+     "answer": {
+      "value": "4"
+     },
+     "working": "y = 5(1) - 1 = 4"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The family has no options, so there are no distractors to check. I checked each instance: 2(3)−2=4, 5(2)−6=4 and 5(1)−1=4. Each stated rearrangement y=ax−b is correct, and each key is 4. Step 1 only restates the rearrangement the stem already gives, which is harmless. All three instances have the same answer, 4, which is a variety weakness and not an error.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u6-1-1:pair",
+   "spec_sha": "d0e2b6e29d772a645643d0c3ee09d70f1fd4a4a8295c193376755b3ce90cf7b0",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-1-1:g003-pair",
+     "stem_sha": "b74d8d0a8269040a",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u6-1-1:g007-pair",
+     "stem_sha": "cdf90e7d6f751799",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u6-1-1:g010-pair",
+     "stem_sha": "38c160a224f71951",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked all three instances by substituting the given x-value and solving for y. The three results are (2,4), (-2,-2) and (3,1). Each matches its key and answer_check, and every worked step is correct. The family has no multiple-choice options, so there are no distractors to judge. There is no word problem, and the stems are unambiguous.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u6-2-3:disk-landing",
+   "spec_sha": "4600663a30afb257b10abe2e5fb48d383906ee0fa1cd1bd6bad60a32c9f689e9",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-2-3:g003-disk-l",
+     "stem_sha": "6aabd05d10d85278",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u6-2-3:g004-disk-l",
+     "stem_sha": "3eb1fac75cb40a30",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u6-2-3:g007-disk-l",
+     "stem_sha": "e3857a36084b3b1d",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": false,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I recomputed all three instances and each key and worked solution is correct. g003: discriminant 19.6, root 70.2266, so 70.23. g004: discriminant 37.8, root 67.489, so 67.49. g007: discriminant 17.08, root 135.546, so 135.55. The negative roots are rejected correctly. There are no options, so there are no distractors to judge. I mark context_ok false because the numbers are physically unrealistic for a disk race. In g007 the disk peaks at about 133 m and lands 135 m away, and in g003 it peaks at about 82 m. If the book uses such coefficients, this can be reversed."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u6-2-3:formula",
+   "spec_sha": "25fc22ce91e7837e4883b0b36cfadc55fef66ae674567fe556908bc41c66505f",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-2-3:g002-formul",
+     "stem_sha": "578168195de84559",
+     "answer": {
+      "value": "1.32"
+     },
+     "working": "a=1,b=4,c=-7. Disc=16+28=44. x=(-4+√44)/2=-2+√11≈1.3166"
+    },
+    {
+     "instance_id": "q:pp3u6-2-3:g004-formul",
+     "stem_sha": "5ebd4d03d0a9a54c",
+     "answer": {
+      "value": "0.56"
+     },
+     "working": "Disc=9+8=17. x=(-3+√17)/2≈(−3+4.1231)/2≈0.5616"
+    },
+    {
+     "instance_id": "q:pp3u6-2-3:g007-formul",
+     "stem_sha": "a7f879398d2a7617",
+     "answer": {
+      "value": "1.41"
+     },
+     "working": "Disc=25+36=61. x=(-5+√61)/2≈(−5+7.8102)/2≈1.4051"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances. 1) Discriminant 44, positive root 1.3166, which rounds to 1.32. 2) Discriminant 17, positive root 0.5616, which rounds to 0.56. 3) Discriminant 61, positive root 1.4051, which rounds to 1.41. In each case the other root is negative, so \"the positive solution\" is unambiguous. The steps follow the quadratic formula correctly. No options were supplied, so there are no distractors to judge.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u6-2-3:garden-length",
+   "spec_sha": "90a05169e21cbdb701c324ee8891d68c6f11fa0f288357f99cb0bef433e247db",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-2-3:g006-garden",
+     "stem_sha": "0d97ad8618032c73",
+     "answer": {
+      "value": "9.30"
+     },
+     "working": "w²+5w-40=0; L=(5+√185)/2=(5+13.6015)/2=9.30075"
+    },
+    {
+     "instance_id": "q:pp3u6-2-3:g007-garden",
+     "stem_sha": "66c144172422a26b",
+     "answer": {
+      "value": "10.17"
+     },
+     "working": "w²+3w-73=0; L=(3+√301)/2=(3+17.34935)/2=10.1747"
+    },
+    {
+     "instance_id": "q:pp3u6-2-3:g010-garden",
+     "stem_sha": "90dc9870ede7455a",
+     "answer": {
+      "value": "9.06"
+     },
+     "working": "w²+2w-64=0; L=(2+√260)/2=(2+16.1245)/2=9.0623"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No options given. I checked each key by hand. g006: √185≈13.6015, w≈4.3008, length≈9.30. g007: √301≈17.3494, w≈7.1747, length≈10.17. g010: √260≈16.1245, w≈7.0623, length≈9.06. The keys match the asked quantity (length, to the nearest hundredth). The worked steps are correct and use the unrounded w, which avoids rounding drift. The contexts are sensible.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u6-3-2:find-length",
+   "spec_sha": "684d97f4d95419e0553adb1d907d4cc77f1a41b82755e7afdd45c4b5ba6e6ff2",
+   "answers": [
+    {
+     "instance_id": "q:pp3u6-3-2:g001-find-l",
+     "stem_sha": "89de9e1400047e99",
+     "answer": {
+      "value": "6"
+     },
+     "working": "l+w=8, lw=12. t^2-8t+12=0 gives t=6 or 2. Longer is 6."
+    },
+    {
+     "instance_id": "q:pp3u6-3-2:g007-find-l",
+     "stem_sha": "ec2bf5c36d3cb36f",
+     "answer": {
+      "value": "9"
+     },
+     "working": "l+w=17, lw=72. t^2-17t+72=0 gives t=9 or 8. Longer is 9."
+    },
+    {
+     "instance_id": "q:pp3u6-3-2:g009-find-l",
+     "stem_sha": "825fafcadbc6e783",
+     "answer": {
+      "value": "11"
+     },
+     "working": "l+w=18, lw=77. t^2-18t+77=0 gives t=11 or 7. Longer is 11."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I checked all three instances by hand. g001 gives 6 and 2, g007 gives 9 and 8, and g009 gives 11 and 7. Each pair satisfies both the perimeter and the area, and each key is the longer side. The worked solutions are correct. No options were supplied, so there were no distractors to judge."
+   }
+  }
+ ]
+}

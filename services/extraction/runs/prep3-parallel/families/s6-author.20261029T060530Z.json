@@ -1,0 +1,645 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "0a8d257c133aeeb0d46c9a653786e1156471b5fd2e943b636088a70bfce0ab10",
+  "generated_sha256": "a2a08609794872cc7e148bf01ac9047657fdc1a7aa55b4525ff5cdd9c94a4f1a",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u5-2-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-2-3:endpoint",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-2-3",
+     "parent_question_id": "expl:pp3u5-2-3:bk-example-2",
+     "source_page": 63,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a1",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "a2",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "name": "m1",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "m2",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "b1",
+       "let": "2*m1 - a1"
+      },
+      {
+       "name": "b2",
+       "let": "2*m2 - a2"
+      },
+      {
+       "require": "b1 != a1 or b2 != a2",
+       "why": "midpoint must differ from A so the segment is real"
+      }
+     ],
+     "constraints": [],
+     "stem": "If $C({=m1}, {=m2})$ is the midpoint of $\\overline{AB}$ where $A({=a1}, {=a2})$, find the coordinates of the point $B$. Write your answer as $(x, y)$.",
+     "solution": [
+      "Let $B(x_2, y_2)$. Then $A({=a1}, {=a2})$ and the midpoint is $C({=m1}, {=m2})$.",
+      "Use $x=\\frac{x_1+x_2}{2}$: ${=m1}=\\frac{({=a1})+x_2}{2}$, so $({=a1})+x_2={=2*m1}$, hence $x_2={=b1}$.",
+      "Use $y=\\frac{y_1+y_2}{2}$: ${=m2}=\\frac{({=a2})+y_2}{2}$, so $({=a2})+y_2={=2*m2}$, hence $y_2={=b2}$.",
+      "Therefore $B({=b1}, {=b2})$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=b1}, {=b2})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Modelled on book example 2. Integer answers only."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-2-3:parallelo",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-2-3",
+     "parent_question_id": "expl:pp3u5-2-3:bk-example-3",
+     "source_page": 64,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "m1",
+       "randint": [
+        -3,
+        4
+       ]
+      },
+      {
+       "name": "m2",
+       "randint": [
+        -3,
+        4
+       ]
+      },
+      {
+       "name": "a1",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "a2",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "b1",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "b2",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "c1",
+       "let": "2*m1 - a1"
+      },
+      {
+       "name": "c2",
+       "let": "2*m2 - a2"
+      },
+      {
+       "name": "d1",
+       "let": "2*m1 - b1"
+      },
+      {
+       "name": "d2",
+       "let": "2*m2 - b2"
+      },
+      {
+       "require": "(b1-a1)*(c2-a2) - (b2-a2)*(c1-a1) != 0",
+       "why": "A, B, C must not be collinear"
+      },
+      {
+       "require": "a1 != c1 or a2 != c2",
+       "why": "A and C distinct"
+      }
+     ],
+     "constraints": [],
+     "stem": "$ABCD$ is a parallelogram where $A({=a1}, {=a2})$, $B({=b1}, {=b2})$ and $C({=c1}, {=c2})$. Find the coordinates of the point $D$. Write your answer as $(x, y)$.",
+     "solution": [
+      "The diagonals of a parallelogram bisect each other, so the intersection point $M$ is the midpoint of $\\overline{AC}$.",
+      "$M\\left(\\frac{({=a1})+({=c1})}{2}, \\frac{({=a2})+({=c2})}{2}\\right)=M({=m1}, {=m2})$.",
+      "$M$ is also the midpoint of $\\overline{BD}$. Let $D(x_1, y_1)$.",
+      "${=m1}=\\frac{({=b1})+x_1}{2}$, so $({=b1})+x_1={=2*m1}$, hence $x_1={=d1}$.",
+      "${=m2}=\\frac{({=b2})+y_1}{2}$, so $({=b2})+y_1={=2*m2}$, hence $y_1={=d2}$.",
+      "Therefore $D({=d1}, {=d2})$."
+     ],
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=d1}, {=d2})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Modelled on book example 3. M is an integer point here; D = A + C - B."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-2-3:diagsum",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-2-3",
+     "parent_question_id": "expl:pp3u5-2-3:bk-example-3",
+     "source_page": 64,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a1",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "a2",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "b1",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "b2",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "c1",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "c2",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "d1",
+       "let": "a1 + c1 - b1"
+      },
+      {
+       "name": "d2",
+       "let": "a2 + c2 - b2"
+      },
+      {
+       "require": "(b1-a1)*(c2-a2) - (b2-a2)*(c1-a1) != 0",
+       "why": "A, B, C must not be collinear"
+      }
+     ],
+     "constraints": [],
+     "stem": "$ABCD$ is a parallelogram where $A({=a1}, {=a2})$, $B({=b1}, {=b2})$ and $C({=c1}, {=c2})$. Its diagonals meet at the point $M$. Find the coordinates of $M$ and then of $D$. What is the value of $x+y$ for the point $D(x, y)$?",
+     "solution": [
+      "$M$ is the midpoint of $\\overline{AC}$: $M\\left(\\frac{({=a1})+({=c1})}{2}, \\frac{({=a2})+({=c2})}{2}\\right)=M\\left({=(a1+c1)/2}, {=(a2+c2)/2}\\right)$.",
+      "$M$ is also the midpoint of $\\overline{BD}$. Let $D(x_1, y_1)$.",
+      "${=(a1+c1)/2}=\\frac{({=b1})+x_1}{2}$, so $({=b1})+x_1={=a1+c1}$, hence $x_1={=d1}$.",
+      "${=(a2+c2)/2}=\\frac{({=b2})+y_1}{2}$, so $({=b2})+y_1={=a2+c2}$, hence $y_1={=d2}$.",
+      "So $D({=d1}, {=d2})$ and $x+y={=d1}+({=d2})={=d1+d2}$."
+     ],
+     "answer": "d1 + d2",
+     "proposed_misconceptions": [],
+     "notes": "Book example 3 twist: M may be fractional. Final answer is x+y of D so it is numeric."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u5-3-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-3-3:perp-slope",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-3-3",
+     "parent_question_id": "q:pp3u5-3-3:bk-drill-7",
+     "source_page": 69,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "s",
+       "choice": [
+        1,
+        -1
+       ]
+      }
+     ],
+     "constraints": [
+      "gcd(a, b) == 1"
+     ],
+     "stem": "A straight line has slope $m_1={=s*a/b}$. Find the slope $m_2$ of the straight line perpendicular to it.",
+     "solution": [
+      "For perpendicular lines, $m_1\\times m_2=-1$.",
+      "${=s*a/b}\\times m_2=-1$",
+      "$m_2=-1\\div\\left({=s*a/b}\\right)$",
+      "$m_2={=-s*b/a}$"
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=-s*b}/{=a}",
+      "form": "simplest",
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Basic entry point: perpendicular slope is the negative reciprocal. Fraction slope with gcd 1, b>=2 so m1 is never an integer; a=1 gives an integer answer."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u5-4-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-4-2:twopoints",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-4-2",
+     "parent_question_id": "q:pp3u5-4-2:bk-example-3",
+     "source_page": 71,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "choice": [
+        -3,
+        -2,
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        -6,
+        6
+       ]
+      },
+      {
+       "require": "b != 0",
+       "why": "keep a visible intercept"
+      },
+      {
+       "name": "x1",
+       "randint": [
+        -3,
+        3
+       ]
+      },
+      {
+       "name": "dx",
+       "choice": [
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "name": "x2",
+       "let": "x1 + dx"
+      },
+      {
+       "name": "y1",
+       "let": "m * x1 + b"
+      },
+      {
+       "name": "y2",
+       "let": "m * x2 + b"
+      },
+      {
+       "name": "sg",
+       "let": "'+' if b > 0 else '-'"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the equation of the straight line passing through the two points $A({=x1}, {=y1})$ and $B({=x2}, {=y2})$. Write it in the form $y = mx + b$.",
+     "solution": [
+      "The slope is $m = \\frac{{=y2} - ({=y1})}{{=x2} - ({=x1})} = \\frac{{=y2 - y1}}{{=dx}} = {=m}$.",
+      "So the equation has the form $y = {=m}x + b$.",
+      "The point $A({=x1}, {=y1})$ lies on the line, so it satisfies the equation: ${=y1} = {=m} \\times ({=x1}) + b$.",
+      "$b = {=y1} - ({=m * x1}) = {=b}$.",
+      "The equation of the line is $y = {=m}x {=sg} {=abs(b)}$."
+     ],
+     "marker": {
+      "kind": "equation",
+      "answer": "y = ({=m})*x + ({=b})",
+      "form": null,
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Integer slope; point-substitution method as in the book. Equivalent forms accepted by the equation marker."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-4-2:perpendicular",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-4-2",
+     "parent_question_id": "q:pp3u5-4-2:bk-example-3",
+     "source_page": 71,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "choice": [
+        -4,
+        -3,
+        -2,
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "dk",
+       "choice": [
+        1,
+        2
+       ]
+      },
+      {
+       "name": "xa",
+       "randint": [
+        -4,
+        4
+       ]
+      },
+      {
+       "name": "ya",
+       "randint": [
+        -4,
+        4
+       ]
+      },
+      {
+       "name": "xb",
+       "let": "xa + m * dk"
+      },
+      {
+       "name": "yb",
+       "let": "ya - dk"
+      },
+      {
+       "name": "x0",
+       "randint": [
+        -4,
+        4
+       ]
+      },
+      {
+       "name": "y0",
+       "randint": [
+        -4,
+        4
+       ]
+      },
+      {
+       "name": "b",
+       "let": "y0 - m * x0"
+      },
+      {
+       "require": "b != 0",
+       "why": "keep a visible intercept"
+      },
+      {
+       "name": "sg",
+       "let": "'+' if b > 0 else '-'"
+      }
+     ],
+     "constraints": [],
+     "stem": "Find the equation of the straight line passing through the point $({=x0}, {=y0})$ and perpendicular to the straight line passing through the two points $A({=xa}, {=ya})$ and $B({=xb}, {=yb})$. Write it in the form $y = mx + b$.",
+     "solution": [
+      "The slope of the line through $A$ and $B$ is $\\frac{{=yb} - ({=ya})}{{=xb} - ({=xa})} = \\frac{{=yb - ya}}{{=xb - xa}} = {=(yb - ya) / (xb - xa)}$.",
+      "The slope of the perpendicular line is the negative reciprocal: $m = {=m}$.",
+      "So the equation has the form $y = {=m}x + b$.",
+      "The point $({=x0}, {=y0})$ lies on the line: ${=y0} = {=m} \\times ({=x0}) + b$.",
+      "$b = {=y0} - ({=m * x0}) = {=b}$.",
+      "The equation of the line is $y = {=m}x {=sg} {=abs(b)}$."
+     ],
+     "marker": {
+      "kind": "equation",
+      "answer": "y = ({=m})*x + ({=b})",
+      "form": null,
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "AB has slope -1/m so the perpendicular slope is the integer m. Follows book example 3."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u5-4-2:midpoint",
+     "kind": "family",
+     "lo_id": "lo:pp3u5-4-2",
+     "parent_question_id": "q:pp3u5-4-2:bk-example-4",
+     "source_page": 72,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "m",
+       "choice": [
+        -3,
+        -2,
+        2,
+        3
+       ]
+      },
+      {
+       "name": "dx",
+       "choice": [
+        -2,
+        -1,
+        1,
+        2
+       ]
+      },
+      {
+       "name": "ax",
+       "randint": [
+        -4,
+        4
+       ]
+      },
+      {
+       "name": "ay",
+       "randint": [
+        -4,
+        4
+       ]
+      },
+      {
+       "name": "mx",
+       "let": "ax + dx"
+      },
+      {
+       "name": "my",
+       "let": "ay + m * dx"
+      },
+      {
+       "name": "e",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "name": "f",
+       "randint": [
+        -5,
+        5
+       ]
+      },
+      {
+       "require": "e != 0 or f != 0",
+       "why": "B and C must differ"
+      },
+      {
+       "name": "bx",
+       "let": "mx + e"
+      },
+      {
+       "name": "by",
+       "let": "my + f"
+      },
+      {
+       "name": "cx",
+       "let": "mx - e"
+      },
+      {
+       "name": "cy",
+       "let": "my - f"
+      },
+      {
+       "name": "b",
+       "let": "ay - m * ax"
+      },
+      {
+       "require": "b != 0",
+       "why": "keep a visible intercept"
+      },
+      {
+       "name": "sg",
+       "let": "'+' if b > 0 else '-'"
+      }
+     ],
+     "constraints": [],
+     "stem": "If $A({=ax}, {=ay})$, $B({=bx}, {=by})$ and $C({=cx}, {=cy})$, find the equation of the straight line passing through the vertex $A$ and bisecting $\\overline{BC}$. Write it in the form $y = mx + b$.",
+     "solution": [
+      "The midpoint of $\\overline{BC}$ is $\\left(\\frac{{=bx} + ({=cx})}{2}, \\frac{{=by} + ({=cy})}{2}\\right) = ({=mx}, {=my})$.",
+      "The slope of the line through $A({=ax}, {=ay})$ and $({=mx}, {=my})$ is $\\frac{{=my} - ({=ay})}{{=mx} - ({=ax})} = \\frac{{=my - ay}}{{=dx}} = {=m}$.",
+      "So the equation has the form $y = {=m}x + b$.",
+      "The point $A({=ax}, {=ay})$ lies on the line: ${=ay} = {=m} \\times ({=ax}) + b$.",
+      "$b = {=ay} - ({=m * ax}) = {=b}$.",
+      "The equation of the line is $y = {=m}x {=sg} {=abs(b)}$."
+     ],
+     "marker": {
+      "kind": "equation",
+      "answer": "y = ({=m})*x + ({=b})",
+      "form": null,
+      "variables": [
+       "x",
+       "y"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Midpoint is built to have integer coordinates and the slope from A to it is the integer m. Follows book example 4, with the answer in y = mx + b form."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  }
+ ],
+ "revised": []
+}

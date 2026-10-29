@@ -1,0 +1,64 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u7-3-2:samefo",
+ "kind": "family",
+ "lo_id": "lo:pp3u7-3-2",
+ "parent_question_id": "expl:pp3u7-3-2:bk-example-3",
+ "parent_kind": "teaching",
+ "source_page": 22,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    5
+   ],
+   "resample_while": "c == a"
+  }
+ ],
+ "constraints": [],
+ "stem": "Let $n_1(x)=\\frac{x+{=a}}{(x+{=a})(x-{=b})}$ and $n_2(x)=\\frac{x+{=c}}{(x+{=c})(x-{=b})}$. Which statement is correct?",
+ "solution": [
+  "Simplify $n_1$: cancelling $x+{=a}$ gives $n_1(x)=\\frac{1}{x-{=b}}$.",
+  "The domain of $n_1$ is $\\mathbb{R}-\\{-{=a}, {=b}\\}$, because the original denominator is zero at $x=-{=a}$ and $x={=b}$.",
+  "Simplify $n_2$: cancelling $x+{=c}$ gives $n_2(x)=\\frac{1}{x-{=b}}$.",
+  "The domain of $n_2$ is $\\mathbb{R}-\\{-{=c}, {=b}\\}$.",
+  "The simplest forms are the same, but the domains are different, so $n_1\\neq n_2$."
+ ],
+ "choices": {
+  "correct": "$n_1\\neq n_2$: both simplify to $\\frac{1}{x-{=b}}$, but their domains are different",
+  "distractors": [
+   {
+    "text": "$n_1=n_2$: both simplify to $\\frac{1}{x-{=b}}$",
+    "misconception_id": "mc:pp3u7-3-2:same-simplest-form-means-equal"
+   },
+   {
+    "text": "$n_1\\neq n_2$: they simplify to different fractions",
+    "misconception_id": null
+   },
+   {
+    "text": "$n_1=n_2$: both have the same domain $\\mathbb{R}-\\{{=b}\\}$",
+    "misconception_id": null
+   }
+  ]
+ },
+ "proposed_misconceptions": [],
+ "notes": "Always the same-simplest-form/different-domain case (book example 3 pattern). Constraint c!=a ensures domains differ; -a, -c, b distinct signs so sets are genuine."
+}

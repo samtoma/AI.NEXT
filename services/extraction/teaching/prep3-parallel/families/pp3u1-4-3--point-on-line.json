@@ -1,0 +1,65 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-4-3:point-on-line",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-4-3",
+ "parent_question_id": "expl:pp3u1-4-3:bk-example-2",
+ "parent_kind": "teaching",
+ "source_page": 20,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "b == 0"
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "bs",
+   "let": "('+ ' + str(b)) if b > 0 else ('- ' + str(-b))"
+  }
+ ],
+ "stem": "Which of these points lies on the straight line that represents $f(x)={=a}x {=bs}$, $f:\\mathbb{R}\\to\\mathbb{R}$?",
+ "choices": {
+  "correct": "$({=k}, {=a*k+b})$",
+  "distractors": [
+   {
+    "text": "$({=k}, {=a*k})$",
+    "misconception_id": "mc:pp3u1-4-3:line-always-through-origin"
+   },
+   {
+    "text": "$({=k}, {=a*k-b})$",
+    "misconception_id": null
+   },
+   {
+    "text": "$({=k}, {=a*k+a*b})$",
+    "misconception_id": null
+   }
+  ]
+ },
+ "solution": [
+  "Find $f({=k}) = {=a}\\times {=k} {=bs} = {=a*k+b}$.",
+  "So the ordered pair $({=k}, {=a*k+b})$ lies on the line.",
+  "$({=k}, {=a*k})$ ignores the constant term, as if the line passed through $(0,0)$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Distractors are distinct since b != 0 and a >= 2."
+}

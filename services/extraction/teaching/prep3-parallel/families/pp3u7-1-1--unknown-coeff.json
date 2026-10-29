@@ -1,0 +1,42 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u7-1-1:unknown-coeff",
+ "kind": "family",
+ "lo_id": "lo:pp3u7-1-1",
+ "parent_question_id": "expl:pp3u7-1-1:bk-think-and-discuss-1",
+ "parent_kind": "teaching",
+ "source_page": 15,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "r",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "m",
+   "randint": [
+    1,
+    8
+   ]
+  },
+  {
+   "name": "q",
+   "let": "r*r + m*r"
+  }
+ ],
+ "stem": "Let $f(x) = x^2 + kx - {=q}$, where $k$ is a constant. Given that ${=r}$ belongs to the set of zeroes $Z(f)$, find the value of $k$.",
+ "answer": "m",
+ "solution": [
+  "Since ${=r}$ is in $Z(f)$, we have $f({=r}) = 0$.",
+  "$({=r})^2 + k({=r}) - {=q} = 0$, so ${=r*r} + {=r}k - {=q} = 0$.",
+  "${=r}k = {=q} - {=r*r} = {=m*r}$.",
+  "$k = {=m}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Uses f(r)=0 as the definition of a zero, then solves a linear equation; k is always a positive whole number."
+}

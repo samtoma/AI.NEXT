@@ -1,0 +1,63 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-4-3:meet-const",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-4-3",
+ "parent_question_id": "expl:pp3u1-4-3:bk-example-2",
+ "parent_kind": "teaching",
+ "source_page": 20,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    -6,
+    6
+   ],
+   "resample_while": "b == 0"
+  },
+  {
+   "name": "t",
+   "randint": [
+    -3,
+    4
+   ],
+   "resample_while": "t == 0"
+  },
+  {
+   "name": "c",
+   "let": "a * t + b"
+  },
+  {
+   "name": "bs",
+   "let": "('+ ' + str(b)) if b > 0 else ('- ' + str(-b))"
+  }
+ ],
+ "stem": "On the same square net, the functions $f(x)={=a}x {=bs}$ and $g(x)={=c}$ (a constant function), both from $\\mathbb{R}$ to $\\mathbb{R}$, are represented graphically. Find the coordinates of the point where the two lines meet. Write your answer as (x, y).",
+ "answer": "",
+ "solution": [
+  "The graph of $g$ is a horizontal line: every ordered pair has $y={=c}$.",
+  "The meeting point needs $f(x)={=c}$, so ${=a}x {=bs} = {=c}$.",
+  "${=a}x = {=c-b}$, so $x={=t}$.",
+  "Check: $f({=t}) = {=a}\\times({=t}) {=bs} = {=c}$.",
+  "The lines meet at $({=t}, {=c})$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=t}, {=c})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Combines a constant function and a linear function; intersection is built from t so it is a whole number."
+}

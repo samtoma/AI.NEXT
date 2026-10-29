@@ -1,0 +1,86 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u3-2-3:discrete-sd",
+ "kind": "family",
+ "lo_id": "lo:pp3u3-2-3",
+ "parent_question_id": "expl:pp3u3-2-3:bk-example-2",
+ "parent_kind": "teaching",
+ "source_page": 44,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": "Defective units found in boxes of manufactured units.",
+ "params": [
+  {
+   "name": "P",
+   "choice": [
+    [
+     2,
+     1,
+     6,
+     1
+    ],
+    [
+     3,
+     2,
+     5,
+     2
+    ],
+    [
+     4,
+     1,
+     6,
+     2
+    ],
+    [
+     6,
+     1,
+     6,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "d",
+   "let": "P[0]"
+  },
+  {
+   "name": "a",
+   "let": "P[1]"
+  },
+  {
+   "name": "b",
+   "let": "P[2]"
+  },
+  {
+   "name": "s",
+   "let": "P[3]"
+  },
+  {
+   "name": "m",
+   "randint": [
+    7,
+    12
+   ]
+  },
+  {
+   "name": "n",
+   "let": "2*a+b"
+  },
+  {
+   "name": "q",
+   "let": "2*a*d*d"
+  }
+ ],
+ "constraints": [],
+ "stem": "The frequency distribution shows the number of defective units ($x$) found in some boxes of manufactured units and the number of boxes ($k$): $x$ = {=m-d}, {=m}, {=m+d} with $k$ = {=a}, {=b}, {=a} boxes respectively. Find the standard deviation of the number of defective units.",
+ "answer": "s",
+ "solution": [
+  "$\\sum k = {=a}+{=b}+{=a} = {=n}$.",
+  "$\\sum xk = {=(m-d)*a}+{=m*b}+{=(m+d)*a} = {=m*n}$, so the mean $\\bar{x}={=m*n}\\div {=n}={=m}$.",
+  "Deviations $x-\\bar{x}$: {=-d}, 0, {=d}. Squares: {=d*d}, 0, {=d*d}.",
+  "Multiply by $k$: {=a*d*d}, 0, {=a*d*d}. So $\\sum (x-\\bar{x})^2k={=q}$.",
+  "$\\sigma=\\sqrt{\\dfrac{{=q}}{{=n}}}=\\sqrt{{=s*s}}={=s}$ units."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Datasets chosen so variance is a perfect square; sigma whole number."
+}

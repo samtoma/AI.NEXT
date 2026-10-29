@@ -1,0 +1,30 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u3-2-1:basic-range",
+ "kind": "family",
+ "lo_id": "lo:pp3u3-2-1",
+ "parent_question_id": "expl:pp3u3-2-1:bk-worked-example-1",
+ "parent_kind": "teaching",
+ "source_page": 42,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "v",
+   "sample": {
+    "from": "range(10, 95)",
+    "k": 6
+   }
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the range of the set of values: ${=v[0]}, {=v[1]}, {=v[2]}, {=v[3]}, {=v[4]}, {=v[5]}$.",
+ "answer": "max(v) - min(v)",
+ "solution": [
+  "Range = greatest value $-$ smallest value.",
+  "The greatest value is ${=max(v)}$ and the smallest value is ${=min(v)}$.",
+  "Range $= {=max(v)} - {=min(v)} = {=max(v) - min(v)}$."
+ ],
+ "notes": "Modelled on the worked example (range = greatest - smallest). Values are distinct, unordered."
+}

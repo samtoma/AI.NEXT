@@ -81,7 +81,10 @@ export const meta = {
  */
 
 const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
-const PROMPTS_VERSION = 's6-v6'   // v2: packet by reference; v3: by-ref shards unclipped; v4: book questions name their figure images
+const PROMPTS_VERSION = 's6-v7'   // v2: packet by reference; v3: by-ref shards unclipped; v4: book questions name their figure images
+// s6-v7 (2026-10-29): the objective's worked examples follow its book questions, marked teaching_only (answer 40):
+// a family may be modelled on one and name it as its parent, so an objective with no live book question is no longer
+// unfillable. The family's own answer must still be one the app marks.
                                   // v5: revise mode names its inputs: the spec, the reasons and the parent's figure images only;
                                   //     the blind solver writes values without names (it wrote "x = [0, 8]", "H = (3, 1)")
                                   // v6: the AUTHOR (and revise) prompt names what Chapter 1's pipeline fixes were for: marker.answer is
@@ -271,7 +274,10 @@ ${o.description ? `Description: ${o.description}` : ''}
 Tier gaps to fill first: ${o.tier_gaps && o.tier_gaps.length ? o.tier_gaps.join(', ') : '(none — add only what adds real variety)'}
 Families that already exist here: ${(o.existing_families || []).join(', ') || '(none)'}
 
-BOOK QUESTIONS of this objective, with the book's canonical solutions (your model and your parents):
+BOOK QUESTIONS of this objective, with the book's canonical solutions (your model and your parents). An item
+marked "teaching_only" is a worked example the book solves on the page: no question row exists for it, but you may
+model a family on it and name its id as the parent — the family itself must still ask for an answer the app can
+mark (a number, a choice, an expression), even when the worked example is a proof or a drawing:
 ${REF ? refFile(`o/${loTailOf(o.lo_id)}.book-questions.txt`) : clip(o.book_questions || [], 12000)}
 
 MISCONCEPTIONS already catalogued for this objective (use these ids on distractors):

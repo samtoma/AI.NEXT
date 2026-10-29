@@ -90,7 +90,7 @@ class FamiliesAuthor(unittest.TestCase):
         author = run_workflow(FAMILIES_WF, {"mode": "author", "book": g10_book(), "objectives": objs},
                               {"author:lo:g10m4s2-1-1": {"lo_id": "lo:g10m4s2-1-1", "families": [spec], "infeasible": []}})
         self.assertTrue(author["ok"], author["error"])
-        self.assertEqual(author["result"]["prompts_version"], "s6-v6")
+        self.assertEqual(author["result"]["prompts_version"], "s6-v7")
         revise = run_workflow(FAMILIES_WF, {"mode": "author", "book": g10_book(), "revise": [{"spec": spec, "problems": ["x"]}]},
                               {f"revise:{spec['id']}": {"spec": dict(spec, version=2), "changes": "-"}})
         self.assertTrue(revise["ok"], revise["error"])
@@ -140,7 +140,7 @@ class FamiliesRevise(unittest.TestCase):
             self.assertIn(f"- {reason}", prompt)
         self.assertIn('"t = {=a} and b = {=b}"', prompt)
         self.assertEqual(out["result"]["revised"], [fixed])
-        self.assertEqual(out["result"]["prompts_version"], "s6-v6")
+        self.assertEqual(out["result"]["prompts_version"], "s6-v7")
         # s6-v5: the revise agent works from its message alone
         self.assertIn("Work from this message alone", prompt)
         self.assertNotIn("The one exception", prompt, "no figures, no file to open")

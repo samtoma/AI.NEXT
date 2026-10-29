@@ -1,0 +1,35 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-2-3:shift-pairs",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-2-3",
+ "parent_question_id": "q:pp3u1-2-3:bk-think-1",
+ "source_page": 13,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "X",
+   "let": "sorted(sample_x)"
+  },
+  {
+   "name": "d",
+   "randint": [
+    1,
+    4
+   ]
+  }
+ ],
+ "constraints": [],
+ "stem": "Let $X = \\{1, 2, 3, 4\\}$ and $Y = \\{2, 3, 4, 5, 6, 7\\}$. The relation $R$ from $X$ to $Y$ is defined by $R = \\{(x, y) : x \\in X,\\ y \\in Y,\\ y = x + {=d}\\}$. How many ordered pairs does $R$ have? (Remember that $R \\subset X \\times Y$.)",
+ "answer": "len([x for x in [1,2,3,4] if x + d in [2,3,4,5,6,7]])",
+ "solution": [
+  "R consists of the pairs of X × Y whose second element equals the first element plus {=d}.",
+  "Check each x in X = {1, 2, 3, 4}: the second element is x + {=d}.",
+  "Keep the pair only if x + {=d} belongs to Y = {2, 3, 4, 5, 6, 7}.",
+  "The number of x in X that work is {=len([x for x in [1,2,3,4] if x + d in [2,3,4,5,6,7]])}.",
+  "So R has {=len([x for x in [1,2,3,4] if x + d in [2,3,4,5,6,7]])} ordered pairs."
+ ],
+ "notes": "Fixed X, Y; d in 1..4. d=1: 4 pairs, d=2: 4, d=3: 4 (4,7 ok), d=4: x=1..2 give 5,6; 3->7; 4->8 no: 3 pairs. All answers >=3, none empty. Parameter X is unused (placeholder removed in practice)."
+}

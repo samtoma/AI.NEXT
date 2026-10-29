@@ -1,0 +1,120 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-2-1:missing",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-2-1",
+ "parent_question_id": "q:pp3u1-2-1:bk-example-1",
+ "source_page": 13,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "sample": {
+    "from": "range(-2, 5)",
+    "k": 4
+   }
+  },
+  {
+   "name": "xs",
+   "let": "sorted(s)"
+  },
+  {
+   "name": "m",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "c",
+   "choice": [
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "i0",
+   "let": "m * xs[0] + c"
+  },
+  {
+   "name": "i1",
+   "let": "m * xs[1] + c"
+  },
+  {
+   "name": "i2",
+   "let": "m * xs[2] + c"
+  },
+  {
+   "name": "i3",
+   "let": "m * xs[3] + c"
+  },
+  {
+   "name": "ys",
+   "let": "sorted([i0, i1, i3, i2 + 1, i3 + 2])"
+  },
+  {
+   "name": "x0",
+   "let": "xs[0]"
+  },
+  {
+   "name": "x1",
+   "let": "xs[1]"
+  },
+  {
+   "name": "x2",
+   "let": "xs[2]"
+  },
+  {
+   "name": "x3",
+   "let": "xs[3]"
+  },
+  {
+   "name": "y0",
+   "let": "ys[0]"
+  },
+  {
+   "name": "y1",
+   "let": "ys[1]"
+  },
+  {
+   "name": "y2",
+   "let": "ys[2]"
+  },
+  {
+   "name": "y3",
+   "let": "ys[3]"
+  },
+  {
+   "name": "y4",
+   "let": "ys[4]"
+  },
+  {
+   "name": "j2",
+   "let": "i2"
+  }
+ ],
+ "stem": "If $X=\\{ {=x0}, {=x1}, {=x2}, {=x3} \\}$, $Y=\\{ {=y0}, {=y1}, {=y2}, {=y3}, {=y4} \\}$, and R is a relation from X to Y where a R b means: «b = {=m}a + {=c}», for each $a\\in X$, $b\\in Y$. Write R as a set of ordered pairs. Only pairs whose second element belongs to Y are in R. List the pairs in order of a, as (a, b), (a, b), …",
+ "solution": [
+  "When a = {=x0}: b = {=m} × ({=x0}) + {=c} = {=i0}, which is in Y, so ({=x0}, {=i0}) is in R.",
+  "When a = {=x1}: b = {=m} × ({=x1}) + {=c} = {=i1}, which is in Y, so ({=x1}, {=i1}) is in R.",
+  "When a = {=x2}: b = {=m} × ({=x2}) + {=c} = {=j2}, which is not in Y, so a = {=x2} is in no pair.",
+  "When a = {=x3}: b = {=m} × ({=x3}) + {=c} = {=i3}, which is in Y, so ({=x3}, {=i3}) is in R.",
+  "R = \\{({=x0}, {=i0}), ({=x1}, {=i1}), ({=x3}, {=i3})\\}."
+ ],
+ "constraints": [
+  "(i2 not in [y0, y1, y2, y3, y4])"
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=x0}, {=i0}), ({=x1}, {=i1}), ({=x3}, {=i3})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced twist like the book's think-and-discuss: one element of X has no partner in Y, so it appears in no pair. Y is built from three true images plus i2+1 and i3+2, neither of which can equal i2 (m>=2). Constraint checks i2 not in Y."
+}

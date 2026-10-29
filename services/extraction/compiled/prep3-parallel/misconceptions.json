@@ -6,6 +6,150 @@
   "generator": "S5 runbook/misconceptions.workflow.js (Sonnet author, Sonnet fail-closed verifier) via assemble_misconceptions.py — runs s5-final.20261018T102128Z.json; pipeline-generated, UNREVIEWED",
   "misconceptions": [
     {
+      "id": "mc:pp3u8-1-1:event-occurs-only-if-outcome-is-whole-set",
+      "lo_id": "lo:pp3u8-1-1",
+      "label": "Thinks an event happens only when the outcome is the whole event set",
+      "description": "The student treats an event like {2, 4, 6} as a single outcome that must come up as a whole, instead of seeing that the event occurs when the outcome is any one element of the set.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are treating the event as one big outcome, so you think it only happens if the whole set turns up. It is natural to read $A = \\{2, 4, 6\\}$ as a single item, but it is a collection of outcomes."
+        },
+        {
+          "step": 2,
+          "text_md": "A dice shows only one number per roll. If the whole set had to appear, the event 'getting an even number' could never happen, because one roll never shows 2, 4 and 6 together."
+        },
+        {
+          "step": 3,
+          "text_md": "The book's rule is that an event occurred if the outcome of the experiment is an element of the set that expresses the event. If the dice shows 4, then 4 is in $\\{2, 4, 6\\}$, so the even-number event occurred."
+        },
+        {
+          "step": 4,
+          "text_md": "This is also why we count elements: $P(A) = \\frac{n(A)}{n(S)} = \\frac{3}{6}$ counts the 3 outcomes that each make $A$ occur, out of the 6 possible outcomes."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, ask 'Is the outcome one of the elements of the event set?' If yes, the event occurred. Then count those elements for $n(A)$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102022Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Backed by the book's caution that an event occurs when the outcome is an element of the event set. The refutation is mathematically correct: one roll shows one number, 4 is in {2,4,6}, and P=3/6 matches the book's method. It names no question ids or pages.",
+        "sources": [
+          {
+            "type": "caution",
+            "ref": "pp3u8-1:caution-1"
+          },
+          {
+            "type": "remark",
+            "ref": "pp3u8-1:caution-1"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u8-1-3:add-without-subtracting-overlap",
+      "lo_id": "lo:pp3u8-1-3",
+      "label": "Adds P(A) and P(B) and forgets the overlap",
+      "description": "The student finds P(A ∪ B) by adding P(A) and P(B) even though the events share outcomes, so shared outcomes are counted twice.",
+      "signal": "A probability for A ∪ B that is exactly P(A) + P(B), larger than the true value, when A and B overlap (e.g. 7/10 instead of 3/5, or 7/9 instead of 2/3).",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are thinking \"A or B means add the two probabilities\". That is right when A and B have nothing in common, and it is a good start. The trouble starts when they share an outcome."
+        },
+        {
+          "step": 2,
+          "text_md": "Take cards numbered 1 to 9. $A$ is an even number, $A=\\{2, 4, 6, 8\\}$, so $P(A)=\\frac{4}{9}$. $B$ is a number divisible by 3, $B=\\{3, 6, 9\\}$, so $P(B)=\\frac{3}{9}$. Adding gives $\\frac{7}{9}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Now list $A\\cup B$ itself: $\\{2, 3, 4, 6, 8, 9\\}$. That is only 6 cards, so $P(A\\cup B)=\\frac{6}{9}=\\frac{2}{3}$, not $\\frac{7}{9}$. The card 6 is in both $A$ and $B$, so adding counted it twice."
+        },
+        {
+          "step": 4,
+          "text_md": "Take the shared outcomes away once: $A\\cap B=\\{6\\}$, so $P(A\\cap B)=\\frac{1}{9}$, and $\\frac{4}{9}+\\frac{3}{9}-\\frac{1}{9}=\\frac{6}{9}=\\frac{2}{3}$, which matches."
+        },
+        {
+          "step": 5,
+          "text_md": "Next time, first find $A\\cap B$. If it has outcomes in it, use $P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$. If $A\\cap B$ is empty (mutually exclusive), the subtraction is $0$ and you just add."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102022Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. The refutation reuses the book's cards 1-9 example (A={2,4,6,8}, B={3,6,9}). Its numbers match the canonical solution: 7/9 versus 6/9 = 2/3, A∩B={6}, 4/9+3/9−1/9 = 2/3. It shows concretely why adding double counts, and it covers the mutually exclusive case. It cites no question ids, pages or figures, and teaches nothing beyond the book. The signal is accurate: 7/10 vs 3/5 matches drill 6a, and 7/9 vs 2/3 matches the example.",
+        "sources": [
+          {
+            "type": "canonical_solution",
+            "ref": "q:pp3u8-1-3:bk-drill-6-a"
+          },
+          {
+            "type": "canonical_solution",
+            "ref": "expl:pp3u8-1-3:bk-example-2"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u8-2-2:only-means-whole-set",
+      "lo_id": "lo:pp3u8-2-2",
+      "label": "Counts the whole set A when asked for A only",
+      "description": "The student takes the 'only' event A - B to be the whole set A, so they use all of A's students and never remove the overlap A ∩ B.",
+      "signal": "Gives 18/40 (or 9/20) for reading Al-Akhbar only, or 15/40 (or 3/8) for Al-Ahram only.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are treating 'reads Al-Akhbar' and 'reads Al-Akhbar only' as the same event. You were right to start from the 18 students in set A."
+        },
+        {
+          "step": 2,
+          "text_md": "Those 18 students are made of two groups. Some read only Al-Akhbar. Others read Al-Akhbar and Al-Ahram too, and that second group is the 8 in $A \\cap B$. This is what $(A - B) \\cup (A \\cap B) = A$ says."
+        },
+        {
+          "step": 3,
+          "text_md": "The 8 students who read both also read Al-Ahram, so they do not belong to 'Al-Akhbar only'. Answering $\\frac{18}{40}$ counts them as well."
+        },
+        {
+          "step": 4,
+          "text_md": "Take the overlap away: $n(A - B) = 18 - 8 = 10$, so $P(A - B) = \\frac{10}{40} = \\frac{1}{4}$, not $\\frac{18}{40}$."
+        },
+        {
+          "step": 5,
+          "text_md": "Whenever a question says 'only', subtract the overlap first: $n(A - B) = n(A) - n(A \\cap B)$. Then divide by $n(S)$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102022Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The figure shows A only = 10, both = 8, B only = 7 and outside = 15, so S = 40 and n(A) = 18. The error of giving 18/40 for 'only' is real, and the book's remark separates A from 'A only'. The refutation's arithmetic (18 - 8 = 10, 10/40 = 1/4) matches the canonical answer. It uses the book's identity (A - B) ∪ (A ∩ B) = A. It argues against the specific error, not just the method. It names no question id, page or figure number, and no review history. The signal (18/40 or 9/20, and 15/40 or 3/8) matches this error.",
+        "sources": [
+          {
+            "type": "remark",
+            "ref": "pp3u8-2:linking-text-4"
+          },
+          {
+            "type": "remark",
+            "ref": "pp3u8-2:rule-3"
+          }
+        ],
+        "covers": []
+      }
+    },
+    {
       "id": "mc:pp3u1-1-1:order-ignored-in-pair",
       "lo_id": "lo:pp3u1-1-1",
       "label": "Treats an ordered pair like an unordered set",
@@ -94,6 +238,382 @@
             "ref": "expl:pp3u1-1-2:bk-example-2"
           }
         ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-1-3:arrow-starts-at-y",
+      "lo_id": "lo:pp3u1-1-3",
+      "label": "Arrows drawn from the second set",
+      "description": "Starts each arrow in an arrow diagram from an element of Y rather than of X.",
+      "signal": "The diagram or the reasoning reverses the direction of every arrow.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You know the diagram joins one set to the other — that is the idea."
+        },
+        {
+          "step": 2,
+          "text_md": "In the arrow diagram of $X \\times Y$ every arrow STARTS at an element of $X$, the first projection, and ends at an element of $Y$."
+        },
+        {
+          "step": 3,
+          "text_md": "The direction carries the order of the pair; reversing it draws $Y \\times X$ instead."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "This matches the book: each arrow starts at the first projection (X) and ends at the second (Y). The refutation addresses the reversed direction and is correct.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-1-3:points-vs-columns",
+      "lo_id": "lo:pp3u1-1-3",
+      "label": "Total points read as the number of columns",
+      "description": "Reports the whole point count of a net diagram where a column count is asked.",
+      "signal": "The answer equals n(X) x n(Y) rather than one of the factors.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "That number is genuinely in the diagram — it is the total of the points."
+        },
+        {
+          "step": 2,
+          "text_md": "Each COLUMN holds $n(Y)$ points, so the number of columns is the total divided by the height."
+        },
+        {
+          "step": 3,
+          "text_md": "$15$ points in columns of $3$ gives $5$ columns."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "It follows from the book's cartesian diagram, with X horizontal and Y vertical, so each column has n(Y) points. The arithmetic is correct (15 points in columns of 3 gives 5 columns). It addresses this specific error.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-1-4:axis-point-given-a-quadrant",
+      "lo_id": "lo:pp3u1-1-4",
+      "label": "A point on an axis placed in a quadrant",
+      "description": "Assigns a point with a zero coordinate to a quadrant; the axes belong to none.",
+      "signal": "A point containing 0 is reported as being in a quadrant.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The sign you did read is right."
+        },
+        {
+          "step": 2,
+          "text_md": "But $(0, -3)$ has a zero first coordinate, so it sits ON the $y$-axis rather than inside any quadrant."
+        },
+        {
+          "step": 3,
+          "text_md": "The axes divide the plane into the four quadrants and belong to none of them — a zero anywhere in the pair puts the point on an axis."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Matches canonical E(0,-3) on the y-axis and F(2,0) on the x-axis; refutation is correct.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-1-4:pair-order-ignored",
+      "lo_id": "lo:pp3u1-1-4",
+      "label": "Order of the pair ignored",
+      "description": "Reports (b, a) where (a, b) was asked; treats an ordered pair as an unordered set.",
+      "signal": "The answer is the correct pair with its components swapped.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Both of your numbers are right — the issue is which one goes first."
+        },
+        {
+          "step": 2,
+          "text_md": "An ordered pair is *ordered*: $(0, 2)$ and $(2, 0)$ name different points and are not equal unless the two components happen to be the same."
+        },
+        {
+          "step": 3,
+          "text_md": "Match first-with-first and second-with-second, and keep them in that order when you write the answer."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Swapping coordinates is a real error when reading points like C(5,0) from the net; refutation is correct and consistent with the book's reading of pairs.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-1-4:quadrant-from-x-alone",
+      "lo_id": "lo:pp3u1-1-4",
+      "label": "Quadrant chosen from one coordinate",
+      "description": "Names the quadrant from the sign of x without checking y, or the reverse.",
+      "signal": "The named quadrant matches one coordinate's sign and contradicts the other.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are reading signs, which is exactly the right instinct."
+        },
+        {
+          "step": 2,
+          "text_md": "A quadrant needs BOTH signs: $(-2, 5)$ is negative then positive, which is the second quadrant."
+        },
+        {
+          "step": 3,
+          "text_md": "In order: $(+,+)$ first, $(-,+)$ second, $(-,-)$ third, $(+,-)$ fourth."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Quadrant sign conventions match the canonical answers (first to fourth); the refutation example (-2,5) in the second quadrant is correct.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-2-2:relation-subset-of-one-set",
+      "lo_id": "lo:pp3u1-2-2",
+      "label": "A relation taken to be a subset of one of the sets",
+      "description": "Treats a relation as a set of elements rather than a set of ordered pairs.",
+      "signal": "The answer names X or Y where X x Y is required.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "A relation does involve both sets — that part is right."
+        },
+        {
+          "step": 2,
+          "text_md": "But its members are ORDERED PAIRS, so a relation from $X$ to $Y$ is a subset of $X \\times Y$."
+        },
+        {
+          "step": 3,
+          "text_md": "$X$ alone holds single elements, and a pair cannot be an element of it."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "A relation is a set of ordered pairs, a subset of X×Y. The refutation is correct and argues against the error, and the signal fits.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-2-2:relation-subset-of-x",
+      "lo_id": "lo:pp3u1-2-2",
+      "label": "A relation on X taken to be a subset of X",
+      "description": "Treats a relation on a set as a set of elements rather than of ordered pairs.",
+      "signal": "The answer names X, or a set of single elements.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "A relation on $X$ does live entirely inside $X$'s world — that instinct is right."
+        },
+        {
+          "step": 2,
+          "text_md": "Its members are ORDERED PAIRS of elements of $X$, so $R \\subseteq X \\times X$."
+        },
+        {
+          "step": 3,
+          "text_md": "$X$ itself holds single elements, and a pair is not one of them."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "This matches the canonical relation on X. The refutation that R ⊆ X×X, made of ordered pairs, is correct and the signal fits.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-2-2:self-pairs-dropped",
+      "lo_id": "lo:pp3u1-2-2",
+      "label": "Pairs of an element with itself left out",
+      "description": "Omits (x, x) from a relation on a set, assuming a relation must join two different elements.",
+      "signal": "The answer is the correct relation minus its self-paired members.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Every pair you listed genuinely satisfies the rule."
+        },
+        {
+          "step": 2,
+          "text_md": "One is missing: with $a + b = 0$ and $a = b = 0$, the pair $(0, 0)$ satisfies it too."
+        },
+        {
+          "step": 3,
+          "text_md": "A relation on a set may pair an element with itself — nothing in the definition forbids it."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "In the canonical answer, (0,0) is the self-pair. The refutation is correct, and the signal (the correct relation minus its self-pair) fits.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-3-1:domain-element-repeated",
+      "lo_id": "lo:pp3u1-3-1",
+      "label": "An element of the domain given two images",
+      "description": "Accepts a relation as a function although one first projection appears twice.",
+      "signal": "The chosen relation contains two pairs sharing a first component.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Every pair there is legal on its own."
+        },
+        {
+          "step": 2,
+          "text_md": "But $1$ appears as a first projection twice, in $(1, 2)$ and $(1, 3)$, so $1$ has two images."
+        },
+        {
+          "step": 3,
+          "text_md": "A function gives each input exactly one output — one repeat is enough to disqualify it."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Mathematically correct and matches the book's condition that each element of X has exactly one image. Two pairs sharing a first component is a precise signal, and the refutation argues against this error.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-3-1:function-condition-on-y",
+      "lo_id": "lo:pp3u1-3-1",
+      "label": "The function condition applied to the second set",
+      "description": "Requires each element of Y to appear once, instead of each element of X appearing exactly once as a first projection.",
+      "signal": "The stated condition is about images rather than about the domain.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right shape of condition — 'exactly once' is the key phrase."
+        },
+        {
+          "step": 2,
+          "text_md": "It applies to the FIRST set: every element of $X$ must appear exactly once as a first projection."
+        },
+        {
+          "step": 3,
+          "text_md": "Elements of $Y$ may repeat, or not appear at all — that is why the range can be a proper subset of the codomain."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The condition is correctly moved to X (each element of X appears exactly once as a first projection). The note that elements of Y may repeat or be unused is consistent with the canonical example, where the range {4,6,8} is a proper subset of Y. The signal is acceptable.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-3-3:range-is-codomain",
+      "lo_id": "lo:pp3u1-3-3",
+      "label": "Range and codomain treated as the same set",
+      "description": "Reports the whole codomain as the range; the range is the set of images actually reached.",
+      "signal": "The answer is Y rather than the set of second components of f.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have found the right set to be looking at — $Y$ is where the images live."
+        },
+        {
+          "step": 2,
+          "text_md": "The RANGE is only the part of $Y$ that is actually reached: the second components of the pairs, $\\{3, 5, 7\\}$."
+        },
+        {
+          "step": 3,
+          "text_md": "$2$ belongs to the codomain but is nobody's image, so it is not in the range."
+        },
+        {
+          "step": 4,
+          "text_md": "Range $\\subseteq$ codomain, and the two are equal only when every element of $Y$ gets used."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Matches the canonical range {3,5,7} and the book's remark that the range is a subset of the codomain. The claim that 2 is in Y but is nobody's image is correct. The signal (answering Y) diagnoses the error accurately. No question ids or other forbidden references.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u1-3-3:range-is-domain",
+      "lo_id": "lo:pp3u1-3-3",
+      "label": "Range confused with the domain",
+      "description": "Gives the set of inputs where the set of images was asked.",
+      "signal": "The answer is X rather than the images.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "That set is the domain — the inputs."
+        },
+        {
+          "step": 2,
+          "text_md": "The range is what comes OUT: the second component of each pair, $\\{3, 5, 7\\}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Domain in, range out; the arrow diagram runs left to right."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101704Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The refutation correctly separates inputs (the domain X) from the images {3,5,7}, matching the canonical solution. The signal (answering X) is accurate. The arrow-diagram remark is generic and consistent with the question's figure. It names no ids or page numbers.",
+        "sources": [],
         "covers": []
       }
     },
@@ -218,6 +738,68 @@
             "ref": "pp3u1-4:rule-3"
           }
         ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u2-1-2:adding-preserves-ratio",
+      "lo_id": "lo:pp3u2-1-2",
+      "label": "Adding the same number to both terms assumed to preserve the ratio",
+      "description": "Carries the rule for multiplication over to addition.",
+      "signal": "The student asserts the ratio is unchanged after adding to both terms.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The rule you are thinking of is real — but it is about multiplying."
+        },
+        {
+          "step": 2,
+          "text_md": "Multiplying both terms by the same nonzero number leaves a ratio unchanged. ADDING does not: $3 : 5$ becomes $4 : 6 = 2 : 3$, which is different."
+        },
+        {
+          "step": 3,
+          "text_md": "Test it with the numbers whenever you are unsure — one example settles it."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101823Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The objective is about whether multiplying or adding changes a ratio, so this error belongs to it. The refutation is correct: 3:5 plus 1 gives 4:6 = 2:3, which differs from 3:5. It is consistent with the book's example, where adding 1 turns 7:11 into 2:3. It cites no ids, pages or review history. It argues against the error with a counterexample and does not just restate the method.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u2-2-1:means-extremes-swapped",
+      "lo_id": "lo:pp3u2-2-1",
+      "label": "Means and extremes exchanged",
+      "description": "Names b and c as the extremes of a/b = c/d.",
+      "signal": "The answer gives the middle pair where the outer pair is asked.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right pair of terms in mind, just the other pair."
+        },
+        {
+          "step": 2,
+          "text_md": "Written as $a : b = c : d$, the EXTREMES are the outer terms $a$ and $d$; the means are the inner terms $b$ and $c$."
+        },
+        {
+          "step": 3,
+          "text_md": "The rule 'product of the extremes = product of the means' is exactly $ad = bc$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101823Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "In a/b=c/d the extremes are a and d and the means are b and c, which matches the canonical 4·x = 12·16 for 4/12 = 16/x. The error is a plausible one, and the refutation is correct and addresses it directly. Step 1 is slightly awkwardly worded, but it is not wrong.",
+        "sources": [],
         "covers": []
       }
     },
@@ -370,6 +952,196 @@
       }
     },
     {
+      "id": "mc:pp3u3-2-2:deviations-not-averaged",
+      "lo_id": "lo:pp3u3-2-2",
+      "label": "Squared deviations summed but not averaged",
+      "description": "Divides by nothing before taking the root, so the sum is used in place of its mean.",
+      "signal": "The answer is √(Σd²) rather than √(Σd²/n).",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your deviations and their squares are right."
+        },
+        {
+          "step": 2,
+          "text_md": "They have to be AVERAGED before the root: divide the sum by $n$, the number of values."
+        },
+        {
+          "step": 3,
+          "text_md": "Sum $= 8$, $n = 4$, so the average is $2$ and $\\sigma = \\sqrt{2}$ — not $\\sqrt{8}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The formula carries the division inside the root: $\\sigma = \\sqrt{\\frac{\\sum (x - \\bar{x})^2}{n}}$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101835Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Omitting the division by n is a plausible slip against the canonical formula σ=√(Σ(x−x̄)²/n). The refutation's arithmetic is correct: 3,5,5,7 has mean 5, squared deviations sum to 8, n=4, so σ=√2. It uses the book's method, names no outside references, and contrasts √8 with √2.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u4-1-3:ratio-inverted",
+      "lo_id": "lo:pp3u4-1-3",
+      "label": "Ratio written upside down",
+      "description": "Divides the hypotenuse by a leg instead of the leg by the hypotenuse.",
+      "signal": "The answer is greater than 1 for a sine or cosine, which is impossible.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The two sides are correct — they are the wrong way up."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\sin$ and $\\cos$ put the HYPOTENUSE on the bottom, so both are always less than $1$ in a right-angled triangle."
+        },
+        {
+          "step": 3,
+          "text_md": "An answer above $1$ for a sine or cosine is a signal to flip the fraction and check."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101846Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. The refutation is correct: sin and cos have the hypotenuse as denominator, so they are below 1. The signal (sine or cosine greater than 1) correctly diagnoses a student who flips the fraction. For the 12-13-5 triangle, sin A = 5/13, not 13/5. The refutation names no external references.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u4-1-3:tan-uses-hypotenuse",
+      "lo_id": "lo:pp3u4-1-3",
+      "label": "Hypotenuse used in the tangent",
+      "description": "Builds tan from a leg and the hypotenuse rather than from the two legs.",
+      "signal": "The tangent is reported as a sine or cosine value.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are choosing between the three sides, which is the right process."
+        },
+        {
+          "step": 2,
+          "text_md": "The tangent is the only ratio that does NOT use the hypotenuse: opposite over adjacent, the two legs."
+        },
+        {
+          "step": 3,
+          "text_md": "If the hypotenuse appears in your fraction, you have written a sine or a cosine."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101846Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. The refutation is correct: tan is opposite over adjacent, the two legs, and any fraction with the hypotenuse is a sine or cosine. The signal fits, because a leg-over-hypotenuse tan equals a sine or cosine value. The refutation names no external references.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u5-1-1:legs-added-before-squaring",
+      "lo_id": "lo:pp3u5-1-1",
+      "label": "Differences added before squaring",
+      "description": "Computes (dx + dy) rather than √(dx² + dy²).",
+      "signal": "The answer equals the sum of the two coordinate differences.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Both differences are right — it is how they combine that changes."
+        },
+        {
+          "step": 2,
+          "text_md": "They cannot simply be added: the two directions are perpendicular, so Pythagoras applies. $\\sqrt{6^2 + 8^2} = 10$, not $6 + 8 = 14$."
+        },
+        {
+          "step": 3,
+          "text_md": "Square, add, then root — in that order."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real: for M(3,2), N(7,5) a student gets 4+3=7 instead of 5. The refutation is correct (√(36+64)=10 vs 14) and matches the canonical Pythagoras method. It is specific to adding the legs, and the signal is accurate.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u5-1-1:one-coordinate-used",
+      "lo_id": "lo:pp3u5-1-1",
+      "label": "Distance read from one point only",
+      "description": "Reports one point's coordinate as the distance instead of the separation between both.",
+      "signal": "The answer equals one of the given coordinates.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "That number is in the question, which is why it is tempting."
+        },
+        {
+          "step": 2,
+          "text_md": "A distance always involves BOTH points: $|6 - 2| = 4$, not $6$ or $2$ on their own."
+        },
+        {
+          "step": 3,
+          "text_md": "Ask what the number is measuring FROM as well as to."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Plausible error, since a student may report a given coordinate. The refutation is mathematically correct (|6-2|=4) and consistent with the book's difference method. It names no external references.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u5-1-1:root-not-taken",
+      "lo_id": "lo:pp3u5-1-1",
+      "label": "Square root never taken in the distance rule",
+      "description": "Stops at the sum of the squares.",
+      "signal": "The answer is the square of the correct distance.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your squares are right: $6^2 + 8^2 = 36 + 64 = 100$."
+        },
+        {
+          "step": 2,
+          "text_md": "That $100$ is the square of the distance. The rule ends with a root: $\\sqrt{100} = 10$."
+        },
+        {
+          "step": 3,
+          "text_md": "$AB = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$ — the root is part of the formula, not an optional tidy-up."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real: a student stops at 25 for MN. The refutation is correct (36+64=100, √100=10) and matches the canonical formula. It targets the missing root specifically, and the signal fits.",
+        "sources": [],
+        "covers": []
+      }
+    },
+    {
       "id": "mc:pp3u5-1-2:equal-sides-enough-for-square",
       "lo_id": "lo:pp3u5-1-2",
       "label": "Four equal sides taken as proof of a square",
@@ -406,6 +1178,83 @@
             "ref": "q:pp3u5-1-2:bk-example-1"
           }
         ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u5-3-1:slope-inverted",
+      "lo_id": "lo:pp3u5-3-1",
+      "label": "Run divided by rise",
+      "description": "Computes Δx/Δy instead of Δy/Δx.",
+      "signal": "The answer is the reciprocal of the correct slope.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Both differences are right — the fraction is upside down."
+        },
+        {
+          "step": 2,
+          "text_md": "Slope is RISE over RUN: $m = \\frac{y_2 - y_1}{x_2 - x_1}$."
+        },
+        {
+          "step": 3,
+          "text_md": "A memory hook: slope answers 'how much does it climb for each step sideways', so the climb is on top."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "Inverting the fraction is a real error for the two-point slope. The refutation keeps the canonical formula (y2-y1)/(x2-x1) and addresses the upside-down fraction specifically. The rise/run wording is a light gloss on that formula and does not change the method.",
+        "sources": [],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-3-1:live-line-equation-standard#slope-inverted",
+            "question_id": "q:pp3u5-3-1:w001",
+            "text": "Slope taken as run over rise instead of rise over run",
+            "tagged": "mc:pp3u5-3-1:slope-inverted"
+          },
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u5-3-1:live-line-equation-standard-4#slope-inverted",
+            "question_id": "q:pp3u5-3-1:w004",
+            "text": "Slope taken as run over rise instead of rise over run",
+            "tagged": "mc:pp3u5-3-1:slope-inverted"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:pp3u5-3-3:perpendicular-sign-only",
+      "lo_id": "lo:pp3u5-3-3",
+      "label": "Sign flipped without taking the reciprocal",
+      "description": "Uses −m for a perpendicular slope instead of −1/m.",
+      "signal": "The answer is the negative of the original slope.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Changing the sign is half of the rule, and you got that half."
+        },
+        {
+          "step": 2,
+          "text_md": "Perpendicular slopes multiply to $-1$, so the other slope is $\\frac{-1}{m}$ — flip the fraction AND change the sign."
+        },
+        {
+          "step": 3,
+          "text_md": "Check by multiplying: if the product is not $-1$, the lines are not perpendicular."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T101917Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. For slope 3/2, a student gives -3/2 instead of -2/3 (drill 7). The refutation is correct and uses the book's m1×m2=-1 rule. It targets the missing reciprocal and gives a product check that would expose the error. It names no outside references and adds nothing beyond the book.",
+        "sources": [],
         "covers": []
       }
     },
@@ -686,146 +1535,197 @@
       }
     },
     {
-      "id": "mc:pp3u8-1-1:event-occurs-only-if-outcome-is-whole-set",
-      "lo_id": "lo:pp3u8-1-1",
-      "label": "Thinks an event happens only when the outcome is the whole event set",
-      "description": "The student treats an event like {2, 4, 6} as a single outcome that must come up as a whole, instead of seeing that the event occurs when the outcome is any one element of the set.",
-      "signal": null,
-      "kind": "conceptual",
+      "id": "mc:pp3u9-1-1:radius-any-length",
+      "lo_id": "lo:pp3u9-1-1",
+      "label": "A radius that stops short of the circle",
+      "description": "Starts correctly at the centre but ends anywhere, as though a radius were a direction rather than a fixed length.",
+      "signal": "One end is the centre; the other is strictly inside the circle.",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
-          "text_md": "You are treating the event as one big outcome, so you think it only happens if the whole set turns up. It is natural to read $A = \\{2, 4, 6\\}$ as a single item, but it is a collection of outcomes."
+          "text_md": "You started in the right place — the centre — which is the part most people get wrong."
         },
         {
           "step": 2,
-          "text_md": "A dice shows only one number per roll. If the whole set had to appear, the event 'getting an even number' could never happen, because one roll never shows 2, 4 and 6 together."
+          "text_md": "But a radius has to REACH the circle. It is not any segment leaving the centre; it is the fixed distance from the centre to the circle."
         },
         {
           "step": 3,
-          "text_md": "The book's rule is that an event occurred if the outcome of the experiment is an element of the set that expresses the event. If the dice shows 4, then 4 is in $\\{2, 4, 6\\}$, so the even-number event occurred."
+          "text_md": "That fixed distance is what makes it a circle in the first place: every point on the circle is exactly $r$ from $M$."
         },
         {
           "step": 4,
-          "text_md": "This is also why we count elements: $P(A) = \\frac{n(A)}{n(S)} = \\frac{3}{6}$ counts the 3 outcomes that each make $A$ occur, out of the 6 possible outcomes."
-        },
-        {
-          "step": 5,
-          "text_md": "Next time, ask 'Is the outcome one of the elements of the event set?' If yes, the event occurred. Then count those elements for $n(A)$."
+          "text_md": "So a radius always has two jobs: start at $M$, and end ON the circle."
         }
       ],
       "maps": [],
       "aliases": [],
       "provenance": {
-        "run": "s5-final.20261018T102022Z.json",
+        "run": "s5-final.20261018T102048Z.json",
         "verdict": "CONFIRMED",
-        "verifier_reason": "Backed by the book's caution that an event occurs when the outcome is an element of the event set. The refutation is mathematically correct: one roll shows one number, 4 is in {2,4,6}, and P=3/6 matches the book's method. It names no question ids or pages.",
-        "sources": [
+        "verifier_reason": "The error is real. The signal, a segment from the centre ending strictly inside, matches it. The refutation is correct and consistent with the book's use of MA = MB as radii. Its definitions are standard: a radius runs from the centre to the circle, and every point on the circle is r from M. The line 'the part most people get wrong' is a slight overclaim, but it does no harm.",
+        "sources": [],
+        "covers": [
           {
-            "type": "caution",
-            "ref": "pp3u8-1:caution-1"
-          },
-          {
-            "type": "remark",
-            "ref": "pp3u8-1:caution-1"
+            "origin": "S7",
+            "ref": "wt:pp3u9-1-1:live-circle-radius-basic#radius-short",
+            "question_id": "q:pp3u9-1-1:w003",
+            "text": "Starts at the centre but does not reach the circle",
+            "tagged": "mc:pp3u9-1-1:radius-any-length"
           }
-        ],
+        ]
+      }
+    },
+    {
+      "id": "mc:pp3u9-1-1:radius-not-from-centre",
+      "lo_id": "lo:pp3u9-1-1",
+      "label": "A radius drawn between two points on the circle",
+      "description": "Builds a segment with both ends on the circle and calls it a radius — the word is attached to 'a line in the circle' rather than to the centre.",
+      "signal": "Both endpoints satisfy the circle; neither is the centre.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Look at what you drew: both ends landed on the circle, and that is a real thing — it is a chord."
+        },
+        {
+          "step": 2,
+          "text_md": "A radius is the one segment that always starts at the centre $M$ and stops at the circle. Its whole job is to carry the circle's fixed distance."
+        },
+        {
+          "step": 3,
+          "text_md": "That is why every radius of a circle has the same length, and chords do not: a chord can be short or long, but a radius cannot."
+        },
+        {
+          "step": 4,
+          "text_md": "Next time, ask where the segment STARTS. Centre to circle is a radius; circle to circle is a chord."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102048Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real. A segment with both ends on the circle is a chord, and a radius must start at the centre. The refutation is correct and uses only the objective's terms. Radii are equal and chords are not, which fits how the canonical solutions use MA = MB.",
+        "sources": [],
+        "covers": [
+          {
+            "origin": "S7",
+            "ref": "wt:pp3u9-1-1:live-circle-radius-basic#radius-drawn-as-chord",
+            "question_id": "q:pp3u9-1-1:w003",
+            "text": "Both ends on the circle where a radius was asked for; a radius starts at the centre",
+            "tagged": "mc:pp3u9-1-1:radius-not-from-centre"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mc:pp3u9-2-1:point-position-reversed",
+      "lo_id": "lo:pp3u9-2-1",
+      "label": "Inside and outside reversed",
+      "description": "Compares the distance from the centre with the radius the wrong way round.",
+      "signal": "A point with MA > r is called inside, or the reverse.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Comparing $MA$ with $r$ is exactly the right test."
+        },
+        {
+          "step": 2,
+          "text_md": "Further from the centre than the radius means OUTSIDE: $MA > r$ is outside, $MA < r$ is inside, $MA = r$ is on the circle."
+        },
+        {
+          "step": 3,
+          "text_md": "Picture the radius as the wall: past it is outside."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102048Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real for this objective, which is comparing MA with r. The canonical worked example says outside means MA > 5, and that matches the refutation's MA > r = outside. The refutation also gives MA < r = inside and MA = r = on the circle. The last case matches the drill, where A on the circle gives MA = r = 5. It names no question ids, pages or figures. It directly targets the swap of inside and outside, and the wall image adds no outside method.",
+        "sources": [],
         "covers": []
       }
     },
     {
-      "id": "mc:pp3u8-1-3:add-without-subtracting-overlap",
-      "lo_id": "lo:pp3u8-1-3",
-      "label": "Adds P(A) and P(B) and forgets the overlap",
-      "description": "The student finds P(A ∪ B) by adding P(A) and P(B) even though the events share outcomes, so shared outcomes are counted twice.",
-      "signal": "A probability for A ∪ B that is exactly P(A) + P(B), larger than the true value, when A and B overlap (e.g. 7/10 instead of 3/5, or 7/9 instead of 2/3).",
-      "kind": "conceptual",
+      "id": "mc:pp3u9-2-2:tangent-cuts-circle",
+      "lo_id": "lo:pp3u9-2-2",
+      "label": "A tangent drawn cutting the circle at two points",
+      "description": "Reads 'tangent' as any line touching or crossing the circle, missing that it meets it exactly once.",
+      "signal": "The distance from the centre to the line is less than $r$, so the line is a secant.",
+      "kind": "generated_distractor",
       "refutation": [
         {
           "step": 1,
-          "text_md": "You are thinking \"A or B means add the two probabilities\". That is right when A and B have nothing in common, and it is a good start. The trouble starts when they share an outcome."
+          "text_md": "Your line does meet the circle, so you are close — but it meets it TWICE."
         },
         {
           "step": 2,
-          "text_md": "Take cards numbered 1 to 9. $A$ is an even number, $A=\\{2, 4, 6, 8\\}$, so $P(A)=\\frac{4}{9}$. $B$ is a number divisible by 3, $B=\\{3, 6, 9\\}$, so $P(B)=\\frac{3}{9}$. Adding gives $\\frac{7}{9}$."
+          "text_md": "A line that cuts a circle at two points is a secant. A tangent touches at exactly one point and then leaves."
         },
         {
           "step": 3,
-          "text_md": "Now list $A\\cup B$ itself: $\\{2, 3, 4, 6, 8, 9\\}$. That is only 6 cards, so $P(A\\cup B)=\\frac{6}{9}=\\frac{2}{3}$, not $\\frac{7}{9}$. The card 6 is in both $A$ and $B$, so adding counted it twice."
+          "text_md": "The test is a distance: measure from the centre $M$ to the line. Less than $r$ and it cuts twice; equal to $r$ and it touches once; more than $r$ and it misses."
         },
         {
           "step": 4,
-          "text_md": "Take the shared outcomes away once: $A\\cap B=\\{6\\}$, so $P(A\\cap B)=\\frac{1}{9}$, and $\\frac{4}{9}+\\frac{3}{9}-\\frac{1}{9}=\\frac{6}{9}=\\frac{2}{3}$, which matches."
-        },
-        {
-          "step": 5,
-          "text_md": "Next time, first find $A\\cap B$. If it has outcomes in it, use $P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$. If $A\\cap B$ is empty (mutually exclusive), the subtraction is $0$ and you just add."
+          "text_md": "So a tangent is the line whose distance from the centre is exactly the radius."
         }
       ],
       "maps": [],
       "aliases": [],
       "provenance": {
-        "run": "s5-final.20261018T102022Z.json",
+        "run": "s5-final.20261018T102048Z.json",
         "verdict": "CONFIRMED",
-        "verifier_reason": "The error is real. The refutation reuses the book's cards 1-9 example (A={2,4,6,8}, B={3,6,9}). Its numbers match the canonical solution: 7/9 versus 6/9 = 2/3, A∩B={6}, 4/9+3/9−1/9 = 2/3. It shows concretely why adding double counts, and it covers the mutually exclusive case. It cites no question ids, pages or figures, and teaches nothing beyond the book. The signal is accurate: 7/10 vs 3/5 matches drill 6a, and 7/9 vs 2/3 matches the example.",
-        "sources": [
+        "verifier_reason": "Real error tied directly to the objective's secant/tangent classification by comparing distance with r. Refutation is correct, consistent with the book's distance-vs-radius test, argues against the specific error, and has no outside references.",
+        "sources": [],
+        "covers": [
           {
-            "type": "canonical_solution",
-            "ref": "q:pp3u8-1-3:bk-drill-6-a"
-          },
-          {
-            "type": "canonical_solution",
-            "ref": "expl:pp3u8-1-3:bk-example-2"
+            "origin": "S7",
+            "ref": "wt:pp3u9-2-2:live-circle-tangent-standard#is-secant",
+            "question_id": "q:pp3u9-2-2:w001",
+            "text": "The line cuts the circle twice — a secant, not a tangent",
+            "tagged": "mc:pp3u9-2-2:tangent-cuts-circle"
           }
-        ],
-        "covers": []
+        ]
       }
     },
     {
-      "id": "mc:pp3u8-2-2:only-means-whole-set",
-      "lo_id": "lo:pp3u8-2-2",
-      "label": "Counts the whole set A when asked for A only",
-      "description": "The student takes the 'only' event A - B to be the whole set A, so they use all of A's students and never remove the overlap A ∩ B.",
-      "signal": "Gives 18/40 (or 9/20) for reading Al-Akhbar only, or 15/40 (or 3/8) for Al-Ahram only.",
+      "id": "mc:pp3u9-2-2:tangent-need-not-touch",
+      "lo_id": "lo:pp3u9-2-2",
+      "label": "A tangent drawn missing the circle altogether",
+      "description": "Reads 'tangent' as a line running alongside the circle without meeting it.",
+      "signal": "The distance from the centre to the line is greater than $r$.",
       "kind": "conceptual",
       "refutation": [
         {
           "step": 1,
-          "text_md": "You are treating 'reads Al-Akhbar' and 'reads Al-Akhbar only' as the same event. You were right to start from the 18 students in set A."
+          "text_md": "Running alongside the circle is the right instinct — a tangent does lie against it."
         },
         {
           "step": 2,
-          "text_md": "Those 18 students are made of two groups. Some read only Al-Akhbar. Others read Al-Akhbar and Al-Ahram too, and that second group is the 8 in $A \\cap B$. This is what $(A - B) \\cup (A \\cap B) = A$ says."
+          "text_md": "But it has to TOUCH. Your line stays clear of the circle, so it meets it nowhere at all."
         },
         {
           "step": 3,
-          "text_md": "The 8 students who read both also read Al-Ahram, so they do not belong to 'Al-Akhbar only'. Answering $\\frac{18}{40}$ counts them as well."
+          "text_md": "Bring it in until the distance from the centre $M$ equals the radius exactly. That single point of contact is what makes it a tangent."
         },
         {
           "step": 4,
-          "text_md": "Take the overlap away: $n(A - B) = 18 - 8 = 10$, so $P(A - B) = \\frac{10}{40} = \\frac{1}{4}$, not $\\frac{18}{40}$."
-        },
-        {
-          "step": 5,
-          "text_md": "Whenever a question says 'only', subtract the overlap first: $n(A - B) = n(A) - n(A \\cap B)$. Then divide by $n(S)$."
+          "text_md": "One number decides it: distance from the centre, compared with $r$."
         }
       ],
       "maps": [],
       "aliases": [],
       "provenance": {
-        "run": "s5-final.20261018T102022Z.json",
+        "run": "s5-final.20261018T102048Z.json",
         "verdict": "CONFIRMED",
-        "verifier_reason": "The figure shows A only = 10, both = 8, B only = 7 and outside = 15, so S = 40 and n(A) = 18. The error of giving 18/40 for 'only' is real, and the book's remark separates A from 'A only'. The refutation's arithmetic (18 - 8 = 10, 10/40 = 1/4) matches the canonical answer. It uses the book's identity (A - B) ∪ (A ∩ B) = A. It argues against the specific error, not just the method. It names no question id, page or figure number, and no review history. The signal (18/40 or 9/20, and 15/40 or 3/8) matches this error.",
-        "sources": [
-          {
-            "type": "remark",
-            "ref": "pp3u8-2:linking-text-4"
-          },
-          {
-            "type": "remark",
-            "ref": "pp3u8-2:rule-3"
-          }
-        ],
+        "verifier_reason": "Real error for this objective (line outside the circle, distance > r, taken as a tangent). Refutation is mathematically correct, uses the book's distance-vs-radius comparison, addresses this error specifically, and contains no outside references.",
+        "sources": [],
         "covers": []
       }
     },
@@ -950,6 +1850,41 @@
             "ref": "pp3u9-4:linking-text-2"
           }
         ],
+        "covers": []
+      }
+    },
+    {
+      "id": "mc:pp3u10-5-1:cyclic-angles-equal",
+      "lo_id": "lo:pp3u10-5-1",
+      "label": "Opposite angles of a cyclic quadrilateral taken as equal",
+      "description": "Applies the parallelogram property to a cyclic quadrilateral.",
+      "signal": "The answer repeats the given angle instead of its supplement.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are using a real property of quadrilaterals — it belongs to parallelograms."
+        },
+        {
+          "step": 2,
+          "text_md": "In a CYCLIC quadrilateral the opposite angles are SUPPLEMENTARY: they add to $180^\\circ$."
+        },
+        {
+          "step": 3,
+          "text_md": "So $m(\\angle A) = 100^\\circ$ gives $m(\\angle C) = 80^\\circ$."
+        },
+        {
+          "step": 4,
+          "text_md": "Equal opposite angles would only happen when both are $90^\\circ$."
+        }
+      ],
+      "maps": [],
+      "aliases": [],
+      "provenance": {
+        "run": "s5-final.20261018T102128Z.json",
+        "verdict": "CONFIRMED",
+        "verifier_reason": "The error is real: a student gives the opposite angle as equal (e.g. B=80 gives D=80 instead of 100). The refutation is correct and matches the book's supplementary-angle method (100 gives 80). It contrasts the parallelogram property with the cyclic one and cites no ids, figures or pages. The 90° remark is a correct, trivial consequence of equal plus supplementary.",
+        "sources": [],
         "covers": []
       }
     }

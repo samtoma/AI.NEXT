@@ -1,0 +1,87 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-4-2:twopoints",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-4-2",
+ "parent_question_id": "expl:pp3u5-4-2:bk-example-3",
+ "parent_kind": "teaching",
+ "source_page": 71,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "m",
+   "choice": [
+    -3,
+    -2,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "require": "b != 0",
+   "why": "keep a visible intercept"
+  },
+  {
+   "name": "x1",
+   "randint": [
+    -3,
+    3
+   ]
+  },
+  {
+   "name": "dx",
+   "choice": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "x2",
+   "let": "x1 + dx"
+  },
+  {
+   "name": "y1",
+   "let": "m * x1 + b"
+  },
+  {
+   "name": "y2",
+   "let": "m * x2 + b"
+  },
+  {
+   "name": "sg",
+   "let": "'+' if b > 0 else '-'"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find the equation of the straight line passing through the two points $A({=x1}, {=y1})$ and $B({=x2}, {=y2})$. Write it in the form $y = mx + b$.",
+ "solution": [
+  "The slope is $m = \\frac{{=y2} - ({=y1})}{{=x2} - ({=x1})} = \\frac{{=y2 - y1}}{{=dx}} = {=m}$.",
+  "So the equation has the form $y = {=m}x + b$.",
+  "The point $A({=x1}, {=y1})$ lies on the line, so it satisfies the equation: ${=y1} = {=m} \\times ({=x1}) + b$.",
+  "$b = {=y1} - ({=m * x1}) = {=b}$.",
+  "The equation of the line is $y = {=m}x {=sg} {=abs(b)}$."
+ ],
+ "marker": {
+  "kind": "equation",
+  "answer": "y = ({=m})*x + ({=b})",
+  "form": null,
+  "variables": [
+   "x",
+   "y"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Integer slope; point-substitution method as in the book. Equivalent forms accepted by the equation marker."
+}

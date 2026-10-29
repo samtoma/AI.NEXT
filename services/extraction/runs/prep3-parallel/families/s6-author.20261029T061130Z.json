@@ -1,0 +1,336 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "30098a709ddb217ee26c91ae3992bed49e0b5a3dd69905f5730f7e30853b1b43",
+  "generated_sha256": "566d4b779f1994459677ad152ee97bbb86872e2c3d5e832a8f61ebef90add668",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u7-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u7-1-1:evaluate-f",
+     "kind": "family",
+     "lo_id": "lo:pp3u7-1-1",
+     "parent_question_id": "q:pp3u7-1-1:bk-think-and-discuss-1",
+     "source_page": 15,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "k",
+       "randint": [
+        2,
+        6
+       ]
+      }
+     ],
+     "stem": "If $f(x) = x^2 - {=p}x + {=q}$ is a polynomial function, calculate $f({=k})$.",
+     "answer": "k*k - p*k + q",
+     "solution": [
+      "Write $f(x) = x^2 - {=p}x + {=q}$ and replace $x$ by ${=k}$.",
+      "$f({=k}) = ({=k})^2 - {=p}({=k}) + {=q}$.",
+      "$f({=k}) = {=k*k} - {=p*k} + {=q} = {=k*k - p*k + q}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Entry point: substitute and evaluate. Answer may be negative or zero, which is fine."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u7-1-1:zeroes-from-list",
+     "kind": "family",
+     "lo_id": "lo:pp3u7-1-1",
+     "parent_question_id": "q:pp3u7-1-1:bk-think-and-discuss-1",
+     "source_page": 15,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        "a + 1",
+        6
+       ]
+      },
+      {
+       "name": "vals",
+       "let": "[x**3 - (a + b)*x**2 + a*b*x for x in range(0, 7)]"
+      }
+     ],
+     "stem": "If $f: \\mathbb{R} \\to \\mathbb{R}$ where $f(x) = x^3 - {=a + b}x^2 + {=a*b}x$, calculate $f(0)$, $f(1)$, $f(2)$, $f(3)$, $f(4)$, $f(5)$ and $f(6)$. Hence write down the values of $x$ from $0, 1, 2, 3, 4, 5, 6$ that belong to the set of zeroes $Z(f)$, in increasing order.",
+     "solution": [
+      "Substitute each value into $f(x) = x^3 - {=a + b}x^2 + {=a*b}x$.",
+      "$f(0) = {=vals[0]}$, $f(1) = {=vals[1]}$, $f(2) = {=vals[2]}$, $f(3) = {=vals[3]}$.",
+      "$f(4) = {=vals[4]}$, $f(5) = {=vals[5]}$, $f(6) = {=vals[6]}$.",
+      "The values of $x$ for which $f(x) = 0$ are $0$, ${=a}$ and ${=b}$, so these belong to $Z(f)$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[0, {=a}, {=b}]",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Cubic with roots 0,a,b so only these three of the tested values are zeroes."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u7-1-1:unknown-coeff",
+     "kind": "family",
+     "lo_id": "lo:pp3u7-1-1",
+     "parent_question_id": "q:pp3u7-1-1:bk-think-and-discuss-1",
+     "source_page": 15,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "r",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "m",
+       "randint": [
+        1,
+        8
+       ]
+      },
+      {
+       "name": "q",
+       "let": "r*r + m*r"
+      }
+     ],
+     "stem": "Let $f(x) = x^2 + kx - {=q}$, where $k$ is a constant. Given that ${=r}$ belongs to the set of zeroes $Z(f)$, find the value of $k$.",
+     "answer": "m",
+     "solution": [
+      "Since ${=r}$ is in $Z(f)$, we have $f({=r}) = 0$.",
+      "$({=r})^2 + k({=r}) - {=q} = 0$, so ${=r*r} + {=r}k - {=q} = 0$.",
+      "${=r}k = {=q} - {=r*r} = {=m*r}$.",
+      "$k = {=m}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Uses f(r)=0 as the definition of a zero, then solves a linear equation; k is always a positive whole number."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u7-3-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u7-3-2:samefo",
+     "kind": "family",
+     "lo_id": "lo:pp3u7-3-2",
+     "parent_question_id": "q:pp3u7-3-2:bk-example-3",
+     "source_page": 22,
+     "tier": "basic",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        1,
+        5
+       ],
+       "resample_while": "c == a"
+      }
+     ],
+     "constraints": [],
+     "stem": "Let $n_1(x)=\\frac{x+{=a}}{(x+{=a})(x-{=b})}$ and $n_2(x)=\\frac{x+{=c}}{(x+{=c})(x-{=b})}$. Which statement is correct?",
+     "solution": [
+      "Simplify $n_1$: cancelling $x+{=a}$ gives $n_1(x)=\\frac{1}{x-{=b}}$.",
+      "The domain of $n_1$ is $\\mathbb{R}-\\{-{=a}, {=b}\\}$, because the original denominator is zero at $x=-{=a}$ and $x={=b}$.",
+      "Simplify $n_2$: cancelling $x+{=c}$ gives $n_2(x)=\\frac{1}{x-{=b}}$.",
+      "The domain of $n_2$ is $\\mathbb{R}-\\{-{=c}, {=b}\\}$.",
+      "The simplest forms are the same, but the domains are different, so $n_1\\neq n_2$."
+     ],
+     "choices": {
+      "correct": "$n_1\\neq n_2$: both simplify to $\\frac{1}{x-{=b}}$, but their domains are different",
+      "distractors": [
+       {
+        "text": "$n_1=n_2$: both simplify to $\\frac{1}{x-{=b}}$",
+        "misconception_id": "mc:pp3u7-3-2:same-simplest-form-means-equal"
+       },
+       {
+        "text": "$n_1\\neq n_2$: they simplify to different fractions",
+        "misconception_id": null
+       },
+       {
+        "text": "$n_1=n_2$: both have the same domain $\\mathbb{R}-\\{{=b}\\}$",
+        "misconception_id": null
+       }
+      ]
+     },
+     "proposed_misconceptions": [],
+     "notes": "Always the same-simplest-form/different-domain case (book example 3 pattern). Constraint c!=a ensures domains differ; -a, -c, b distinct signs so sets are genuine."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u7-3-2:common",
+     "kind": "family",
+     "lo_id": "lo:pp3u7-3-2",
+     "parent_question_id": "q:pp3u7-3-2:bk-example-3",
+     "source_page": 22,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        6
+       ],
+       "resample_while": "q == p"
+      },
+      {
+       "name": "s",
+       "let": "p + q"
+      },
+      {
+       "name": "t",
+       "let": "p * q"
+      },
+      {
+       "name": "lo",
+       "let": "min(p, q)"
+      },
+      {
+       "name": "hi",
+       "let": "max(p, q)"
+      }
+     ],
+     "constraints": [],
+     "stem": "Let $n_1(x)=\\frac{x^2-{=p*p}}{x^2-{=s}x+{=t}}$ and $n_2(x)=\\frac{x^2+{=p}x}{x^2-{=q}x}$. The two fractions have the same simplest form but are not equal, because their domains differ. $n_1(x)=n_2(x)$ only on the common domain. Write the values of $x$ that are excluded from the common domain, in ascending order, as a list.",
+     "solution": [
+      "Factorise $n_1$: $\\frac{(x-{=p})(x+{=p})}{(x-{=p})(x-{=q})}=\\frac{x+{=p}}{x-{=q}}$.",
+      "The domain of $n_1$ is $\\mathbb{R}-\\{{=lo}, {=hi}\\}$ (the denominator is zero at $x={=p}$ and $x={=q}$).",
+      "Factorise $n_2$: $\\frac{x(x+{=p})}{x(x-{=q})}=\\frac{x+{=p}}{x-{=q}}$.",
+      "The domain of $n_2$ is $\\mathbb{R}-\\{0, {=q}\\}$.",
+      "The common domain excludes the values from both: $\\mathbb{R}-\\{0, {=lo}, {=hi}\\}$.",
+      "The excluded values are $0, {=lo}, {=hi}$."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[0, {=lo}, {=hi}]",
+      "form": null,
+      "variables": [
+       "x"
+      ],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "p!=q so the denominator of n1 has two distinct roots; both simplify to (x+p)/(x-q). Excluded values: 0, p, q."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u7-3-2:extrafa",
+     "kind": "family",
+     "lo_id": "lo:pp3u7-3-2",
+     "parent_question_id": "q:pp3u7-3-2:bk-example-2",
+     "source_page": 22,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        4
+       ],
+       "resample_while": "q == p"
+      },
+      {
+       "name": "c2",
+       "let": "p * p"
+      },
+      {
+       "name": "c3",
+       "let": "p * p * p"
+      }
+     ],
+     "constraints": [],
+     "stem": "Let $n_1(x)=\\frac{x^2(x+{=q})}{x^2(x-{=p})(x+{=q})}$ and $n_2(x)=\\frac{x^3+{=p}x^2+{=c2}x}{x^4-{=c3}x}$, where $x\\in\\mathbb{R}$. Both fractions have the same simplest form, but $n_1\\neq n_2$. Find the sum of the real values of $x$ that are excluded from the common domain of $n_1$ and $n_2$.",
+     "solution": [
+      "Simplify $n_1$: cancelling $x^2(x+{=q})$ gives $n_1(x)=\\frac{1}{x-{=p}}$. Its domain is $\\mathbb{R}-\\{0, {=p}, -{=q}\\}$.",
+      "Factorise $n_2$: numerator $x(x^2+{=p}x+{=c2})$, denominator $x(x^3-{=c3})=x(x-{=p})(x^2+{=p}x+{=c2})$.",
+      "So $n_2(x)=\\frac{1}{x-{=p}}$. The factor $x^2+{=p}x+{=c2}$ is never zero for real $x$, so the domain of $n_2$ is $\\mathbb{R}-\\{0, {=p}\\}$.",
+      "The domains differ, so $n_1\\neq n_2$. The common domain is $\\mathbb{R}-\\{0, {=p}, -{=q}\\}$.",
+      "The excluded values are $0$, ${=p}$ and $-{=q}$; their sum is ${=p-q}$."
+     ],
+     "answer": "p - q",
+     "proposed_misconceptions": [],
+     "notes": "x^2+px+p^2 has negative discriminant (-3p^2) so no real roots. p!=q gives nonzero sum; sum may be negative."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  }
+ ],
+ "revised": []
+}

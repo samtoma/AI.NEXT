@@ -1,0 +1,45 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-6-2:area",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-6-2",
+ "parent_question_id": "expl:pp3u10-6-2:bk-example-3",
+ "parent_kind": "teaching",
+ "source_page": 97,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "r",
+   "randint": [
+    2,
+    8
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    3,
+    12
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    3,
+    12
+   ]
+  }
+ ],
+ "stem": "$M$ is a circle inscribed in the quadrilateral $ABCD$ (it touches all four sides) with radius {=r} cm. $AB = {=a}$ cm and $CD = {=c}$ cm. Find the area of $ABCD$ in cm$^2$.",
+ "answer": "r * (a + c)",
+ "solution": [
+  "Equal tangent segments from each vertex give $AB + CD = BC + AD = {=a} + {=c} = {=a + c}$ cm.",
+  "Perimeter $= 2 \\times {=a + c} = {=2 * (a + c)}$ cm.",
+  "The radius to each point of contact is perpendicular to the side, so the area is the sum of four triangles with height $r$: area $= \\frac{1}{2} \\times$ perimeter $\\times r$.",
+  "Area $= \\frac{1}{2} \\times {=2 * (a + c)} \\times {=r} = {=r * (a + c)}$ cm$^2$."
+ ],
+ "constraints": [],
+ "notes": "Mirrors book example 3 (perimeter then area)."
+}

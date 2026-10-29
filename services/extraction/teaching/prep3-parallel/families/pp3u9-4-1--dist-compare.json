@@ -1,0 +1,70 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u9-4-1:dist-compare",
+ "kind": "family",
+ "lo_id": "lo:pp3u9-4-1",
+ "parent_question_id": "expl:pp3u9-4-1:bk-drill-1-1",
+ "parent_kind": "teaching",
+ "source_page": 58,
+ "tier": "basic",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    9
+   ],
+   "resample_while": "q == p"
+  },
+  {
+   "name": "sym",
+   "let": "'>' if p < q else '<'"
+  },
+  {
+   "name": "rev",
+   "let": "'<' if p < q else '>'"
+  }
+ ],
+ "stem": "In a circle with center $M$, $AB$ and $CD$ are two chords. The distance from $M$ to $AB$ is {=p} cm and the distance from $M$ to $CD$ is {=q} cm. Complete using $>$, $<$ or $=$: $AB$ ......... $CD$",
+ "solution": [
+  "The distance from $M$ to $AB$ is {=p} cm and to $CD$ is {=q} cm.",
+  "{=p} {=('<' if p < q else '>')} {=q}, so $AB$ is {=('closer to' if p < q else 'farther from')} the center than $CD$.",
+  "The closer the chord is to the center, the longer it is.",
+  "So $AB$ {=sym} $CD$."
+ ],
+ "choices": {
+  "correct": "$AB {=sym} CD$",
+  "distractors": [
+   {
+    "text": "$AB {=rev} CD$",
+    "misconception_id": "mc:pp3u9-4-1:farther-longer"
+   },
+   {
+    "text": "$AB = CD$",
+    "misconception_id": null
+   },
+   {
+    "text": "It cannot be compared",
+    "misconception_id": null
+   }
+  ]
+ },
+ "distinct_by_choices": false,
+ "proposed_misconceptions": [
+  {
+   "id": "mc:pp3u9-4-1:farther-longer",
+   "label": "Farther chord is longer",
+   "description": "Thinks the chord farther from the center is the longer one, reversing the relation."
+  }
+ ],
+ "notes": "Mirrors book drill 1-1 with distances given."
+}

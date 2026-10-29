@@ -1,0 +1,46 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u10-5-3:opposite-supp",
+ "kind": "family",
+ "lo_id": "lo:pp3u10-5-3",
+ "parent_question_id": "expl:pp3u10-5-3:bk-drill-10-cyclic-quadrilaterals",
+ "parent_kind": "teaching",
+ "source_page": 92,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    50,
+    130
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    50,
+    130
+   ]
+  },
+  {
+   "name": "c",
+   "let": "180 - a"
+  },
+  {
+   "name": "d",
+   "let": "180 - b"
+  }
+ ],
+ "stem": "In the quadrilateral $ABCD$, $m(\\angle A) = {=a}^\\circ$, $m(\\angle B) = {=b}^\\circ$ and $m(\\angle C) = {=c}^\\circ$. Given that $ABCD$ is a cyclic quadrilateral, find $m(\\angle D)$ in degrees.",
+ "answer": "d",
+ "solution": [
+  "The quadrilateral is cyclic, so its opposite angles are supplementary.",
+  "$\\angle B$ and $\\angle D$ are opposite, so $m(\\angle B) + m(\\angle D) = 180^\\circ$.",
+  "$m(\\angle D) = 180 - {=b} = {=d}^\\circ$.",
+  "Check: $\\angle A + \\angle C = {=a} + {=c} = 180^\\circ$, which agrees."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Converse of the cyclic quadrilateral property; opposite angles supplementary. Text-only, no figure."
+}

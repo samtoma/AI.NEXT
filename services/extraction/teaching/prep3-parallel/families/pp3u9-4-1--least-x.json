@@ -1,0 +1,42 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u9-4-1:least-x",
+ "kind": "family",
+ "lo_id": "lo:pp3u9-4-1",
+ "parent_question_id": "expl:pp3u9-4-1:bk-exercise-1",
+ "parent_kind": "teaching",
+ "source_page": 59,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "L",
+   "randint": [
+    5,
+    12
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "lo",
+   "let": "L - k"
+  }
+ ],
+ "stem": "In a circle with center $M$, chord $AB = {=L}$ cm and chord $CD = X + {=k}$ cm. Given that $CD$ is closer to the center than $AB$, find the least whole number value of $X$.",
+ "answer": "lo + 1",
+ "solution": [
+  "$CD$ is closer to the center than $AB$, so $CD$ is longer: $X + {=k} > {=L}$.",
+  "$X > {=L} - {=k}$, so $X > {=lo}$.",
+  "The least whole number greater than {=lo} is {=lo + 1}.",
+  "So $X = {=lo + 1}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Lower-bound half of book exercise 1."
+}

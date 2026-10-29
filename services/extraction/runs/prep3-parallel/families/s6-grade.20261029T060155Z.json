@@ -1,0 +1,303 @@
+{
+ "mode": "grade",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "081117dbfe820f058a6e8f147f4395aa32d64ffdd74d9ca2b677f0f9f4fcb496",
+  "generated_sha256": "bbf3bd47719be36c2282262497533acbfca012e3a32bcc147580b0ee8b44236d",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:pp3u3-2-1:basic-range",
+   "spec_sha": "54c160ea9518e97e63288918edc2a5b44100c16effc0171ac5b0a54c144cfd39",
+   "answers": [
+    {
+     "instance_id": "q:pp3u3-2-1:g001-basic-",
+     "stem_sha": "1757890928aece8d",
+     "answer": {
+      "value": "57"
+     },
+     "working": "Max 77, min 20, range 57"
+    },
+    {
+     "instance_id": "q:pp3u3-2-1:g005-basic-",
+     "stem_sha": "5c8ce020df74b347",
+     "answer": {
+      "value": "70"
+     },
+     "working": "Max 94, min 24, range 70"
+    },
+    {
+     "instance_id": "q:pp3u3-2-1:g006-basic-",
+     "stem_sha": "473aebaf012f6959",
+     "answer": {
+      "value": "57"
+     },
+     "working": "Max 79, min 22, range 57"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No wrong options were provided, so there are no distractors to judge. All three keys are correct (57, 70, 57), and each worked solution uses range = greatest − smallest. The stems are plain data sets with no word problem, so they are unambiguous. The stems of g001 and g006 both give a key of 57, which is harmless.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u3-2-1:missing-value",
+   "spec_sha": "3e6735e733cf8246cd8180ac88aac7735c37e87e453547800c17ae60810e19fd",
+   "answers": [
+    {
+     "instance_id": "q:pp3u3-2-1:g001-missin",
+     "stem_sha": "0dce4db426206df9",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u3-2-1:g008-missin",
+     "stem_sha": "ea6f569b06a6b17c",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u3-2-1:g009-missin",
+     "stem_sha": "275289b89341ac1f",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked the arithmetic for all three instances.\n- g001: the four known values sum to 193, so the fifth value is 240 − 193 = 47. The set runs from 28 to 74, so the range is 46.\n- g008: the known values sum to 168, so the fifth value is 170 − 168 = 2. The set runs from 2 to 62, so the range is 60.\n- g009: the known values sum to 232, so the fifth value is 265 − 232 = 33. The set runs from 33 to 70, so the range is 37.\nNo wrong options were provided, so the distractor list is empty."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u3-2-2:advanced-sd",
+   "spec_sha": "b5882a9ced3ebcde32f388dd5e380403e2ad878adc9761181fe915955adc5437",
+   "answers": [
+    {
+     "instance_id": "q:pp3u3-2-2:g006-advanc",
+     "stem_sha": "34cb66509c23c0fb",
+     "answer": {
+      "value": "7.16"
+     },
+     "working": "Sum = 5×21 = 105. Known sum = 71, so the fifth value is 34. Squared deviations from 21: 4+9+49+25+169 = 256. Population variance = 256/5 = 51.2. SD = √51.2 ≈ 7.16."
+    },
+    {
+     "instance_id": "q:pp3u3-2-2:g007-advanc",
+     "stem_sha": "07d0f3d0e8ad26c2",
+     "answer": {
+      "value": "6.36"
+     },
+     "working": "Sum = 5×22 = 110. Known sum = 96, so the fifth value is 14. Squared deviations from 22: 9+49+16+64+64 = 202. Population variance = 202/5 = 40.4. SD = √40.4 ≈ 6.36."
+    },
+    {
+     "instance_id": "q:pp3u3-2-2:g008-advanc",
+     "stem_sha": "8004e0fcee79d922",
+     "answer": {
+      "value": "4.69"
+     },
+     "working": "Sum = 5×25 = 125. Known sum = 96, so the fifth value is 29. Squared deviations from 25: 49+16+25+4+16 = 110. Population variance = 110/5 = 22. SD = √22 ≈ 4.69."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "Recomputed all three: the fifth values are 34, 14 and 29. The sums of squared deviations are 256, 202 and 110. The standard deviations round to 7.16, 6.36 and 4.69. These match the keys and the worked steps. The family has no options, so there are no distractors to check.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u3-2-2:basic-sd",
+   "spec_sha": "0a3701c86d036038b2219c834837deb7c7825ca131f59caada51faff89674822",
+   "answers": [
+    {
+     "instance_id": "q:pp3u3-2-2:g004-basic-",
+     "stem_sha": "c31871202dee1a0d",
+     "answer": {
+      "value": "4"
+     },
+     "working": "Mean 14; deviations ±4; population variance 16; SD 4"
+    },
+    {
+     "instance_id": "q:pp3u3-2-2:g006-basic-",
+     "stem_sha": "f33e97f74b39c9a4",
+     "answer": {
+      "value": "5"
+     },
+     "working": "Mean 27; deviations ±5; variance 25; SD 5"
+    },
+    {
+     "instance_id": "q:pp3u3-2-2:g010-basic-",
+     "stem_sha": "f0d0bec4a8fc9a48",
+     "answer": {
+      "value": "1"
+     },
+     "working": "Mean 19; deviations ±1; variance 1; SD 1"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "No wrong options were given, so there is nothing to judge there. I checked the arithmetic for all three instances. g004: mean 14, deviations ±4, sum of squares 64, σ=4. g006: mean 27, deviations ±5, sum of squares 100, σ=5. g010: mean 19, deviations ±1, sum of squares 4, σ=1. Each solution uses the population formula σ=√(Σ(x−x̄)²/n), and each key matches its solution. The stems are bare calculations with no word problem, so context is fine."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u3-2-2:standard-sd",
+   "spec_sha": "58b22105f9cf5b3af07848518268f01f79bb3616accb86207b392f622eaf9617",
+   "answers": [
+    {
+     "instance_id": "q:pp3u3-2-2:g002-standa",
+     "stem_sha": "ab1f0fe1412f5336",
+     "answer": {
+      "value": "10.71"
+     },
+     "working": "Mean=19; squared deviations sum=574; population variance=574/5=114.8; sd=sqrt(114.8)≈10.71 (population SD assumed)"
+    },
+    {
+     "instance_id": "q:pp3u3-2-2:g009-standa",
+     "stem_sha": "28a063c23e260e2d",
+     "answer": {
+      "value": "9.06"
+     },
+     "working": "Mean=21; squared deviations sum=410; population variance=82; sd=sqrt(82)≈9.06 (population SD assumed)"
+    },
+    {
+     "instance_id": "q:pp3u3-2-2:g010-standa",
+     "stem_sha": "20be60284331dc2a",
+     "answer": {
+      "value": "8.51"
+     },
+     "working": "Mean=18; squared deviations sum=362; population variance=72.4; sd=sqrt(72.4)≈8.51 (population SD assumed)"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances by hand and every key matches its worked solution: 10.71, 9.06 and 8.51. The solutions divide by n (population σ), the usual prep-3 convention. No options were supplied, so there were no distractors to judge.",
+    "distractors": []
+   }
+  },
+  {
+   "family_id": "tpl:pp3u3-2-3:discrete-sd",
+   "spec_sha": "46d56f782ee1201d1278747be45505a7f1b46e508a59e758e040aebae36dc382",
+   "answers": [
+    {
+     "instance_id": "q:pp3u3-2-3:g003-discre",
+     "stem_sha": "2eee56274415a3ab",
+     "answer": {
+      "value": "1"
+     },
+     "working": "n=8, mean=7, sum sq dev=4+4=8, var=8/8=1, SD=1"
+    },
+    {
+     "instance_id": "q:pp3u3-2-3:g008-discre",
+     "stem_sha": "a8ec453eed226095",
+     "answer": {
+      "value": "3"
+     },
+     "working": "n=8, mean=9, sum sq dev=36+36=72, var=9, SD=3"
+    },
+    {
+     "instance_id": "q:pp3u3-2-3:g010-discre",
+     "stem_sha": "fa5965698357bad8",
+     "answer": {
+      "value": "2"
+     },
+     "working": "n=9, mean=7, sum sq dev=2*9+2*9=36, var=4, SD=2"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I recomputed all three instances and each key matches: g003 gives 1, g008 gives 3 and g010 gives 2. Every worked step is correct and uses the population standard deviation formula. No options were supplied, so there are no distractors. The context is a plain frequency table of defective units per box, with realistic numbers. The only small wording quirk is that \"boxes of manufactured units\" is slightly loose, but the stem is unambiguous."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u3-2-3:grouped-sd",
+   "spec_sha": "b2e49c0b4d015cd641c58d0ad5db282c9c980f4b6cbcda370db579e7f0522177",
+   "answers": [
+    {
+     "instance_id": "q:pp3u3-2-3:g004-groupe",
+     "stem_sha": "6c4f185fde7a3bc7",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u3-2-3:g007-groupe",
+     "stem_sha": "2e76677b007c19cd",
+     "answer": {},
+     "working": "NO ANSWER"
+    },
+    {
+     "instance_id": "q:pp3u3-2-3:g009-groupe",
+     "stem_sha": "dcf310ef0f515dfd",
+     "answer": {},
+     "working": "NO ANSWER"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I checked the arithmetic for all three instances.\n- g004: the frequencies 1, 3, 6, 3, 1 sum to 14. The weighted squares sum to 504, and 504/14 = 36, so σ = 6.\n- g007: the frequencies 2, 5, 12, 5, 2 sum to 26. The weighted squares sum to 936, and 936/26 = 36, so σ = 6.\n- g009: the frequencies 1, 5, 6, 5, 1 sum to 18. The weighted squares sum to 1800, and 1800/18 = 100, so σ = 10.\n\nThe centres are correct, and the frequencies are symmetric, so the mean is the middle centre. The family has no options, so there are no distractors to judge. The keys are plain numbers, which is what the stem asks for."
+   }
+  },
+  {
+   "family_id": "tpl:pp3u3-2-3:mean-of-freq",
+   "spec_sha": "7ccd54ad78a161ea770c01d772d93cc6382b9e3af79aa1c585e5ff6bb58356e2",
+   "answers": [
+    {
+     "instance_id": "q:pp3u3-2-3:g002-mean-o",
+     "stem_sha": "7cfdaabed223b23b",
+     "answer": {
+      "value": "6"
+     },
+     "working": "Σk=15; Σkx=6+4+36+24+20=90; 90/15=6"
+    },
+    {
+     "instance_id": "q:pp3u3-2-3:g004-mean-o",
+     "stem_sha": "059b127aa4a6eabb",
+     "answer": {
+      "value": "3"
+     },
+     "working": "Σk=19; Σkx=4+6+15+12+20=57; 57/19=3"
+    },
+    {
+     "instance_id": "q:pp3u3-2-3:g009-mean-o",
+     "stem_sha": "50408681c1792cef",
+     "answer": {
+      "value": "3"
+     },
+     "working": "Σk=15; Σkx=3+2+18+12+10=45; 45/15=3"
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "I recomputed all three instances and each key matches.\n\n- g002: Σk = 15 and Σxk = 6+4+36+24+20 = 90, so the mean is 6.\n- g004: Σk = 19 and Σxk = 4+6+15+12+20 = 57, so the mean is 3.\n- g009: Σk = 15 and Σxk = 3+2+18+12+10 = 45, so the mean is 3.\n\nThe worked steps are correct and use Σxk / Σk. The family has no wrong options, so there are no distractors to check. The stems are unambiguous.",
+    "distractors": []
+   }
+  }
+ ]
+}

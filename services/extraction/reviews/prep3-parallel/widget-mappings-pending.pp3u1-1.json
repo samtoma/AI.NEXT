@@ -10,37 +10,49 @@
       "kind": "product_builder",
       "stem": "Find the set of ordered pairs (x, y) which satisfy the relation $y = 2x - 1$ when $x = 0$, $x = 1$ and $x = 2$. Tap the pairs that satisfy the relation.",
       "reading": {
-        "X": [
-          0,
-          1,
-          2
-        ],
-        "Y": [
-          -1,
-          1,
-          3
-        ],
-        "pairs": [
+        "targets": [
           [
-            0,
-            -1
+            3,
+            5
           ],
           [
-            1,
-            1
-          ],
-          [
-            2,
+            5,
             3
           ]
         ]
       },
-      "construction": "Mode relation with X=[0,1,2], Y=[-1,1,3]. Tap (0,-1), (1,1), (2,3). Each satisfies y=2x-1 and the set has one pair per x. Reachable, within the small-set limits (3 numbers each). Y is not given in the question, so the Y set is inferred from the rule's outputs, which is a reasonable reading.",
+      "construction": "Use the targets form. Tap (3,5) and (5,3) on the board (x -1..6, y -1..6). Both are lattice points in range. The two points are different, which answers the question.",
       "predicate": "extra-pairs",
       "predicate_meaning": "Selected pairs that are not in X×Y at all",
       "hint": "Substitute each x into $y = 2x - 1$ and compute y. Only a pair whose y matches that result belongs in the set.",
       "hint_step": 2,
       "why": "It is in the can_emit table for relation mode. It fires when the student taps a pair of X×Y that the rule leaves out, such as (0,1). The hint's description says 'not in X×Y at all', which is wrong: these pairs are in X×Y, they just fail the rule. The hint text itself is mathematically right and doesn't give the answer. But it says 'Only a pair whose y matches that result belongs', which nearly directs the student to the answer. The mismatch between the predicate description and the situation makes this a risky hint, so it is rejected."
+    },
+    {
+      "key": "q:pp3u1-1-1:w003#hint:wrong-quadrant",
+      "question_id": "q:pp3u1-1-1:w003",
+      "template_id": "wt:pp3u1-1-1:think-and-discuss-3",
+      "lo_id": "lo:pp3u1-1-1",
+      "kind": "pair_plotter",
+      "stem": "Represent the ordered pairs (3, 5) and (5, 3) graphically in the coordinate plane. Tap each point. Are they the same point?",
+      "reading": {
+        "targets": [
+          [
+            3,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ]
+      },
+      "construction": "Tap lattice points (3,5) and (5,3). Both lie within the board (x -1..6, y -1..6) and the set is graded order-free, so this is a correct answer.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "hint": "Both numbers in each pair are positive, so both moves go right along x and up along y.",
+      "hint_step": 2,
+      "why": "It cannot fire on this board. Reflecting the targets gives points like (-3,5) or (3,-5), and the board runs only from -1 to 6, so those points cannot be tapped. The hint also reveals that both numbers are positive, which is part of the answer."
     },
     {
       "key": "q:pp3u1-2-2:w001#hint:arrows-reversed",

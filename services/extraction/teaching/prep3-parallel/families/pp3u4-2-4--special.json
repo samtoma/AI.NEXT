@@ -1,0 +1,50 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u4-2-4:special",
+ "kind": "family",
+ "lo_id": "lo:pp3u4-2-4",
+ "parent_question_id": "expl:pp3u4-2-4:bk-example-3",
+ "parent_kind": "teaching",
+ "source_page": 55,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "t",
+   "randint": [
+    0,
+    8
+   ]
+  },
+  {
+   "name": "tab",
+   "let": "[['sin','1/2',30],['sin','√2/2',45],['sin','√3/2',60],['cos','√3/2',30],['cos','√2/2',45],['cos','1/2',60],['tan','1/√3',30],['tan','1',45],['tan','√3',60]]"
+  },
+  {
+   "name": "row",
+   "let": "tab[t]"
+  },
+  {
+   "name": "fn",
+   "let": "row[0]"
+  },
+  {
+   "name": "r",
+   "let": "row[1]"
+  },
+  {
+   "name": "ang",
+   "let": "row[2]"
+  }
+ ],
+ "constraints": [],
+ "stem": "Find $m(\\angle E)$, in degrees, where $E$ is an acute angle and $\\{=fn} E = {=r}$.",
+ "answer": "ang",
+ "solution": [
+  "Use the special-angle values: the acute angle whose $\\{=fn}$ equals ${=r}$ is ${=ang}^\\circ$.",
+  "(Calculator check: SHIFT, {=fn}, then the ratio, =.)",
+  "So $m(\\angle E) = {=ang}^\\circ$."
+ ],
+ "notes": "Special angles 30/45/60 only; exact integer answers. Ratios written in plain text inside math."
+}

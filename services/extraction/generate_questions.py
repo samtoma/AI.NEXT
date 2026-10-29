@@ -1773,6 +1773,7 @@ def book_objectives(book) -> dict[str, dict]:
     los: dict[str, dict] = {}
     module_of: dict[str, str] = {}
     questions: dict[str, list] = {}
+    teaching: dict[str, list] = {}
     for path in book.bundle_paths():
         if not path.exists():
             continue
@@ -1786,10 +1787,41 @@ def book_objectives(book) -> dict[str, dict]:
                 module_of[e["dst"]] = e["src"]
         for q in b.get("questions", []):
             questions.setdefault(q.get("lo"), []).append(q)
+        for e in b.get("explanation_entries", []):
+            if e.get("entry_type") == "worked_example" and e.get("id"):
+                teaching.setdefault(e.get("lo"), []).append(e)
     for lo, rec in los.items():
         rec["module"] = module_of.get(lo)
         rec["questions"] = questions.get(lo, [])
+        rec["teaching"] = teaching.get(lo, [])
     return los
+
+
+TEACHING_PARENTS = 4   # worked examples shown to the S6 author per objective, after its book questions
+
+
+def teaching_parents(rec: dict) -> list[dict]:
+    """An objective's book TEACHING items (worked examples of the explanation library) as the S6 author sees them:
+    models, and parents a family may name (Samuel's answer 40, decision 61; FR-1101 as amended). Listed under the id
+    they WOULD have as a question, marked teaching_only, as fanout.py did for lo:g10m8s1-1-1; the landing step
+    (fanout.write_specs → families.spec.resolve_teaching_parent) writes a family built on one as its expl: id with
+    parent_kind "teaching". Every book, every objective (2026-10-29): without them an objective whose book items
+    are all worked examples, or whose exercises have no usable answer yet, could never get a generated question,
+    because its families had no parent (Prep 3: 43 of 104 objectives with two live questions or fewer)."""
+    out = []
+    for e in rec.get("teaching") or []:
+        content = e.get("content") or []
+        stem = " ".join(c.get("text_md", "") for c in content if c.get("kind") == "problem").strip()
+        steps = [c.get("text_md", "") for c in content if c.get("kind") != "problem" and c.get("text_md")]
+        if not stem and not steps:
+            continue
+        out.append({"id": "q:" + e["id"].removeprefix("expl:"), "tier": None,
+                    "type": "worked example (teaching only: the book solves it on the page, so no question row "
+                            "exists; a family may still be modelled on it and name it as its parent)",
+                    "stem": stem, "choices": None, "answer": None, "solution": steps,
+                    "source_page": e.get("source_page"), "teaching_only": True, "library_entry": e["id"],
+                    "parent_question_id": e["id"], "parent_kind": "teaching"})
+    return out[:TEACHING_PARENTS]
 
 
 def book_parents(book) -> tuple[set[str], set[str]]:
@@ -1878,7 +1910,8 @@ def author_args(book, specs, objectives: dict, entries: dict, all_objectives: bo
             "tier_gaps": gaps.get(lo, []), "existing_families": existing.get(lo, []),
             "book_questions": [{**{k: q.get(k) for k in ("id", "tier", "type", "stem", "choices", "answer",
                                                           "solution", "source_page")},
-                                **({"figures": figures[q["id"]]} if figures.get(q.get("id")) else {})} for q in qs],
+                                **({"figures": figures[q["id"]]} if figures.get(q.get("id")) else {})} for q in qs]
+                              + teaching_parents(rec),
             "misconceptions": [{"id": m["id"], "label": m.get("label"), "description": m.get("description")}
                                for m in entries.values() if m.get("lo_id") == lo],
         })

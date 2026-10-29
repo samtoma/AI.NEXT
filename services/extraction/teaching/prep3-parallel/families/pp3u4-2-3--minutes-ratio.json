@@ -1,0 +1,51 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u4-2-3:minutes-ratio",
+ "kind": "family",
+ "lo_id": "lo:pp3u4-2-3",
+ "parent_question_id": "expl:pp3u4-2-3:bk-example-2",
+ "parent_kind": "teaching",
+ "source_page": 54,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "i",
+   "choice": [
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "name": "W",
+   "let": "['sine','cosine','tangent']"
+  },
+  {
+   "name": "D",
+   "let": "[15,22,67]"
+  },
+  {
+   "name": "T",
+   "let": "[['0.2672','0.9636','0.2773'],['0.3827','0.9239','0.4142'],['0.9239','0.3827','2.4142']]"
+  }
+ ],
+ "stem": "Use a calculator to find the {=W[i]} of ${=D[k]}^\\circ 30'$. Round the result to four decimal places.",
+ "answer": "T[k][i]",
+ "solution": [
+  "Make sure the calculator is in degree mode.",
+  "Press the {=W[i]} key, enter {=D[k]}, press the degrees-minutes-seconds key (°'\"), enter 30, press the key (°'\") again, then press =.",
+  "Rounded to four decimal places, the {=W[i]} of ${=D[k]}^\\circ 30'$ is {=T[k][i]}."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Angles 15°30', 22°30', 67°30'; values computed by hand to 4 d.p. (tan 22.5 = sqrt2-1, tan 67.5 = sqrt2+1)."
+}

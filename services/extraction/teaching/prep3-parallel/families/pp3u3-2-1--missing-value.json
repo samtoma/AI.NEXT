@@ -1,0 +1,51 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u3-2-1:missing-value",
+ "kind": "family",
+ "lo_id": "lo:pp3u3-2-1",
+ "parent_question_id": "expl:pp3u3-2-1:bk-think-and-discuss-1",
+ "parent_kind": "teaching",
+ "source_page": 41,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "v",
+   "sample": {
+    "from": "range(20, 80)",
+    "k": 4
+   }
+  },
+  {
+   "name": "M",
+   "randint": [
+    30,
+    70
+   ]
+  },
+  {
+   "name": "x",
+   "let": "5*M - sum(v)"
+  },
+  {
+   "require": "x >= 1 and x <= 120 and x not in v",
+   "why": "fifth value positive, reasonable and distinct"
+  },
+  {
+   "name": "w",
+   "let": "v + [x]"
+  }
+ ],
+ "constraints": [],
+ "stem": "A set of five values has mean ${=M}$. Four of the values are ${=v[0]}, {=v[1]}, {=v[2]}, {=v[3]}$. Find the range of the set.",
+ "answer": "max(w) - min(w)",
+ "solution": [
+  "Total of the five values $= 5 \\times {=M} = {=5*M}$.",
+  "Total of the four known values $= {=sum(v)}$.",
+  "Fifth value $= {=5*M} - {=sum(v)} = {=x}$.",
+  "Greatest value $= {=max(w)}$, smallest value $= {=min(w)}$.",
+  "Range $= {=max(w)} - {=min(w)} = {=max(w) - min(w)}$."
+ ],
+ "notes": "Uses mean = total / number, then range."
+}

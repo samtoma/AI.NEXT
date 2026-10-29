@@ -1,0 +1,43 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u6-1-1:find-y",
+ "kind": "family",
+ "lo_id": "lo:pp3u6-1-1",
+ "parent_question_id": "expl:pp3u6-1-1:bk-example-1",
+ "parent_kind": "teaching",
+ "source_page": 5,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    6
+   ]
+  },
+  {
+   "name": "t",
+   "randint": [
+    0,
+    4
+   ]
+  }
+ ],
+ "stem": "The equation ${=a}x - y = {=c}$ can be written in the form $y = {=a}x - {=c}$. Find the value of $y$ when $x = {=t}$.",
+ "answer": "a * t - c",
+ "solution": [
+  "Write the equation in the form $y = {=a}x - {=c}$.",
+  "Put $x = {=t}$: $y = {=a} \\times {=t} - {=c}$.",
+  "So $y = {=a * t - c}$, and $({=t}, {=a * t - c})$ is a solution of the equation."
+ ],
+ "notes": "Basic: substitute into given y-form."
+}

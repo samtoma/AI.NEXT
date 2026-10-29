@@ -1,0 +1,64 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u9-4-1:range-x",
+ "kind": "family",
+ "lo_id": "lo:pp3u9-4-1",
+ "parent_question_id": "expl:pp3u9-4-1:bk-exercise-1",
+ "parent_kind": "teaching",
+ "source_page": 59,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "r",
+   "randint": [
+    4,
+    8
+   ]
+  },
+  {
+   "name": "L",
+   "randint": [
+    4,
+    "2*r - 3"
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    3
+   ]
+  },
+  {
+   "name": "lo",
+   "let": "L - k"
+  },
+  {
+   "name": "hi",
+   "let": "2*r - k"
+  },
+  {
+   "require": "lo >= 1 and hi > lo",
+   "why": "positive, nonempty range"
+  }
+ ],
+ "stem": "In a circle $M$ of radius {=r} cm, chord $AB = {=L}$ cm and chord $CD = X + {=k}$ cm. Given that $MF < ME$, where $ME$ is the distance from $M$ to $AB$ and $MF$ the distance from $M$ to $CD$, find the range of $X$. Write your answer as an interval such as $(a, b]$.",
+ "solution": [
+  "$MF < ME$, so $CD$ is closer to the center than $AB$, so $CD > AB$: $X + {=k} > {=L}$, i.e. $X > {=lo}$.",
+  "$CD$ is a chord, so it is at most the diameter {=2*r} cm: $X + {=k} \\le {=2*r}$, i.e. $X \\le {=hi}$.",
+  "So $X \\in ({=lo}, {=hi}]$, i.e. ${=lo} < X \\le {=hi}$."
+ ],
+ "marker": {
+  "kind": "interval",
+  "answer": "interval({=lo}, {=hi}, false, true)",
+  "form": null,
+  "variables": [
+   "X"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Follows book exercise 1: lower bound from comparison, upper bound from diameter."
+}

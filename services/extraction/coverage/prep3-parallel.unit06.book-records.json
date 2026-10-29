@@ -105,19 +105,11 @@
       "id": "tier_floor",
       "title": "Objectives × 3 tiers = cells with a live question, book or generated",
       "want": 27,
-      "got": 14,
+      "got": 19,
       "state": "fails",
       "failures": [
         {
-          "scope": "lo:pp3u6-1-1 basic",
-          "detail": "no live question at this tier"
-        },
-        {
           "scope": "lo:pp3u6-1-1 standard",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:pp3u6-1-1 advanced",
           "detail": "no live question at this tier"
         },
         {
@@ -129,15 +121,7 @@
           "detail": "no live question at this tier"
         },
         {
-          "scope": "lo:pp3u6-2-3 basic",
-          "detail": "no live question at this tier"
-        },
-        {
           "scope": "lo:pp3u6-2-3 standard",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:pp3u6-2-3 advanced",
           "detail": "no live question at this tier"
         },
         {
@@ -146,10 +130,6 @@
         },
         {
           "scope": "lo:pp3u6-3-1 advanced",
-          "detail": "no live question at this tier"
-        },
-        {
-          "scope": "lo:pp3u6-3-2 basic",
           "detail": "no live question at this tier"
         },
         {
@@ -322,8 +302,8 @@
     {
       "id": "notation",
       "title": "Un-normalised decimal commas, `(x; y)` and display environments left in the unit = 0",
-      "want": 747,
-      "got": 747,
+      "want": 1057,
+      "got": 1057,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -358,7 +338,7 @@
     {
       "id": "held_decided",
       "title": "Held families and widget templates = those a person dropped + those sent back and written again",
-      "want": 3,
+      "want": 5,
       "got": 0,
       "state": "fails",
       "failures": [
@@ -373,6 +353,14 @@
         {
           "scope": "family pp3u6-2-2--factorise-lead.json",
           "detail": "held, not decided: tpl:pp3u6-2-2:factorise-monic and tpl:pp3u6-2-2:factorise-lead share an objective and the first six letters of their slug, so their item ids would collide; rena"
+        },
+        {
+          "scope": "family pp3u6-3-2--both-dims.json",
+          "detail": "held, not decided: pp3u6-3-2--both-dims.json: an expression family's answer is marker.answer; it has no 'answer' and no choices"
+        },
+        {
+          "scope": "family pp3u6-3-2--half-cm.json",
+          "detail": "held, not decided: pp3u6-3-2--half-cm.json: an expression family's answer is marker.answer; it has no 'answer' and no choices"
         }
       ],
       "excepted_scopes": []
@@ -383,7 +371,7 @@
     "book-records/prep3-parallel/misprint-candidates.json": "d7dad9cedbc66bae0139a57ca52a911fd1ebf6791ebd61365f21346e77cdae1e",
     "groundtruth/prep3-parallel/misprint-decisions.json": "3ba70b418fadac1697572210e76f1307d427f07a1e54c17f3ff26b447c88906e",
     "reviews/prep3-parallel/maths-reading.json": "603f009dcecc9a03cc7078dadfae28e6589f4fc473ef4f029d192f2a8d1ec40b",
-    "teaching/prep3-parallel/held.json": "af8ac00d79e0cd7a1b9fabbee00c0fe2a24a4f4d4c281aa483abcb08435f60ca",
+    "teaching/prep3-parallel/held.json": "6f783f4b3913f25c6ebe8b7f66c52846abfa8a818c897d2ab8ace77ef463f355",
     "book-records/prep3-parallel/pp3u6-1.json": "58394cc0e7d9c28f8a89061add57fd5aac28933aa5ee365bf8d1ec6c59c53907",
     "book-records/prep3-parallel/pp3u6-2.json": "e01aca3997d2444dde4001250d2935ccefba91fb24b85ada9a706201f3c231e2",
     "book-records/prep3-parallel/pp3u6-3.json": "9e1a9b59f9be5b1300aa750e0607013cb7baff38ceeaae91635c28d7349d3865",
@@ -393,9 +381,9 @@
     "teaching/prep3-parallel/visuals/pp3u6-1.json": "b90f922782d6a7f858a2d4f54140031f86e2159539b400ef4cbe81c2f762139d",
     "teaching/prep3-parallel/visuals/pp3u6-2.json": "14a9753372d9d06f9bd6bc1618cd4466fa44a308db09a33ae99c0cbfef48e0b2",
     "teaching/prep3-parallel/visuals/pp3u6-3.json": "2beca9ab7e5a34dbb4f1ddfb475f608100cfcbb42d0eff7e8586aa21ac67c151",
-    "compiled/prep3-parallel/compile-report.json": "2ecebb0f25be841a9ce34c7afdb50f1830bbd1c94febd6e5ac7d7a98de5ff798",
-    "compiled/prep3-parallel/generated-questions.json": "2b0d6de0d1c1f4ad8439dd6810be311f3a8e7d048f912dc8afb87e9e764b568b",
-    "compiled/prep3-parallel/misconceptions.json": "c621012a62a4ccb62c29f2e7fbe7a1ba2bc7f0a13527704bdf93fc07e6354a6f",
+    "compiled/prep3-parallel/compile-report.json": "7f037880e6f9c540d58a492f4427a4897be445239bed26b554e6858a2d3d4393",
+    "compiled/prep3-parallel/generated-questions.json": "796d38705b353586c4c839a33c2107899d8952c5d40364264165fc2043d24de5",
+    "compiled/prep3-parallel/misconceptions.json": "0d5720bb73f96de3deda87c4a5b578cefa22c882295758b72a01f9bc4a34966c",
     "compiled/prep3-parallel/pp3u1.json": "60d58a4883a78adef890f1831307af30ccf7c3dac35e086221cb1f7b06e6a76e",
     "compiled/prep3-parallel/pp3u10.json": "4cea3ddce353fa47fa0a25001aae5e97d10cd94b590384f586fa0c519f7d07b8",
     "compiled/prep3-parallel/pp3u2.json": "b1288363572babecbfb09e555077a1c0d7740d2e3e279d00ff8a4067ecabfb2b",
@@ -407,7 +395,7 @@
     "compiled/prep3-parallel/pp3u8.json": "1a3172ce296a60d3c8f318a167610f2bc38545ac883eff29b55c1666113c165c",
     "compiled/prep3-parallel/pp3u9.json": "4b1b33c55a1db42f8da478feb58f8c60a499a98327ce579c207671456653e0c4",
     "compiled/prep3-parallel/review-stamps.json": "bb764df8cc0e1a354a86b9c854aaa8928b7ee4e0a12f1ad6135b8b2f4ee6d502",
-    "compiled/prep3-parallel/widget-questions.json": "0014d2b63f5c9840ad98274c104ed77676c414bc103f4b5d978cbdf7c746522d",
+    "compiled/prep3-parallel/widget-questions.json": "f20f5d5ecba0271e9788cec6f77fe3e27732ab7cb0dc50b9900b6543dc9d8348",
     "compiled/prep3-parallel/content/pp3u6-1.json": "6ebd6d6c6719af8b272a1cbe90abb5205794f8faecd027df2834d73ae88d66df",
     "compiled/prep3-parallel/content/pp3u6-2.json": "e62c343673006322af996a39a7b8b84980d8a98c0e21f52c73750cd02b3b0345",
     "compiled/prep3-parallel/content/pp3u6-3.json": "0861b6ed9b8039350a61917be62345eb3188cf17d3c63bdeaf07d2f54563808d"

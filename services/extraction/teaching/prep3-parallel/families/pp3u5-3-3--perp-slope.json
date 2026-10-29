@@ -1,0 +1,53 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u5-3-3:perp-slope",
+ "kind": "family",
+ "lo_id": "lo:pp3u5-3-3",
+ "parent_question_id": "q:pp3u5-3-3:bk-drill-7",
+ "source_page": 69,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "s",
+   "choice": [
+    1,
+    -1
+   ]
+  }
+ ],
+ "constraints": [
+  "gcd(a, b) == 1"
+ ],
+ "stem": "A straight line has slope $m_1={=s*a/b}$. Find the slope $m_2$ of the straight line perpendicular to it.",
+ "solution": [
+  "For perpendicular lines, $m_1\\times m_2=-1$.",
+  "${=s*a/b}\\times m_2=-1$",
+  "$m_2=-1\\div\\left({=s*a/b}\\right)$",
+  "$m_2={=-s*b/a}$"
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=-s*b}/{=a}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic entry point: perpendicular slope is the negative reciprocal. Fraction slope with gcd 1, b>=2 so m1 is never an integer; a=1 gives an integer answer."
+}

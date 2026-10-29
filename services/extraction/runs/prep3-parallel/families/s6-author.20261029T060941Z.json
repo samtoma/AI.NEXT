@@ -1,0 +1,576 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "63a04c33f297d84f14c9580158ee7e1ecc7897468ed638cce2a36aad0575fdc2",
+  "generated_sha256": "147a59dec82a5c58a073ad0220875b7b65dada1e3810c83400b3c7fae538ed1b",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u6-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-1-1:find-y",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-1-1",
+     "parent_question_id": "q:pp3u6-1-1:bk-example-1",
+     "source_page": 5,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "t",
+       "randint": [
+        0,
+        4
+       ]
+      }
+     ],
+     "stem": "The equation ${=a}x - y = {=c}$ can be written in the form $y = {=a}x - {=c}$. Find the value of $y$ when $x = {=t}$.",
+     "answer": "a * t - c",
+     "solution": [
+      "Write the equation in the form $y = {=a}x - {=c}$.",
+      "Put $x = {=t}$: $y = {=a} \\times {=t} - {=c}$.",
+      "So $y = {=a * t - c}$, and $({=t}, {=a * t - c})$ is a solution of the equation."
+     ],
+     "notes": "Basic: substitute into given y-form."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-1-1:pair",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-1-1",
+     "parent_question_id": "q:pp3u6-1-1:bk-open-prompt-2",
+     "source_page": 6,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        2,
+        4
+       ]
+      },
+      {
+       "name": "t",
+       "randint": [
+        -2,
+        4
+       ]
+      },
+      {
+       "name": "s",
+       "randint": [
+        -3,
+        5
+       ]
+      },
+      {
+       "name": "c",
+       "let": "a * t + b * s"
+      }
+     ],
+     "stem": "Find the solution of the equation ${=a}x + {=b}y = {=c}$ whose $x$-coordinate is ${=t}$. Write it as an ordered pair $(x, y)$.",
+     "marker": {
+      "kind": "coordinates",
+      "answer": "({=t}, {=s})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "Put $x = {=t}$ in the equation: ${=a} \\times ({=t}) + {=b}y = {=c}$.",
+      "So ${=b}y = {=c} - ({=a * t}) = {=b * s}$.",
+      "Divide by ${=b}$: $y = {=s}$.",
+      "The solution is $({=t}, {=s})$."
+     ],
+     "notes": "Standard: coefficient of y not 1; y always an integer by construction.",
+     "proposed_misconceptions": []
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-1-1:find-k",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-1-1",
+     "parent_question_id": "q:pp3u6-1-1:bk-example-1",
+     "source_page": 5,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        5
+       ]
+      },
+      {
+       "name": "t",
+       "randint": [
+        1,
+        4
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "s",
+       "let": "a * t - c"
+      }
+     ],
+     "stem": "The ordered pair $({=t}, {=s})$ is a solution of the equation $kx - y = {=c}$. Find the value of $k$.",
+     "answer": "a",
+     "solution": [
+      "Substitute $x = {=t}$ and $y = {=s}$ into the equation: ${=t}k - ({=s}) = {=c}$.",
+      "So ${=t}k = {=c} + ({=s}) + 0 = {=a * t}$.",
+      "Divide by ${=t}$: $k = {=a}$."
+     ],
+     "notes": "Advanced: reverse use of substitution, solving for a coefficient."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u6-2-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-2-3:formula",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-2-3",
+     "parent_question_id": "expl:pp3u6-2-3:bk-example-3",
+     "source_page": 12,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "b",
+       "randint": [
+        1,
+        8
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        -9,
+        -1
+       ]
+      },
+      {
+       "name": "D",
+       "let": "b*b-4*c"
+      },
+      {
+       "require": "not is_square(D)",
+       "why": "keep an irrational root so rounding is needed"
+      },
+      {
+       "name": "s",
+       "let": "float(sqrt(D))"
+      },
+      {
+       "name": "x1",
+       "let": "(-b+s)/2"
+      },
+      {
+       "name": "x2",
+       "let": "(-b-s)/2"
+      }
+     ],
+     "constraints": [],
+     "stem": "Use the general rule to solve $x^2 + {=b}x - {=-c} = 0$. Give the positive solution, rounded to the nearest hundredth.",
+     "answer": "fixed(x1, 2)",
+     "solution": [
+      "Here $a=1$, $b={=b}$, $c={=c}$.",
+      "$x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}=\\frac{-{=b}\\pm\\sqrt{{=D}}}{2}$, and $\\sqrt{{=D}}\\approx{=fixed(s,3)}$.",
+      "$x=\\frac{-{=b}+{=fixed(s,3)}}{2}\\approx{=fixed(x1,2)}$ or $x=\\frac{-{=b}-{=fixed(s,3)}}{2}\\approx{=fixed(x2,2)}$.",
+      "The positive solution is ${=fixed(x1,2)}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "c is negative so the equation is written with minus sign; roots always opposite sign, exactly one positive."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-2-3:disk-landing",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-2-3",
+     "parent_question_id": "expl:pp3u6-2-3:bk-example-3",
+     "source_page": 12,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": "A disk is thrown in a race; its height y (m) above the floor at horizontal distance x (m) follows a quadratic relation.",
+     "params": [
+      {
+       "name": "ak",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "af",
+       "let": "float(ak/100)"
+      },
+      {
+       "name": "b",
+       "randint": [
+        3,
+        6
+       ]
+      },
+      {
+       "name": "c",
+       "randint": [
+        5,
+        20
+       ]
+      },
+      {
+       "name": "D",
+       "let": "b*b+4*af*c"
+      },
+      {
+       "name": "s",
+       "let": "float(sqrt(D))"
+      },
+      {
+       "name": "x1",
+       "let": "(-b+s)/(-2*af)"
+      },
+      {
+       "name": "x2",
+       "let": "(-b-s)/(-2*af)"
+      }
+     ],
+     "constraints": [],
+     "stem": "In a disk throwing race the path of the disk follows the relation $y=-{=fixed(af,2)}x^2+{=b}x+{=c}$, where $x$ is the horizontal distance in meters and $y$ is the height of the disk above the floor in meters. Find the horizontal distance at which the disk lands, to the nearest hundredth of a meter.",
+     "answer": "fixed(x2, 2)",
+     "solution": [
+      "The disk lands when $y=0$: $-{=fixed(af,2)}x^2+{=b}x+{=c}=0$, so $a=-{=fixed(af,2)}$, $b={=b}$, $c={=c}$.",
+      "$x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}$ with $b^2-4ac={=fixed(D,3)}$ and $\\sqrt{{=fixed(D,3)}}\\approx{=fixed(s,3)}$.",
+      "$x=\\frac{-{=b}+{=fixed(s,3)}}{-{=fixed(2*af,2)}}\\approx{=fixed(x1,2)}$ (rejected: a distance cannot be negative here).",
+      "$x=\\frac{-{=b}-{=fixed(s,3)}}{-{=fixed(2*af,2)}}\\approx{=fixed(x2,2)}$.",
+      "The disk lands at about ${=fixed(x2,2)}$ meters."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Modelled on the book example. Final value computed from unrounded root; the displayed 3-dp sqrt may differ from the key by 0.01 in rare cases."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-2-3:garden-length",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-2-3",
+     "parent_question_id": "expl:pp3u6-2-3:bk-example-3",
+     "source_page": 12,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": "A rectangular garden whose length exceeds its width by a fixed number of meters and whose area is given.",
+     "params": [
+      {
+       "name": "k",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "A",
+       "randint": [
+        20,
+        90
+       ]
+      },
+      {
+       "name": "D",
+       "let": "k*k+4*A"
+      },
+      {
+       "require": "not is_square(D)",
+       "why": "need rounding"
+      },
+      {
+       "name": "s",
+       "let": "float(sqrt(D))"
+      },
+      {
+       "name": "w1",
+       "let": "(-k+s)/2"
+      },
+      {
+       "name": "w2",
+       "let": "(-k-s)/2"
+      },
+      {
+       "name": "L",
+       "let": "w1+k"
+      }
+     ],
+     "constraints": [],
+     "stem": "The length of a rectangular garden is ${=k}$ m more than its width, and its area is ${=A}$ m$^2$. Use the general rule to find the length of the garden, to the nearest hundredth of a meter.",
+     "answer": "fixed(L, 2)",
+     "solution": [
+      "Let the width be $w$ m, so the length is $w+{=k}$ and $w(w+{=k})={=A}$, i.e. $w^2+{=k}w-{=A}=0$.",
+      "$a=1$, $b={=k}$, $c=-{=A}$: $w=\\frac{-{=k}\\pm\\sqrt{{=D}}}{2}$ with $\\sqrt{{=D}}\\approx{=fixed(s,3)}$.",
+      "$w\\approx{=fixed(w1,2)}$ or $w\\approx{=fixed(w2,2)}$; the negative value is rejected because a width cannot be negative.",
+      "Length $=w+{=k}$ (using the unrounded $w$) $\\approx{=fixed(L,2)}$ m."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Answer is the length, computed from the unrounded width to avoid double rounding."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u6-3-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-3-2:find-length",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-3-2",
+     "parent_question_id": "expl:pp3u6-3-2:bk-example-2",
+     "source_page": 13,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": "A rectangle whose perimeter and area are given; find its dimensions.",
+     "params": [
+      {
+       "name": "W",
+       "randint": [
+        2,
+        8
+       ]
+      },
+      {
+       "name": "d",
+       "randint": [
+        1,
+        6
+       ]
+      },
+      {
+       "name": "L",
+       "let": "W + d"
+      },
+      {
+       "name": "s",
+       "let": "L + W"
+      },
+      {
+       "name": "p",
+       "let": "2 * s"
+      },
+      {
+       "name": "a",
+       "let": "L * W"
+      }
+     ],
+     "constraints": [],
+     "stem": "A rectangle has perimeter ${=p}$ cm and area ${=a}$ cm$^2$. Find its length, the longer dimension, in cm.",
+     "answer": "L",
+     "solution": [
+      "Let the length be $x$ and the width be $y$.",
+      "Perimeter: $2(x+y) = {=p}$, so $x + y = {=s}$ (first degree).",
+      "Area: $xy = {=a}$ (second degree).",
+      "From the first equation: $y = {=s} - x$.",
+      "Substitute: $x({=s}-x) = {=a}$, so $x^2 - {=s}x + {=a} = 0$.",
+      "Factorise: $(x-{=W})(x-{=L}) = 0$, so $x = {=W}$ or $x = {=L}$.",
+      "The dimensions are ${=W}$ cm and ${=L}$ cm, so the length (longer) is ${=L}$ cm."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Integer dimensions, L>W always so the answer is unique."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-3-2:both-dims",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-3-2",
+     "parent_question_id": "expl:pp3u6-3-2:bk-example-2",
+     "source_page": 13,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": "A rectangular plot whose perimeter and area are given; find its two dimensions.",
+     "params": [
+      {
+       "name": "W",
+       "randint": [
+        5,
+        15
+       ]
+      },
+      {
+       "name": "d",
+       "randint": [
+        1,
+        8
+       ]
+      },
+      {
+       "name": "L",
+       "let": "W + d"
+      },
+      {
+       "name": "s",
+       "let": "L + W"
+      },
+      {
+       "name": "p",
+       "let": "2 * s"
+      },
+      {
+       "name": "a",
+       "let": "L * W"
+      }
+     ],
+     "constraints": [],
+     "stem": "A rectangular plot has perimeter ${=p}$ m and area ${=a}$ m$^2$. Form a first-degree and a second-degree equation and find its two dimensions in metres. Give the two values separated by a comma.",
+     "answer": "",
+     "solution": [
+      "Let the length be $x$ and the width be $y$.",
+      "Perimeter: $2(x+y) = {=p}$, so $x + y = {=s}$.",
+      "Area: $xy = {=a}$.",
+      "From the first equation: $y = {=s} - x$.",
+      "Substitute: $x({=s}-x) = {=a}$, so $x^2 - {=s}x + {=a} = 0$.",
+      "Factorise: $(x-{=W})(x-{=L}) = 0$, so $x = {=W}$ or $x = {=L}$.",
+      "When $x={=W}$, $y={=L}$; when $x={=L}$, $y={=W}$.",
+      "The dimensions are ${=W}$ m and ${=L}$ m."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[{=W}, {=L}]",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Integer dimensions; order of the two values should not matter for a values marker."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u6-3-2:half-cm",
+     "kind": "family",
+     "lo_id": "lo:pp3u6-3-2",
+     "parent_question_id": "expl:pp3u6-3-2:bk-example-2",
+     "source_page": 13,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": "A rectangle whose perimeter and area are given, with dimensions that are not whole numbers.",
+     "params": [
+      {
+       "name": "m",
+       "choice": [
+        3,
+        5,
+        7,
+        9,
+        11
+       ]
+      },
+      {
+       "name": "d",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "W",
+       "let": "m / 2"
+      },
+      {
+       "name": "L",
+       "let": "W + d"
+      },
+      {
+       "name": "s",
+       "let": "m + d"
+      },
+      {
+       "name": "p",
+       "let": "2 * s"
+      },
+      {
+       "name": "a",
+       "let": "L * W"
+      },
+      {
+       "name": "As",
+       "let": "fixed(a, 2)"
+      },
+      {
+       "name": "Ws",
+       "let": "fixed(W, 1)"
+      },
+      {
+       "name": "Ls",
+       "let": "fixed(L, 1)"
+      }
+     ],
+     "constraints": [],
+     "stem": "A rectangle has perimeter ${=p}$ cm and area ${=As}$ cm$^2$. Form a first-degree and a second-degree equation and find its two dimensions in cm. Give the two values as decimals separated by a comma.",
+     "answer": "",
+     "solution": [
+      "Let the length be $x$ and the width be $y$.",
+      "Perimeter: $2(x+y) = {=p}$, so $x + y = {=s}$.",
+      "Area: $xy = {=As}$.",
+      "Substitute $y = {=s} - x$: $x({=s}-x) = {=As}$, so $x^2 - {=s}x + {=As} = 0$.",
+      "Solve (by factorising or the quadratic formula): $x = {=Ws}$ or $x = {=Ls}$.",
+      "Check: ${=Ws} + {=Ls} = {=s}$ and ${=Ws} \\times {=Ls} = {=As}$.",
+      "The dimensions are ${=Ws}$ cm and ${=Ls}$ cm."
+     ],
+     "marker": {
+      "kind": "values",
+      "answer": "[{=Ws}, {=Ls}]",
+      "form": "decimal",
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Dimensions are half-integers (m odd), so the quadratic has non-integer roots; area ends in .25 or .75. Check: (m/2)(m/2+d) = m(m+2d)/4."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  }
+ ],
+ "revised": []
+}

@@ -1,0 +1,74 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u1-2-1:plusk",
+ "kind": "family",
+ "lo_id": "lo:pp3u1-2-1",
+ "parent_question_id": "q:pp3u1-2-1:bk-example-1",
+ "source_page": 13,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "x1",
+   "randint": [
+    1,
+    4
+   ]
+  },
+  {
+   "name": "d",
+   "choice": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "k",
+   "randint": [
+    1,
+    5
+   ]
+  },
+  {
+   "name": "x2",
+   "let": "x1 + d"
+  },
+  {
+   "name": "x3",
+   "let": "x1 + 2 * d"
+  },
+  {
+   "name": "b1",
+   "let": "x1 + k"
+  },
+  {
+   "name": "b2",
+   "let": "x2 + k"
+  },
+  {
+   "name": "b3",
+   "let": "x3 + k"
+  },
+  {
+   "name": "e",
+   "let": "b3 + 1"
+  }
+ ],
+ "stem": "If $X=\\{ {=x1}, {=x2}, {=x3} \\}$, $Y=\\{ {=b1}, {=b2}, {=b3}, {=e} \\}$, and R is a relation from X to Y where a R b means: «b = a + {=k}», for each $a\\in X$, $b\\in Y$. Write R as a set of ordered pairs, listing the pairs in order of a, as (a, b), (a, b), …",
+ "solution": [
+  "When a = {=x1}: b = {=x1} + {=k} = {=b1}, so the pair is ({=x1}, {=b1}).",
+  "When a = {=x2}: b = {=x2} + {=k} = {=b2}, so the pair is ({=x2}, {=b2}).",
+  "When a = {=x3}: b = {=x3} + {=k} = {=b3}, so the pair is ({=x3}, {=b3}).",
+  "Each b is in Y, so R = \\{({=x1}, {=b1}), ({=x2}, {=b2}), ({=x3}, {=b3})\\}."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=x1}, {=b1}), ({=x2}, {=b2}), ({=x3}, {=b3})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic entry: one-step rule, every image lies in Y (Y has one extra element 'e' that is never an image). Answer is the list of pairs in increasing a."
+}
