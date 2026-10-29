@@ -81,3 +81,14 @@ test("5: a typed answer may hold braces — a set reaches the grader whole", asy
   assert.equal(extractAnswerSubmitted("{{answer_submitted:B}}"), "B");
   assert.equal(extractAnswerSubmitted("no tag here"), null);
 });
+
+test("6: an unreadable typed answer is told to Noor, and the card stays open", () => {
+  const src = read("../components/chat/ChatCore.tsx");
+  const branch = src.slice(src.indexOf("if (e instanceof AttemptRetryError) {"), src.indexOf('console.error("chat-typed answer submission failed:"'));
+  assert.match(branch, /\{ role: "note", kind: "event", text: UNREAD_ANSWER_NOTE \}/, "the tutor hears it");
+  assert.match(branch, /localOnly: true, text: e\.retry\.message/, "the student still sees the marker's words");
+  const note = src.slice(src.indexOf("export const UNREAD_ANSWER_NOTE"), src.indexOf(";", src.indexOf("export const UNREAD_ANSWER_NOTE")));
+  // an event naming the open card's id is what closes it (openQuestionId)
+  assert.ok(!/q:/.test(note), "the note must not name a question id");
+  assert.ok(note.includes("{{answer_submitted:…}}"));
+});

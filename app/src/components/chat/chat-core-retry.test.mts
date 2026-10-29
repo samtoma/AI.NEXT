@@ -29,7 +29,7 @@ test("the chat-typed submit path imports AttemptRetryError alongside submitAttem
   assert.match(code, /import\s*\{\s*AttemptRetryError,\s*submitAttempt\s*\}\s*from\s*"@\/lib\/attempts-client"/);
 });
 
-test("a re-entry is shown as a local note — never sent to the model, never counted as an attempt", () => {
+test("a re-entry is shown to the student, told to the tutor as an event (2026-10-29), never counted as an attempt", () => {
   // isolate the catch block that wraps the chat-typed submitAttempt call, up
   // to the fallback log line that already existed (a stable, unique anchor)
   const block = code.match(/const r = await submitAttempt\([\s\S]*?chat-typed answer submission failed:", e\);/)?.[0] ?? "";
@@ -37,7 +37,7 @@ test("a re-entry is shown as a local note — never sent to the model, never cou
   assert.match(block, /if \(e instanceof AttemptRetryError\)/);
   assert.match(
     block,
-    /setMessages\(\(prev\) => \[\s*\.\.\.prev,\s*\{ role: "note", kind: "say", localOnly: true, text: e\.retry\.message \},\s*\]\)/
+    /setMessages\(\(prev\) => \[\s*\.\.\.prev,\s*\{ role: "note", kind: "event", text: UNREAD_ANSWER_NOTE \},\s*\{ role: "note", kind: "say", localOnly: true, text: e\.retry\.message \},\s*\]\)/
   );
   // the retry branch must not treat the re-entry as a graded result
   const retryArm = block.match(/if \(e instanceof AttemptRetryError\) \{[\s\S]*?\} else \{/)?.[0] ?? "";

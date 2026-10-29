@@ -303,6 +303,9 @@ const prefersReducedMotion = () =>
 // suggestion chip — the one literal string both call sites use as their
 // "the student says they're done" signal (see CheckInCard, LessonSession).
 const GOT_IT_SENTINEL = "Got it — next ✓";
+/** Told to the tutor when a chat-typed answer could not be read (see the re-entry branch). */
+export const UNREAD_ANSWER_NOTE =
+  "⟲ the student's typed answer to the open question card could not be read, so nothing was recorded and the card is still open — the student was asked to type it again. When they do, tag that attempt with {{answer_submitted:…}} as usual; it is the first answer to this card. (for you only: do not mention reading or grading to the student)";
 
 export function ChatCore({
   surface,
@@ -1122,12 +1125,22 @@ export function ChatCore({
                   // no attempt, no mastery change. Before this it was only
                   // logged, so a student who typed an unreadable or
                   // wrong-form answer in chat saw nothing and never knew to
-                  // retype it. Shown as a local note (never sent to the
-                  // model, never counted as an attempt) — the same words the
-                  // tapped card already shows via its own `reentry` prop.
+                  // retype it. Shown as a local note (never counted as an
+                  // attempt) — the same words the tapped card already shows
+                  // via its own `reentry` prop.
+                  //
+                  // And Noor is told, in an event note that rides with the
+                  // student's next message: otherwise its own tag is the last
+                  // thing in its transcript, it believes the answer was
+                  // graded, and "only the first answer to a card counts"
+                  // stops it tagging the retyped one — the card stays open
+                  // and the answer never counts. The note names no question
+                  // id on purpose: an event naming the open card's id is
+                  // what marks the card answered.
                   if (e instanceof AttemptRetryError) {
                     setMessages((prev) => [
                       ...prev,
+                      { role: "note", kind: "event", text: UNREAD_ANSWER_NOTE },
                       { role: "note", kind: "say", localOnly: true, text: e.retry.message },
                     ]);
                   } else {
