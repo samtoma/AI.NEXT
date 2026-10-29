@@ -93,5 +93,14 @@ Three places keep it true from now on:
 - **Review tool**, Misprints → "Decided, not applied": shows the record's own text; the reviewer copies the exact
   words into "Text in the record", and the tool keeps the decision only if the pipeline then applies it.
 
+### Generated answers: what counts as agreed (2026-10-29)
+
+`answer_gen.check` compares the two readings of an answer. A value is agreed when both give the same answer. An
+explanation or a drawing used to go straight to a person ("needs_person"), even when both readings said "Yes, …":
+now it is agreed on its gradable answer (Yes/No, a number, a set; `gradable_key`), and the question is asked on that
+key, while its explanation stays unchecked. A Yes/No counts only when the question asks a yes/no question and nothing
+else a Yes/No leaves unanswered (`asks_yes_or_no`). Saved answers follow the current rule through `answer_gen.py
+rejudge`, which `ingest.py refresh` runs (free). Prep 3: 31 answers agreed this way, 29 new book questions.
+
 A changed correction reaches a generated answer only when that answer is made again (`answer_gen.py run … --only
 <ref> --force`), then compile.

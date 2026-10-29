@@ -1,0 +1,294 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "2b0a8d392acb81f69c2d11a24d14a6338dd88ca921bc2995e74e75f16da30164",
+  "generated_sha256": "8c71a15bba4588d70ecbe5691ca7372c7a9d0eb42380e8f1bbb7dabc867c8c94",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u2-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u2-1-1:terms",
+     "kind": "family",
+     "lo_id": "lo:pp3u2-1-1",
+     "parent_question_id": "q:pp3u2-1-1:bk-think-and-discuss-3",
+     "source_page": 25,
+     "tier": "standard",
+     "answer_type": "numeric",
+     "context": "A bag holds red marbles and blue marbles.",
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        3,
+        15
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        3,
+        15
+       ],
+       "resample_while": "b == a"
+      }
+     ],
+     "constraints": [],
+     "stem": "A bag holds ${=a}$ red marbles and ${=b}$ blue marbles. The ratio of blue marbles to red marbles is written $x : y$ without simplifying. What is the consequent of this ratio?",
+     "answer": "a",
+     "solution": [
+      "The ratio of blue marbles to red marbles is blue to red, that is ${=b} : {=a}$.",
+      "In a ratio the first term is the antecedent and the second term is the consequent.",
+      "The antecedent is ${=b}$ and the consequent is ${=a}$.",
+      "So the consequent is ${=a}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Order of the ratio follows the wording; consequent is the second term."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u2-1-1:findterm",
+     "kind": "family",
+     "lo_id": "lo:pp3u2-1-1",
+     "parent_question_id": "q:pp3u2-1-1:bk-think-and-discuss-3",
+     "source_page": 25,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        2,
+        11
+       ],
+       "resample_while": "q == p"
+      },
+      {
+       "require": "gcd(p, q) == 1",
+       "why": "ratio in lowest terms"
+      },
+      {
+       "name": "k",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "s",
+       "let": "(p + q) * k"
+      }
+     ],
+     "constraints": [
+      "gcd(p, q) == 1"
+     ],
+     "stem": "The ratio $\\frac{a}{b}=\\frac{{=p}}{{=q}}$, where $a$ and $b$ are whole numbers that need not equal ${=p}$ and ${=q}$. If $a + b = {=s}$, find the antecedent $a$.",
+     "answer": "p * k",
+     "solution": [
+      "$\\frac{a}{b}=\\frac{{=p}}{{=q}}$ means $a$ to $b$ is the ratio ${=p}$ to ${=q}$, so $a={=p}k$ and $b={=q}k$ for some number $k$.",
+      "Then $a+b=({=p}+{=q})k={=p+q}k={=s}$.",
+      "So $k={=s}\\div{=p+q}={=k}$.",
+      "Therefore $a={=p}\\times{=k}={=p*k}$ (and $b={=q*k}$)."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Extends the think-and-discuss idea that a,b are multiples of the ratio terms."
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:pp3u2-2-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u2-2-2:sum-ratio",
+     "kind": "family",
+     "lo_id": "lo:pp3u2-2-2",
+     "parent_question_id": "q:pp3u2-2-2:bk-example-1",
+     "source_page": 28,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "q",
+       "randint": [
+        2,
+        7
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        8
+       ],
+       "resample_while": "p == q or gcd(p, q) != 1"
+      },
+      {
+       "name": "k",
+       "choice": [
+        2,
+        3,
+        4
+       ]
+      },
+      {
+       "name": "n",
+       "let": "k * p + q"
+      }
+     ],
+     "constraints": [
+      "gcd(p, q) == 1",
+      "p != q"
+     ],
+     "stem": "If $\\frac{a}{b}=\\frac{{=p}}{{=q}}$, find the value of $\\frac{{=k}a+b}{b}$ as a fraction in its simplest form.",
+     "answer": "{=n}/{=q}",
+     "solution": [
+      "Since $\\frac{a}{b}=\\frac{{=p}}{{=q}}$, let $a={=p}m$ and $b={=q}m$ with $m\\neq 0$.",
+      "$\\frac{{=k}a+b}{b}=\\frac{{=k}\\times {=p}m+{=q}m}{{=q}m}$.",
+      "$=\\frac{{=n}m}{{=q}m}=\\frac{{=n}}{{=q}}$.",
+      "The value of the ratio is $\\frac{{=n}}{{=q}}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=n}/{=q}",
+      "form": "simplest",
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "gcd(kp+q,q)=gcd(kp,q)=1 only if gcd(k,q)=1; reduction checked by constraint below."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u2-2-2:quad-ratio",
+     "kind": "family",
+     "lo_id": "lo:pp3u2-2-2",
+     "parent_question_id": "q:pp3u2-2-2:bk-example-1",
+     "source_page": 28,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "q",
+       "randint": [
+        2,
+        6
+       ]
+      },
+      {
+       "name": "p",
+       "randint": [
+        1,
+        6
+       ],
+       "resample_while": "p == q or gcd(p, q) != 1"
+      },
+      {
+       "name": "A",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "B",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "C",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "D",
+       "choice": [
+        2,
+        3,
+        4,
+        5
+       ]
+      },
+      {
+       "name": "nn",
+       "let": "A * p * p + B * p * q"
+      },
+      {
+       "name": "dd",
+       "let": "C * q * q + D * p * q"
+      },
+      {
+       "name": "g",
+       "let": "gcd(nn, dd)"
+      },
+      {
+       "name": "rn",
+       "let": "nn // g"
+      },
+      {
+       "name": "rd",
+       "let": "dd // g"
+      },
+      {
+       "require": "rd != 1",
+       "why": "answer must be a proper fraction string"
+      }
+     ],
+     "constraints": [
+      "gcd(p, q) == 1"
+     ],
+     "stem": "If $\\frac{x}{y}=\\frac{{=p}}{{=q}}$, find the value of $\\frac{{=A}x^2+{=B}xy}{{=C}y^2+{=D}xy}$ as a fraction in its simplest form.",
+     "answer": "{=rn}/{=rd}",
+     "solution": [
+      "Since $\\frac{x}{y}=\\frac{{=p}}{{=q}}$, let $x={=p}m$ and $y={=q}m$ with $m\\neq 0$.",
+      "Numerator: ${=A}x^2+{=B}xy={=A}\\times {=p*p}m^2+{=B}\\times {=p*q}m^2={=nn}m^2$.",
+      "Denominator: ${=C}y^2+{=D}xy={=C}\\times {=q*q}m^2+{=D}\\times {=p*q}m^2={=dd}m^2$.",
+      "$\\frac{{=nn}m^2}{{=dd}m^2}=\\frac{{=nn}}{{=dd}}=\\frac{{=rn}}{{=rd}}$ in simplest form.",
+      "The value of the ratio is $\\frac{{=rn}}{{=rd}}$."
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=rn}/{=rd}",
+      "form": "simplest",
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Extends the book's substitution x=pm, y=qm to degree-2 homogeneous expressions. Reduced fraction is computed; rd != 1 required."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Basic family: the answer (kp+q)/q may not be in lowest terms when gcd(k,q)>1, so the key is not always simplest. Fix: restrict q so gcd(k,q)==1, or reduce the fraction. Review before use. The advanced tier is a degree-2 extension of the book's substitution, not a proof. Identity proofs can't be marked, so none was written."
+  }
+ ],
+ "revised": []
+}

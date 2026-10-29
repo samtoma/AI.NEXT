@@ -38,6 +38,7 @@ order, stopping at the first that fails (Tamer, 2026-10-17; the review tool's ho
   1. the Maths reading decisions into the book records (book_record_maths.py apply);
   2. per unit past G1, the filing decisions (book_record_filing.py apply), then generated content re-mapped to where
      its source now is (book_record_remap.py);
+  2b. the stored answer readings compared again with the current rule (answer_gen.py rejudge, no model call);
   3. compile (every lesson compiled before, with the units named): the G2, answer, tier, figure and Generated content
      decisions and the book records' own edits (Label extraction's "apply to the book record") are read there;
   4. the review sample drawn again (book_record_sample.py: past sampled questions kept);
@@ -343,6 +344,9 @@ def refresh(name: str, units: list[int] | None, dsn: str | None) -> dict:
         if (HERE / "teaching" / bk / "cross-links" / f"ch{u:02d}.json").exists():
             # the links into earlier units G1 kept: without this they were approved and never compiled (2026-10-21)
             steps.append((f"unit {u}: links into earlier units kept", U("book_record_links.py", "apply", bk, str(u))))
+    # the stored answer readings compared again with the current rule (no model call): a reading the rule now agrees
+    # (answer_gen COMPARE_VERSION) is served without waiting for a person (Tamer, 2026-10-29)
+    steps.append(("answers re-checked", U("answer_gen.py", "rejudge", bk)))
     steps.append(("compile", U("compile_book_records.py", bk, *slugs)))
     steps.append(("review sample", U("book_record_sample.py", bk)))
     steps += [(f"unit {u}: coverage audit", U("book_record_coverage.py", bk, str(u))) for u in units]

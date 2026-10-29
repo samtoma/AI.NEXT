@@ -1848,58 +1848,6 @@
       "parent_kind": "teaching"
     },
     {
-      "id": "q:pp3u2-3-2:w001",
-      "lo_id": "lo:pp3u2-3-2",
-      "tier": "basic",
-      "question_type": "widget",
-      "stem": "The area of a rectangle is constant and equal to $30$ cm², so $xy = 30$. When $x = 3$, $y = 10$. Find $y$ when $x = 5$. Drag the right pan until the balance is level.",
-      "choices": {
-        "kind": "ratio_balance",
-        "spec": {
-          "mode": "inverse",
-          "a": 3,
-          "b": 10,
-          "c": 5
-        },
-        "diagnostics": [
-          {
-            "predicate": "inverse-solved-as-direct",
-            "misconception_id": "mc:pp3u2-3-2:inverse-treated-as-direct"
-          }
-        ],
-        "hints": [
-          {
-            "predicate": "off-target",
-            "step": 2,
-            "text": "Find the constant product $x \\times y$ from the pair you are given, then make the new $x$ times the new $y$ equal that same constant."
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "The area is constant, so $y$ varies inversely as $x$: $y = \\frac{m}{x}$ with $xy = m$."
-        },
-        {
-          "step": 2,
-          "text_md": "From $x = 3$, $y = 10$: $m = 3 \\times 10 = 30$."
-        },
-        {
-          "step": 3,
-          "text_md": "For $x = 5$: $y = \\frac{30}{5}$."
-        },
-        {
-          "step": 4,
-          "text_md": "So $y = 6$, and $5 \\times 6 = 30$ matches the constant product."
-        }
-      ],
-      "parent_question_id": "q:pp3u2-3-2:bk-exercise-2-b",
-      "source_note": "The book's own exercise pp3u2-3:exercise-2#B on an instrument. Generated from template family wt:pp3u2-3-2:exercise-2-b.",
-      "family": "wt:pp3u2-3-2:exercise-2-b",
-      "template_sha": "0988a90f6c56fa105e5146e94a0e29f4112ff7375b56be67844236fb6d69c1fa"
-    },
-    {
       "id": "q:pp3u5-2-1:w001",
       "lo_id": "lo:pp3u5-2-1",
       "tier": "basic",
@@ -4263,6 +4211,58 @@
       "template_sha": "ae576373351b1c814a5358e930c58656eeae6857f79a507d81d4b71ee36cca57"
     },
     {
+      "id": "q:pp3u2-3-2:w001",
+      "lo_id": "lo:pp3u2-3-2",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "The area of a rectangle is constant and equal to $30$ cm², so $xy = 30$. When $x = 3$, $y = 10$. Find $y$ when $x = 5$. Drag the right pan until the balance is level.",
+      "choices": {
+        "kind": "ratio_balance",
+        "spec": {
+          "mode": "inverse",
+          "a": 3,
+          "b": 10,
+          "c": 5
+        },
+        "diagnostics": [
+          {
+            "predicate": "inverse-solved-as-direct",
+            "misconception_id": "mc:pp3u2-3-2:inverse-treated-as-direct"
+          }
+        ],
+        "hints": [
+          {
+            "predicate": "off-target",
+            "step": 2,
+            "text": "Find the constant product $x \\times y$ from the pair you are given, then make the new $x$ times the new $y$ equal that same constant."
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The area is constant, so $y$ varies inversely as $x$: $y = \\frac{m}{x}$ with $xy = m$."
+        },
+        {
+          "step": 2,
+          "text_md": "From $x = 3$, $y = 10$: $m = 3 \\times 10 = 30$."
+        },
+        {
+          "step": 3,
+          "text_md": "For $x = 5$: $y = \\frac{30}{5}$."
+        },
+        {
+          "step": 4,
+          "text_md": "So $y = 6$, and $5 \\times 6 = 30$ matches the constant product."
+        }
+      ],
+      "parent_question_id": "q:pp3u2-3-2:bk-exercise-2-b",
+      "source_note": "The book's own exercise pp3u2-3:exercise-2#B on an instrument. Generated from template family wt:pp3u2-3-2:exercise-2-b.",
+      "family": "wt:pp3u2-3-2:exercise-2-b",
+      "template_sha": "0988a90f6c56fa105e5146e94a0e29f4112ff7375b56be67844236fb6d69c1fa"
+    },
+    {
       "id": "q:pp3u9-1-2:w001",
       "lo_id": "lo:pp3u9-1-2",
       "tier": "basic",
@@ -5775,12 +5775,6 @@
       "description": "The student writes the pairs with the elements in the wrong order, or assumes X×Y gives the same set as Y×X."
     },
     {
-      "id": "mc:pp3u2-3-2:inverse-treated-as-direct",
-      "lo_id": "lo:pp3u2-3-2",
-      "label": "Treats inverse variation as direct (y = mx, or the ratio turned the wrong way)",
-      "description": "The student finds the constant by dividing y by x, or sets up y₁/y₂ = x₁/x₂, so y grows when x grows."
-    },
-    {
       "id": "mc:pp3u5-4-1:read-coefficients-without-isolating-y",
       "lo_id": "lo:pp3u5-4-1",
       "label": "Reading m and b straight off the equation without isolating y",
@@ -5797,6 +5791,12 @@
       "lo_id": "lo:pp3u7-2-1",
       "label": "Finds only the positive root of the denominator",
       "description": "When the denominator has the form $x^2=k$, the student gives only $x=\\sqrt{k}$ and loses the negative root."
+    },
+    {
+      "id": "mc:pp3u2-3-2:inverse-treated-as-direct",
+      "lo_id": "lo:pp3u2-3-2",
+      "label": "Treats inverse variation as direct (y = mx, or the ratio turned the wrong way)",
+      "description": "The student finds the constant by dividing y by x, or sets up y₁/y₂ = x₁/x₂, so y grows when x grows."
     }
   ],
   "mapping_review": {

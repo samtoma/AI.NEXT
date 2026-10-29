@@ -1,0 +1,81 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u9-3-3:radius-coord",
+ "kind": "family",
+ "lo_id": "lo:pp3u9-3-3",
+ "parent_question_id": "q:pp3u9-3-3:bk-exercise-1",
+ "source_page": 56,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "t",
+   "choice": [
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     6,
+     8
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     5,
+     12
+    ],
+    [
+     12,
+     5
+    ],
+    [
+     9,
+     12
+    ],
+    [
+     12,
+     9
+    ],
+    [
+     8,
+     15
+    ],
+    [
+     15,
+     8
+    ]
+   ]
+  },
+  {
+   "name": "p",
+   "let": "t[0]"
+  },
+  {
+   "name": "q",
+   "let": "t[1]"
+  },
+  {
+   "name": "r",
+   "let": "sqrt(p*p + q*q)"
+  }
+ ],
+ "constraints": [],
+ "stem": "On a coordinate plane, $A = (0, 0)$, $B = ({=2*p}, 0)$ and $C = (0, {=2*q})$. The circle through A, B and C is drawn as the intersection of the axes of $\\overline{AB}$ and $\\overline{AC}$ gives its center M. Find the radius of this circle in units.",
+ "answer": "r",
+ "solution": [
+  "The axis of $\\overline{AB}$ is the vertical line $x = {=p}$, through the midpoint of $\\overline{AB}$.",
+  "The axis of $\\overline{AC}$ is the horizontal line $y = {=q}$, through the midpoint of $\\overline{AC}$.",
+  "They intersect at the center $M = ({=p}, {=q})$.",
+  "The radius is $MA = \\sqrt{{=p}^2 + {=q}^2} = \\sqrt{{=p*p + q*q}} = {=r}$ units."
+ ],
+ "notes": "Right angle at A, so M is the midpoint of BC; sqrt(p^2+q^2) is an integer for all listed pairs (Pythagorean).",
+ "proposed_misconceptions": []
+}

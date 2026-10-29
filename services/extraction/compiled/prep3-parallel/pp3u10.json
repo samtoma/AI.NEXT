@@ -1112,6 +1112,25 @@
       "verified": true
     },
     {
+      "id": "q:pp3u10-2-2:bk-think-4",
+      "lo": "lo:pp3u10-2-2",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Is the inscribed right angle inscribed in a semicircle? Explain your answer?",
+      "answer": "Yes",
+      "solution": [
+        "Let the inscribed angle be 90°.",
+        "Its measure is half the subtended arc: 90 = 1/2 m(arc).",
+        "So m(arc) = 180°.",
+        "An arc of 180° is a semicircle.",
+        "So the angle is inscribed in a semicircle."
+      ],
+      "source_page": 75,
+      "source": "seed",
+      "source_note": "The book's own open prompt (pp3u10-2:think-4, printed p.75); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
       "id": "q:pp3u10-2-2:bk-drill-14-1-p1",
       "lo": "lo:pp3u10-2-2",
       "tier": "standard",
@@ -1454,6 +1473,23 @@
       "verified": true
     },
     {
+      "id": "q:pp3u10-3-1:bk-think-and-discuss-1-3",
+      "lo": "lo:pp3u10-3-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "In the opposite figure: m(arc AB) = 100°. Do the inscribed angles that include equal arcs in measure are equal in measue? Explain your answer.",
+      "answer": "Yes",
+      "solution": [
+        "Each inscribed angle equals half the measure of the arc it includes.",
+        "If the two arcs have equal measures, their halves are equal.",
+        "So the two inscribed angles are equal in measure."
+      ],
+      "source_page": 79,
+      "source": "seed",
+      "source_note": "The book's own activity (pp3u10-3:think-and-discuss-1:3, printed p.79); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
       "id": "q:pp3u10-3-1:bk-drill-1-1",
       "lo": "lo:pp3u10-3-1",
       "tier": "basic",
@@ -1525,6 +1561,25 @@
           "key": "20°, 117°"
         }
       },
+      "verified": true
+    },
+    {
+      "id": "q:pp3u10-3-2:bk-think-1",
+      "lo": "lo:pp3u10-3-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Are each two chords not intersecting inside a circle and subtended by two congruent arcs are parallel? Explain your answer.",
+      "answer": "No",
+      "solution": [
+        "Equal arcs give equal chords, as in example-3: AD = BE because the arcs are equal.",
+        "Chords that do not cross inside the circle either do not meet at all (parallel) or meet outside the circle.",
+        "In example-3, the equal chords AD and BE meet at the point C outside the circle.",
+        "So these chords are not parallel, and equal arcs alone do not make the chords parallel.",
+        "Answer: No, not always."
+      ],
+      "source_page": 82,
+      "source": "seed",
+      "source_note": "The book's own open prompt (pp3u10-3:think-1, printed p.82); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
       "verified": true
     },
     {
@@ -1610,6 +1665,229 @@
         }
       },
       "hold_reason": "figure_missing"
+    },
+    {
+      "id": "q:pp3u10-3-3:bk-drill-6-1",
+      "lo": "lo:pp3u10-3-3",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Which of the following figures can have a circle passing through the points A, B, C and D? Mention the reason. Figure 1",
+      "answer": "No",
+      "solution": [
+        "AD ∥ BC, so m(∠ADB) = m(∠DBC) = 38°.",
+        "In △AED: m(∠DAE) = 180° − 76° − 38° = 66°.",
+        "On base AD... ∠ADB = 38° but ∠ACB = ∠DAC = 66°, not equal.",
+        "Equal angles on one base and one side are not found, so no circle passes through A, B, C, D."
+      ],
+      "source_page": 84,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u10-3:drill-6:1, printed p.84); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u10-3-3:bk-drill-6-2",
+      "lo": "lo:pp3u10-3-3",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Which of the following figures can have a circle passing through the points A, B, C and D? Mention the reason. Figure 2",
+      "answer": "Yes",
+      "solution": [
+        "In △ADE: m(∠AED) = 180° − 85° = 95° and m(∠ADE) = 60°, so m(∠DAC) = 25°.",
+        "DA = DC, so m(∠DCA) = m(∠DAC) = 25°.",
+        "m(∠ABD) = 25°.",
+        "So m(∠ACD) = m(∠ABD) = 25°, both drawn on base AD and on one side of it.",
+        "So A, B, C, D lie on one circle."
+      ],
+      "source_page": 84,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u10-3:drill-6:2, printed p.84); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u10-3-3:bk-drill-6-3",
+      "lo": "lo:pp3u10-3-3",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Which of the following figures can have a circle passing through the points A, B, C and D? Mention the reason. Figure 3",
+      "answer": "Yes",
+      "solution": [
+        "EA = ED, so m(∠EDA) = m(∠EAD).",
+        "EB = EC, so m(∠EBC) = m(∠ECB).",
+        "AD ∥ BC, so m(∠DAC) = m(∠ACB) and m(∠ADB) = m(∠DBC).",
+        "So m(∠DAC) = m(∠ACB) = m(∠EBC) = m(∠DBC).",
+        "So m(∠DAC) = m(∠DBC), both drawn on base DC and on one side of it.",
+        "So A, B, C, D lie on one circle."
+      ],
+      "source_page": 84,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u10-3:drill-6:3, printed p.84); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u10-3-3:bk-drill-6-4",
+      "lo": "lo:pp3u10-3-3",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Which of the following figures can have a circle passing through the points A, B, C and D? Mention the reason. Figure 4",
+      "answer": "Yes",
+      "solution": [
+        "In the rectangle, AD = BC, AB is common and m(∠DAB) = m(∠CBA) = 90°.",
+        "So △DAB and △CBA are congruent, so m(∠ADB) = m(∠ACB).",
+        "Both are drawn on base AB and on one side of it.",
+        "So A, B, C, D lie on one circle."
+      ],
+      "source_page": 84,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u10-3:drill-6:4, printed p.84); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u10-3-3:bk-drill-6-5",
+      "lo": "lo:pp3u10-3-3",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Which of the following figures can have a circle passing through the points A, B, C and D? Mention the reason. Figure 5",
+      "answer": "Yes",
+      "solution": [
+        "In the square, AD = BC, AB is common and m(∠DAB) = m(∠CBA) = 90°.",
+        "So △DAB and △CBA are congruent, so m(∠ADB) = m(∠ACB) = 45°.",
+        "Both are drawn on base AB and on one side of it.",
+        "So A, B, C, D lie on one circle."
+      ],
+      "source_page": 84,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u10-3:drill-6:5, printed p.84); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u10-3-3:bk-drill-6-6",
+      "lo": "lo:pp3u10-3-3",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Which of the following figures can have a circle passing through the points A, B, C and D? Mention the reason. Figure 6",
+      "answer": "No",
+      "solution": [
+        "In a parallelogram AD ∥ BC but AD = BC with no right angles, so ∠ADB and ∠ACB are not equal in general.",
+        "There are no two equal angles drawn on one base and on one side of it.",
+        "So a circle does not pass through A, B, C, D."
+      ],
+      "source_page": 84,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u10-3:drill-6:6, printed p.84); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u10-4-1:bk-think-and-discuss-1",
+      "lo": "lo:pp3u10-4-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "In the opposite figure: ABCD is a quadrilateral, its diagonals intersect at E, m(∠ACB) = 58°, m(∠CAD) = 35°, m(∠CED) = 93°. Can a circle be drawn passing through the vertices of the quadrilateral ABCD? Explain your answer?",
+      "answer": "Yes",
+      "solution": [
+        "Angle CED is an exterior angle of triangle AED, so m(∠CED) = m(∠CAD) + m(∠ADE).",
+        "93° = 35° + m(∠ADB), so m(∠ADB) = 58°.",
+        "Also m(∠ACB) = 58°.",
+        "So m(∠ADB) = m(∠ACB) = 58°.",
+        "They are two drawn angles on the base AB, and C and D are on the same side of AB (one direction).",
+        "Therefore ABCD is a cyclic quadrilateral, so a circle can pass through A, B, C and D."
+      ],
+      "source_page": 85,
+      "source": "seed",
+      "source_note": "The book's own activity (pp3u10-4:think-and-discuss-1, printed p.85); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u10-4-1:bk-drill-1-1",
+      "lo": "lo:pp3u10-4-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Which of the following figures is a cyclic quadrilateral? Explain your answer. Figure 1",
+      "answer": "Yes",
+      "solution": [
+        "The diagonals are perpendicular at E, so in triangle ADE: m(∠DAC) = 90° − 40° = 50°.",
+        "m(∠DBC) = 50° (given in the figure).",
+        "So m(∠DAC) = m(∠DBC) = 50°.",
+        "They are two drawn angles on the base DC and in one direction of it.",
+        "Therefore Figure 1 is a cyclic quadrilateral."
+      ],
+      "source_page": 86,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u10-4:drill-1:1, printed p.86); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u10-4-1:bk-drill-1-2",
+      "lo": "lo:pp3u10-4-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Which of the following figures is a cyclic quadrilateral? Explain your answer. Figure 2",
+      "answer": "No",
+      "solution": [
+        "The figure gives m(∠CAB) = 90°, m(∠ACB) = 40° and m(∠ABC) = 50°.",
+        "No two angles are shown to be equal on the same base and in one direction of it.",
+        "So Figure 2 cannot be shown to be cyclic.",
+        "Figure 2 is not a cyclic quadrilateral."
+      ],
+      "source_page": 86,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u10-4:drill-1:2, printed p.86); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u10-4-1:bk-drill-1-3",
+      "lo": "lo:pp3u10-4-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Which of the following figures is a cyclic quadrilateral? Explain your answer. Figure 3",
+      "answer": "No",
+      "solution": [
+        "DA ∥ CB, so m(∠DBC) = m(∠ADB) = 41° (alternate angles).",
+        "In triangle ADE: m(∠DAC) = 180° − 41° − 99° = 40°.",
+        "On the base DC, m(∠DAC) = 40° and m(∠DBC) = 41° are not equal.",
+        "So Figure 3 is not a cyclic quadrilateral."
+      ],
+      "source_page": 86,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u10-4:drill-1:3, printed p.86); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u10-4-1:bk-drill-1-4",
+      "lo": "lo:pp3u10-4-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Which of the following figures is a cyclic quadrilateral? Explain your answer. Figure 4",
+      "answer": "No",
+      "solution": [
+        "Figure 4 is a parallelogram whose angles are not right angles.",
+        "In it, m(∠DAC) = m(∠ACB) (alternate angles).",
+        "For it to be cyclic we would need m(∠DAC) = m(∠DBC) on the base DC.",
+        "That would make the diagonals equal, which holds only for a rectangle.",
+        "Figure 4 is not a rectangle, so it is not cyclic."
+      ],
+      "source_page": 86,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u10-4:drill-1:4, printed p.86); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u10-4-1:bk-drill-1-5",
+      "lo": "lo:pp3u10-4-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Which of the following figures is a cyclic quadrilateral? Explain your answer. Figure 5",
+      "answer": "Yes",
+      "solution": [
+        "DA ∥ CB and DC = AB, so Figure 5 is an isosceles trapezium and m(∠DCB) = m(∠ABC).",
+        "In triangles DCB and ABC: DC = AB, CB is common and m(∠DCB) = m(∠ABC).",
+        "So the triangles are congruent, and m(∠CDB) = m(∠CAB).",
+        "They are two drawn angles on the base CB and in one direction of it.",
+        "Therefore Figure 5 is a cyclic quadrilateral."
+      ],
+      "source_page": 86,
+      "source": "seed",
+      "source_note": "The book's own exercise (pp3u10-4:drill-1:5, printed p.86); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
     },
     {
       "id": "q:pp3u10-5-1:bk-think-and-discuss-1-1",
@@ -1999,6 +2277,25 @@
       "verified": true
     },
     {
+      "id": "q:pp3u10-6-2:bk-think-4",
+      "lo": "lo:pp3u10-6-2",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Is the center of the inscribed circle for any triangle the intersection point of the bisectors of its interior angles? Explain your answer.",
+      "answer": "Yes",
+      "solution": [
+        "The inscribed circle touches all three sides, so each side is a tangent to the circle.",
+        "At each vertex, the two sides are two tangents drawn from that outside point.",
+        "The line through the centre M and the vertex bisects the angle between the two tangents.",
+        "So M lies on the bisector of each interior angle of the triangle.",
+        "Hence M is the intersection point of the bisectors of the interior angles."
+      ],
+      "source_page": 97,
+      "source": "seed",
+      "source_note": "The book's own open prompt (pp3u10-6:think-4, printed p.97); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
       "id": "q:pp3u10-6-3:bk-drill-7-1",
       "lo": "lo:pp3u10-6-3",
       "tier": "basic",
@@ -2074,6 +2371,42 @@
       "source_page": 99,
       "source": "seed",
       "source_note": "The book's own exercise (pp3u10-6:drill-8, printed p.99); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u10-7-1:bk-think-and-discuss-1",
+      "lo": "lo:pp3u10-7-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Does the measure of the resulted inscribed angles increase such as $\\angle ABC_1$ and $\\angle ABC_2$, ......",
+      "answer": "Yes",
+      "solution": [
+        "An inscribed angle is half the measure of the arc between its sides.",
+        "As BC moves away from BA, the arc AC1, then AC2, and so on gets larger.",
+        "So the inscribed angles ∠ABC1, ∠ABC2, ... get larger.",
+        "Answer: yes, they increase."
+      ],
+      "source_page": 100,
+      "source": "seed",
+      "source_note": "The book's own activity (pp3u10-7:think-and-discuss-1, printed p.100); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
+      "verified": true
+    },
+    {
+      "id": "q:pp3u10-7-1:bk-think-and-discuss-2",
+      "lo": "lo:pp3u10-7-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Do the mesures of $m(\\widehat{AC_1})$ and $m(\\widehat{AC_2})$ increase, ......... ?",
+      "answer": "Yes",
+      "solution": [
+        "Each new position of BC cuts off a larger arc starting from A.",
+        "So the measures of arc AC1, then arc AC2, and so on, increase.",
+        "Their halves, the inscribed angles, increase too.",
+        "Answer: yes, they increase."
+      ],
+      "source_page": 100,
+      "source": "seed",
+      "source_note": "The book's own activity (pp3u10-7:think-and-discuss-2, printed p.100); answer generated, both readings agree, not yet reviewed. Compiled from the book record (compile_book_records.py).",
       "verified": true
     },
     {
@@ -11473,6 +11806,212 @@
       "source_page": 79
     },
     {
+      "id": "v:pp3u10-3:figure-1-3",
+      "lo": "lo:pp3u10-3-1",
+      "question": "q:pp3u10-3-1:bk-think-and-discuss-1-3",
+      "kind": "geo_scene",
+      "spec": {
+        "animate": "sequence",
+        "elements": [
+          {
+            "type": "circle",
+            "cx": 0,
+            "cy": 0,
+            "r": 5,
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 0,
+            "label": "",
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 2.94,
+            "y": -4.05,
+            "label": "A",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": -2.94,
+            "y": -4.05,
+            "label": "B",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": -4.76,
+            "y": 1.55,
+            "label": "C",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": 5,
+            "label": "D",
+            "step": 2
+          },
+          {
+            "type": "point",
+            "x": 4.76,
+            "y": 1.55,
+            "label": "E",
+            "step": 2
+          },
+          {
+            "type": "polygon",
+            "points": [
+              [
+                2.94,
+                -4.05
+              ],
+              [
+                -2.94,
+                -4.05
+              ],
+              [
+                -4.76,
+                1.55
+              ],
+              [
+                0,
+                5
+              ],
+              [
+                4.76,
+                1.55
+              ]
+            ],
+            "step": 3
+          },
+          {
+            "type": "chord",
+            "from": [
+              0,
+              5
+            ],
+            "to": [
+              2.94,
+              -4.05
+            ],
+            "step": 4
+          },
+          {
+            "type": "chord",
+            "from": [
+              0,
+              5
+            ],
+            "to": [
+              -2.94,
+              -4.05
+            ],
+            "step": 4
+          },
+          {
+            "type": "chord",
+            "from": [
+              4.76,
+              1.55
+            ],
+            "to": [
+              -2.94,
+              -4.05
+            ],
+            "step": 4
+          },
+          {
+            "type": "chord",
+            "from": [
+              4.76,
+              1.55
+            ],
+            "to": [
+              -4.76,
+              1.55
+            ],
+            "step": 4
+          },
+          {
+            "type": "chord",
+            "from": [
+              -4.76,
+              1.55
+            ],
+            "to": [
+              2.94,
+              -4.05
+            ],
+            "step": 4
+          },
+          {
+            "type": "arc",
+            "cx": 0,
+            "cy": 0,
+            "r": 5,
+            "startDeg": 18,
+            "endDeg": 90,
+            "ticks": 1,
+            "step": 5
+          },
+          {
+            "type": "arc",
+            "cx": 0,
+            "cy": 0,
+            "r": 5,
+            "startDeg": 90,
+            "endDeg": 162,
+            "ticks": 1,
+            "step": 5
+          },
+          {
+            "type": "arc",
+            "cx": 0,
+            "cy": 0,
+            "r": 5,
+            "startDeg": 162,
+            "endDeg": 234,
+            "ticks": 1,
+            "step": 5
+          },
+          {
+            "type": "arc",
+            "cx": 0,
+            "cy": 0,
+            "r": 5,
+            "startDeg": -54,
+            "endDeg": 18,
+            "ticks": 1,
+            "step": 5
+          },
+          {
+            "type": "arc",
+            "cx": 0,
+            "cy": 0,
+            "r": 5,
+            "startDeg": 234,
+            "endDeg": 306,
+            "label": "100°",
+            "step": 6
+          }
+        ],
+        "tasks": [
+          {
+            "name": "marks",
+            "mode": "marks",
+            "ask": "equal",
+            "prompt": "Which arcs does the figure mark as equal? Tap all of them."
+          }
+        ]
+      },
+      "caption": "A circle with pentagon ABCDE and its diagonals, and arc AB marked 100°.",
+      "source_page": 79
+    },
+    {
       "id": "v:pp3u10-3:figure-2",
       "lo": "lo:pp3u10-3-1",
       "question": null,
@@ -13644,7 +14183,7 @@
     {
       "id": "v:pp3u10-3:figure-18",
       "lo": "lo:pp3u10-3-3",
-      "question": null,
+      "question": "q:pp3u10-3-3:bk-drill-6-1",
       "kind": "geo_scene",
       "spec": {
         "animate": "sequence",
@@ -13794,7 +14333,7 @@
     {
       "id": "v:pp3u10-3:figure-19",
       "lo": "lo:pp3u10-3-3",
-      "question": null,
+      "question": "q:pp3u10-3-3:bk-drill-6-2",
       "kind": "geo_scene",
       "spec": {
         "animate": "sequence",
@@ -13955,7 +14494,7 @@
     {
       "id": "v:pp3u10-3:figure-20",
       "lo": "lo:pp3u10-3-3",
-      "question": null,
+      "question": "q:pp3u10-3-3:bk-drill-6-3",
       "kind": "geo_scene",
       "spec": {
         "animate": "sequence",
@@ -14109,7 +14648,7 @@
     {
       "id": "v:pp3u10-3:figure-21",
       "lo": "lo:pp3u10-3-3",
-      "question": null,
+      "question": "q:pp3u10-3-3:bk-drill-6-4",
       "kind": "geo_scene",
       "spec": {
         "animate": "sequence",
@@ -14216,7 +14755,7 @@
     {
       "id": "v:pp3u10-3:figure-22",
       "lo": "lo:pp3u10-3-3",
-      "question": null,
+      "question": "q:pp3u10-3-3:bk-drill-6-5",
       "kind": "geo_scene",
       "spec": {
         "animate": "sequence",
@@ -14357,7 +14896,7 @@
     {
       "id": "v:pp3u10-3:figure-23",
       "lo": "lo:pp3u10-3-3",
-      "question": null,
+      "question": "q:pp3u10-3-3:bk-drill-6-6",
       "kind": "geo_scene",
       "spec": {
         "animate": "sequence",
@@ -14480,7 +15019,7 @@
     {
       "id": "v:pp3u10-4:figure-1",
       "lo": "lo:pp3u10-4-1",
-      "question": null,
+      "question": "q:pp3u10-4-1:bk-think-and-discuss-1",
       "kind": "geo_scene",
       "spec": {
         "elements": [
@@ -14793,7 +15332,7 @@
     {
       "id": "v:pp3u10-4:figure-4",
       "lo": "lo:pp3u10-4-1",
-      "question": null,
+      "question": "q:pp3u10-4-1:bk-drill-1-1",
       "kind": "geo_scene",
       "spec": {
         "elements": [
@@ -14920,7 +15459,7 @@
     {
       "id": "v:pp3u10-4:figure-5",
       "lo": "lo:pp3u10-4-1",
-      "question": null,
+      "question": "q:pp3u10-4-1:bk-drill-1-2",
       "kind": "geo_scene",
       "spec": {
         "elements": [
@@ -15036,7 +15575,7 @@
     {
       "id": "v:pp3u10-4:figure-6",
       "lo": "lo:pp3u10-4-1",
-      "question": null,
+      "question": "q:pp3u10-4-1:bk-drill-1-3",
       "kind": "geo_scene",
       "spec": {
         "elements": [
@@ -15179,7 +15718,7 @@
     {
       "id": "v:pp3u10-4:figure-7",
       "lo": "lo:pp3u10-4-1",
-      "question": null,
+      "question": "q:pp3u10-4-1:bk-drill-1-4",
       "kind": "geo_scene",
       "spec": {
         "elements": [
@@ -15302,7 +15841,7 @@
     {
       "id": "v:pp3u10-4:figure-8",
       "lo": "lo:pp3u10-4-1",
-      "question": null,
+      "question": "q:pp3u10-4-1:bk-drill-1-5",
       "kind": "geo_scene",
       "spec": {
         "elements": [
@@ -21659,7 +22198,134 @@
     {
       "id": "v:pp3u10-7:figure-1",
       "lo": "lo:pp3u10-7-1",
-      "question": null,
+      "question": "q:pp3u10-7-1:bk-think-and-discuss-1",
+      "kind": "geo_scene",
+      "spec": {
+        "animate": "sequence",
+        "elements": [
+          {
+            "type": "circle",
+            "cx": 0,
+            "cy": 0,
+            "r": 5,
+            "step": 1
+          },
+          {
+            "type": "point",
+            "x": 0,
+            "y": -5,
+            "label": "B",
+            "step": 2
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -5
+            ],
+            "to": [
+              -2.4,
+              5.7
+            ],
+            "arrow": "end",
+            "step": 3
+          },
+          {
+            "type": "point",
+            "x": -2.4,
+            "y": 5.7,
+            "label": "A",
+            "step": 3
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -5
+            ],
+            "to": [
+              5.3,
+              3.7
+            ],
+            "arrow": "end",
+            "step": 4
+          },
+          {
+            "type": "point",
+            "x": 5.3,
+            "y": 3.7,
+            "label": "C",
+            "step": 4
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -5
+            ],
+            "to": [
+              6.5,
+              1.9
+            ],
+            "arrow": "end",
+            "step": 5
+          },
+          {
+            "type": "point",
+            "x": 6.5,
+            "y": 1.9,
+            "label": "D₁",
+            "step": 5
+          },
+          {
+            "type": "segment",
+            "from": [
+              0,
+              -5
+            ],
+            "to": [
+              7.7,
+              -1.1
+            ],
+            "arrow": "end",
+            "step": 6
+          },
+          {
+            "type": "point",
+            "x": 7.7,
+            "y": -1.1,
+            "label": "D₂",
+            "step": 6
+          },
+          {
+            "type": "tangent",
+            "from": [
+              0,
+              -5
+            ],
+            "to": [
+              8,
+              -5
+            ],
+            "arrow": "end",
+            "step": 7
+          },
+          {
+            "type": "point",
+            "x": 7,
+            "y": -5,
+            "label": "D",
+            "step": 7
+          }
+        ]
+      },
+      "caption": "Rays from B swing from the chord BA down toward the tangent BD, each making a new angle with BA.",
+      "source_page": 100
+    },
+    {
+      "id": "v:pp3u10-7:figure-1-2",
+      "lo": "lo:pp3u10-7-1",
+      "question": "q:pp3u10-7-1:bk-think-and-discuss-2",
       "kind": "geo_scene",
       "spec": {
         "animate": "sequence",

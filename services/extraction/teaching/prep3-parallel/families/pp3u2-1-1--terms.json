@@ -1,0 +1,39 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u2-1-1:terms",
+ "kind": "family",
+ "lo_id": "lo:pp3u2-1-1",
+ "parent_question_id": "q:pp3u2-1-1:bk-think-and-discuss-3",
+ "source_page": 25,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": "A bag holds red marbles and blue marbles.",
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    3,
+    15
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    3,
+    15
+   ],
+   "resample_while": "b == a"
+  }
+ ],
+ "constraints": [],
+ "stem": "A bag holds ${=a}$ red marbles and ${=b}$ blue marbles. The ratio of blue marbles to red marbles is written $x : y$ without simplifying. What is the consequent of this ratio?",
+ "answer": "a",
+ "solution": [
+  "The ratio of blue marbles to red marbles is blue to red, that is ${=b} : {=a}$.",
+  "In a ratio the first term is the antecedent and the second term is the consequent.",
+  "The antecedent is ${=b}$ and the consequent is ${=a}$.",
+  "So the consequent is ${=a}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Order of the ratio follows the wording; consequent is the second term."
+}

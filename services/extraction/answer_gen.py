@@ -510,6 +510,38 @@ def same_answer(a: str, b: str) -> bool:
     return False
 
 
+def gradable_key(answer: str):
+    """The part of an answer the app would mark — Yes/No, a number, a set, named values — as compile reads it
+    (compile_book_records.answer_type, exercises), or None for a drawing or an explanation with nothing to mark."""
+    import compile_book_records as CB  # noqa: PLC0415  (compile imports this module: imported when first needed)
+    t = CB.answer_type(answer) if answer and not str(answer).startswith("CANNOT ANSWER") else None
+    if t and t[1] and re.search(r"[A-Za-z]{3,}", re.sub(r"\\[A-Za-z]+", "", t[2])):
+        return None   # a sentence the marker would read as letters ("Both sides equal m + 1"): nothing gradable
+    return t[2] if t else None
+
+
+YES_NO_Q = re.compile(r"(?i)^(?:is|are|was|were|does|do|did|can|could|will|would|has|have|should|must|may)\b")
+
+
+def asks_yes_or_no(question) -> bool:
+    """A Yes/No answer answers this question: it asks a yes/no question ("Is figure 1 cyclic? Explain your answer.",
+    "If a/b = 3/5, is a = 3?", "Which of the following figures is cyclic?" asked of one figure) and asks nothing else
+    a Yes/No leaves unanswered ("… What feature is hidden?", "What do you deduce?", "Under what conditions?").
+    "Explain", "why" and "mention the reason" ask for the working, which is not marked."""
+    q = question if isinstance(question, str) else " ".join(str((question or {}).get(k) or "") for k in ("text", "stem"))
+    stem = "" if isinstance(question, str) else str((question or {}).get("stem") or "")
+    one_of_several = bool(re.match(r"(?i)\s*(?:figure|fig\.?|case|part)\s*\(?\d", stem))
+    yes_no = other = False
+    for sent in re.split(r"(?<=[?.:])\s+", re.sub(r"\$[^$]*\$", "X", q)):
+        core = sent.strip()
+        if YES_NO_Q.match(core) or re.match(r"(?i)if\b.*?\b(?:is|are|can|could|does|do|will|would)\s", core) \
+                or (one_of_several and re.match(r"(?i)which of the following", core)):
+            yes_no = True
+        elif core.endswith("?") and re.match(r"(?i)(?:what|which|where|when|how|find|calculate|write|under what)\b", core):
+            other = True
+    return yes_no and not other
+
+
 def check(author: dict, resolve: dict | None) -> dict:
     flags = WC.precheck_solution({"id": author["ref"], "steps": author.get("solution") or [], "kind": "generated"})
     c = {"resolve_answer": (resolve or {}).get("answer"), "resolve_kind": (resolve or {}).get("kind"),
@@ -517,7 +549,18 @@ def check(author: dict, resolve: dict | None) -> dict:
     if str(author.get("answer", "")).startswith("CANNOT ANSWER") or str(c["resolve_answer"] or "").startswith("CANNOT ANSWER"):
         c["agree"], status = None, "cannot_answer"
     elif author["kind"] != "value":
-        c["agree"], status = None, "needs_person"   # a drawing or an explanation: no machine check
+        # a drawing or an explanation has no machine check of its words — but when both readings come down to the same
+        # thing the app would mark ("Is figure 1 cyclic? Explain." → Yes, Yes), that is the check a value gets, and
+        # the question is asked on that key (Tamer, 2026-10-29: 32 Prep 3 answers both solvers agreed on waited for a
+        # person). Anything else, or a numeric flag on the working, still needs a person.
+        ka = gradable_key(author.get("answer"))
+        kb = gradable_key((resolve or {}).get("answer"))
+        if ka in ("Yes", "No") and not asks_yes_or_no(author.get("question")):
+            ka = None   # "…? What feature is hidden?" answered "No, …": the question asked is not the yes/no one
+        if ka and kb and same_answer(ka, kb) and not flags:
+            c["agree"], c["agreed_on"], status = True, f"the gradable answer ({ka}); the explanation is not checked", "agreed"
+        else:
+            c["agree"], status = None, "needs_person"
     elif resolve is None:
         c["agree"], status = False, "disagreed"
     else:
@@ -593,7 +636,8 @@ def answer_lesson(doc: dict, us: list[dict], model: str, budget: Budget, book: s
                                 "grounded_in": [], "checks": {"resolve_answer": (by_r.get(u["ref"]) or {}).get("answer")}})
                 continue
             results.append({**_entry(u), "kind": a["kind"], "answer": a["answer"], "solution": a.get("solution") or [],
-                            "grounded_in": a.get("grounded_in") or [], **check(a, by_r.get(u["ref"]))})
+                            "grounded_in": a.get("grounded_in") or [],
+                            **check({**a, "question": _entry(u)["question"]}, by_r.get(u["ref"]))})
     stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
     for r in results:
         r["made"] = {"at": stamp, "model": model, "prompts": PROMPT_VERSION}
@@ -714,12 +758,14 @@ def out_path(book: str, slug: str) -> Path:
     return HERE / "teaching" / book / "answers" / f"{slug}.json"
 
 
-COMPARE_VERSION = "same-answer-v2"   # v2: asides in words dropped, notation unified, values and angles compared
+COMPARE_VERSION = "same-answer-v3"   # v2: asides in words dropped, notation unified, values and angles compared;
+                                     # v3: an explanation or drawing is agreed on its gradable answer (check)
 
 
 def rejudge(book: str, dry: bool = False) -> dict:
     """The stored readings judged again with the current comparison, no model call: only answers marked `disagreed`
-    (a value both readings gave), so an agreement already made is never undone. Each one re-judged says so."""
+    (a value both readings gave) or `needs_person` (an explanation or drawing: v3 agrees one on its gradable answer),
+    so an agreement already made is never undone. Each one re-judged says so. ingest.py refresh runs it."""
     from datetime import datetime, timezone  # noqa: PLC0415
     out = {"looked_at": 0, "now_agreed": [], "now_flagged": [], "still_disagreed": 0}
     for f in sorted((HERE / "teaching" / book / "answers").glob("*.json")):
@@ -727,15 +773,16 @@ def rejudge(book: str, dry: bool = False) -> dict:
         changed = False
         for a in doc.get("answers") or []:
             r = (a.get("checks") or {}).get("resolve_answer")
-            if a.get("status") != "disagreed" or a.get("kind") != "value" or not r:
+            was = a.get("status")
+            if not r or not (was == "disagreed" and a.get("kind") == "value" or was == "needs_person"):
                 continue
             out["looked_at"] += 1
             res = check(a, {"answer": r, "kind": (a.get("checks") or {}).get("resolve_kind")})
-            if res["status"] == "disagreed":
+            if res["status"] in ("disagreed", "needs_person"):
                 out["still_disagreed"] += 1
                 continue
             out["now_agreed" if res["status"] == "agreed" else "now_flagged"].append(a["ref"])
-            a["checks"] = {**res["checks"], "rejudged": {"from": "disagreed", "by": COMPARE_VERSION,
+            a["checks"] = {**res["checks"], "rejudged": {"from": was, "by": COMPARE_VERSION,
                                                          "at": datetime.now(timezone.utc).isoformat(timespec="seconds")}}
             a["status"] = res["status"]
             changed = True

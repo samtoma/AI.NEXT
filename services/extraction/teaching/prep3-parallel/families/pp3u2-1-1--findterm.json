@@ -1,0 +1,56 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u2-1-1:findterm",
+ "kind": "family",
+ "lo_id": "lo:pp3u2-1-1",
+ "parent_question_id": "q:pp3u2-1-1:bk-think-and-discuss-3",
+ "source_page": 25,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    11
+   ],
+   "resample_while": "q == p"
+  },
+  {
+   "require": "gcd(p, q) == 1",
+   "why": "ratio in lowest terms"
+  },
+  {
+   "name": "k",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "s",
+   "let": "(p + q) * k"
+  }
+ ],
+ "constraints": [
+  "gcd(p, q) == 1"
+ ],
+ "stem": "The ratio $\\frac{a}{b}=\\frac{{=p}}{{=q}}$, where $a$ and $b$ are whole numbers that need not equal ${=p}$ and ${=q}$. If $a + b = {=s}$, find the antecedent $a$.",
+ "answer": "p * k",
+ "solution": [
+  "$\\frac{a}{b}=\\frac{{=p}}{{=q}}$ means $a$ to $b$ is the ratio ${=p}$ to ${=q}$, so $a={=p}k$ and $b={=q}k$ for some number $k$.",
+  "Then $a+b=({=p}+{=q})k={=p+q}k={=s}$.",
+  "So $k={=s}\\div{=p+q}={=k}$.",
+  "Therefore $a={=p}\\times{=k}={=p*k}$ (and $b={=q*k}$)."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Extends the think-and-discuss idea that a,b are multiples of the ratio terms."
+}

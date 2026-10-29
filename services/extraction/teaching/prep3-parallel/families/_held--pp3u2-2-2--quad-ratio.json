@@ -1,0 +1,110 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:pp3u2-2-2:quad-ratio",
+ "kind": "family",
+ "lo_id": "lo:pp3u2-2-2",
+ "parent_question_id": "expl:pp3u2-2-2:bk-example-1",
+ "parent_kind": "teaching",
+ "source_page": 28,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "q",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    1,
+    6
+   ],
+   "resample_while": "p == q or gcd(p, q) != 1"
+  },
+  {
+   "name": "A",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "B",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "C",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "D",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "nn",
+   "let": "A * p * p + B * p * q"
+  },
+  {
+   "name": "dd",
+   "let": "C * q * q + D * p * q"
+  },
+  {
+   "name": "g",
+   "let": "gcd(nn, dd)"
+  },
+  {
+   "name": "rn",
+   "let": "nn // g"
+  },
+  {
+   "name": "rd",
+   "let": "dd // g"
+  },
+  {
+   "require": "rd != 1",
+   "why": "answer must be a proper fraction string"
+  }
+ ],
+ "constraints": [
+  "gcd(p, q) == 1"
+ ],
+ "stem": "If $\\frac{x}{y}=\\frac{{=p}}{{=q}}$, find the value of $\\frac{{=A}x^2+{=B}xy}{{=C}y^2+{=D}xy}$ as a fraction in its simplest form.",
+ "answer": "{=rn}/{=rd}",
+ "solution": [
+  "Since $\\frac{x}{y}=\\frac{{=p}}{{=q}}$, let $x={=p}m$ and $y={=q}m$ with $m\\neq 0$.",
+  "Numerator: ${=A}x^2+{=B}xy={=A}\\times {=p*p}m^2+{=B}\\times {=p*q}m^2={=nn}m^2$.",
+  "Denominator: ${=C}y^2+{=D}xy={=C}\\times {=q*q}m^2+{=D}\\times {=p*q}m^2={=dd}m^2$.",
+  "$\\frac{{=nn}m^2}{{=dd}m^2}=\\frac{{=nn}}{{=dd}}=\\frac{{=rn}}{{=rd}}$ in simplest form.",
+  "The value of the ratio is $\\frac{{=rn}}{{=rd}}$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=rn}/{=rd}",
+  "form": "simplest",
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Extends the book's substitution x=pm, y=qm to degree-2 homogeneous expressions. Reduced fraction is computed; rd != 1 required."
+}

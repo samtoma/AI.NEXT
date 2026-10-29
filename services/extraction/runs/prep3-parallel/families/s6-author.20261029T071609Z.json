@@ -1,0 +1,134 @@
+{
+ "mode": "author",
+ "book": "prep3-parallel",
+ "prompts_version": "s6-v7",
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "a091756c722944023d99de122bbf0fc4a1283029f7517579ff16c2edb0592960",
+  "args_sha256": "75b3fcc2b978e9ea126974f4cfb1f66161d53bd4c23a21859d27512d924fd762",
+  "generated_sha256": "f9b8a422303ec0766c71d5538c6d40607ec018b0908b7cedbc1dc06c58b4e459",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:pp3u9-3-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-3-3:equal-radii",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-3-3",
+     "parent_question_id": "q:pp3u9-3-3:bk-exercise-1",
+     "source_page": 56,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "r",
+       "randint": [
+        3,
+        15
+       ]
+      }
+     ],
+     "constraints": [],
+     "stem": "A, B and C are three points that are not on one straight line. The axis of $\\overline{AB}$ and the axis of $\\overline{BC}$ intersect at the point M, and $MA = {=r}$ cm. Find the length of $\\overline{MC}$ in cm.",
+     "answer": "r",
+     "solution": [
+      "Since A, B and C are not collinear, the axes of $\\overline{AB}$ and $\\overline{BC}$ intersect at one point M.",
+      "M is on the axis of $\\overline{AB}$, so $MA = MB = {=r}$ cm.",
+      "M is on the axis of $\\overline{BC}$, so $MB = MC$.",
+      "So $MC = MB = MA = {=r}$ cm. M is the center of the circle through A, B and C."
+     ],
+     "notes": "Basic: the intersection of two axes is equidistant from the three points, so it is the circle's center.",
+     "proposed_misconceptions": []
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:pp3u9-3-3:radius-coord",
+     "kind": "family",
+     "lo_id": "lo:pp3u9-3-3",
+     "parent_question_id": "q:pp3u9-3-3:bk-exercise-1",
+     "source_page": 56,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "t",
+       "choice": [
+        [
+         3,
+         4
+        ],
+        [
+         4,
+         3
+        ],
+        [
+         6,
+         8
+        ],
+        [
+         8,
+         6
+        ],
+        [
+         5,
+         12
+        ],
+        [
+         12,
+         5
+        ],
+        [
+         9,
+         12
+        ],
+        [
+         12,
+         9
+        ],
+        [
+         8,
+         15
+        ],
+        [
+         15,
+         8
+        ]
+       ]
+      },
+      {
+       "name": "p",
+       "let": "t[0]"
+      },
+      {
+       "name": "q",
+       "let": "t[1]"
+      },
+      {
+       "name": "r",
+       "let": "sqrt(p*p + q*q)"
+      }
+     ],
+     "constraints": [],
+     "stem": "On a coordinate plane, $A = (0, 0)$, $B = ({=2*p}, 0)$ and $C = (0, {=2*q})$. The circle through A, B and C is drawn as the intersection of the axes of $\\overline{AB}$ and $\\overline{AC}$ gives its center M. Find the radius of this circle in units.",
+     "answer": "r",
+     "solution": [
+      "The axis of $\\overline{AB}$ is the vertical line $x = {=p}$, through the midpoint of $\\overline{AB}$.",
+      "The axis of $\\overline{AC}$ is the horizontal line $y = {=q}$, through the midpoint of $\\overline{AC}$.",
+      "They intersect at the center $M = ({=p}, {=q})$.",
+      "The radius is $MA = \\sqrt{{=p}^2 + {=q}^2} = \\sqrt{{=p*p + q*q}} = {=r}$ units."
+     ],
+     "notes": "Right angle at A, so M is the midpoint of BC; sqrt(p^2+q^2) is an integer for all listed pairs (Pythagorean).",
+     "proposed_misconceptions": []
+    }
+   ],
+   "infeasible": [],
+   "notes": ""
+  }
+ ],
+ "revised": []
+}
