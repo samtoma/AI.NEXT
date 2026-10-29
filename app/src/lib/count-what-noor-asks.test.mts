@@ -87,8 +87,15 @@ test("6: an unreadable typed answer is told to Noor, and the card stays open", (
   const branch = src.slice(src.indexOf("if (e instanceof AttemptRetryError) {"), src.indexOf('console.error("chat-typed answer submission failed:"'));
   assert.match(branch, /\{ role: "note", kind: "event", text: UNREAD_ANSWER_NOTE \}/, "the tutor hears it");
   assert.match(branch, /localOnly: true, text: e\.retry\.message/, "the student still sees the marker's words");
-  const note = src.slice(src.indexOf("export const UNREAD_ANSWER_NOTE"), src.indexOf(";", src.indexOf("export const UNREAD_ANSWER_NOTE")));
+  const note = src.match(/export const UNREAD_ANSWER_NOTE =\s*"((?:[^"\\]|\\.)*)";/)?.[1] ?? "";
+  assert.ok(note.length > 0, "the note is a single string literal");
   // an event naming the open card's id is what closes it (openQuestionId)
   assert.ok(!/q:/.test(note), "the note must not name a question id");
   assert.ok(note.includes("{{answer_submitted:…}}"));
+  assert.ok(note.includes("first answer to this card"), "the retyped answer counts as the first");
+  // 2026-10-29 live test: Noor praised a retyped answer as "written properly
+  // with braces this time" — the unreadable attempt may be our parser's fault
+  assert.match(note, /react only to the maths/, "Noor reacts to the maths alone");
+  assert.match(note, /never mention it, the retry, the format/, "Noor must not comment on the retry or the format");
+  assert.match(note, /never say \\"this time\\"/, "Noor must not say 'this time'");
 });

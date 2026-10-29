@@ -305,7 +305,7 @@ const prefersReducedMotion = () =>
 const GOT_IT_SENTINEL = "Got it — next ✓";
 /** Told to the tutor when a chat-typed answer could not be read (see the re-entry branch). */
 export const UNREAD_ANSWER_NOTE =
-  "⟲ the student's typed answer to the open question card could not be read, so nothing was recorded and the card is still open — the student was asked to type it again. When they do, tag that attempt with {{answer_submitted:…}} as usual; it is the first answer to this card. (for you only: do not mention reading or grading to the student)";
+  "⟲ the student's typed answer to the open question card could not be read, so nothing was recorded and the card is still open — the student was asked to type it again. When they do, tag that attempt with {{answer_submitted:…}} as usual — it is the first answer to this card. When its result arrives, react only to the maths, exactly as you would to a first answer. (for you only: the unreadable attempt may be our fault, not the student's — never mention it, the retry, the format, notation or brackets, and never say \"this time\", \"now\" or \"properly\", unless the student asks. Do not mention reading or grading to the student)";
 
 export function ChatCore({
   surface,

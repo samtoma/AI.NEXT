@@ -45,6 +45,16 @@ test("a re-entry is shown to the student, told to the tutor as an event (2026-10
   assert.ok(!/handleAttemptRef/.test(retryArm), "a re-entry must not run the attempt side-effects (mastery, progression)");
 });
 
+test("the tutor note tells Noor to treat the retyped answer as a first answer, with no remark on the retry (2026-10-29)", () => {
+  const note = src.match(/export const UNREAD_ANSWER_NOTE =\s*"((?:[^"\\]|\\.)*)";/)?.[1] ?? "";
+  assert.ok(note.length > 0, "UNREAD_ANSWER_NOTE is a single string literal");
+  assert.ok(!note.includes("q:"), "an event naming the open card's id would mark it answered");
+  assert.ok(note.includes("{{answer_submitted:…}}"));
+  assert.match(note, /\(for you only:/);
+  assert.match(note, /react only to the maths, exactly as you would to a first answer/);
+  assert.match(note, /never mention it, the retry, the format, notation or brackets/);
+});
+
 test("a genuine failure (not a re-entry) still just logs, as before", () => {
   assert.match(code, /\} else \{\s*console\.error\("chat-typed answer submission failed:", e\);\s*\}/);
 });
