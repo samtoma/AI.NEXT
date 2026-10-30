@@ -23,6 +23,7 @@ import { gradeLabel } from "@/lib/profile";
 import { addressForms, type Gender } from "@/lib/address";
 import type { LessonLo, LessonMode } from "@/lib/types";
 import { MASTERY_PHRASE, masteryStage } from "@/lib/mastery";
+import { SAFETY_REPORT_RULE } from "@/lib/safety-prompt";
 
 /** One transcript line as the surface sends it. */
 export interface UnderstandingMsg {
@@ -104,6 +105,7 @@ GRADING RULES:
 - strengths and gaps: 1–4 short concrete phrases each, referencing the actual content of THIS lesson (its objectives, figures, and exercises as they appeared in the transcript). gaps may be empty ([]) if there truly are none.
 - next_step: ONE actionable, encouraging sentence for tomorrow. Never punitive.
 - The student reads strengths, gaps and next_step: name an objective by its label in quotes above, never by its id (nothing like "lo:…", "q:…" or "v:…"), and talk about what ${a.they} did — never about the transcript, the session record or its length.
+${SAFETY_REPORT_RULE}
 
 Return STRICT JSON exactly in this shape:
 {"score": <integer 0-100>, "verdict": "got_it" | "nearly" | "needs_work", "strengths": ["...", ...], "gaps": ["...", ...], "next_step": "..."}

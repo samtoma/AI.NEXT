@@ -72,6 +72,13 @@ const STUBS = {
       // builds the real maths learn prompt to send to the live model (#77);
       // the student id is a parameter, so no principal is ever resolved
       "eval-answer-rules.mts",
+      // the safety suite (docs/specs/safety-standard.md): the same real
+      // lesson, understanding and homework builders, sent to the live model;
+      // the student id is a parameter, so no principal is ever resolved
+      "eval-safety.mts",
+      // pins the safety block on every tutor prompt by rendering the real
+      // builders; no student, so no principal
+      "safety-prompt.test.mts",
       // renders the same prompt builders for each address register, and
       // reaches `lib/lesson.ts` -> `auth/principal.ts` to do it (P6)
       "prompt-address.test.mts",

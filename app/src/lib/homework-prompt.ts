@@ -11,6 +11,7 @@
  */
 import type { HomeworkMode } from "./homework-rules";
 import { EXPECTS_MATH_RULE } from "./math-keys";
+import { SAFETY_RULES } from "./safety-prompt";
 
 export type SplitObjective = { id: string; label: string; unit: string };
 
@@ -97,5 +98,7 @@ CURRICULUM MATCH: ${
     i.objective
       ? `[[lo:${i.objective.id}]] ${i.objective.label} — unit: ${i.objective.unit}${i.objective.description ? ` — ${i.objective.description}` : ""}. ${i.student}'s standing on it: ${i.objective.mastery}.`
       : "none matched — teach with standard secondary-school methods and cite nothing."
-  }`;
+  }
+
+${SAFETY_RULES}`;
 }

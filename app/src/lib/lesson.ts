@@ -8,6 +8,7 @@ import { sequential } from "./db";
 import { deriveMasteryStage, learnOpeningFrame } from "./checkin";
 import { masteryLabel } from "./mastery";
 import { gradeLabel } from "./profile";
+import { SAFETY_RULES } from "./safety-prompt";
 import type { AskContext } from "./ask";
 import { getLessonContent, type LessonContent } from "./lesson-content";
 import { bookStatementsBlock, contextCount, getBookStatements, statementCount } from "./book-statements";
@@ -1092,7 +1093,7 @@ interface ProtocolExamples {
 function sharedProtocol(data: LessonData, rhythm: string): string {
   const kit = lessonPromptKit(data.subject);
   const fallback = tutorFacts(data.courseId).exampleFallbacks;
-  return kit.protocol(
+  const protocol = kit.protocol(
     rhythm,
     {
       lo: data.los[0]?.id.replace(/^lo:/, "") ?? fallback?.lo ?? PLACEHOLDER_ID,
@@ -1102,6 +1103,8 @@ function sharedProtocol(data: LessonData, rhythm: string): string {
     },
     data
   );
+  // last, so it overrides the rhythm and arc above it (safety standard SR1)
+  return `${protocol}\n\n${SAFETY_RULES}`;
 }
 
 /** SOCIAL STUDIES — Arabic citations + the map / timeline / chain / term-match

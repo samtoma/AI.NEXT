@@ -85,6 +85,7 @@ GRADING RULES:
 - strengths and gaps: 1–4 short concrete phrases each, referencing the actual content of THIS lesson (its objectives, figures, and exercises as they appeared in the transcript). gaps may be empty ([]) if there truly are none.
 - next_step: ONE actionable, encouraging sentence for tomorrow. Never punitive.
 - The student reads strengths, gaps and next_step: name an objective by its label in quotes above, never by its id (nothing like "lo:…", "q:…" or "v:…"), and talk about what he did — never about the transcript, the session record or its length.
+- If the student wrote anything personal, upsetting or unrelated to the lesson (worries, feelings, danger, home, insults), leave it out of strengths, gaps and next_step completely: do not mention, quote or hint at it, and do not count it in the score. next_step is about the maths only.
 
 Return STRICT JSON exactly in this shape:
 {"score": <integer 0-100>, "verdict": "got_it" | "nearly" | "needs_work", "strengths": ["...", ...], "gaps": ["...", ...], "next_step": "..."}

@@ -98,8 +98,8 @@ const SPAWNERS = FILES.filter(
 
 /* ------------------------------------------------------------- the scan */
 
-test("the files that spawn the CLI are the six we think they are", () => {
-  // Enumerated so that a SEVENTH one arriving is a visible event rather than a
+test("the files that spawn the CLI are the seven we think they are", () => {
+  // Enumerated so that an EIGHTH one arriving is a visible event rather than a
   // silent one. A new spawner is not a failure — it is a decision, and the
   // decision is "does this need the health probe to speak for it?".
   const claudeSpawners = SPAWNERS.filter((f) => code(f.source).includes("CLAUDE_BIN")).map(
@@ -110,6 +110,9 @@ test("the files that spawn the CLI are the six we think they are", () => {
     // student and needs no probe: it goes through CLAUDE_BIN / claudeEnv /
     // claudeCwd, so it authenticates exactly as the tutor does.
     "scripts/eval-answer-rules.mts",
+    // Hand-run safety suite (docs/specs/safety-standard.md). Same reasoning:
+    // serves no student, and authenticates exactly as the tutor does.
+    "scripts/eval-safety.mts",
     "scripts/probe-runtime.mts",
     "src/app/api/ask/route.ts",
     "src/app/api/understanding/route.ts",

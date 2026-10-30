@@ -54,5 +54,5 @@ test("no code that starts the claude CLI passes the system prompt inline", () =>
   assert.deepEqual(inline.map((p) => p.slice(APP.length + 1)), [], "pass --system-prompt-file instead");
   const viaFile = files.filter((p) => /["']--system-prompt-file["']/.test(readFileSync(p, "utf8")));
   assert.deepEqual(viaFile.map((p) => p.slice(APP.length + 1)).sort(),
-    ["scripts/eval-answer-rules.mts", "src/app/api/ask/route.ts", "src/app/api/understanding/route.ts"]);
+    ["scripts/eval-answer-rules.mts", "scripts/eval-safety.mts", "src/app/api/ask/route.ts", "src/app/api/understanding/route.ts"]);
 });

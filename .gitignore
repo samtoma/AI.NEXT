@@ -37,3 +37,7 @@ services/extraction/work/
 
 # the review tool: when THIS machine last refreshed and loaded its own local database (groundtruth/review/server.py pending)
 services/extraction/reviews/*/last-refresh.json
+
+# Safety-suite evidence (app/scripts/safety-eval): transcripts of test cases,
+# kept per run as release evidence, not code.
+/eval-runs/

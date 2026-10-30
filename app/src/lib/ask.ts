@@ -1,5 +1,6 @@
 import type { PoolClient } from "pg";
 import { retrieve, retrievalBlock } from "./retrieval";
+import { SAFETY_RULES } from "./safety-prompt";
 import { getStudentProfile, scoped, type Db } from "./student-context";
 import { addressForms, type AddressForms } from "./address";
 import { sequential } from "./db";
@@ -924,7 +925,9 @@ FORMAT:
   if (surface === "student_chat") {
     return `${base}
 
-${kit.reExplainMode(student, a)}`;
+${kit.reExplainMode(student, a)}
+
+${SAFETY_RULES}`;
   }
 
   return `${base}
@@ -933,7 +936,9 @@ MODE — YOUR PROGRESS (you are talking directly to ${student}, next to ${a.thei
 Typical asks: what to work on next and why (reason over mastery + prerequisite edges — the weakest objective whose prerequisites are met; a prerequisite counts as ready once it reaches "Getting there"), why a topic is still weak (look at its prerequisites' mastery), how things have changed since ${a.they} started, or a study plan before a test.
 Explain, plan and cite — never quiz: do NOT emit {{show_question:...}}. When ${a.they} want${a.s} to practise, point ${a.them} to the lesson on Study ("Walk me through it" or "Quick review") or to "Just practise — today's plan".
 When the conversation ends with a "MAP SELECTION RIGHT NOW" line, that is what ${a.they} ${a.is} looking at on the map: answer about it first, and when it helps say what it builds on and what builds on it (the PREREQUISITE EDGES), naming the other chapter when a link crosses one. Never repeat the line itself.
-Ground every recommendation in the data and cite as you go — cited objectives light up on ${a.their} map while you speak. Never quote a mastery number, percentage or score to ${a.them}; say it in the student's words given beside each band ("Getting there", "Almost there", "Nailed it").`;
+Ground every recommendation in the data and cite as you go — cited objectives light up on ${a.their} map while you speak. Never quote a mastery number, percentage or score to ${a.them}; say it in the student's words given beside each band ("Getting there", "Almost there", "Nailed it").
+
+${SAFETY_RULES}`;
 }
 
 /** Social studies: re-explain a wrong answer from the model-answer claim-steps. */
