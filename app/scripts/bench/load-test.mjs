@@ -13,13 +13,18 @@
  *   node app/scripts/bench/load-test.mjs \
  *     --base https://staging-noor.reletix.com \
  *     --accounts /path/to/accounts.json \
- *     --lesson u1-1 --turns 5 --concurrency 1,3,5,10 \
+ *     --lessons u1-1,u1-2,u1-3,u1-4,u2-1,u2-2,u2-3,u3-1,u3-2,u4-1 \
+ *     --turns 5 --concurrency 1,3,5,10 \
  *     --out /path/to/results.jsonl
  *
  * accounts.json: [{"email":"...","password":"..."}, ...] — one STUDENT
  * account per concurrent session (the server allows one open session per
  * student, so two concurrent runs on the same account would collide). The
  * file never leaves the machine and nothing from it is printed.
+ *
+ * --lessons is a comma list; student k takes lesson k (round-robin), so ten
+ * students hit ten DIFFERENT lessons. --lesson <one slug> puts everyone in
+ * the same lesson.
  *
  * On the box, in parallel, so the client numbers meet the server's:
  *   docker stats --no-stream ainext-staging-app-1 ; pgrep -c -f 'claude -p'
@@ -42,7 +47,8 @@ const args = Object.fromEntries(
 const BASE = (args.base ?? "").replace(/\/$/, "");
 const ACCOUNTS_FILE = args.accounts;
 const SURFACE = args.surface ?? "lesson_learn";
-const LESSON = args.lesson ?? "u1-1";
+const LESSONS = String(args.lessons ?? args.lesson ?? "u1-1").split(",").map((x) => x.trim()).filter(Boolean);
+const LESSON = LESSONS[0];
 const TURNS = Number(args.turns ?? 5);
 const LEVELS = String(args.concurrency ?? "1,3,5,10").split(",").map((n) => Number(n.trim())).filter(Boolean);
 const THINK_MS = Number(args.think ?? 2000);
@@ -51,7 +57,7 @@ const OUT = args.out ?? `load-test-${new Date().toISOString().slice(0, 19).repla
 const LOGIN_ONLY = args["login-only"] === "true";
 
 if (!BASE || !ACCOUNTS_FILE) {
-  console.error("usage: --base <url> --accounts <file.json> [--lesson u1-1] [--turns 5] [--concurrency 1,3,5,10] [--think 2000] [--out file.jsonl] [--login-only]");
+  console.error("usage: --base <url> --accounts <file.json> [--lessons a,b,c | --lesson u1-1] [--turns 5] [--concurrency 1,3,5,10] [--think 2000] [--out file.jsonl] [--login-only]");
   process.exit(2);
 }
 if (/noor\.reletix\.com$/.test(new URL(BASE).hostname) && !/staging/.test(BASE)) {
@@ -100,7 +106,7 @@ async function login(account) {
 }
 
 /** One /api/ask turn; resolves with timings and the reply text. */
-async function turn({ cookie, chatSession, transcript, turnIndex, inflight }) {
+async function turn({ cookie, chatSession, transcript, turnIndex, inflight, lesson }) {
   const t0 = now();
   const row = {
     t_request: new Date().toISOString(), turnIndex, status: null,
@@ -115,7 +121,7 @@ async function turn({ cookie, chatSession, transcript, turnIndex, inflight }) {
     const res = await fetch(`${BASE}/api/ask`, {
       method: "POST",
       headers: { "content-type": "application/json", cookie },
-      body: JSON.stringify({ surface: SURFACE, lesson: LESSON, chatSession, messages: transcript }),
+      body: JSON.stringify({ surface: SURFACE, lesson, chatSession, messages: transcript }),
       signal: ctrl.signal,
     });
     row.status = res.status;
@@ -158,13 +164,14 @@ async function turn({ cookie, chatSession, transcript, turnIndex, inflight }) {
 async function student(account, level, inflight, rows) {
   const { cookie } = await login(account);
   const chatSession = `bench-${randomUUID()}`;
+  const lesson = LESSONS[(account.index - 1) % LESSONS.length];
   const transcript = [];
   for (let i = 0; i < TURNS; i++) {
     const say = SCRIPT[i % SCRIPT.length];
     transcript.push({ role: "user", text: say });
-    const { row, text } = await turn({ cookie, chatSession, transcript, turnIndex: i, inflight });
+    const { row, text } = await turn({ cookie, chatSession, transcript, turnIndex: i, inflight, lesson });
     transcript.push({ role: "assistant", text: text || "(no reply)" });
-    const out = { level, account: account.index, chatSession, surface: SURFACE, lesson: LESSON, said: say, replyChars: text.length, ...row };
+    const out = { level, account: account.index, chatSession, surface: SURFACE, lesson, said: say, replyChars: text.length, ...row };
     rows.push(out);
     await appendFile(OUT, JSON.stringify(out) + "\n");
     if (i < TURNS - 1) await sleep(THINK_MS);
@@ -201,7 +208,7 @@ if (LOGIN_ONLY) {
   }
   process.exit(0);
 }
-console.log(`base ${BASE} · surface ${SURFACE} · lesson ${LESSON} · ${TURNS} turns per student · think ${THINK_MS}ms · levels ${LEVELS.join(",")} · out ${OUT}`);
+console.log(`base ${BASE} · surface ${SURFACE} · lessons ${LESSONS.join(",")} · ${TURNS} turns per student · think ${THINK_MS}ms · levels ${LEVELS.join(",")} · out ${OUT}`);
 const rows = [];
 for (const level of LEVELS) {
   const inflight = { n: 0, max: 0 };
