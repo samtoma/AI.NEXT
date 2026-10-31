@@ -106,7 +106,7 @@ async function login(account) {
 }
 
 /** One /api/ask turn; resolves with timings and the reply text. */
-async function turn({ cookie, chatSession, transcript, turnIndex, inflight, lesson }) {
+async function turn({ cookie, chatSession, transcript, turnIndex, inflight, lesson, account, retried = false, onCookie }) {
   const t0 = now();
   const row = {
     t_request: new Date().toISOString(), turnIndex, status: null,
@@ -125,6 +125,13 @@ async function turn({ cookie, chatSession, transcript, turnIndex, inflight, less
       signal: ctrl.signal,
     });
     row.status = res.status;
+    if (res.status === 401 && !retried) {
+      // the student access cookie lives 15 minutes; sign in again once and retry
+      clearTimeout(killer); inflight.n--;
+      const fresh = await login(account);
+      onCookie?.(fresh.cookie);
+      return turn({ cookie: fresh.cookie, chatSession, transcript, turnIndex, inflight, lesson, account, retried: true, onCookie });
+    }
     if (!res.ok || !res.body) { row.error = `http ${res.status}`; return { row, text }; }
     const reader = res.body.getReader();
     const dec = new TextDecoder();
@@ -162,14 +169,14 @@ async function turn({ cookie, chatSession, transcript, turnIndex, inflight, less
 }
 
 async function student(account, level, inflight, rows) {
-  const { cookie } = await login(account);
+  let { cookie } = await login(account);
   const chatSession = `bench-${randomUUID()}`;
   const lesson = LESSONS[(account.index - 1) % LESSONS.length];
   const transcript = [];
   for (let i = 0; i < TURNS; i++) {
     const say = SCRIPT[i % SCRIPT.length];
     transcript.push({ role: "user", text: say });
-    const { row, text } = await turn({ cookie, chatSession, transcript, turnIndex: i, inflight, lesson });
+    const { row, text } = await turn({ cookie, chatSession, transcript, turnIndex: i, inflight, lesson, account, onCookie: (c) => { cookie = c; } });
     transcript.push({ role: "assistant", text: text || "(no reply)" });
     const out = { level, account: account.index, chatSession, surface: SURFACE, lesson, said: say, replyChars: text.length, ...row };
     rows.push(out);
